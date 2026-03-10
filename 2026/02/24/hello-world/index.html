@@ -100,12 +100,14 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>yb0os1~🏠</strong>
+      <strong>
+        yb0os1~🏠
+      </strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
       <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
 
@@ -141,18 +143,25 @@
           
           
           
+            <!-- 修复核心：拆分跳转区域和下拉箭头 -->
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- 可跳转的主文字区域 -->
+              <a class="nav-link" href="/categories/" target="_self" style="display: inline-block;">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
+              </a>
+              <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+              <a class="nav-link dropdown-toggle" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                 style="display: inline-block; padding-left: 5px; padding-right: 0;">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 
                   
                   
                   
-                  <a class="dropdown-item" href="/categories/hexo/" target="_self">
+                  <a class="dropdown-item" href="/categories/hexo/"
+                     target="_self">
                     
                     <span>hexo</span>
                   </a>
@@ -160,7 +169,8 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/categories/java/" target="_self">
+                  <a class="dropdown-item" href="/categories/java/"
+                     target="_self">
                     
                     <span>Java</span>
                   </a>
@@ -168,7 +178,8 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/categories/mysql/" target="_self">
+                  <a class="dropdown-item" href="/categories/mysql/"
+                     target="_self">
                     
                     <span>数据库</span>
                   </a>
@@ -203,7 +214,8 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+               data-target="#modalSearch" aria-label="Search">
               <i class="iconfont icon-search"></i>
             </a>
           </li>
@@ -219,8 +231,20 @@
       </ul>
     </div>
   </div>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function(e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
 </nav>
-
   
 
 <div id="banner" class="banner" parallax=true
