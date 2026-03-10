@@ -28,9 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar.png">
 <meta property="article:published_time" content="2026-03-10T07:32:50.000Z">
-<meta property="article:modified_time" content="2026-03-10T08:02:20.224Z">
+<meta property="article:modified_time" content="2026-03-10T08:37:13.779Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="java">
+<meta property="article:tag" content="myself">
 <meta property="article:tag" content="实习">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://yb0os1.github.io/img/avatar.png">
@@ -342,12 +343,57 @@
             <h1 id="seo-header">实习整理</h1>
             
             
-              <div class="markdown-body">
-                
-                <h1 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h1><p>大苏打</p>
-<h1 id="美团"><a href="#美团" class="headerlink" title="美团"></a>美团</h1><h1 id="携程"><a href="#携程" class="headerlink" title="携程"></a>携程</h1>
-                
-              </div>
+              
+              <div id="hexo-blog-encrypt" data-wpm="密码错误，请重试！" data-whm="密码验证失败！">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="请输入文章加密密码" />
+    <label>请输入文章加密密码</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="ad3ffafc7b2ef5c9f85bd0fa968d6bcb43a28cbb69ad3c1e12dbe4e3b9875f01">9ef2a3e635f3dc7e309ca51f1b1beec7c8fa410d0b9d0c79d83ccfe2e30df7cde436f1816ae2c586435b99cb61f28a4c26901266941ad9331f8794f23db4493a4f14411e66df7b50dffaedd3dbf41d8c</script>
+</div>
+
+<!-- 保留插件原有解密逻辑，仅修改提示语相关 -->
+<script>
+  (function (window, document) {
+    'use strict';
+
+    var hexoBlogEncrypt = window.hexoBlogEncrypt = {
+      decrypt: function () {
+        var pass = document.getElementById('hbePass').value;
+        var encryptedData = document.getElementById('hbeData').textContent;
+        var hmacDigest = document.getElementById('hbeData').dataset.hmacdigest;
+
+        if (!encryptedData || !hmacDigest) {
+          console.error('No encrypted data found');
+          return;
+        }
+
+        try {
+          var decrypted = CryptoJS.AES.decrypt(encryptedData, pass);
+          decrypted = decrypted.toString(CryptoJS.enc.Utf8);
+
+          if (CryptoJS.SHA256(decrypted).toString() === hmacDigest) {
+            document.getElementById('hexo-blog-encrypt').innerHTML = decrypted;
+          } 
+        } catch (e) {
+          
+        }
+      }
+    };
+
+    // 绑定回车事件
+    document.getElementById('hbePass').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        hexoBlogEncrypt.decrypt();
+      }
+    });
+
+  })(window, document);
+</script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+              
+
+              
             
             <hr/>
             <div>
@@ -381,6 +427,8 @@
         <a href="/tags/java/" class="print-no-link">#java</a>
       
         <a href="/tags/%E5%AE%9E%E4%B9%A0/" class="print-no-link">#实习</a>
+      
+        <a href="/tags/myself/" class="print-no-link">#myself</a>
       
     </div>
   
@@ -623,6 +671,23 @@
   
 
 
+
+
+  
+  <script defer>
+    if (document.getElementById('hbePass') || document.querySelector('hbe-prefix')) {
+      Fluid.utils.waitElementLoaded('hbe-prefix', function() {
+        var hbePrefix = document.querySelector('hbe-prefix');
+        hbePrefix.parentElement.classList.add('markdown-body');
+        Fluid.utils.retry(function() {
+          if (Fluid.boot && Fluid.boot.refresh) {
+            Fluid.boot.refresh();
+            return true;
+          }
+        }, 100, 10);
+      })
+    }
+  </script>
 
 
   
