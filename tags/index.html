@@ -135,18 +135,24 @@
           
           
           
-            <!-- 修复核心：拆分跳转区域和下拉箭头 -->
             <li class="nav-item dropdown">
-              <!-- 可跳转的主文字区域 -->
-              <a class="nav-link" href="/categories/" target="_self" style="display: inline-block;">
+              <!-- 合并为单个a标签：既是跳转链接，也是下拉触发器 -->
+              <a class="nav-link dropdown-toggle" 
+                 href="/categories/" 
+                 target="_self" 
+                 role="button"
+                 data-toggle="dropdown" 
+                 aria-haspopup="true" 
+                 aria-expanded="false"
+                >
+                <!-- 图标 + 文字（原跳转区域） -->
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
+                <!-- 下拉箭头（内置到同一个a标签） -->
+                <span class="caret" style="margin-left: -3px;"></span>
               </a>
-              <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
-              <a class="nav-link dropdown-toggle" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                 style="display: inline-block; padding-left: 5px; padding-right: 0;">
-              </a>
+            
+              <!-- 下拉菜单（保留原有逻辑） -->
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 
                   
@@ -165,6 +171,15 @@
                      target="_self">
                     
                     <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/algorithm/"
+                     target="_self">
+                    
+                    <span>算法</span>
                   </a>
                 
                   
@@ -278,7 +293,7 @@
                 
 
 <div class="text-center tagcloud">
-  <a href="/tags/Hexo/" style="font-size: 15px; color: #bbe">Hexo</a> <a href="/tags/java/" style="font-size: 15px; color: #bbe">java</a> <a href="/tags/myself/" style="font-size: 15px; color: #bbe">myself</a> <a href="/tags/%E5%AE%9E%E4%B9%A0/" style="font-size: 15px; color: #bbe">实习</a>
+  <a href="/tags/Hexo/" style="font-size: 15px; color: #bbe">Hexo</a> <a href="/tags/java/" style="font-size: 15px; color: #bbe">java</a> <a href="/tags/myself/" style="font-size: 15px; color: #bbe">myself</a> <a href="/tags/%E5%AE%9E%E4%B9%A0/" style="font-size: 15px; color: #bbe">实习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15px; color: #bbe">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15px; color: #bbe">算法</a>
 </div>
 
               </div>

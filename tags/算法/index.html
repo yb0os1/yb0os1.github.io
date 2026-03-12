@@ -21,8 +21,8 @@
   
     <meta name="description" content="yb0os1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://yb0os1.github.io/archives/2026/02/index.html">
+<meta property="og:title" content="标签 - 算法">
+<meta property="og:url" content="https://yb0os1.github.io/tags/%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="yb0os1">
 <meta property="og:description" content="yb0os1">
 <meta property="og:locale" content="zh_CN">
@@ -34,7 +34,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - yb0os1</title>
+  <title>标签 - 算法 - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -88,7 +88,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 80vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -135,18 +135,24 @@
           
           
           
-            <!-- 修复核心：拆分跳转区域和下拉箭头 -->
             <li class="nav-item dropdown">
-              <!-- 可跳转的主文字区域 -->
-              <a class="nav-link" href="/categories/" target="_self" style="display: inline-block;">
+              <!-- 合并为单个a标签：既是跳转链接，也是下拉触发器 -->
+              <a class="nav-link dropdown-toggle" 
+                 href="/categories/" 
+                 target="_self" 
+                 role="button"
+                 data-toggle="dropdown" 
+                 aria-haspopup="true" 
+                 aria-expanded="false"
+                >
+                <!-- 图标 + 文字（原跳转区域） -->
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
+                <!-- 下拉箭头（内置到同一个a标签） -->
+                <span class="caret" style="margin-left: -3px;"></span>
               </a>
-              <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
-              <a class="nav-link dropdown-toggle" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                 style="display: inline-block; padding-left: 5px; padding-right: 0;">
-              </a>
+            
+              <!-- 下拉菜单（保留原有逻辑） -->
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 
                   
@@ -165,6 +171,15 @@
                      target="_self">
                     
                     <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/algorithm/"
+                     target="_self">
+                    
+                    <span>算法</span>
                   </a>
                 
                   
@@ -246,13 +261,17 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="归档"></span>
+            <span id="subtitle" data-typed-text="标签 - 算法"></span>
           
         </div>
 
         
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -274,7 +293,7 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 3 篇文章</p>
+  <p class="h4">共计 1 篇文章</p>
   <hr>
   
   
@@ -282,9 +301,9 @@
       
       <p class="h5">2026</p>
     
-    <a href="/2026/02/24/hello-world/" class="list-group-item list-group-item-action">
-      <time>02-24</time>
-      <div class="list-group-item-title">Hello World</div>
+    <a href="/2026/03/11/1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" class="list-group-item list-group-item-action">
+      <time>03-11</time>
+      <div class="list-group-item-title">1.两数之和</div>
     </a>
   
 </div>
