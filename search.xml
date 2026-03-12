@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>暑期实习记录</title>
+      <link href="/2026/03/12/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
+      <url>/2026/03/12/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="经历"><a href="#经历" class="headerlink" title="经历"></a>经历</h1><p>26.2.28 字节广告部门   一面挂</p><h1 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h1><h3 id="字节广告部门一面"><a href="#字节广告部门一面" class="headerlink" title="字节广告部门一面"></a>字节广告部门一面</h3><span class="label label-primary">实习</span><p>1、挑一个实习详细的介绍一下，项目背景、遇到的问题、怎么解决的以及上线之后的衡量指标（边说边拷打）</p><span class="label label-primary">八股</span><p>2、线程池原理？核心线程一定是不可以被销毁的吗？</p><p>3、反射是什么？你知道哪些框架基于反射吗？</p><p>4、动态规划</p><p>5、MySQL联合索引</p><span class="label label-primary">算法</span><p>6、循环数组的中位数</p><blockquote><p>差不多是这样的，有些忘记了</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> practice </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 实习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>1.两数之和</title>
       <link href="/2026/03/11/1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
       <url>/2026/03/11/1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
