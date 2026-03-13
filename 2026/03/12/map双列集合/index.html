@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar5.png">
 <meta property="article:published_time" content="2026-03-12T15:50:50.000Z">
-<meta property="article:modified_time" content="2026-03-13T09:42:02.476Z">
+<meta property="article:modified_time" content="2026-03-13T16:26:53.460Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="集合">
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.4k 字
+          2k 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          12 分钟
+          17 分钟
         
       </span>
     
@@ -607,6 +607,58 @@
 <p>HashTable默认容量是11，扩容是<code>2n+1</code></p>
 <h1>ConcurrentHashMap</h1>
 <h2 id="原理">原理</h2>
+<p><strong>JDK1.7 分段锁 Segment</strong></p>
+<p><img src="D:.blog%5Cmy-blog%5Csource%5Cimg%5Carticle_img%5Cimage-20260313175732035.png" srcset="/img/loading.gif" lazyload alt="image-20260313175732035"></p>
+<p>JDK1.7底层数据结构采用的是 数组+链表，利用分段锁（可重入）保证线程安全的，ConcurrentHashMap将桶数组分为16段Segment，每个Segment持有独立的锁，每个Segment下面又是一个HashEntry数组，用于存储键值对；当插入/更新/删除等操作，先定位到具体的segment，然后在该segment加锁，这样当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问</p>
+<p><strong>JDK1.8 volatile + CAS 或者 synchronized</strong></p>
+<p><img src="D:.blog%5Cmy-blog%5Csource%5Cimg%5Carticle_img%5Cimage-20260313175456490.png" srcset="/img/loading.gif" lazyload alt="image-20260313175456490"></p>
+<p>JDK1.8底层采用数据+链表/红黑树，利用volatile+CAS/synchronized对头节点进行加锁保证线程安全的</p>
+<p>当添加元素的时候：</p>
+<ol>
+<li>首先判断容器是否为空，如果为空使用CAS初始化（volatile修饰）桶数组</li>
+<li>如果容器不为空，那根据存储的元素计算索引判断索引位置是否为空
+<ol>
+<li>如果索引位置为空，那么利用CAS设置该节点</li>
+<li>如果索引位置不为空，那么使用synchronized锁住头节点，然后遍历数据然后在对应位置替换或者新增节点，最后判断是否要转化红黑树</li>
+</ol>
+</li>
+<li>这样是保证线程安全了的</li>
+</ol>
+<h2 id="使用synchronized为什么还要用CAS">使用synchronized为什么还要用CAS</h2>
+<p>两种锁结合保证线程安全是一种权衡的考虑，主要是根据竞争程度来选择具体使用那一种的</p>
+<p>put元素的时候如果计算索引没有存放元素，那么使用CAS设置值，因为在设置元素的时候，hash值经过了各种扰动后，发生hash碰撞的概率是较低的，所以可以预测使用较少的自旋来完成具体的设置值</p>
+<h1>HashTable</h1>
+<h2 id="原理-2">原理</h2>
+<p><img src="D:.blog%5Cmy-blog%5Csource%5Cimg%5Carticle_img%5Cimage-20260314002152983.png" srcset="/img/loading.gif" lazyload alt="image-20260314002152983"></p>
+<p>底层：数据+链表</p>
+<p>线程安全：所有的公共方法都加了synchronized关键字，一个线程访问同步方法，另外一个线程就会阻塞</p>
+<h1>三个区别</h1>
+<p>HashMap、ConcurrentHashMap、HashTable</p>
+<ul>
+<li>HashMap
+<ol>
+<li>线程不完全，效率高点</li>
+<li>可以存储null值null键</li>
+<li>默认容量16，扩容2倍</li>
+<li>给定初始大小时，扩充为离初始大小最近的2的次方</li>
+<li>底层数据+链表/红黑树</li>
+</ol>
+</li>
+<li>HashTable
+<ol>
+<li>线程安全，所有的公共方法都加synchronized</li>
+<li>不可以存储null值null键</li>
+<li>默认容量11，扩容2n+1</li>
+<li>给定初始大小时直接使用</li>
+<li>底层数据+链表（基本被淘汰</li>
+</ol>
+</li>
+<li>ConcurrentHashMap
+<ol>
+<li>线程安全，分段锁||volatile+CAS/synchronized</li>
+</ol>
+</li>
+</ul>
 
                 
               
