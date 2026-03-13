@@ -252,7 +252,7 @@
                   <!-- 修复核心：拆分跳转区域和下拉箭头 -->
                   <li class="nav-item dropdown">
                     <!-- 可跳转的主文字区域 -->
-                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
                       
                         <span>🗄️ 数据库</span>
                     </a>
@@ -266,7 +266,7 @@
                         
                           
                             
-                              <a class="dropdown-item" href="/mysql/"
+                              <a class="dropdown-item" href="/database/mysql/"
                                 target="_self">
                                 
                                   <span>MySQL</span>
@@ -275,7 +275,7 @@
                         
                           
                             
-                              <a class="dropdown-item" href="/redis/"
+                              <a class="dropdown-item" href="/database/redis/"
                                 target="_self">
                                 
                                   <span>Redis</span>
@@ -601,6 +601,82 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/03/14/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" target="_self">
+          <img src="/img/avatar5.png" srcset="/img/loading.gif" lazyload alt="存储引擎">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/03/14/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" target="_self">
+          存储引擎
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/03/14/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" target="_self">
+        <div>
+          执行sql请求过程
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-03-14 00:36" pubdate>
+              2026-03-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/databse/" class="category-chain-item">databse</a>
+  
+  
+    <span>></span>
+    
+  <a href="/databse/mysql/" class="category-chain-item">mysql</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">#MySQL</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2026/03/13/JVM/" target="_self">
           <img src="/img/avatar10.png" srcset="/img/loading.gif" lazyload alt="JVM">
         </a>
@@ -693,7 +769,7 @@
       
       <a class="index-excerpt " href="/2026/03/12/map%E5%8F%8C%E5%88%97%E9%9B%86%E5%90%88/" target="_self">
         <div>
-          总览示意图 map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较
+          总览示意图  map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了
         </div>
       </a>
 
@@ -769,7 +845,7 @@
       
       <a class="index-excerpt " href="/2026/03/12/collection%E5%8D%95%E5%88%97%E9%9B%86%E5%90%88/" target="_self">
         <div>
-          总览示意图 List List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Linked
+          总览示意图  List  List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Link
         </div>
       </a>
 
