@@ -19,26 +19,37 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="yb0os1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="https://yb0os1.github.io/tags/index.html">
+    <meta name="description" content="总览示意图 map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较">
+<meta property="og:type" content="article">
+<meta property="og:title" content="map双列集合">
+<meta property="og:url" content="https://yb0os1.github.io/2026/03/12/map%E5%8F%8C%E5%88%97%E9%9B%86%E5%90%88/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="yb0os1">
+<meta property="og:description" content="总览示意图 map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar5.png">
+<meta property="article:published_time" content="2026-03-12T15:50:50.000Z">
+<meta property="article:modified_time" content="2026-03-13T08:25:26.348Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="yb0os1">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="集合">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar5.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>标签 - yb0os1</title>
+  <title>map双列集合 - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -88,7 +99,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 80vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -421,17 +432,64 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="标签"></span>
+            <span id="subtitle" data-typed-text="map双列集合"></span>
           
         </div>
 
         
-      </div>
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-03-12 23:50" pubdate>
+          2026年3月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
 
       
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
+    
+  </div>
+
+
+        
+      </div>
+
       
     </div>
   </div>
@@ -443,24 +501,284 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center tagcloud">
-  <a href="/tags/Hexo/" style="font-size: 15px; color: #bbe">Hexo</a> <a href="/tags/JVM/" style="font-size: 15px; color: #bbe">JVM</a> <a href="/tags/java/" style="font-size: 30px; color: #337ab7">java</a> <a href="/tags/myself/" style="font-size: 15px; color: #bbe">myself</a> <a href="/tags/%E5%AE%9E%E4%B9%A0/" style="font-size: 22.5px; color: #779bd3">实习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15px; color: #bbe">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15px; color: #bbe">算法</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 22.5px; color: #779bd3">集合</a>
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">map双列集合</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <h1 id="总览示意图"><a href="#总览示意图" class="headerlink" title="总览示意图"></a>总览示意图</h1><p><img src="/img%5Carticle_img%5Cimage-20260313103656777.png" srcset="/img/loading.gif" lazyload alt="重要集合示意图"></p>
+<p>map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap</p>
+<ul>
+<li>hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较大的变化，当数组长度大于64并且链表长度大于阈值（默认为 8）时，将链表转化为红黑树，以减少搜索时间（ <code>HashMap</code> 支持 <code>null</code> 键，null的哈希值直接为0）</li>
+<li>linkedhashmap：LinkedHashMap 继承自 HashMap，底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成；在hashmap的基础上增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序</li>
+<li>hashtable：线程安全的，所有的方法加上synchronized关键字，其余和hashmap没什么区别（不支持null值null键）</li>
+<li>treemap：红黑树（自平衡的排序二叉树）</li>
+<li>concurrenthashmap：数组+链表&#x2F;红黑树；不支持null值null键；线程安全的（1.8之前使用分段锁，1.8之后使用volatile+CAS或者synchronized）</li>
+</ul>
+<h1 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h1><h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>JDK1.7之前，HashMap是由数组+链表组成，HashMap通过哈希算法将元素的键映射到桶数组的槽位中。如果多个key映射到同一槽位，就会以链表的形式存储（链表查询为O(n)，冲突严重时查询效率就低了）</p>
+<p>JDK1.8做了优化，当桶数组长度大于等于64并且链表的长度大于等于8的时候，就会将链表转换为红黑树（查询为O(logn))，当数量小于等于6的时候就会把红黑树转换回链表</p>
+<h2 id="Put操作"><a href="#Put操作" class="headerlink" title="Put操作"></a>Put操作</h2><p><img src="/img%5Carticle_img%5Cimage-20260313150919012.png" srcset="/img/loading.gif" lazyload alt="HashMap Put流程"></p>
+<p>调用put的时候：（初始容量是16）</p>
+<ol>
+<li>根据要添加的key来计算在桶数组中对应的位置，计算方式是<code>(数组长度-1) &amp; key的哈希值</code></li>
+<li>检查对应位置是否为空，如果为空直接把元素插入进去（HashMap的修改次数加1，以便在进行迭代时发现并发修改）</li>
+<li>如果对应位置已经存在元素了，那么检查该位置第一个元素key的哈希值是否和key是否相同，相同直接替换value</li>
+<li>如果不相同，那么遍历链表&#x2F;红黑树来查找是否有相同的元素，有的话就替换掉</li>
+<li>如果不存在相同的元素，把新建插入链表（jdk1.7 头插法  jdk1.8尾插法）或者红黑树对应的位置</li>
+<li>如果是链表，那么插入之后检查长度是否达到了阈值8，达到并且数组长度&gt;&#x3D;64则把链表转化为红黑树</li>
+<li>检查负载因子是否达到阈值0.75（负载因子就是键值对的数量&#x2F;数组长度），如果超过阈值那么进行扩容操作</li>
+<li>扩容操作：<ol>
+<li>创建一个新的两倍大小的数组</li>
+<li>把旧数组中数据重新计算哈希值并分配到新数组中</li>
+<li>更新HashMap数组引用和阈值参数</li>
+</ol>
+</li>
+</ol>
+<h2 id="是否线程安全"><a href="#是否线程安全" class="headerlink" title="是否线程安全"></a>是否线程安全</h2><p>HashMap不是线程安全的，多线程下存在的问题：</p>
+<ol>
+<li><p>JDK1.7，put的时候采用头插法，那么扩容的时候存在Entry链死循环和put数据丢失的问题</p>
+<blockquote>
+<p>Entry链死循环示例：</p>
+<p><strong>线程 1</strong> 和 <strong>线程 2</strong> 同时执行 <code>transfer()</code>，步骤拆解：</p>
+<p>线程 1 执行到 <code>Entry&lt;K,V&gt; next = e.next;</code>（保存 e1 的 next 为 e2），然后被 CPU 挂起；</p>
+<p>线程 2 完整执行迁移，将链表变成 <code>e2 → e1 → null</code>，并完成扩容；</p>
+<p>线程 1 恢复执行，此时：</p>
+<ul>
+<li>线程 1 中 <code>e = e1</code>，<code>next = e2</code>（旧值）；</li>
+<li>执行 <code>e.next = newTable[i]</code> → e1.next &#x3D; null（新数组该桶此时为空）；</li>
+<li>执行 <code>newTable[i] = e1</code> → 新桶头节点为 e1；</li>
+<li>执行 <code>e = next</code> → e &#x3D; e2；</li>
+</ul>
+<p>线程 1 处理 e2：</p>
+<ul>
+<li>执行 <code>next = e2.next</code> → 此时 e2 的 next 已经被线程 2 改成 e1（环形的关键！）；</li>
+<li>执行 <code>e2.next = newTable[i]</code> → e2.next &#x3D; e1；</li>
+<li>执行 <code>newTable[i] = e2</code> → 新桶头节点为 e2；</li>
+<li>执行 <code>e = next</code> → e &#x3D; e1；</li>
+</ul>
+<p>线程 1 进入死循环：</p>
+<ul>
+<li>再次处理 e1 时，<code>next = e1.next</code> &#x3D; null，但 e2.next &#x3D; e1，形成 <code>e1 ← e2</code> 的环形链表；</li>
+<li>后续查询该桶的元素时，会无限遍历 <code>e1 → e2 → e1 → e2...</code>，导致死循环。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>JDK1.8，解决了 Entry 链死循环和数据丢失问题，但是存在put数据覆盖的问题</p>
+</li>
+</ol>
+<h2 id="为什么使用红黑树"><a href="#为什么使用红黑树" class="headerlink" title="为什么使用红黑树"></a>为什么使用红黑树</h2><p>为什么使用了红黑树？平衡二叉树不可以吗？</p>
+<ol>
+<li>平衡二叉树是追求完全平衡的：任何节点的左右子树高度差不能超过1，这样严格的条件导致每次插入&#x2F;删除数据几乎都会破坏平衡，就会调整一颗符合条件的平衡树，浪费性能</li>
+<li>红黑树不追求完全平衡：整个树最长路径不会超过最短路径的 2 倍；虽然牺牲了一部分查找的性能效率，但是能够换取一部分维持树平衡状态的成本；红黑树在插入、删除等操作，不会像平衡树那样，频繁着破坏红黑树的规则，所以不需要频繁着调整</li>
+</ol>
+<h2 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h2><p>为什么每次扩容要是2倍？而且初始的容量必须是2的次方？</p>
+<ol>
+<li>2的次幂，在计算索引的时候使用位运算代替了取模，效率高</li>
+<li>扩容时迁移元素时只需判断 1 个二进制位，降低扩容的计算成本</li>
+</ol>
+<p>HashMap默认容量是16，扩容是<code>2n</code></p>
+<p>HashTable默认容量是11，扩容是<code>2n+1</code></p>
+<h1 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2>
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/java/" class="category-chain-item">java</a>
+  
+  
+    <span>></span>
+    
+  <a href="/java/basics/" class="category-chain-item">basics</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java/" class="print-no-link">#java</a>
+      
+        <a href="/tags/%E9%9B%86%E5%90%88/" class="print-no-link">#集合</a>
+      
+    </div>
+  
 </div>
 
-              </div>
-            </div>
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>map双列集合</div>
+      <div>https://yb0os1.github.io/2026/03/12/map双列集合/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年3月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
           </div>
         </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/03/13/JVM/" title="JVM">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JVM</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/03/12/collection%E5%8D%95%E5%88%97%E9%9B%86%E5%90%88/" title="collection单列集合">
+                        <span class="hidden-mobile">collection单列集合</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
       </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
     
 
     
@@ -579,6 +897,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
