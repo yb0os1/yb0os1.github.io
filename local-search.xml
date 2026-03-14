@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>索引</title>
+    <link href="/2026/03/15/%E7%B4%A2%E5%BC%95/"/>
+    <url>/2026/03/15/%E7%B4%A2%E5%BC%95/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>database</category>
+      
+      <category>mysql</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>MySQL</tag>
+      
+      <tag>数据库</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>泛型+反射+动态代理</title>
     <link href="/2026/03/14/%E6%B3%9B%E5%9E%8B-%E5%8F%8D%E5%B0%84-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/"/>
     <url>/2026/03/14/%E6%B3%9B%E5%9E%8B-%E5%8F%8D%E5%B0%84-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</url>
@@ -37,7 +66,7 @@
     <link href="/2026/03/14/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/"/>
     <url>/2026/03/14/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
     
-    <content type="html"><![CDATA[<h1 id="执行sql请求过程"><a href="#执行sql请求过程" class="headerlink" title="执行sql请求过程"></a>执行sql请求过程</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="执行sql请求过程"><a href="#执行sql请求过程" class="headerlink" title="执行sql请求过程"></a>执行sql请求过程</h1><p><img src="D:.blog\my-blog\source\img\article_img\image-20260315001748950.png" alt="MySQL内部架构（by 小林coding）"></p><p>MySQL架构可以分为连接层、server层、存储引擎层</p><p>执行一条sql语句过程</p><ol><li><p>连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份</p></li><li><p>查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；</p></li><li><p>解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；</p><blockquote><p>词法分析：根据输入的sql语句识别出关键字和非关键字</p><p>语法分析：根据词法分析的结果，语法解析器会根据语法规则判断这个SQL语句是否满足MySQL的语法</p></blockquote></li><li><p>执行SQL：三个阶段</p><ol><li>预处理器：检查表或字段是否存在、select * 中*代替所有的字段</li><li>优化器：基于查询成本（选择使用哪些索引，以及决定表之间的连接顺序等），选择查询成本最小的执行计划</li><li>执行器：根据执行计划执行SQL查询语句，从存储引擎中读取记录返回给客户端</li></ol></li></ol><blockquote><p>执行器和存储引擎交互过程比如有主键索引查询、全表扫描、索引下推</p><p>主键索引查询：</p><ol><li>执行器第一次查询执行函数，将条件交给存储引擎</li><li>存储引擎通过主键索引B+树判断记录是否存在   存在返回给执行器；不存在上报查询不到的错误；</li><li>执行器从存储引擎读取到记录再次判断是否符合条件   符合交给客户端；不符合跳过记录</li><li>执行器查询过程是while循环，还是需要再次查询，同样执行函数（永远返回-1）执行器退出，结束查询</li></ol><p>全表扫描：</p><ol><li><p>执行器第一次查询，调用函数将条件交给存储引擎</p></li><li><p>存储引擎读取表中的第一条记录，符合条件返回给客户端，不符合跳过</p><ol><li><blockquote><p>Server 层每从存储引擎读到一条记录就会发送给客户端，客户端显示的时候是直接显示所有记录的，是因为客户端是等查询语句查询完成后，才会显示出所有的记录</p></blockquote></li></ol></li><li><p>执行器查询过程是while循环，还是需要再次查询，执行函数，重复1-2过程，直到存储引擎把表中所有记录读完，然后向执行器返回读取完毕的信息</p></li><li><p>执行器收到存储引擎报告的查询完毕的信息，退出循环，停止查询。</p></li></ol><p>索引下推：</p><p>为了减少二级索引在查询时的回表操作</p><blockquote><p>age和money建立了联合索引，由于&gt;导致age索引可用，money的索引失效</p></blockquote><p>比如一个查询语句<code>select * from a where age&gt;10 and money=1000</code></p><p>如果不使用索引下推，那么每找到一个age&gt;10的记录都需要进行回表，将完整记录返回给serve层；serve层判断money是否等于1000再决定是否返回给客户端</p><p>使用索引下推，找到age&gt;10的记录后，不执行回表操作，而是判断该索引中money列条件是否符合，不符合跳过，符合的话再进行回表操作，将完整记录返回给serve层</p></blockquote><h1 id="MySQL引擎"><a href="#MySQL引擎" class="headerlink" title="MySQL引擎"></a>MySQL引擎</h1><p>1、有什么了解？</p><ul><li>Innodb：默认存储引擎，具有ACID事务支持、行级锁、外键约束；使用高并发的读写操作，支持较好的数据完整性和并发控制</li><li>MyISAM：具有较低的存储空间和内存消耗，适用于大量读操作的场景。不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li><li>Memory：将数据存储在内存中，适用于对性能要求较高的读操作；在服务器重启或崩溃时数据会丢失；不支持事务、行级锁和外键约束</li></ul><p>2、为什么默认引擎是Innodb？</p><p>InnoDB引擎在事务支持、并发性能、崩溃恢复等方面具有优势</p><p>ACID、行级锁、redolog</p><ul><li>事务支持：InnoDB引擎提供了对事务的支持，可以进行ACID（原子性、一致性、隔离性、持久性）属性的操作</li><li>并发性能：InnoDB引擎采用了行级锁定的机制，可以提供更好的并发性能</li><li>崩溃恢复：InnoDB引引擎通过 redolog 日志实现了崩溃恢复，可以在数据库发生异常情况（如断电）时，通过日志文件进行恢复，保证数据的持久性和一致性</li></ul><p>3、MyISAM和Innodb对比</p><ul><li>事务支持：MyISAM不支持</li><li>索引结构：MyISAM是非聚簇索引</li><li>锁粒度：MyISAM最小级的锁是表锁</li><li>count效率：MyISAM保存具体的行数</li></ul>]]></content>
     
     
     <categories>
@@ -153,7 +182,7 @@
     <link href="/2026/03/12/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
     <url>/2026/03/12/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     
-    <content type="html"><![CDATA[<h1 id="经历"><a href="#经历" class="headerlink" title="经历"></a>经历</h1><p>26.2.28 字节广告部门   一面挂</p><h1 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h1><h3 id="字节广告部门一面"><a href="#字节广告部门一面" class="headerlink" title="字节广告部门一面"></a>字节广告部门一面</h3><span class="label label-primary">实习</span><p>1、挑一个实习详细的介绍一下，项目背景、遇到的问题、怎么解决的以及上线之后的衡量指标（边说边拷打）</p><span class="label label-primary">八股</span><p>2、线程池原理？核心线程一定是不可以被销毁的吗？</p><p>3、反射是什么？你知道哪些框架基于反射吗？</p><p>4、动态规划</p><p>5、MySQL联合索引</p><span class="label label-primary">算法</span><p>6、循环数组的中位数</p><blockquote><p>差不多是这样的，有些忘记了</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="经历"><a href="#经历" class="headerlink" title="经历"></a>经历</h1><h1 id="投递"><a href="#投递" class="headerlink" title="投递"></a>投递</h1><p>3&#x2F;11</p><p>PDD</p><p>3&#x2F;15</p><p>美团：<a href="https://zhaopin.meituan.com/web/personal-center/delivery-record">https://zhaopin.meituan.com/web/personal-center/delivery-record</a></p><p>米哈游：<a href="https://jobs.mihoyo.com/#/applyRecord">https://jobs.mihoyo.com/#/applyRecord</a></p><h1 id="面试经历"><a href="#面试经历" class="headerlink" title="面试经历"></a>面试经历</h1><p>字节广告部门  26.2.28一面挂</p><p>pdd鸡架部门  26.3.15笔试</p><h1 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h1><h3 id="字节广告部门一面"><a href="#字节广告部门一面" class="headerlink" title="字节广告部门一面"></a>字节广告部门一面</h3><span class="label label-primary">实习</span><p>1、挑一个实习详细的介绍一下，项目背景、遇到的问题、怎么解决的以及上线之后的衡量指标（边说边拷打）</p><span class="label label-primary">八股</span><p>2、线程池原理？核心线程一定是不可以被销毁的吗？</p><p>3、反射是什么？你知道哪些框架基于反射吗？</p><p>4、动态规划</p><p>5、MySQL联合索引</p><span class="label label-primary">算法</span><p>6、循环数组的中位数</p><blockquote><p>差不多是这样的，有些忘记了</p></blockquote>]]></content>
     
     
     <categories>
