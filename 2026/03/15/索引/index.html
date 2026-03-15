@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="yb0os1">
+    <meta name="description" content="索引基础定义索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关索引分类 数据结构：B+数索引、Hash索引、Full-text索引  InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个 有主键，主键作为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="索引">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/15/%E7%B4%A2%E5%BC%95/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="yb0os1">
+<meta property="og:description" content="索引基础定义索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关索引分类 数据结构：B+数索引、Hash索引、Full-text索引  InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个 有主键，主键作为">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar12.png">
 <meta property="article:published_time" content="2026-03-14T16:36:54.000Z">
-<meta property="article:modified_time" content="2026-03-14T16:37:04.965Z">
+<meta property="article:modified_time" content="2026-03-15T16:06:18.818Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          0 字
+          998 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          9 分钟
         
       </span>
     
@@ -523,7 +523,68 @@
             <div class="markdown-body" id="post-content">
               
                 
-                
+                <h1 id="索引基础"><a href="#索引基础" class="headerlink" title="索引基础"></a>索引基础</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率</p>
+<ul>
+<li>如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n)</li>
+<li>如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)</li>
+</ul>
+<h2 id="分类相关"><a href="#分类相关" class="headerlink" title="分类相关"></a>分类相关</h2><h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><ul>
+<li>数据结构：B+数索引、Hash索引、Full-text索引<ul>
+<li><img src="D:.blog\my-blog\source\img\article_img\image-20260315234449914.png" srcset="/img/loading.gif" lazyload alt="image-20260315234449914"></li>
+<li>InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个<ol>
+<li>有主键，主键作为聚簇索引</li>
+<li>无主键，选择第一个不包含null的唯一列作为聚簇索引</li>
+<li>上面两个都没，自动生成一个隐式自增id列作为聚簇索引</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>物理存储：聚簇索引、非聚簇索引（二级索引）<ul>
+<li>聚簇索引：b+树的叶子节点存储的是实际数据，所有完整的用户记录都存放</li>
+<li>二级索引：b+树的叶子节点存储的是主键值，而不是实际数据</li>
+<li>在查询时，使用二级索引如果查询的数据可以在二级索引找到，就不需要回表，这个过程就是覆盖索引；如果查询的数据不在二级索引中，那么先查二级索引找到对应的主键值，然后再查找主键索引找到对应的数据，这就是回表</li>
+</ul>
+</li>
+<li>字段特性：主键索引、唯一索引、普通索引、前缀索引<ul>
+<li>主键索引：建立在主键上的索引，一个表最多只有一个，并且不允许有空值</li>
+<li>唯一索引：建立在 UNIQUE 字段上的索引，一张表可以有多个唯一索引，索引列的值必须唯一但是可以有空值</li>
+<li>普通索引：建立在普通字段上的索引，既不要求字段为主键，也不要求字段为 UNIQUE</li>
+<li>前缀索引：对字符类型字段的前几个字符建立的索引，而不是在整个字段上建立的索引，对字符类型字段的前几个字符建立的索引，而不是在整个字段上建立的索引；目的是为了减少索引占用的存储空间，提升查询效率</li>
+</ul>
+</li>
+<li>字段个数：单列索引、联合索引<ul>
+<li>建立在单列上的索引</li>
+<li>建立在多列上的索引，怎么构建？a和b的索引，先按照a进行排序建立好，如果a有相同的在根据b</li>
+<li>最左匹配原则</li>
+</ul>
+</li>
+</ul>
+<h3 id="聚簇索引和非聚簇索引对比"><a href="#聚簇索引和非聚簇索引对比" class="headerlink" title="聚簇索引和非聚簇索引对比"></a>聚簇索引和非聚簇索引对比</h3><p><img src="D:.blog\my-blog\source\img\article_img\image-20260315234738844.png" srcset="/img/loading.gif" lazyload alt="image-20260315234738844"></p>
+<p>数据存储：存储整个数据行；存储主键</p>
+<p>索引和数据关系：回表</p>
+<p>唯一性：有且必须只有一个；不限</p>
+<p>效率：范围查询和排序查询，聚簇索引效率更高，避免了寻址开销；非聚簇索引回表查询效率低</p>
+<h1 id="索引数据结构"><a href="#索引数据结构" class="headerlink" title="索引数据结构"></a>索引数据结构</h1><h2 id="MySQL索引如何实现"><a href="#MySQL索引如何实现" class="headerlink" title="MySQL索引如何实现"></a>MySQL索引如何实现</h2><h2 id="B-树有什么特性"><a href="#B-树有什么特性" class="headerlink" title="B+树有什么特性"></a>B+树有什么特性</h2><h2 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h2><p>对比B树、二叉树、红黑树、Hash、跳表</p>
+<h1 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h1><h2 id="索引如何选择"><a href="#索引如何选择" class="headerlink" title="索引如何选择"></a>索引如何选择</h2><blockquote>
+<p>回答什么字段适合建立索引</p>
+</blockquote>
+<ol>
+<li><p>字段唯一、非空、区分度高</p>
+</li>
+<li><p>经常作为查询条件、排序、分组、去重的字段</p>
+</li>
+<li><p>字段最好有递增趋势，如果字段是随机无序的，可能会引发页分裂问题，造成性能影响</p>
+<blockquote>
+<p>如果是随机无序的，那么写入的顺序就是乱序的，不得不频繁的做页分裂操作，以便为新行分配空间，页分裂导致移动大量的数据，影响性能</p>
+<p>而且频繁的页分裂，页会变的稀疏并被不规则的填充，最终会导致数据有sui’pian</p>
+</blockquote>
+</li>
+<li><p>超长文本字段不建议建立索引，如果必须建立的话考虑前缀索引</p>
+</li>
+<li><p>尽量选择建立联合索引</p>
+</li>
+</ol>
+<h2 id="索引优化详细"><a href="#索引优化详细" class="headerlink" title="索引优化详细"></a>索引优化详细</h2><h2 id="索引失效"><a href="#索引失效" class="headerlink" title="索引失效"></a>索引失效</h2>
                 
               
             </div>
