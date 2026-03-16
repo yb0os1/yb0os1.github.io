@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="1111111 事务基础 事务特性和原理 ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保">
+    <meta name="description" content="事务基础 事务特性和原理 ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL-事务">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/16/MySQL-%E4%BA%8B%E5%8A%A1/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="1111111 事务基础 事务特性和原理 ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保">
+<meta property="og:description" content="事务基础 事务特性和原理 ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar11.png">
 <meta property="article:published_time" content="2026-03-16T09:37:49.000Z">
-<meta property="article:modified_time" content="2026-03-16T09:44:05.685Z">
+<meta property="article:modified_time" content="2026-03-16T16:11:36.714Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          310 字
+          721 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          3 分钟
+          7 分钟
         
       </span>
     
@@ -523,8 +523,7 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <p>1111111</p>
-<h1>事务基础</h1>
+                <h1>事务基础</h1>
 <h2 id="事务特性和原理">事务特性和原理</h2>
 <p>ACID （原子性、一致性、隔离性、持久性）</p>
 <ul>
@@ -534,7 +533,46 @@
 <li><strong>持久性</strong>Durability，通过redolog保证，事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</li>
 </ul>
 <h2 id="并发事务问题">并发事务问题</h2>
+<p>服务端允许多个客户端连接，处理多个事务可能出现的问题：脏读、不可重复读、幻读</p>
+<ul>
+<li>脏读：一个事务读取到另外一个事务未提交事务修改过的数据</li>
+<li>不可重复读：一个事务内多次读取同一个数据，出现前后读取到的数据不一致</li>
+<li>幻读：一个事务内多次查询某个符合条件的记录数量，出现前后查询数量不同</li>
+</ul>
 <h2 id="事务隔离级别">事务隔离级别</h2>
+<h3 id="四种隔离级别">四种隔离级别</h3>
+<ul>
+<li>读未提交
+<ol>
+<li>一个事务还没提交，它做的变更其他事务就可以看到</li>
+<li>出现问题脏读、不可重复读、幻读</li>
+<li>实现：可以读取到未提交的数据，所以直接读取最新的数据就行了</li>
+</ol>
+</li>
+<li>读已提交
+<ol>
+<li>一个事务提交之后，它做的变更其他事务就可以看到</li>
+<li>出现问题不可重复读、幻读</li>
+<li>实现：MVCC</li>
+</ol>
+</li>
+<li>可重复读
+<ol>
+<li>一个事务执行过程中看到的数据，一直跟这个事务启动时看到的数据一致（MySQL默认隔离级别）</li>
+<li>出现问题幻读</li>
+<li>实现：MVCC</li>
+</ol>
+</li>
+<li>串行化
+<ol>
+<li>对记录加上读写锁，在多个事务对这条记录进行读写操作时，如果发生读写冲突，后访问的事务必须等待前一个事务完成才能执行</li>
+<li>实现：加读写锁避免并行访问</li>
+</ol>
+</li>
+</ul>
+<p>安全等级：串行化&gt;可重复读&gt;读已提交&gt;读未提交</p>
+<h3 id="可重复读的幻读问题">可重复读的幻读问题</h3>
+<p>可重复读很大程度避免了幻读，但是不是完全解决了幻读</p>
 <h1>MVCC</h1>
 <h1>其他</h1>
 <h2 id="update是不是原子性">update是不是原子性</h2>
