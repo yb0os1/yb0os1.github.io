@@ -22,13 +22,13 @@
     <meta name="description" content="索引基础定义索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关索引分类 数据结构：B+数索引、Hash索引、Full-text索引  InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个 有主键，主键作为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL-索引">
-<meta property="og:url" content="https://yb0os1.github.io/2026/03/15/%E7%B4%A2%E5%BC%95/index.html">
+<meta property="og:url" content="https://yb0os1.github.io/2026/03/15/MySQL-%E7%B4%A2%E5%BC%95/index.html">
 <meta property="og:site_name" content="yb0os1">
 <meta property="og:description" content="索引基础定义索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关索引分类 数据结构：B+数索引、Hash索引、Full-text索引  InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个 有主键，主键作为">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar12.png">
 <meta property="article:published_time" content="2026-03-14T16:36:54.000Z">
-<meta property="article:modified_time" content="2026-03-16T09:37:39.313Z">
+<meta property="article:modified_time" content="2026-03-17T14:23:40.891Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -654,7 +654,7 @@
 </li>
 <li><p>范围查询(&gt; &lt; between)导致右侧索引失效(a&gt;xx and b&#x3D;x)；</p>
 <blockquote>
-<p>范围查询会定位到 B + 树的一个 “区间”，区间内的<code>b</code>列值不再保持全局有序</p>
+<p>范围查询会定位到 B + 树的一个 区间，区间内的<code>b</code>列值不再保持全局有序</p>
 </blockquote>
 </li>
 <li><p>OR条件包含非索引列</p>
@@ -760,7 +760,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>MySQL-索引</div>
-      <div>https://yb0os1.github.io/2026/03/15/索引/</div>
+      <div>https://yb0os1.github.io/2026/03/15/MySQL-索引/</div>
     </div>
     <div class="license-meta">
       

@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar26.png">
 <meta property="article:published_time" content="2026-03-17T08:16:03.000Z">
-<meta property="article:modified_time" content="2026-03-17T10:02:20.487Z">
+<meta property="article:modified_time" content="2026-03-17T14:53:04.299Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.6k 字
+          2k 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          14 分钟
+          17 分钟
         
       </span>
     
@@ -592,7 +592,7 @@
 <p>插入意向锁也属于间隙锁，但两个事务却不能在同一时间内，一个拥有间隙锁，另一个拥有该间隙区间内的插入意向锁（插入意向锁如果不在间隙锁区间内则是可以的）。所以，插入意向锁和间隙锁之间是冲突的。</p>
 <p><strong>插入意向锁的生成时机</strong></p>
 <ul>
-<li>每插入一条记录，都要看下待插入记录的下一条记录是否已经被加上间隙锁，如果加上了就会生成一个插入意向锁</li>
+<li>每插入一条记录，都要看下待插入的位置是否已经被加上间隙锁，如果加上了就会生成一个插入意向锁</li>
 </ul>
 <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="update不加索引导致什么"><a href="#update不加索引导致什么" class="headerlink" title="update不加索引导致什么"></a>update不加索引导致什么</h2><p>update的条件没有加索引的话那么就会走全表扫描，这样会对所有的记录加上临键锁，想到与锁住了整个表，变成了全表只读</p>
 <p>如何避免？</p>
@@ -607,12 +607,50 @@
 <ul>
 <li>同时使用 where 和 limit，此时 where 条件中可以没有索引列；</li>
 </ul>
-<h2 id="MySQL是怎么进行加锁的？"><a href="#MySQL是怎么进行加锁的？" class="headerlink" title="MySQL是怎么进行加锁的？"></a>MySQL是怎么进行加锁的？</h2><p>加什么锁主要看：走的什么索引、是等值查询还是范围查询、记录存不存在</p>
+<h2 id="MySQL是怎么加行锁的？"><a href="#MySQL是怎么加行锁的？" class="headerlink" title="MySQL是怎么加行锁的？"></a>MySQL是怎么加行锁的？</h2><p>加锁的对象是索引，加锁的基本单位是临键锁</p>
+<p>加什么锁主要看：走的什么索引、是等值查询还是范围查询、记录存不存在</p>
 <blockquote>
 <p> update x set s&#x3D;100 where id&#x3D;2（id是主键）</p>
 <p>1、如果id&#x3D;2存在，那么加上的是记录独占锁</p>
 <p>2、如果id&#x3D;2不存在，那么加上的是间隙锁</p>
 </blockquote>
+<p>可重复读隔离级别下，唯一索引（包含主键索引）和非唯一索引的加锁规则：</p>
+<ul>
+<li>唯一索引<ul>
+<li>等值查询<ul>
+<li>记录存在，在索引树定位到该记录&#x3D;》临键锁退化成<strong>记录锁</strong></li>
+<li>记录不存在，在索引树定位到第一个大于和小于该记录&#x3D;》临键锁退化成<strong>间隙锁</strong></li>
+</ul>
+</li>
+<li>范围查询（为什么不一样，临键锁是左闭右开的）<ul>
+<li>大于等于（存在等值查询）<ul>
+<li>等值查询的记录在表中&#x3D;》对该等值的索引退化为<strong>记录锁</strong>，对大于该等值的索引还是<strong>临键锁</strong>  ；</li>
+<li>等值查询的记录不在表中&#x3D;》<strong>临键锁</strong></li>
+</ul>
+</li>
+<li>小于等于<ul>
+<li>等值查询的记录在表中，都是<strong>临键锁</strong></li>
+<li>等值查询的记录不在表中，终止范围前后退化为<strong>间隙锁</strong>，之前还是<strong>临键锁</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非唯一索引<ul>
+<li>等值查询<ul>
+<li>记录不存在，找到等值的前后两个，临键锁退还为<strong>间隙锁</strong></li>
+<li>记录存在，因为非唯一索引可能存在值相同的记录，所以是一个扫描的过程，等值前到等值<strong>临键锁</strong>，等值到等值后一个<strong>间隙锁</strong>，等值对应的主键<strong>记录锁</strong></li>
+</ul>
+</li>
+<li>范围查询<ul>
+<li>都是临键锁</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>详细小林coding：<a target="_blank" rel="noopener" href="https://xiaolincoding.com/mysql/lock/how_to_lock.html">https://xiaolincoding.com/mysql/lock/how_to_lock.html</a></p>
 
                 
               
