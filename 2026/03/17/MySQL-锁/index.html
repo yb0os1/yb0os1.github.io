@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar26.png">
 <meta property="article:published_time" content="2026-03-17T08:16:03.000Z">
-<meta property="article:modified_time" content="2026-03-17T14:54:51.690Z">
+<meta property="article:modified_time" content="2026-03-17T16:57:05.435Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -594,7 +594,7 @@
 <ul>
 <li>每插入一条记录，都要看下待插入的位置是否已经被加上间隙锁，如果加上了就会生成一个插入意向锁</li>
 </ul>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="update不加索引导致什么"><a href="#update不加索引导致什么" class="headerlink" title="update不加索引导致什么"></a>update不加索引导致什么</h2><p>update的条件没有加索引的话那么就会走全表扫描，这样会对所有的记录加上临键锁，想到与锁住了整个表，变成了全表只读</p>
+<h2 id="update不加索引导致什么？"><a href="#update不加索引导致什么？" class="headerlink" title="update不加索引导致什么？"></a>update不加索引导致什么？</h2><p>update的条件没有加索引的话那么就会走全表扫描，这样会对所有的记录加上临键锁，想到与锁住了整个表，变成了全表只读</p>
 <p>如何避免？</p>
 <p>当 sql_safe_updates 设置为 1 时。</p>
 <p>update 语句必须满足如下条件之一才能执行成功：</p>
