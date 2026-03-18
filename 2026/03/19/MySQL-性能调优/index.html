@@ -19,26 +19,37 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="yb0os1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类 - database">
-<meta property="og:url" content="https://yb0os1.github.io/database/index.html">
+    <meta name="description" content="explain作用 explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL-性能调优">
+<meta property="og:url" content="https://yb0os1.github.io/2026/03/19/MySQL-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="yb0os1">
+<meta property="og:description" content="explain作用 explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar29.png">
+<meta property="article:published_time" content="2026-03-18T16:18:01.000Z">
+<meta property="article:modified_time" content="2026-03-18T17:10:07.399Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="yb0os1">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar29.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>分类 - database - yb0os1</title>
+  <title>MySQL-性能调优 - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -88,7 +99,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -421,9 +432,60 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="分类 - database"></span>
+            <span id="subtitle" data-typed-text="MySQL-性能调优"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-03-19 00:18" pubdate>
+          2026年3月19日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
 
         
       </div>
@@ -439,70 +501,354 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 6 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2026</p>
-    
-    <a href="/2026/03/19/MySQL-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" class="list-group-item list-group-item-action">
-      <time>03-19</time>
-      <div class="list-group-item-title">MySQL-性能调优</div>
-    </a>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">MySQL-性能调优</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <h1>explain作用</h1>
+<p>explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等</p>
+<p>主要参数：</p>
+<ol>
+<li>possible_keys：可能用到的索引</li>
+<li>key：实际用到的索引，如果是null代表没用用到索引</li>
+<li>ken_len：索引长度</li>
+<li>rows：扫描的数据行数</li>
+<li>type：数据扫描类型 重点就是这个type</li>
+</ol>
+<blockquote>
+<p>type描述找到所需数据时使用的扫描方式是什么，<strong>执行效率从低到高</strong>：</p>
+<ol>
+<li>All全表扫描</li>
+<li>index全索引扫描</li>
+<li>range索引范围扫描</li>
+<li>ref非唯一索引扫描</li>
+<li>eq_ref唯一索引扫描</li>
+<li>const结果只有一条的主键或唯一索引扫描</li>
+</ol>
+</blockquote>
+<ol start="6">
+<li>
+<p>extra：显示的结果</p>
+<blockquote>
+<p>Using filesort：查询语句中包含group by，且无法利用索引完成排序，不得不选择排序算法进行排序，效率很低</p>
+<p>Using temporary：临时表保存中间结果，常见于排序order by、分组查询group by  效率低</p>
+<p>Using index：所需数据只需在索引即可获取全部，避免回表，效率不错</p>
+</blockquote>
+</li>
+</ol>
+<h1>慢SQL解决方案</h1>
+<h2 id="慢SQL定位">慢SQL定位</h2>
+<p>开启慢查询日志，会记录查询时间超过阈值的SQL</p>
+<h2 id="慢SQL原因">慢SQL原因</h2>
+<p>可能出现的原因？</p>
+<ul>
+<li>数据量或并发量太大</li>
+<li>没用使用索引或使用不当</li>
+<li>SQL书写不当</li>
+<li>表结构实际不当</li>
+<li>业务设计不合理</li>
+<li>数据库服务器实例性能配置差</li>
+</ul>
+<p>可以通过explain分析原因，是否走了全表扫描、是否存在索引未被利用的情况</p>
+<h2 id="慢SQL解决">慢SQL解决</h2>
+<p>1、创建或优化索引：查询条件创建合适的索引</p>
+<p>2、避免索引失效</p>
+<p>3、查询优化：避免select * 只查询真正需要的列；覆盖索引；尽量避免联表查询，必须使用的话以小表驱动大表</p>
+<p>4、分页优化：深分页优化，使用limit</p>
+<p>5、优化数据库表</p>
+<p>6、使用缓存技术：引入缓存层，如redis，存储热点数据或频繁查询的结果</p>
+<h1>深分页解决</h1>
+<h2 id="问题">问题</h2>
+<p>深分页问题是指当使用<code>limit offset,size</code>分页是，<code>offset</code>极大查询性能会急剧下降</p>
+<p>因为MySQL需要先扫描<code>offset+size</code>条数据，然后丢弃掉前<code>offset</code>条，仅返回<code>size</code>条，大量的无效扫描导致IO和CPU开销大</p>
+<h2 id="解决">解决</h2>
+<p>1、主键ID游标分页，放弃 offset，用上一页最后一条主键 ID做条件过滤，直接定位数据</p>
+<ul>
+<li>示例：<code>SELECT * FROM table WHERE id &gt; 上一页最大ID LIMIT 10;</code></li>
+<li>优点：走主键索引，无无效扫描，速度极快</li>
+<li>缺点：需要主键是自增的，不支持跳页，仅适用于滚动加载（APP / 小程序下拉）</li>
+</ul>
+<p>2、先通过索引只查主键 ID，减少扫描量，再回表查完整数据</p>
+<ul>
+<li>示例：<code>SELECT t.* FROM table t JOIN (SELECT id FROM table ORDER BY id LIMIT 100000,10) tmp ON t.id = tmp.id;</code></li>
+<li>优点：支持跳页，性能远优于原生深分页</li>
+<li>适用：后台管理系统等必须跳页的场景</li>
+</ul>
+<p>3、给排序字段建索引，用时间 / 状态等条件缩小数据范围</p>
+<ul>
+<li>示例：<code>SELECT * FROM table WHERE create_time &gt; '2025-01-01' ORDER BY create_time LIMIT 10;</code></li>
+<li>优点：实现简单，适配绝大多数业务场景</li>
+</ul>
+<p>4、超大数据量终极方案</p>
+<ul>
+<li>数据量超千万时，用分库分表（按 ID / 时间分片，降低单表量级），或引入 Elasticsearch 等搜索引擎处理分页，从架构上规避 MySQL 深分页瓶颈</li>
+</ul>
+<h1>分库分表</h1>
+<h2 id="概述">概述</h2>
+<p>分库：一种水平扩展数据库的技术，将数据根据一定规则划分到多个独立的数据库中。每个数据库只负责存储部分数据，实现了数据的拆分和分布式存储。分库主要是为了<strong>解决</strong>并发连接过多，单机 mysql扛不住的问题。</p>
+<p>分表：将单个数据库中的表拆分成多个表，每个表只负责存储一部分数据。这种数据的垂直划分能够提高查询效率，减轻单个表的压力。分表主要是为了<strong>解决</strong>单表数据量太大，导致查询性能下降的问题。</p>
+<h2 id="拆分方式">拆分方式</h2>
+<p>分库、分表可以从垂直和水平两个维度进行拆分</p>
+<p><img src="../../../../img/article_img/image-20260319005351539.png" srcset="/img/loading.gif" lazyload alt="拆分分类"></p>
+<p>分库</p>
+<ul>
+<li>垂直分库：按业务模块拆数据库
+<ul>
+<li>按照业务和功能的维度进行拆分，将不同业务数据分别放到不同的数据库中，核心理念 专库专用</li>
+<li>按业务类型对数据分离，剥离为多个数据库，像订单、支付、会员、积分相关等表放在对应的订单库、支付库、会员库、积分库</li>
+<li>垂直分库把一个库的压力分摊到多个库，提升了一些数据库性能，但并没有解决由于单表数据量过大导致的性能问题</li>
+</ul>
+</li>
+<li>水平分库：多库拆多表，解决单库性能瓶颈
+<ul>
+<li>把同一个表按一定规则拆分到不同的数据库中，每个库可以位于不同的服务器上，以此实现水平扩展，是一种常见的提升数据库性能的方式</li>
+<li>能解决单库存储量及性能瓶颈问题，但由于同一个表被分配在不同的数据库中，数据的访问需要额外的路由工作，因此系统的复杂度也被提升了</li>
+</ul>
+</li>
+</ul>
+<p>分表</p>
+<ul>
+<li>垂直分表：按字段属性拆单表
+<ul>
+<li>针对业务上字段比较多的大表进行的，一般是把业务宽表中比较独立的字段，或者不常用的字段拆分到单独的数据表中，是一种大表拆小表的模式</li>
+<li>数据库它是以行为单位将数据加载到内存中，这样拆分以后核心表大多是访问频率较高的字段，而且字段长度也都较短，因而可以加载更多数据到内存中，减少磁盘IO，增加索引查询的命中率，进一步提升数据库性能</li>
+</ul>
+</li>
+<li>水平分表：同库拆多表，解决单表数据量过大
+<ul>
+<li>在同一个数据库内，把一张大数据量的表按一定规则，切分成多个结构完全相同表，而每个表只存原表的一部分数据</li>
+<li>水平分表尽管拆分了表，但子表都还是在同一个数据库实例中，只是解决了单一表数据量过大的问题，并没有将拆分后的表分散到不同的机器上，还在竞争同一个物理机的CPU、内存、网络IO等</li>
+<li>想进一步提升性能，就需要将拆分后的表分散到不同的数据库中，达到分布式的效果</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>拆分方式</th>
+<th>核心解决问题</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>垂直分库</td>
+<td>单库多业务耦合、连接数瓶颈</td>
+<td>电商 / 金融等多业务模块系统</td>
+</tr>
+<tr>
+<td>垂直分表</td>
+<td>单表字段过多、冷热字段混杂</td>
+<td>用户表、商品表等字段冗余场景</td>
+</tr>
+<tr>
+<td>水平分表</td>
+<td>单表数据量过大（百万～千万）</td>
+<td>中小规模订单表、日志表</td>
+</tr>
+<tr>
+<td>水平分库</td>
+<td>单库 IO / 存储瓶颈（亿级数据）</td>
+<td>高并发、超大流量的核心业务</td>
+</tr>
+</tbody>
+</table>
+
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
   
     
-    <a href="/2026/03/17/MySQL-%E6%97%A5%E5%BF%97/" class="list-group-item list-group-item-action">
-      <time>03-17</time>
-      <div class="list-group-item-title">MySQL-日志</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/database/" class="category-chain-item">database</a>
   
+  
+    <span>></span>
     
-    <a href="/2026/03/17/MySQL-%E9%94%81/" class="list-group-item list-group-item-action">
-      <time>03-17</time>
-      <div class="list-group-item-title">MySQL-锁</div>
-    </a>
+  <a href="/database/mysql/" class="category-chain-item">mysql</a>
   
+  
+
+  
+
+      </span>
     
-    <a href="/2026/03/16/MySQL-%E4%BA%8B%E5%8A%A1/" class="list-group-item list-group-item-action">
-      <time>03-16</time>
-      <div class="list-group-item-title">MySQL-事务</div>
-    </a>
   
-    
-    <a href="/2026/03/15/MySQL-%E7%B4%A2%E5%BC%95/" class="list-group-item list-group-item-action">
-      <time>03-15</time>
-      <div class="list-group-item-title">MySQL-索引</div>
-    </a>
+</span>
+
+    </div>
   
-    
-    <a href="/2026/03/14/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" class="list-group-item list-group-item-action">
-      <time>03-14</time>
-      <div class="list-group-item-title">MySQL-存储引擎</div>
-    </a>
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+      
+    </div>
+  
+</div>
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MySQL-性能调优</div>
+      <div>https://yb0os1.github.io/2026/03/19/MySQL-性能调优/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年3月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/03/17/MySQL-%E6%97%A5%E5%BF%97/" title="MySQL-日志">
+                        <span class="hidden-mobile">MySQL-日志</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+      </div>
+    </div>
+  </div>
 </div>
 
 
 
 
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
     
 
     
@@ -621,6 +967,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
