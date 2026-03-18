@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar22.png">
 <meta property="article:published_time" content="2026-03-16T09:37:49.000Z">
-<meta property="article:modified_time" content="2026-03-17T08:13:41.559Z">
+<meta property="article:modified_time" content="2026-03-18T08:00:59.671Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.2k 字
+          2.4k 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          19 分钟
+          20 分钟
         
       </span>
     
@@ -632,6 +632,23 @@
 <li>回滚记录会占用大量存储空间，事务回滚时间长。在MySQL中，实际上每条记录在更新的时候都会同时记录一条回滚操作。记录上的最新值，通过回滚操作，都可以得到前一个状态的值，sql 越多，所需要保存的回滚数据就越多。</li>
 <li>执行时间长，容易造成主从延迟，主库上必须等事务执行完成才会写入binlog，再传给备库。</li>
 <li>所以，如果一个主库上的语句执行10分钟，那这个事务很可能就会导致从库延迟10分钟</li>
+</ol>
+<h2 id="RR和RC区别"><a href="#RR和RC区别" class="headerlink" title="RR和RC区别"></a>RR和RC区别</h2><ol>
+<li>快照读：两者在生成readView的时机是不同的<ul>
+<li>在读已提交隔离级别下：事务中的每次查询前都会创建一个新的ReadView。新建的ReadView会更新creator_trx_id以外的其余字段，因此不可重复读现象依然存在</li>
+<li>可重复读隔离级别下：只会在事务中的第一次查询时创建ReadView，同一个事务中后续所有的查询共用一个ReadView，由此便解决了不可重复读的问题</li>
+</ul>
+</li>
+<li>锁机制<ul>
+<li>RR只会对索引加记录锁</li>
+<li>RC为了解决幻读要么使用快照读，要么使用当前读，对索引会加记录锁、间隙锁、临键锁</li>
+</ul>
+</li>
+<li>主从同步<ul>
+<li>RR只支持row的binlog</li>
+<li>RC支持statement、row、mixed三种格式的binlog</li>
+</ul>
+</li>
 </ol>
 
                 
