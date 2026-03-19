@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar20.png">
 <meta property="article:published_time" content="2026-03-17T14:54:48.000Z">
-<meta property="article:modified_time" content="2026-03-19T02:57:59.017Z">
+<meta property="article:modified_time" content="2026-03-19T03:06:09.921Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -675,6 +675,8 @@
 <li>更新完成后，要记录该语句对应的binlog，此时binlog先保存到binlog cache中，并不会刷新到磁盘文件，在事务提交时统一把该事务运行过程中的所有binlog刷盘</li>
 <li>事务提交，采用两阶段提交保证redo log和binlog一致性</li>
 </ol>
+<p>简单说下：</p>
+<p>看数据页是不是在buffer pool中=》对比更新前后是否相同=》记录undolog=》数据页标记为脏页，记录redo log=》记录binlog=》两阶段提交</p>
 
                 
               
