@@ -19,26 +19,37 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="yb0os1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://yb0os1.github.io/archives/index.html">
+    <meta name="description" content="redis为什么快 基于内存。redis是一种基于内存的数据库，数据存储在内存中，读写速度非常快；而且redis采用了高效的数据结构 执行命令是单线程模型。因为redis是基于内存，因此瓶颈可能是机器内存或网络带宽，而不是cpu，那么执行命令采用单线程模型，避免了多线程之间的竞争，省去多线程之间切换带来的时间和性能上的开销，而且还不存在死锁问题 IO多路复用技术。在单线程的基础上，采用了I&amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis-线程模型">
+<meta property="og:url" content="https://yb0os1.github.io/2026/03/20/Redis-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="yb0os1">
+<meta property="og:description" content="redis为什么快 基于内存。redis是一种基于内存的数据库，数据存储在内存中，读写速度非常快；而且redis采用了高效的数据结构 执行命令是单线程模型。因为redis是基于内存，因此瓶颈可能是机器内存或网络带宽，而不是cpu，那么执行命令采用单线程模型，避免了多线程之间的竞争，省去多线程之间切换带来的时间和性能上的开销，而且还不存在死锁问题 IO多路复用技术。在单线程的基础上，采用了I&amp;#x2">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar24.png">
+<meta property="article:published_time" content="2026-03-20T07:12:04.000Z">
+<meta property="article:modified_time" content="2026-03-20T08:24:13.980Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="yb0os1">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar24.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - yb0os1</title>
+  <title>Redis-线程模型 - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -88,7 +99,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -421,9 +432,60 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="归档"></span>
+            <span id="subtitle" data-typed-text="Redis-线程模型"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-03-20 15:12" pubdate>
+          2026年3月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
 
         
       </div>
@@ -439,100 +501,248 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 16 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2026</p>
-    
-    <a href="/2026/03/20/Redis-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" class="list-group-item list-group-item-action">
-      <time>03-20</time>
-      <div class="list-group-item-title">Redis-线程模型</div>
-    </a>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Redis-线程模型</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <h1 id="redis为什么快"><a href="#redis为什么快" class="headerlink" title="redis为什么快"></a>redis为什么快</h1><ol>
+<li>基于内存。redis是一种基于内存的数据库，数据存储在内存中，读写速度非常快；而且redis采用了高效的数据结构</li>
+<li>执行命令是单线程模型。因为redis是基于内存，因此瓶颈可能是机器内存或网络带宽，而不是cpu，那么执行命令采用单线程模型，避免了多线程之间的竞争，省去多线程之间切换带来的时间和性能上的开销，而且还不存在死锁问题</li>
+<li>IO多路复用技术。在单线程的基础上，采用了I&#x2F;O 多路复用技术，实现了单个线程同时处理多个客户端连接的能力，从而提高了 Redis 的并发性能</li>
+</ol>
+<blockquote>
+<p>IO多路复用技术：一个线程处理多个IO流（select&#x2F;epoll机制）。简单来说，redis只运行单线程的情况下，该机制允许内核中同时存在多个监听socket和已连接socket；内核会一直监听这些socket上的连接情况或数据请求，一旦有请求到达，就会交给redis线程处理，实现了一个redis线程处理多个IO流的效果</p>
+</blockquote>
+<h1 id="redis是单线程？多线程体现在哪"><a href="#redis是单线程？多线程体现在哪" class="headerlink" title="redis是单线程？多线程体现在哪"></a>redis是单线程？多线程体现在哪</h1><p>redis执行命令是单线程的，也就是 接收客户端请求、解析请求、执行读写操作、发送数据给客户端 这个流程是单线程的</p>
+<p>但是redis程序并不是单线程的，多线程体现在：</p>
+<ol>
+<li>关闭文件</li>
+<li>AOF刷盘</li>
+<li>释放redis内存，lazyfree线程；执行unlink key&#x2F;flushdb async&#x2F;flushall async等删除操作的命令是交给后台线程执行（del是主线程处理）</li>
+</ol>
+<p>此外，redis6.0引入了多线程IO，这个只针对发送响应数据，并不会以多线程的方式处理读请求</p>
+<p>为什么这些是单独线程处理的？</p>
+<ul>
+<li>关闭文件、释放内存、AOF刷盘这些操作都是很耗时的，如果交给主线程处理那么很容易发生阻塞，这样就无法处理后续请求了</li>
+</ul>
+<p><img src="/../../../../img/article_img/image-20260320153305440.png" srcset="/img/loading.gif" lazyload alt="redis体现多线程"></p>
+<h1 id="redis的IO多路复用"><a href="#redis的IO多路复用" class="headerlink" title="redis的IO多路复用"></a>redis的IO多路复用</h1><p>多路是指多个网络连接的客户端，复用是指复用同一个线程</p>
+<p>IO多路复用技术其实就是一个线程处理多个IO流（select&#x2F;epoll机制）。简单来说，redis只运行单线程的情况下，该机制允许内核中同时存在多个监听socket和已连接socket；内核会一直监听这些socket上的连接情况或数据请求，一旦有请求到达，就会交给redis线程处理，实现了一个redis线程处理多个IO流的效果</p>
+<p><img src="/../../../../img/article_img/image-20260320154936591.png" srcset="/img/loading.gif" lazyload alt="redis的IO多路复用模型"></p>
+<p>redis把多个客户端的连接socket注册到IO多路复用器中，由内核统一监听；哪个连接器有读写&#x2F;连接事件，就把时间交给事件分派器，再由对应处理器执行具体逻辑</p>
+<p>对上图详细描述：</p>
+<ul>
+<li>一个socket客户端与服务端连接时，会生成对应的一个套接字描述符，一个socket对应一个套接字描述符（文件描述符FD）</li>
+<li>多个客户端与服务端连接时，redis使用IO多路复用程序将客户端socket对应的FD注册到监听列表中。当客户端执行读写等命令时，IO多路复用程序会将命令封装成事件，并绑定到对应FD上</li>
+<li>文件事件处理器使用IO多路复用模块同时监听多个FD的读写情况，当产生读写、关闭、接收事件时，文件事件处理器将回调FD绑定的事件处理器进行处理相关命令</li>
+</ul>
+<p>例如，：以 Redis 的 I&#x2F;O 多路复用程序 epoll 函数为例。多个客户端连接服务端时，Redis 会将客户端socket 对应的 fd 注册进 epoll，然后 epoll 同时监听多个文件描述符(FD)是否有数据到来，如果有数据来了就通知事件处理器赶紧处理，这样就不会存在服务端一直等待某个客户端给数据的情形</p>
+<h1 id="redis网络模型"><a href="#redis网络模型" class="headerlink" title="redis网络模型"></a>redis网络模型</h1><p>redis6.0之前使用的是单reactor单进程模式</p>
+<p><img src="/../../../../img/article_img/image-20260320162102039.png" srcset="/img/loading.gif" lazyload alt="单reactor单进程"></p>
+<p>所有工作都在同一进程中完成，实现简单，不需要考虑进程之间的通信，也不用担心多进程竞争</p>
+<p>缺点</p>
+<ol>
+<li>只有一个进程，无法充分利用多核CPU性能</li>
+<li>Handler对象在业务处理时，整个进程无法处理其他连接事件，如果业务处理耗时长，那么就会造成相应延迟</li>
+</ol>
+<p>单reactor单进程不适用计算密集型场景，只适用于业务处理非常快速的场景</p>
+<p>redis6.0之后，网络IO的处理改成了多线程（命令的执行还是单线程）</p>
+
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
   
     
-    <a href="/2026/03/19/Redis-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="list-group-item list-group-item-action">
-      <time>03-19</time>
-      <div class="list-group-item-title">Redis-数据结构</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/database/" class="category-chain-item">database</a>
   
-    
-    <a href="/2026/03/19/MySQL-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" class="list-group-item list-group-item-action">
-      <time>03-19</time>
-      <div class="list-group-item-title">MySQL-性能调优</div>
-    </a>
   
+    <span>></span>
     
-    <a href="/2026/03/17/MySQL-%E6%97%A5%E5%BF%97/" class="list-group-item list-group-item-action">
-      <time>03-17</time>
-      <div class="list-group-item-title">MySQL-日志</div>
-    </a>
+  <a href="/database/redis/" class="category-chain-item">redis</a>
   
-    
-    <a href="/2026/03/17/MySQL-%E9%94%81/" class="list-group-item list-group-item-action">
-      <time>03-17</time>
-      <div class="list-group-item-title">MySQL-锁</div>
-    </a>
   
-    
-    <a href="/2026/03/16/MySQL-%E4%BA%8B%E5%8A%A1/" class="list-group-item list-group-item-action">
-      <time>03-16</time>
-      <div class="list-group-item-title">MySQL-事务</div>
-    </a>
+
   
+
+      </span>
     
-    <a href="/2026/03/15/MySQL-%E7%B4%A2%E5%BC%95/" class="list-group-item list-group-item-action">
-      <time>03-15</time>
-      <div class="list-group-item-title">MySQL-索引</div>
-    </a>
   
-    
-    <a href="/2026/03/14/%E6%B3%9B%E5%9E%8B-%E5%8F%8D%E5%B0%84-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" class="list-group-item list-group-item-action">
-      <time>03-14</time>
-      <div class="list-group-item-title">泛型+反射+动态代理</div>
-    </a>
+</span>
+
+    </div>
   
-    
-    <a href="/2026/03/14/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" class="list-group-item list-group-item-action">
-      <time>03-14</time>
-      <div class="list-group-item-title">MySQL-存储引擎</div>
-    </a>
   
-    
-    <a href="/2026/03/13/JVM/" class="list-group-item list-group-item-action">
-      <time>03-13</time>
-      <div class="list-group-item-title">JVM</div>
-    </a>
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+      
+        <a href="/tags/redis/" class="print-no-link">#redis</a>
+      
+    </div>
   
 </div>
 
+              
+  
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/#board">2</a><a class="extend next" rel="next" href="/archives/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-
-              </div>
-            </div>
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis-线程模型</div>
+      <div>https://yb0os1.github.io/2026/03/20/Redis-线程模型/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年3月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
           </div>
         </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/03/19/Redis-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="Redis-数据结构">
+                        <span class="hidden-mobile">Redis-数据结构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
       </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
     
 
     
@@ -651,6 +861,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
