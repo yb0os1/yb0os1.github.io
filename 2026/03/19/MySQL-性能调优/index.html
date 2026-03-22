@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="explain作用 explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什">
+    <meta name="description" content="explain作用explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什么">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL-性能调优">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/19/MySQL-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="explain作用 explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什">
+<meta property="og:description" content="explain作用explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什么">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar29.png">
 <meta property="article:published_time" content="2026-03-18T16:18:01.000Z">
@@ -523,8 +523,7 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>explain作用</h1>
-<p>explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等</p>
+                <h1 id="explain作用"><a href="#explain作用" class="headerlink" title="explain作用"></a>explain作用</h1><p>explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等</p>
 <p>主要参数：</p>
 <ol>
 <li>possible_keys：可能用到的索引</li>
@@ -545,8 +544,7 @@
 </ol>
 </blockquote>
 <ol start="6">
-<li>
-<p>extra：显示的结果</p>
+<li><p>extra：显示的结果</p>
 <blockquote>
 <p>Using filesort：查询语句中包含group by，且无法利用索引完成排序，不得不选择排序算法进行排序，效率很低</p>
 <p>Using temporary：临时表保存中间结果，常见于排序order by、分组查询group by  效率低</p>
@@ -554,11 +552,8 @@
 </blockquote>
 </li>
 </ol>
-<h1>慢SQL解决方案</h1>
-<h2 id="慢SQL定位">慢SQL定位</h2>
-<p>开启慢查询日志，会记录查询时间超过阈值的SQL</p>
-<h2 id="慢SQL原因">慢SQL原因</h2>
-<p>可能出现的原因？</p>
+<h1 id="慢SQL解决方案"><a href="#慢SQL解决方案" class="headerlink" title="慢SQL解决方案"></a>慢SQL解决方案</h1><h2 id="慢SQL定位"><a href="#慢SQL定位" class="headerlink" title="慢SQL定位"></a>慢SQL定位</h2><p>开启慢查询日志，会记录查询时间超过阈值的SQL</p>
+<h2 id="慢SQL原因"><a href="#慢SQL原因" class="headerlink" title="慢SQL原因"></a>慢SQL原因</h2><p>可能出现的原因？</p>
 <ul>
 <li>数据量或并发量太大</li>
 <li>没用使用索引或使用不当</li>
@@ -568,23 +563,19 @@
 <li>数据库服务器实例性能配置差</li>
 </ul>
 <p>可以通过explain分析原因，重点关注type、key、rows、extra，是否走了全表扫描、是否存在索引未被利用、回表过多等情况</p>
-<h2 id="慢SQL解决">慢SQL解决</h2>
-<p>1、创建或优化索引：查询条件创建合适的索引</p>
+<h2 id="慢SQL解决"><a href="#慢SQL解决" class="headerlink" title="慢SQL解决"></a>慢SQL解决</h2><p>1、创建或优化索引：查询条件创建合适的索引</p>
 <p>2、避免索引失效</p>
 <p>3、查询优化：避免select * 只查询真正需要的列；覆盖索引；尽量避免联表查询，必须使用的话以小表驱动大表</p>
 <p>4、分页优化：深分页优化，使用主键游标查询</p>
 <p>5、是否需要优化数据库表，是否需要分库分表？字段过大？表设计不合理？</p>
 <p>6、使用缓存技术：引入缓存层，如redis，存储热点数据或频繁查询的结果</p>
-<h1>深分页解决</h1>
-<h2 id="问题">问题</h2>
-<p>深分页问题是指当使用<code>limit offset,size</code>分页是，<code>offset</code>极大查询性能会急剧下降</p>
+<h1 id="深分页解决"><a href="#深分页解决" class="headerlink" title="深分页解决"></a>深分页解决</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>深分页问题是指当使用<code>limit offset,size</code>分页是，<code>offset</code>极大查询性能会急剧下降</p>
 <p>因为MySQL需要先扫描<code>offset+size</code>条数据，然后丢弃掉前<code>offset</code>条，仅返回<code>size</code>条，大量的无效扫描导致IO和CPU开销大</p>
-<h2 id="解决">解决</h2>
-<p>1、主键ID游标分页，放弃 offset，用上一页最后一条主键 ID做条件过滤，直接定位数据</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>1、主键ID游标分页，放弃 offset，用上一页最后一条主键 ID做条件过滤，直接定位数据</p>
 <ul>
 <li>示例：<code>SELECT * FROM table WHERE id &gt; 上一页最大ID LIMIT 10;</code></li>
 <li>优点：走主键索引，无无效扫描，速度极快</li>
-<li>缺点：需要主键是自增的，不支持跳页，仅适用于滚动加载（APP / 小程序下拉）</li>
+<li>缺点：需要主键是自增的，不支持跳页，仅适用于滚动加载（APP &#x2F; 小程序下拉）</li>
 </ul>
 <p>2、先通过索引只查主键 ID，减少扫描量，再回表查完整数据</p>
 <ul>
@@ -592,33 +583,28 @@
 <li>优点：支持跳页，性能远优于原生深分页</li>
 <li>适用：后台管理系统等必须跳页的场景</li>
 </ul>
-<p>3、给排序字段建索引，用时间 / 状态等条件缩小数据范围</p>
+<p>3、给排序字段建索引，用时间 &#x2F; 状态等条件缩小数据范围</p>
 <ul>
-<li>示例：<code>SELECT * FROM table WHERE create_time &gt; '2025-01-01' ORDER BY create_time LIMIT 10;</code></li>
+<li>示例：<code>SELECT * FROM table WHERE create_time &gt; &#39;2025-01-01&#39; ORDER BY create_time LIMIT 10;</code></li>
 <li>优点：实现简单，适配绝大多数业务场景</li>
 </ul>
 <p>4、超大数据量终极方案</p>
 <ul>
-<li>数据量超千万时，用分库分表（按 ID / 时间分片，降低单表量级），或引入 Elasticsearch 等搜索引擎处理分页，从架构上规避 MySQL 深分页瓶颈</li>
+<li>数据量超千万时，用分库分表（按 ID &#x2F; 时间分片，降低单表量级），或引入 Elasticsearch 等搜索引擎处理分页，从架构上规避 MySQL 深分页瓶颈</li>
 </ul>
-<h1>分库分表</h1>
-<h2 id="概述">概述</h2>
-<p>分库：一种水平扩展数据库的技术，将数据根据一定规则划分到多个独立的数据库中。每个数据库只负责存储部分数据，实现了数据的拆分和分布式存储。分库主要是为了<strong>解决</strong>并发连接过多，单机 mysql扛不住的问题。</p>
+<h1 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>分库：一种水平扩展数据库的技术，将数据根据一定规则划分到多个独立的数据库中。每个数据库只负责存储部分数据，实现了数据的拆分和分布式存储。分库主要是为了<strong>解决</strong>并发连接过多，单机 mysql扛不住的问题。</p>
 <p>分表：将单个数据库中的表拆分成多个表，每个表只负责存储一部分数据。这种数据的垂直划分能够提高查询效率，减轻单个表的压力。分表主要是为了<strong>解决</strong>单表数据量太大，导致查询性能下降的问题。</p>
-<h2 id="拆分方式">拆分方式</h2>
-<p>分库、分表可以从垂直和水平两个维度进行拆分</p>
-<p><img src="../../../../img/article_img/image-20260319005351539.png" srcset="/img/loading.gif" lazyload alt="拆分分类"></p>
+<h2 id="拆分方式"><a href="#拆分方式" class="headerlink" title="拆分方式"></a>拆分方式</h2><p>分库、分表可以从垂直和水平两个维度进行拆分</p>
+<p><img src="/../../../../img/article_img/image-20260319005351539.png" srcset="/img/loading.gif" lazyload alt="拆分分类"></p>
 <p>分库</p>
 <ul>
-<li>垂直分库：按业务模块拆数据库
-<ul>
+<li>垂直分库：按业务模块拆数据库<ul>
 <li>按照业务和功能的维度进行拆分，将不同业务数据分别放到不同的数据库中，核心理念 专库专用</li>
 <li>按业务类型对数据分离，剥离为多个数据库，像订单、支付、会员、积分相关等表放在对应的订单库、支付库、会员库、积分库</li>
 <li>垂直分库把一个库的压力分摊到多个库，提升了一些数据库性能，但并没有解决由于单表数据量过大导致的性能问题</li>
 </ul>
 </li>
-<li>水平分库：多库拆多表，解决单库性能瓶颈
-<ul>
+<li>水平分库：多库拆多表，解决单库性能瓶颈<ul>
 <li>把同一个表按一定规则拆分到不同的数据库中，每个库可以位于不同的服务器上，以此实现水平扩展，是一种常见的提升数据库性能的方式</li>
 <li>能解决单库存储量及性能瓶颈问题，但由于同一个表被分配在不同的数据库中，数据的访问需要额外的路由工作，因此系统的复杂度也被提升了</li>
 </ul>
@@ -626,14 +612,12 @@
 </ul>
 <p>分表</p>
 <ul>
-<li>垂直分表：按字段属性拆单表
-<ul>
+<li>垂直分表：按字段属性拆单表<ul>
 <li>针对业务上字段比较多的大表进行的，一般是把业务宽表中比较独立的字段，或者不常用的字段拆分到单独的数据表中，是一种大表拆小表的模式</li>
 <li>数据库它是以行为单位将数据加载到内存中，这样拆分以后核心表大多是访问频率较高的字段，而且字段长度也都较短，因而可以加载更多数据到内存中，减少磁盘IO，增加索引查询的命中率，进一步提升数据库性能</li>
 </ul>
 </li>
-<li>水平分表：同库拆多表，解决单表数据量过大
-<ul>
+<li>水平分表：同库拆多表，解决单表数据量过大<ul>
 <li>在同一个数据库内，把一张大数据量的表按一定规则，切分成多个结构完全相同表，而每个表只存原表的一部分数据</li>
 <li>水平分表尽管拆分了表，但子表都还是在同一个数据库实例中，只是解决了单一表数据量过大的问题，并没有将拆分后的表分散到不同的机器上，还在竞争同一个物理机的CPU、内存、网络IO等</li>
 <li>想进一步提升性能，就需要将拆分后的表分散到不同的数据库中，达到分布式的效果</li>
@@ -648,11 +632,10 @@
 <th>适用场景</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>垂直分库</td>
 <td>单库多业务耦合、连接数瓶颈</td>
-<td>电商 / 金融等多业务模块系统</td>
+<td>电商 &#x2F; 金融等多业务模块系统</td>
 </tr>
 <tr>
 <td>垂直分表</td>
@@ -666,11 +649,10 @@
 </tr>
 <tr>
 <td>水平分库</td>
-<td>单库 IO / 存储瓶颈（亿级数据）</td>
+<td>单库 IO &#x2F; 存储瓶颈（亿级数据）</td>
 <td>高并发、超大流量的核心业务</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
                 
               
