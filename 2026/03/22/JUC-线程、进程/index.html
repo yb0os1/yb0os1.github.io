@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar23.png">
 <meta property="article:published_time" content="2026-03-21T16:05:16.000Z">
-<meta property="article:modified_time" content="2026-03-22T15:51:06.629Z">
+<meta property="article:modified_time" content="2026-03-23T12:11:19.816Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="JUC">
 <meta property="article:tag" content="java">
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.1k 字
+          2.9k 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          18 分钟
+          25 分钟
         
       </span>
     
@@ -637,6 +637,25 @@
 <li>实现Runnable接口</li>
 <li>实现Callable接口结合FutureTash，适用于执行有返回值的任务</li>
 <li>通过线程池创建</li>
+</ol>
+<h2 id="多线程上下文切换"><a href="#多线程上下文切换" class="headerlink" title="多线程上下文切换"></a>多线程上下文切换</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>上下文切换是指 CPU 从一个线程转到另一个线程时，需要保存当前线程的上下文状态，恢复另一个线程的上下文状态，以便于下一次恢复执行该线程时能够正确地运行。</p>
+<blockquote>
+<p>在多线程编程中，上下文切换是一种常见的操作，上下文切换通常是指在一个CPU 上，由于多个线程共享 CPU时间片，当一个线程的时间片用完后，需要切换到另一个线程运行。此时需要保存当前线程的状态信息，包括<strong>程序计数器、寄存器、栈指针</strong>等，以便下次继续执行该线程时能够恢复到正确的执行状态。同时，需要将切换到的线程的状态信息恢复，以便于该线程能够正确运行。</p>
+</blockquote>
+<p>在多线程中，上下文切换的开销比直接用单线程大，因为在多线程中，需要保存和恢复更多的上下文信息。过多的上下文切换会降低系统的运行效率，因此需要尽可能减少上下文切换的次数。</p>
+<h3 id="什么时候发生"><a href="#什么时候发生" class="headerlink" title="什么时候发生"></a>什么时候发生</h3><ol>
+<li>时间片耗尽：操作系统为每个线程分配固定的CPU时间片（如10ms），当时间片用完后，强制切换至其他就绪线程</li>
+<li>线程主动阻塞：例如线程等待I&#x2F;O操作（如文件读写）、获取锁失败（如<code>synchronized</code>或<code>ReentrantLock</code>）、调用<code>sleep()</code>或<code>wait()</code>方法。线程主动让出CPU，触发调度器执行其他线程</li>
+<li>高优先级线程抢占：操作系统支持抢占式调度，且更高优先级线程进入就绪状态。当前线程被中断，CPU立即执行高优先级任务</li>
+<li>线程主动让出：例如Java中<code>**Thread.yield()**</code>可能让当前线程回到就绪队列，允许其他线程运行</li>
+<li>中断处理：硬件事件（如磁盘I&#x2F;O完成、网络数据到达）引发中断，CPU暂停当前线程，执行中断服务程序（ISR）</li>
+<li>线程终止：线程执行完毕或异常退出时，释放CPU资源，调度器选择新线程运行</li>
+</ol>
+<h3 id="如何避免上下文切换"><a href="#如何避免上下文切换" class="headerlink" title="如何避免上下文切换"></a>如何避免上下文切换</h3><ol>
+<li>减少线程数：通过合理的线程池管理来减少线程的创建和销毁，线程数不是越多越好，合理的线程数可以避免线程过多导致频繁的上下文切换</li>
+<li>使用无锁并发编程：无锁并发编程可以避免线程因等待锁而进入阻塞状态，从而减少上下文切换的发生</li>
+<li>虚拟线程：协程是一种用户态线程，其切换不需要操作系统的参与，因此可以避免上下文切换。(避免的是操作系统级别的上下文切换，但是仍然需要在JVM层面做一些保存和恢复线程的状态，但是也成本低得多)</li>
+<li>合理使用锁：在使用锁的过程中，尽量缩小同步块或同步方法的范围，从而减少线程的等待时间，避免上下文切换的发生</li>
 </ol>
 <h1 id="协程-虚拟线程"><a href="#协程-虚拟线程" class="headerlink" title="协程&#x2F;虚拟线程"></a>协程&#x2F;虚拟线程</h1><h2 id="如何理解协程-虚拟线程？"><a href="#如何理解协程-虚拟线程？" class="headerlink" title="如何理解协程&#x2F;虚拟线程？"></a>如何理解协程&#x2F;虚拟线程？</h2><p>协程是被视为比线程更轻量级的并发单元，可以在单个线程中实现并发执行，由开发者显示调度</p>
 <p>协程是在用户态进行调度的，避免了线程之间切换时的内核态开销</p>

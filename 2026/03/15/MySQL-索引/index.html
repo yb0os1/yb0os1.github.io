@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar12.png">
 <meta property="article:published_time" content="2026-03-14T16:36:54.000Z">
-<meta property="article:modified_time" content="2026-03-21T06:47:39.104Z">
+<meta property="article:modified_time" content="2026-03-23T10:55:11.418Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -661,6 +661,8 @@
 <blockquote>
 <p><code>OR</code>的逻辑是满足任一条件即可，若其中一列无索引，MySQL 无法通过索引快速筛选所有满足条件的行，只能全表扫描</p>
 </blockquote>
+</li>
+<li><p>优化器判断执行当前查询时走索引的效率低于全表扫描，因此主动放弃使用索引，最终导致索引失效</p>
 </li>
 </ol>
 <p>怎么看走不走索引的？</p>
