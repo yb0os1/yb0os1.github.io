@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar30.png">
 <meta property="article:published_time" content="2026-03-21T16:05:22.000Z">
-<meta property="article:modified_time" content="2026-03-22T15:57:30.565Z">
+<meta property="article:modified_time" content="2026-03-22T16:06:04.678Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="JUC">
 <meta property="article:tag" content="java">
@@ -559,8 +559,8 @@
 <ul>
 <li>corePoolSize：核心线程的数量，默认情况下，这些线程是会一直运行的，不会被销毁；但是allowCoreThreadTimeOut，开启后核心线程和非核心线程一样会超时销毁</li>
 <li>maxPoolSize：最大线程的数量，这是当corePoolSize满了并且阻塞队列也满了之后会创建的线程，有存活期 不会一直运行</li>
-<li>keepAliveTime：就是非核心线程存货的时候，这个是当该线程在keepAliveTime时间内没有执行任务就会销毁</li>
-<li>unit：存货时间的单位</li>
+<li>keepAliveTime：就是非核心线程存活的时候，这个是当该线程在keepAliveTime时间内没有执行任务就会销毁</li>
+<li>unit：存活时间的单位</li>
 <li>workQueue：任务队列，就是一个阻塞队列，用于存放我们提交的任务对象</li>
 <li>threadFactory：线程池内部创建的线程所有的工厂，可以用来创建核心、辅助线程的方法，也可以自定义线程名称等参数</li>
 <li>handler：拒绝策略，是一个策略模式，在线程池的代码中，当任务队列满时就会触发该接口的方法，所以我们只要实现这个接口方法，再把实现类传入线程池即可，并且方法里还可以拿到被拒绝的任务、线程池对象来实现自己的拒绝逻辑。</li>

@@ -19,18 +19,21 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="yb0os1">
+    <meta name="description" content="如何理解线程安全线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JUC-线程安全">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="yb0os1">
+<meta property="og:description" content="如何理解线程安全线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执行">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar33.png">
 <meta property="article:published_time" content="2026-03-21T16:05:30.000Z">
-<meta property="article:modified_time" content="2026-03-21T16:06:36.501Z">
+<meta property="article:modified_time" content="2026-03-23T03:46:30.333Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="yb0os1">
+<meta property="article:tag" content="JUC">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar33.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -453,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          0 字
+          799 字
         
       </span>
     
@@ -465,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          7 分钟
         
       </span>
     
@@ -520,7 +523,59 @@
             <div class="markdown-body" id="post-content">
               
                 
-                
+                <h1 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h1><p>线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题</p>
+<ol>
+<li>原子性：操作不可分割，要么全部成功执行要么全部执行失败</li>
+<li>可见性：线程对共享变量的修改是对其他线程立刻可见的</li>
+<li>有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序</li>
+</ol>
+<blockquote>
+<p>指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执行顺序的一种优化技术</p>
+</blockquote>
+<p>线程安全问题：<br>假设线程 A 和线程 B 同时执行 <code>i++</code>（初始值 <code>i=0</code>）：</p>
+<ol>
+<li>线程 A 读取 <code>i=0</code>，线程 B 也读取 <code>i=0</code>。</li>
+<li>线程 A 计算 <code>i+1=1</code>，线程 B 计算 <code>i+1=1</code>。</li>
+<li>线程 A 写回 <code>i=1</code>，线程 B 写回 <code>i=1</code>。</li>
+</ol>
+<ul>
+<li><strong>最终结果</strong>：<code>i=1</code>（期望值为 <code>2</code>），出现错误。</li>
+</ul>
+<p>三者怎么保证的？</p>
+<p><strong>原子性</strong>：主要通过加锁实现的</p>
+<p><strong>可见性</strong>：</p>
+<ul>
+<li>volatile修饰的变量：<ol>
+<li>写操作：JVM 会发出一个StoreStore内存屏障指令，保证对当前线程工作内存中共享变量修改完之后写入到主内存，硬件层次上使用了MESI缓存一致性保障物理可见性</li>
+<li>读操作：JVM 会发出一个loadload内存屏障指令，清空当前线程工作内存中共享内存变量的副本 ，直接从主内存中读取该变量的值</li>
+</ol>
+</li>
+<li>synchronized，基于内存屏障：<ol>
+<li>在获取锁的时候jvm会执行MonitorEnter操作，代表获取锁并且同时执行一个loadload内存屏障指令（作用就是清空当前线程工作内存中共享内存变量的副本），使得线程在后续对这些变量的首次读取操作都必须从主内存中读取最新的值；</li>
+<li>释放锁的时候，jvm执行MonitoExit释放锁，然后还会执行storestore内存屏障指令（将当前线程工作内存中被修改过的变量值刷新回主内存）</li>
+</ol>
+</li>
+</ul>
+<p><strong>有序性</strong>：通过插入内存屏障，内存屏障前后自动禁用指令重排序优化</p>
+<ul>
+<li><p>volatile：编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排</p>
+<ol>
+<li>读操作后加入loadload屏障    后添加loadstore屏障</li>
+<li>写操作前加入storestore屏障  后添加storeload屏障</li>
+</ol>
+</li>
+<li><p>synchronized</p>
+<ol>
+<li>monitorenter 和 monitorexit，来确保加锁代码块内的指令不会被重排</li>
+<li>获取锁后加入loadload屏障</li>
+<li>释放锁前加storestore屏障  后添加storeload屏障</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>MESI缓存一致性协议：主要用途是确保在多个 CPU 共享内存时，各个 CPU 的缓存数据能够保持一致性。当CPU修改共享内存中的变量时，由于其他CPU中也有该变量的副本，所以修改的时候会发出信号使其他CPU对该共享变量的缓存失效；当其他CPU读取该共享变量时，发现缓存失效那么就从内存重新读取</p>
+</blockquote>
+<h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1>
                 
               
             </div>
@@ -529,6 +584,43 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/java/" class="category-chain-item">java</a>
+  
+  
+    <span>></span>
+    
+  <a href="/java/JUC/" class="category-chain-item">JUC</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java/" class="print-no-link">#java</a>
+      
+        <a href="/tags/JUC/" class="print-no-link">#JUC</a>
+      
+    </div>
   
 </div>
 
