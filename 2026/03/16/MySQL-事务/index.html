@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="事务基础 事务特性和原理 ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多">
+    <meta name="description" content="事务基础事务特性和原理ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多个并">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL-事务">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/16/MySQL-%E4%BA%8B%E5%8A%A1/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="事务基础 事务特性和原理 ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多">
+<meta property="og:description" content="事务基础事务特性和原理ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多个并">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar22.png">
 <meta property="article:published_time" content="2026-03-16T09:37:49.000Z">
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -523,88 +523,74 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>事务基础</h1>
-<h2 id="事务特性和原理">事务特性和原理</h2>
-<p>ACID （原子性、一致性、隔离性、持久性）</p>
+                <h1 id="事务基础"><a href="#事务基础" class="headerlink" title="事务基础"></a>事务基础</h1><h2 id="事务特性和原理"><a href="#事务特性和原理" class="headerlink" title="事务特性和原理"></a>事务特性和原理</h2><p>ACID （原子性、一致性、隔离性、持久性）</p>
 <ul>
 <li><strong>原子性</strong>Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段</li>
 <li><strong>一致性</strong>Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态</li>
 <li><strong>隔离性</strong>Isolation，通过锁和MVCC保证，数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致，多个事务同时使用相同的数据时，不会相互干扰，每个事务都有一个完整的数据空间，对其他并发事务是隔离的。</li>
 <li><strong>持久性</strong>Durability，通过redolog保证，事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</li>
 </ul>
-<h2 id="并发事务问题">并发事务问题</h2>
-<p>服务端允许多个客户端连接，处理多个事务可能出现的问题：脏读、不可重复读、幻读</p>
+<h2 id="并发事务问题"><a href="#并发事务问题" class="headerlink" title="并发事务问题"></a>并发事务问题</h2><p>服务端允许多个客户端连接，处理多个事务可能出现的问题：脏读、不可重复读、幻读</p>
 <ul>
 <li>脏读：一个事务读取到另外一个事务未提交事务修改过的数据</li>
 <li>不可重复读：一个事务内多次读取同一个数据，出现前后读取到的数据不一致</li>
 <li>幻读：一个事务内多次查询某个符合条件的记录数量，出现前后查询数量不同</li>
 </ul>
-<h2 id="事务隔离级别">事务隔离级别</h2>
-<h3 id="四种隔离级别">四种隔离级别</h3>
-<ul>
-<li>读未提交
-<ol>
+<h2 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h2><h3 id="四种隔离级别"><a href="#四种隔离级别" class="headerlink" title="四种隔离级别"></a>四种隔离级别</h3><ul>
+<li>读未提交<ol>
 <li>一个事务还没提交，它做的变更其他事务就可以看到</li>
 <li>出现问题脏读、不可重复读、幻读</li>
 <li>实现：可以读取到未提交的数据，所以直接读取最新的数据就行了</li>
 </ol>
 </li>
-<li>读已提交
-<ol>
+<li>读已提交<ol>
 <li>一个事务提交之后，它做的变更其他事务就可以看到</li>
 <li>出现问题不可重复读、幻读</li>
 <li>实现：MVCC</li>
 </ol>
 </li>
-<li>可重复读
-<ol>
+<li>可重复读<ol>
 <li>一个事务执行过程中看到的数据，一直跟这个事务启动时看到的数据一致（MySQL默认隔离级别）</li>
 <li>出现问题幻读</li>
 <li>实现：MVCC</li>
 </ol>
 </li>
-<li>串行化
-<ol>
+<li>串行化<ol>
 <li>对记录加上读写锁，在多个事务对这条记录进行读写操作时，如果发生读写冲突，后访问的事务必须等待前一个事务完成才能执行</li>
 <li>实现：加读写锁避免并行访问</li>
 </ol>
 </li>
 </ul>
 <p>安全等级：串行化&gt;可重复读&gt;读已提交&gt;读未提交</p>
-<h3 id="可重复读的幻读问题">可重复读的幻读问题</h3>
-<p>可重复读很大程度避免了幻读，但是没有完全解决了幻读</p>
+<h3 id="可重复读的幻读问题"><a href="#可重复读的幻读问题" class="headerlink" title="可重复读的幻读问题"></a>可重复读的幻读问题</h3><p>可重复读很大程度避免了幻读，但是没有完全解决了幻读</p>
 <ol>
 <li>对于快照读。当事务 A 更新了一条事务 B 插入的记录，那么事务 A 前后两次查询的记录条目就不一样了，所以就发生幻读。</li>
 <li>对于当前读，如果事务开启后，并没有执行当前读，而是先快照读，然后这期间如果其他事务插入了一条记录，那么事务后续使用当前读进行查询的时候，就会发现两次查询的记录条目就不一样了，所以就发生幻读。</li>
 </ol>
 <p><strong>例子（可重复读发生幻读、快照读）</strong>：</p>
 <ul>
-<li>可重复读隔离级别下，事务A第一次执行普通的select生成一个ReadView，之后事务B向表中插入一条id=1的数据然后提交事务</li>
-<li>接着，事务A对id=1的数据进行更新操作（update是当前读，直接读取最新版本），在这时候，这条新纪录的trx_id隐藏列就变成了事务A的id</li>
-<li>之后，事务A再使用普通select查询id=1的记录就可以查询到了（事务自己修改的记录永远对自己可见</li>
+<li>可重复读隔离级别下，事务A第一次执行普通的select生成一个ReadView，之后事务B向表中插入一条id&#x3D;1的数据然后提交事务</li>
+<li>接着，事务A对id&#x3D;1的数据进行更新操作（update是当前读，直接读取最新版本），在这时候，这条新纪录的trx_id隐藏列就变成了事务A的id</li>
+<li>之后，事务A再使用普通select查询id&#x3D;1的记录就可以查询到了（事务自己修改的记录永远对自己可见</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs mysql">1、<br># 事务A <br>begin;<br>select * from t where id=1;<br># empty<br>2、<br><br># 事务B<br>begin;<br>insert into t values(1,&quot;xx&quot;);<br>commit;<br><br>3、<br># 事务A<br>update t set name = &quot;qq&quot; where id = 1;<br>select * from t where id=1;<br># 可以查到对应的数据<br></code></pre></td></tr></table></figure>
+
 <p><strong>可重复读怎么保证不发生幻读</strong>：</p>
 <ul>
 <li>开启事务之后，执行<code>select ... for update</code>当前读，对记录加上next-key-lock，避免其他事务插入新记录，避免幻读</li>
 </ul>
-<h3 id="串行化">串行化</h3>
-<p>串行化通过行级锁实现的，普通的select语句会对记录加上S（共享读）型的next-key锁，其他事务就无法对这条记录进行增删改操作，避免了脏读、不可重复读、幻读</p>
-<h1>MVCC</h1>
-<h2 id="原理">原理</h2>
-<p>MVCC是多版本并发控制，核心思想是维护一个数据的多个版本，实现非锁定读机制，让读写操作不相互阻塞。</p>
+<h3 id="串行化"><a href="#串行化" class="headerlink" title="串行化"></a>串行化</h3><p>串行化通过行级锁实现的，普通的select语句会对记录加上S（共享读）型的next-key锁，其他事务就无法对这条记录进行增删改操作，避免了脏读、不可重复读、幻读</p>
+<h1 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>MVCC是多版本并发控制，核心思想是维护一个数据的多个版本，实现非锁定读机制，让读写操作不相互阻塞。</p>
 <p>主要是依赖<strong>三个核心组件</strong>：</p>
 <ol>
-<li>隐藏字段
-<ol>
+<li>隐藏字段<ol>
 <li>trx_id：最近一次修改该行的事务id</li>
 <li>roll_pointer：指向undolog中该行的上一个版本，形成版本链</li>
 <li>row_id：如果表没有主键和唯一索引，自动生成一个隐式行id</li>
 </ol>
 </li>
 <li>undolog版本链：每次事务修改一行数据时，会把旧版本写入undolog，通过roll_pointer串成一条链表，表头是最新的版本，越往后越旧</li>
-<li>ReadView：快照读生成的一个可见性视图，包含四个重要字段
-<ol>
+<li>ReadView：快照读生成的一个可见性视图，包含四个重要字段<ol>
 <li>m_ids：创建ReadView时，当前数据库中活跃事务列表（启动但是未提交的事务）</li>
 <li>min_trx_id：活跃事务列表中最小的事务id</li>
 <li>max_trx_id：活跃事务列表中最大的事务id+1，也就是应该给下一个事务分配的id</li>
@@ -612,15 +598,14 @@
 </ol>
 </li>
 </ol>
-<p><img src="../../../../img/article_img/image-20260317154525274.png" srcset="/img/loading.gif" lazyload alt="readview"></p>
+<p><img src="/../../../../img/article_img/image-20260317154525274.png" srcset="/img/loading.gif" lazyload alt="readview"></p>
 <p><strong>可见性判断</strong></p>
-<p><img src="../../../../img/article_img/image-20260317154717540.png" srcset="/img/loading.gif" lazyload alt="可见性判断"></p>
+<p><img src="/../../../../img/article_img/image-20260317154717540.png" srcset="/img/loading.gif" lazyload alt="可见性判断"></p>
 <ol>
-<li>trx_id == create_trx_id：当前事务id==创建该readview的事务自身的id，自己修改的可见</li>
+<li>trx_id &#x3D;&#x3D; create_trx_id：当前事务id&#x3D;&#x3D;创建该readview的事务自身的id，自己修改的可见</li>
 <li>trx_id &lt; min_trx_id：当前事务id小于活跃事务列表中最小的事务id，说明这个版本是在创建该readview前已经生成的，可见</li>
-<li>trx_id &gt;= max_trx_id：当前事务id大于等于活跃事务列表中最大事务id+1，说明这个版本是在创建该readview后已经生成的，不可见</li>
-<li>min_trx_id&lt;trx_id &lt; max_trx_id：当前事务在最小活跃事务id和下一个分配事务id之间，判断当前事务id在不在活跃事务id列表里
-<ol>
+<li>trx_id &gt;&#x3D; max_trx_id：当前事务id大于等于活跃事务列表中最大事务id+1，说明这个版本是在创建该readview后已经生成的，不可见</li>
+<li>min_trx_id&lt;trx_id &lt; max_trx_id：当前事务在最小活跃事务id和下一个分配事务id之间，判断当前事务id在不在活跃事务id列表里<ol>
 <li>在，说明生成这个版本的事务还没提交，不可见</li>
 <li>不在，说明生成这个版本的事务已经提交，可见</li>
 </ol>
@@ -632,30 +617,15 @@
 <li>RC，读已提交，每次select都会重新生成一个readview，能看到其他事务最新提交的数据</li>
 <li>RR，可重复读，只有第一次select才会生成readview，后续复用，整个事务期间看到的快照是一致的</li>
 </ul>
-<h2 id="讲一下整个判断的流程-比如开启事务-读取一行数据-怎么判断是不是可见的">讲一下整个判断的流程 比如开启事务 读取一行数据 怎么判断是不是可见的</h2>
-<p>整体流程：</p>
-<p>执行 SELECT<br>
-↓<br>
-是否有 ReadView？（RR下复用，RC下每次新建）<br>
-↓ 没有则创建<br>
-拿到记录的版本链头部<br>
-↓<br>
-用 trx_id 套四条可见性规则<br>
-↓<br>
-可见 → 返回该版本数据<br>
-不可见 → 沿 roll_pointer 找上一个版本，重复判断<br>
-↓<br>
-遍历到链尾都不可见 → 该行对当前事务不可见，跳过</p>
+<h2 id="讲一下整个判断的流程-比如开启事务-读取一行数据-怎么判断是不是可见的"><a href="#讲一下整个判断的流程-比如开启事务-读取一行数据-怎么判断是不是可见的" class="headerlink" title="讲一下整个判断的流程 比如开启事务 读取一行数据 怎么判断是不是可见的"></a>讲一下整个判断的流程 比如开启事务 读取一行数据 怎么判断是不是可见的</h2><p>整体流程：</p>
+<p> 执行 SELECT<br>      ↓<br>  是否有 ReadView？（RR下复用，RC下每次新建）<br>      ↓ 没有则创建<br>  拿到记录的版本链头部<br>      ↓<br>  用 trx_id 套四条可见性规则<br>      ↓<br>  可见 → 返回该版本数据<br>  不可见 → 沿 roll_pointer 找上一个版本，重复判断<br>      ↓<br>  遍历到链尾都不可见 → 该行对当前事务不可见，跳过</p>
 <p>核心就是一个循环：拿版本、判断、不可见就往前找，直到找到第一个可见版本为止。</p>
-<h1>其他</h1>
-<h2 id="update是不是原子性">update是不是原子性</h2>
-<p>是的，通过锁和undolog日志保证原子性</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="update是不是原子性"><a href="#update是不是原子性" class="headerlink" title="update是不是原子性"></a>update是不是原子性</h2><p>是的，通过锁和undolog日志保证原子性</p>
 <ul>
 <li>执行update的时候，会加行级锁，保证一个事务更新一条记录的时候不会被其他事务干扰</li>
 <li>事务执行过程中，生成undolog，如果事务执行失败，通过undolog进行回滚</li>
 </ul>
-<h2 id="滥用事务或者一个事务很多sql的弊端">滥用事务或者一个事务很多sql的弊端</h2>
-<p>事务的资源在事务提交之后才会释放，比如存储资源、锁等</p>
+<h2 id="滥用事务或者一个事务很多sql的弊端"><a href="#滥用事务或者一个事务很多sql的弊端" class="headerlink" title="滥用事务或者一个事务很多sql的弊端"></a>滥用事务或者一个事务很多sql的弊端</h2><p>事务的资源在事务提交之后才会释放，比如存储资源、锁等</p>
 <p>如果事务中很多sql，那么会导致：</p>
 <ol>
 <li>事务太多sql，锁的数据过多，可能导致大量死锁或者锁超时</li>
@@ -663,22 +633,18 @@
 <li>执行时间长，容易造成主从延迟，主库上必须等事务执行完成才会写入binlog，再传给备库。</li>
 <li>所以，如果一个主库上的语句执行10分钟，那这个事务很可能就会导致从库延迟10分钟</li>
 </ol>
-<h2 id="RR和RC区别">RR和RC区别</h2>
-<ol>
-<li>快照读：两者在生成readView的时机是不同的
-<ul>
+<h2 id="RR和RC区别"><a href="#RR和RC区别" class="headerlink" title="RR和RC区别"></a>RR和RC区别</h2><ol>
+<li>快照读：两者在生成readView的时机是不同的<ul>
 <li>在读已提交隔离级别下：事务中的每次查询前都会创建一个新的ReadView。新建的ReadView会更新creator_trx_id以外的其余字段，因此不可重复读现象依然存在</li>
 <li>可重复读隔离级别下：只会在事务中的第一次查询时创建ReadView，同一个事务中后续所有的查询共用一个ReadView，由此便解决了不可重复读的问题</li>
 </ul>
 </li>
-<li>锁机制
-<ul>
+<li>锁机制<ul>
 <li>RR只会对索引加记录锁</li>
 <li>RC为了解决幻读要么使用快照读，要么使用当前读，对索引会加记录锁、间隙锁、临键锁</li>
 </ul>
 </li>
-<li>主从同步
-<ul>
+<li>主从同步<ul>
 <li>RR只支持row的binlog</li>
 <li>RC支持statement、row、mixed三种格式的binlog</li>
 </ul>

@@ -66,7 +66,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -734,7 +734,7 @@
       
       <a class="index-excerpt " href="/2026/03/22/JUC-%E5%9C%BA%E6%99%AF/" target="_self">
         <div>
-          单例模式 为什么使用了synchronized，还要加volatile？ 使用 synchronized 和 volatile 一起，可以创建一个既线程安全又能正确初始化的单例模式，避免了多线程环境下的各种潜在问题。这是一种比较完善的线程安全的单例模式实现方式，尤其适用于高并发环境。 123456789101112131415161718192021public class Singleton&#
+          单例模式为什么使用了synchronized，还要加volatile？ 使用 synchronized 和 volatile 一起，可以创建一个既线程安全又能正确初始化的单例模式，避免了多线程环境下的各种潜在问题。这是一种比较完善的线程安全的单例模式实现方式，尤其适用于高并发环境。 123456789101112131415161718192021public class Singleton&#1
         </div>
       </a>
 
@@ -810,7 +810,7 @@
       
       <a class="index-excerpt " href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/" target="_self">
         <div>
-          如何理解线程安全 线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执
+          如何理解线程安全线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执行
         </div>
       </a>
 
@@ -886,7 +886,7 @@
       
       <a class="index-excerpt " href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
         <div>
-          为什么要有线程池？  开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能
+          为什么要有线程池？ 开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能立
         </div>
       </a>
 
@@ -962,7 +962,7 @@
       
       <a class="index-excerpt " href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E3%80%81%E8%BF%9B%E7%A8%8B/" target="_self">
         <div>
-          线程和进程 如何理解线程和进程 线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源  进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分
+          线程和进程如何理解线程和进程线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源 进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分开的，
         </div>
       </a>
 
@@ -1038,7 +1038,7 @@
       
       <a class="index-excerpt " href="/2026/03/20/Redis-%E5%9C%BA%E6%99%AF/" target="_self">
         <div>
-          缓存 本地缓存 本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访
+          缓存本地缓存本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访问
         </div>
       </a>
 
