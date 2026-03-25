@@ -620,7 +620,6 @@
 </div>
 
 
-
   </aside>
 
 
@@ -632,7 +631,6 @@
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
-
 
 
       </div>
@@ -805,6 +803,10 @@
       scrollSmooth    : true,
       includeTitleTags: true,
       headingsOffset  : -boardTop,
+      // 🔥 新增1：目录永久展开（永不折叠）
+      collapseDepth   : 0,
+      // 🔥 新增2：修复跳转偏移（精准定位，解决时好时坏）
+      scrollSmoothOffset : -80
     }, CONFIG.toc));
     if (toc.find('.toc-list-item').length > 0) {
       toc.css('visibility', 'visible');
