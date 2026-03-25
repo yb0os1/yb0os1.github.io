@@ -773,11 +773,6 @@ html {
   position: sticky;
   top: 2rem;
   padding: 3rem 0;
-/* 强制永久展开目录，彻底禁用折叠 */
-}
-.tocbot-is-collapsed {
-  max-height: none !important;
-  display: block !important;
 }
 html {
   font-size: 16px;
