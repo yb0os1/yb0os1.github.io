@@ -688,6 +688,15 @@ sup > a::before,
 #local-search-result .search-word {
   color: #ff4500;
 }
+html {
+  scroll-padding-top: 90px !important; /* 适配你的侧边栏+导航栏，核心修复 */
+  scroll-behavior: smooth !important; /* 稳定平滑滚动 */
+}
+:target {
+  scroll-margin-top: 90px !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
 #toc {
   visibility: hidden;
 }

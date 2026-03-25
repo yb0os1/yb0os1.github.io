@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="总览示意图  map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了">
+    <meta name="description" content="总览示意图 map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较">
 <meta property="og:type" content="article">
 <meta property="og:title" content="map双列集合">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/12/Java%E9%9B%86%E5%90%88-map%E5%8F%8C%E5%88%97%E9%9B%86%E5%90%88/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="总览示意图  map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了">
+<meta property="og:description" content="总览示意图 map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar5.png">
 <meta property="article:published_time" content="2026-03-12T15:50:50.000Z">
@@ -523,44 +523,37 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>总览示意图</h1>
-<p><img src="../../../../img/article_img/image-20260313103656777.png" srcset="/img/loading.gif" lazyload alt="重要集合示意图"></p>
+                <h1 id="总览示意图"><a href="#总览示意图" class="headerlink" title="总览示意图"></a>总览示意图</h1><p><img src="/../../../../img/article_img/image-20260313103656777.png" srcset="/img/loading.gif" lazyload alt="重要集合示意图"></p>
 <p>map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap</p>
 <ul>
 <li>hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较大的变化，当数组长度大于64并且链表长度大于阈值（默认为 8）时，将链表转化为红黑树，以减少搜索时间（ <code>HashMap</code> 支持 <code>null</code> 键，null的哈希值直接为0）</li>
 <li>linkedhashmap：LinkedHashMap 继承自 HashMap，底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成；在hashmap的基础上增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序</li>
 <li>hashtable：线程安全的，所有的方法加上synchronized关键字，其余和hashmap没什么区别（不支持null值null键）</li>
 <li>treemap：红黑树（自平衡的排序二叉树）</li>
-<li>concurrenthashmap：数组+链表/红黑树；不支持null值null键；线程安全的（1.8之前使用分段锁，1.8之后使用volatile+CAS或者synchronized）</li>
+<li>concurrenthashmap：数组+链表&#x2F;红黑树；不支持null值null键；线程安全的（1.8之前使用分段锁，1.8之后使用volatile+CAS或者synchronized）</li>
 </ul>
-<h1>HashMap</h1>
-<h2 id="实现原理">实现原理</h2>
-<p>JDK1.7之前，HashMap是由数组+链表组成，HashMap通过哈希算法将元素的键映射到桶数组的槽位中。如果多个key映射到同一槽位，就会以链表的形式存储（链表查询为O(n)，冲突严重时查询效率就低了）</p>
+<h1 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h1><h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>JDK1.7之前，HashMap是由数组+链表组成，HashMap通过哈希算法将元素的键映射到桶数组的槽位中。如果多个key映射到同一槽位，就会以链表的形式存储（链表查询为O(n)，冲突严重时查询效率就低了）</p>
 <p>JDK1.8做了优化，当桶数组长度大于等于64并且链表的长度大于等于8的时候，就会将链表转换为红黑树（查询为O(logn))，当数量小于等于6的时候就会把红黑树转换回链表</p>
-<h2 id="Put操作">Put操作</h2>
-<p><img src="../../../../img/article_img/image-20260313150919012.png" srcset="/img/loading.gif" lazyload alt="HashMap Put流程"></p>
+<h2 id="Put操作"><a href="#Put操作" class="headerlink" title="Put操作"></a>Put操作</h2><p><img src="/../../../../img/article_img/image-20260313150919012.png" srcset="/img/loading.gif" lazyload alt="HashMap Put流程"></p>
 <p>调用put的时候：（初始容量是16）</p>
 <ol>
 <li>根据要添加的key来计算在桶数组中对应的位置，计算方式是<code>(数组长度-1) &amp; key的哈希值</code></li>
 <li>检查对应位置是否为空，如果为空直接把元素插入进去（HashMap的修改次数加1，以便在进行迭代时发现并发修改）</li>
 <li>如果对应位置已经存在元素了，那么检查该位置第一个元素key的哈希值是否和key是否相同，相同直接替换value</li>
-<li>如果不相同，那么遍历链表/红黑树来查找是否有相同的元素，有的话就替换掉</li>
+<li>如果不相同，那么遍历链表&#x2F;红黑树来查找是否有相同的元素，有的话就替换掉</li>
 <li>如果不存在相同的元素，把新建插入链表（jdk1.7 头插法  jdk1.8尾插法）或者红黑树对应的位置</li>
-<li>如果是链表，那么插入之后检查长度是否达到了阈值8，达到并且数组长度&gt;=64则把链表转化为红黑树</li>
-<li>检查负载因子是否达到阈值0.75（负载因子就是键值对的数量/数组长度），如果超过阈值那么进行扩容操作</li>
-<li>扩容操作：
-<ol>
+<li>如果是链表，那么插入之后检查长度是否达到了阈值8，达到并且数组长度&gt;&#x3D;64则把链表转化为红黑树</li>
+<li>检查负载因子是否达到阈值0.75（负载因子就是键值对的数量&#x2F;数组长度），如果超过阈值那么进行扩容操作</li>
+<li>扩容操作：<ol>
 <li>创建一个新的两倍大小的数组</li>
 <li>把旧数组中数据重新计算哈希值并分配到新数组中</li>
 <li>更新HashMap数组引用和阈值参数</li>
 </ol>
 </li>
 </ol>
-<h2 id="是否线程安全">是否线程安全</h2>
-<p>HashMap不是线程安全的，多线程下存在的问题：</p>
+<h2 id="是否线程安全"><a href="#是否线程安全" class="headerlink" title="是否线程安全"></a>是否线程安全</h2><p>HashMap不是线程安全的，多线程下存在的问题：</p>
 <ol>
-<li>
-<p>JDK1.7，put的时候采用头插法，那么扩容的时候存在Entry链死循环和put数据丢失的问题</p>
+<li><p>JDK1.7，put的时候采用头插法，那么扩容的时候存在Entry链死循环和put数据丢失的问题</p>
 <blockquote>
 <p>Entry链死循环示例：</p>
 <p><strong>线程 1</strong> 和 <strong>线程 2</strong> 同时执行 <code>transfer()</code>，步骤拆解：</p>
@@ -569,42 +562,37 @@
 <p>线程 1 恢复执行，此时：</p>
 <ul>
 <li>线程 1 中 <code>e = e1</code>，<code>next = e2</code>（旧值）；</li>
-<li>执行 <code>e.next = newTable[i]</code> → e1.next = null（新数组该桶此时为空）；</li>
+<li>执行 <code>e.next = newTable[i]</code> → e1.next &#x3D; null（新数组该桶此时为空）；</li>
 <li>执行 <code>newTable[i] = e1</code> → 新桶头节点为 e1；</li>
-<li>执行 <code>e = next</code> → e = e2；</li>
+<li>执行 <code>e = next</code> → e &#x3D; e2；</li>
 </ul>
 <p>线程 1 处理 e2：</p>
 <ul>
 <li>执行 <code>next = e2.next</code> → 此时 e2 的 next 已经被线程 2 改成 e1（环形的关键！）；</li>
-<li>执行 <code>e2.next = newTable[i]</code> → e2.next = e1；</li>
+<li>执行 <code>e2.next = newTable[i]</code> → e2.next &#x3D; e1；</li>
 <li>执行 <code>newTable[i] = e2</code> → 新桶头节点为 e2；</li>
-<li>执行 <code>e = next</code> → e = e1；</li>
+<li>执行 <code>e = next</code> → e &#x3D; e1；</li>
 </ul>
 <p>线程 1 进入死循环：</p>
 <ul>
-<li>再次处理 e1 时，<code>next = e1.next</code> = null，但 e2.next = e1，形成 <code>e1 ← e2</code> 的环形链表；</li>
+<li>再次处理 e1 时，<code>next = e1.next</code> &#x3D; null，但 e2.next &#x3D; e1，形成 <code>e1 ← e2</code> 的环形链表；</li>
 <li>后续查询该桶的元素时，会无限遍历 <code>e1 → e2 → e1 → e2...</code>，导致死循环。</li>
 </ul>
 </blockquote>
 </li>
-<li>
-<p>JDK1.8，解决了 Entry 链死循环和数据丢失问题，但是存在put数据覆盖的问题</p>
+<li><p>JDK1.8，解决了 Entry 链死循环和数据丢失问题，但是存在put数据覆盖的问题</p>
 </li>
 </ol>
-<h2 id="为什么使用红黑树">为什么使用红黑树</h2>
-<p>为什么使用了红黑树？平衡二叉树不可以吗？</p>
+<h2 id="为什么使用红黑树"><a href="#为什么使用红黑树" class="headerlink" title="为什么使用红黑树"></a>为什么使用红黑树</h2><p>为什么使用了红黑树？平衡二叉树不可以吗？</p>
 <ol>
-<li>平衡二叉树是追求完全平衡的：任何节点的左右子树高度差不能超过1，这样严格的条件导致每次插入/删除数据几乎都会破坏平衡，就会调整一颗符合条件的平衡树，浪费性能</li>
+<li>平衡二叉树是追求完全平衡的：任何节点的左右子树高度差不能超过1，这样严格的条件导致每次插入&#x2F;删除数据几乎都会破坏平衡，就会调整一颗符合条件的平衡树，浪费性能</li>
 <li>红黑树不追求完全平衡：整个树最长路径不会超过最短路径的 2 倍；虽然牺牲了一部分查找的性能效率，但是能够换取一部分维持树平衡状态的成本；红黑树在插入、删除等操作，不会像平衡树那样，频繁着破坏红黑树的规则，所以不需要频繁着调整</li>
 </ol>
-<h2 id="扩容机制">扩容机制</h2>
-<p>为什么每次扩容要是2倍？而且初始的容量必须是2的次方？</p>
+<h2 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h2><p>为什么每次扩容要是2倍？而且初始的容量必须是2的次方？</p>
 <ol>
 <li>2的次幂，在计算索引的时候使用位运算代替了取模，效率高</li>
-<li>扩容时迁移元素时只需判断 1 个二进制位，降低扩容的计算成本
-<ul>
-<li>扩容之后长度-1最左边的二进制位是0还是1
-<ol>
+<li>扩容时迁移元素时只需判断 1 个二进制位，降低扩容的计算成本<ul>
+<li>扩容之后长度-1最左边的二进制位是0还是1<ol>
 <li>0的话再哈希位置不变</li>
 <li>1的话原先位置+原先长度</li>
 </ol>
@@ -614,47 +602,38 @@
 </ol>
 <p>HashMap默认容量是16，扩容是<code>2n</code></p>
 <p>HashTable默认容量是11，扩容是<code>2n+1</code></p>
-<h1>ConcurrentHashMap</h1>
-<h2 id="原理">原理</h2>
-<p><strong>JDK1.7 分段锁 Segment</strong></p>
-<p><img src="../../../../img/article_img/image-20260313175732035.png" srcset="/img/loading.gif" lazyload alt="image-20260313175732035"></p>
-<p>JDK1.7底层数据结构采用的是 数组+链表，利用分段锁（可重入）保证线程安全的，ConcurrentHashMap将桶数组分为16段Segment，每个Segment持有独立的锁，每个Segment下面又是一个HashEntry数组，用于存储键值对；当插入/更新/删除等操作，先定位到具体的segment，然后在该segment加锁，这样当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问</p>
+<h1 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><strong>JDK1.7 分段锁 Segment</strong> </p>
+<p><img src="/../../../../img/article_img/image-20260313175732035.png" srcset="/img/loading.gif" lazyload alt="image-20260313175732035"></p>
+<p>JDK1.7底层数据结构采用的是 数组+链表，利用分段锁（可重入）保证线程安全的，ConcurrentHashMap将桶数组分为16段Segment，每个Segment持有独立的锁，每个Segment下面又是一个HashEntry数组，用于存储键值对；当插入&#x2F;更新&#x2F;删除等操作，先定位到具体的segment，然后在该segment加锁，这样当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问</p>
 <p><strong>JDK1.8 volatile + CAS 或者 synchronized</strong></p>
-<p><img src="../../../../img/article_img/image-20260313175456490.png" srcset="/img/loading.gif" lazyload alt="image-20260313175456490"></p>
-<p>JDK1.8底层采用数据+链表/红黑树，利用volatile+CAS/synchronized对头节点进行加锁保证线程安全的</p>
+<p><img src="/../../../../img/article_img/image-20260313175456490.png" srcset="/img/loading.gif" lazyload alt="image-20260313175456490"></p>
+<p>JDK1.8底层采用数据+链表&#x2F;红黑树，利用volatile+CAS&#x2F;synchronized对头节点进行加锁保证线程安全的</p>
 <p>当添加元素的时候：</p>
 <ol>
 <li>首先判断容器是否为空，如果为空使用CAS初始化（volatile修饰）桶数组</li>
-<li>如果容器不为空，那根据存储的元素计算索引判断索引位置是否为空
-<ol>
+<li>如果容器不为空，那根据存储的元素计算索引判断索引位置是否为空<ol>
 <li>如果索引位置为空，那么利用CAS设置该节点</li>
 <li>如果索引位置不为空，那么使用synchronized锁住头节点，然后遍历数据然后在对应位置替换或者新增节点，最后判断是否要转化红黑树</li>
 </ol>
 </li>
 <li>这样是保证线程安全了的</li>
 </ol>
-<h2 id="使用synchronized为什么还要用CAS">使用synchronized为什么还要用CAS</h2>
-<p>两种锁结合保证线程安全是一种权衡的考虑，主要是根据竞争程度来选择具体使用那一种的</p>
+<h2 id="使用synchronized为什么还要用CAS"><a href="#使用synchronized为什么还要用CAS" class="headerlink" title="使用synchronized为什么还要用CAS"></a>使用synchronized为什么还要用CAS</h2><p>两种锁结合保证线程安全是一种权衡的考虑，主要是根据竞争程度来选择具体使用那一种的</p>
 <p>put元素的时候如果计算索引没有存放元素，那么使用CAS设置值，因为在设置元素的时候，hash值经过了各种扰动后，发生hash碰撞的概率是较低的，所以可以预测使用较少的自旋来完成具体的设置值</p>
-<h1>HashTable</h1>
-<h2 id="原理-2">原理</h2>
-<p><img src="../../../../img/article_img/image-20260314002152983.png" srcset="/img/loading.gif" lazyload alt="image-20260314002152983"></p>
+<h1 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p><img src="/../../../../img/article_img/image-20260314002152983.png" srcset="/img/loading.gif" lazyload alt="image-20260314002152983"></p>
 <p>底层：数据+链表</p>
 <p>线程安全：所有的公共方法都加了synchronized关键字，一个线程访问同步方法，另外一个线程就会阻塞</p>
-<h1>三个区别</h1>
-<p>HashMap、ConcurrentHashMap、HashTable</p>
+<h1 id="三个区别"><a href="#三个区别" class="headerlink" title="三个区别"></a>三个区别</h1><p>HashMap、ConcurrentHashMap、HashTable</p>
 <ul>
-<li>HashMap
-<ol>
+<li>HashMap<ol>
 <li>线程不完全，效率高点</li>
 <li>可以存储null值null键</li>
 <li>默认容量16，扩容2倍</li>
 <li>给定初始大小时，扩充为离初始大小最近的2的次方</li>
-<li>底层数据+链表/红黑树</li>
+<li>底层数据+链表&#x2F;红黑树</li>
 </ol>
 </li>
-<li>HashTable
-<ol>
+<li>HashTable<ol>
 <li>线程安全，所有的公共方法都加synchronized</li>
 <li>不可以存储null值null键</li>
 <li>默认容量11，扩容2n+1</li>
@@ -662,9 +641,8 @@
 <li>底层数据+链表（基本被淘汰</li>
 </ol>
 </li>
-<li>ConcurrentHashMap
-<ol>
-<li>线程安全，分段锁||volatile+CAS/synchronized</li>
+<li>ConcurrentHashMap<ol>
+<li>线程安全，分段锁||volatile+CAS&#x2F;synchronized</li>
 </ol>
 </li>
 </ul>
