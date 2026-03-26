@@ -19,27 +19,27 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="执行sql请求过程 MySQL架构可以分为连接层、server层、存储引擎层 执行一条sql语句过程  连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份  查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；  解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；  词">
+    <meta name="description" content="智能体和发展史概念在人工智能领域，智能体被定义为任何能够通过传感器（Sensors）感知其所处环境（Environment），并自主地通过**执行器（Actuators）采取行动（Action）**以达成特定目标的实体 上述概念包含四个基本要素：  环境是智能体所处的外部世界  对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它通过其">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL-存储引擎">
-<meta property="og:url" content="https://yb0os1.github.io/2026/03/14/MySQL-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/index.html">
+<meta property="og:title" content="AI学习-helloAgents">
+<meta property="og:url" content="https://yb0os1.github.io/2026/03/26/AI%E5%AD%A6%E4%B9%A0-helloAgent/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="执行sql请求过程 MySQL架构可以分为连接层、server层、存储引擎层 执行一条sql语句过程  连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份  查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；  解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；  词">
+<meta property="og:description" content="智能体和发展史概念在人工智能领域，智能体被定义为任何能够通过传感器（Sensors）感知其所处环境（Environment），并自主地通过**执行器（Actuators）采取行动（Action）**以达成特定目标的实体 上述概念包含四个基本要素：  环境是智能体所处的外部世界  对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它通过其">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yb0os1.github.io/img/avatar7.png">
-<meta property="article:published_time" content="2026-03-13T16:36:47.000Z">
-<meta property="article:modified_time" content="2026-03-18T07:17:52.788Z">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar25.png">
+<meta property="article:published_time" content="2026-03-25T17:20:16.000Z">
+<meta property="article:modified_time" content="2026-03-26T10:02:08.505Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="MySQL">
-<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="agent">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar7.png">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar25.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>MySQL-存储引擎 - yb0os1</title>
+  <title>AI学习-helloAgents - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -432,7 +432,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MySQL-存储引擎"></span>
+            <span id="subtitle" data-typed-text="AI学习-helloAgents"></span>
           
         </div>
 
@@ -443,8 +443,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-03-14 00:36" pubdate>
-          2026年3月14日 凌晨
+        <time datetime="2026-03-26 01:20" pubdate>
+          2026年3月26日 凌晨
         </time>
       </span>
     
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.2k 字
+          532 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          11 分钟
+          5 分钟
         
       </span>
     
@@ -516,92 +516,38 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MySQL-存储引擎</h1>
+            <h1 id="seo-header">AI学习-helloAgents</h1>
             
             
             <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
             <div class="markdown-body" id="post-content">
               
                 
-                <h1 id="执行sql请求过程"><a href="#执行sql请求过程" class="headerlink" title="执行sql请求过程"></a>执行sql请求过程</h1><p><img src="/../../../../img/article_img/image-20260315001748950.png" srcset="/img/loading.gif" lazyload alt="MySQL内部架构（by 小林coding）"></p>
-<p>MySQL架构可以分为连接层、server层、存储引擎层</p>
-<p>执行一条sql语句过程</p>
+                <h1 id="智能体和发展史"><a href="#智能体和发展史" class="headerlink" title="智能体和发展史"></a>智能体和发展史</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>在人工智能领域，智能体被定义为任何能够通过<strong>传感器（Sensors）<strong>感知其所处</strong>环境（Environment）</strong>，并<strong>自主</strong>地通过**执行器（Actuators）<strong>采取</strong>行动（Action）**以达成特定目标的实体</p>
+<p>上述概念包含四个基本要素：</p>
 <ol>
-<li><p>连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份</p>
-</li>
-<li><p>查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；</p>
-</li>
-<li><p>解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；</p>
+<li><p>环境是智能体所处的外部世界</p>
 <blockquote>
-<p>词法分析：根据输入的sql语句识别出关键字和非关键字</p>
-<p>语法分析：根据词法分析的结果，语法解析器会根据语法规则判断这个SQL语句是否满足MySQL的语法</p>
+<p>对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它通过其传感器持续地感知环境状态。摄像头、麦克风、雷达或各类**应用程序编程接口（Application Programming Interface, API）**返回的数据流，都是其感知能力的延伸</p>
 </blockquote>
 </li>
-<li><p>执行SQL：三个阶段</p>
-<ol>
-<li>预处理器：检查表或字段是否存在、select * 中*代替所有的字段</li>
-<li>优化器：基于查询成本（选择使用哪些索引，以及决定表之间的连接顺序等），选择查询成本最小的执行计划</li>
-<li>执行器：根据执行计划执行SQL查询语句，从存储引擎中读取记录返回给客户端</li>
-</ol>
-</li>
-</ol>
+<li><p>获取信息后，智能体需要采取行动来对环境施加影响，它通过执行器来改变环境的状态</p>
 <blockquote>
-<p>执行器和存储引擎交互过程比如有主键索引查询、全表扫描、索引下推</p>
-<p>主键索引查询：</p>
-<ol>
-<li>执行器第一次查询执行函数，将条件交给存储引擎</li>
-<li>存储引擎通过主键索引B+树判断记录是否存在   存在返回给执行器；不存在上报查询不到的错误；</li>
-<li>执行器从存储引擎读取到记录再次判断是否符合条件   符合交给客户端；不符合跳过记录</li>
-<li>执行器查询过程是while循环，还是需要再次查询，同样执行函数（永远返回-1）执行器退出，结束查询</li>
-</ol>
-<p>全表扫描：</p>
-<ol>
-<li><p>执行器第一次查询，调用函数将条件交给存储引擎</p>
-</li>
-<li><p>存储引擎读取表中的第一条记录，符合条件返回给客户端，不符合跳过</p>
-<ol>
-<li><blockquote>
-<p>Server 层每从存储引擎读到一条记录就会发送给客户端，客户端显示的时候是直接显示所有记录的，是因为客户端是等查询语句查询完成后，才会显示出所有的记录</p>
+<p>执行器可以是物理设备（如机械臂、方向盘）或虚拟工具（如执行一段代码、调用一个服务）</p>
 </blockquote>
 </li>
-</ol>
-</li>
-<li><p>执行器查询过程是while循环，还是需要再次查询，执行函数，重复1-2过程，直到存储引擎把表中所有记录读完，然后向执行器返回读取完毕的信息</p>
-</li>
-<li><p>执行器收到存储引擎报告的查询完毕的信息，退出循环，停止查询。</p>
-</li>
-</ol>
-<p>索引下推：</p>
-<p>为了减少二级索引在查询时的回表操作</p>
+<li><p>真正赋予智能体智能的，是其自主性（Autonomy）</p>
 <blockquote>
-<p>age和money建立了联合索引，由于&gt;导致age索引可用，money的索引失效</p>
+<p>智能体并非只是被动响应外部刺激或严格执行预设指令的程序，它能够基于其感知和内部状态进行独立决策，以达成其设计目标。这种从感知到行动的闭环，构成了所有智能体行为的基础</p>
 </blockquote>
-<p>比如一个查询语句<code>select * from a where age&gt;10 and money=1000</code></p>
-<p>如果不使用索引下推，那么每找到一个age&gt;10的记录都需要进行回表，将完整记录返回给serve层；serve层判断money是否等于1000再决定是否返回给客户端</p>
-<p>使用索引下推，找到age&gt;10的记录后，不执行回表操作，而是判断该索引中money列条件是否符合，不符合跳过，符合的话再进行回表操作，将完整记录返回给serve层</p>
-</blockquote>
-<h1 id="MySQL引擎"><a href="#MySQL引擎" class="headerlink" title="MySQL引擎"></a>MySQL引擎</h1><p>1、有什么了解？</p>
-<ul>
-<li>Innodb：默认存储引擎，具有ACID事务支持、行级锁、外键约束；使用高并发的读写操作，支持较好的数据完整性和并发控制</li>
-<li>MyISAM：具有较低的存储空间和内存消耗，适用于大量读操作的场景。不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li>
-<li>Memory：将数据存储在内存中，适用于对性能要求较高的读操作；在服务器重启或崩溃时数据会丢失；不支持事务、行级锁和外键约束</li>
-</ul>
-<p>2、为什么默认引擎是Innodb？</p>
-<p>InnoDB引擎在事务支持、并发性能、崩溃恢复等方面具有优势</p>
-<p>ACID、行级锁、redolog</p>
-<ul>
-<li>事务支持：InnoDB引擎提供了对事务的支持，可以进行ACID（原子性、一致性、隔离性、持久性）属性的操作</li>
-<li>并发性能：InnoDB引擎采用了行级锁定的机制，可以提供更好的并发性能</li>
-<li>崩溃恢复：InnoDB引引擎通过 redolog 日志实现了崩溃恢复，可以在数据库发生异常情况（如断电）时，通过日志文件进行恢复，保证数据的持久性和一致性</li>
-</ul>
-<p>3、MyISAM和Innodb对比</p>
-<ul>
-<li>事务支持：MyISAM不支持</li>
-<li>索引结构：MyISAM是非聚簇索引</li>
-<li>锁粒度：MyISAM最小级的锁是表锁</li>
-<li>count效率：MyISAM保存具体的行数</li>
-</ul>
-<h1 id="MySQL一行记录怎么存储"><a href="#MySQL一行记录怎么存储" class="headerlink" title="MySQL一行记录怎么存储"></a>MySQL一行记录怎么存储</h1>
+</li>
+</ol>
+<p><img src="/../../../../img/article_img/image-20260326114330418.png" srcset="/img/loading.gif" lazyload alt="智能体与环境的基本交互循环"></p>
+<h3 id="传统视角下的智能体"><a href="#传统视角下的智能体" class="headerlink" title="传统视角下的智能体"></a>传统视角下的智能体</h3><p>传统视角下的智能体，是在大语言模型出现之前，是那些结构最简单的<strong>反射智能体（Simple Reflex Agent）</strong>。它们的决策核心由工程师明确设计的“条件-动作”规则构成</p>
+<p>完全依赖于当前的感知输入，不具备记忆或预测能力。它像一种数字化的本能，可靠且高效，但也因此无法应对需要理解上下文的复杂任务，局限性引出了一个关键问题：如果环境的当前状态不足以作为决策的全部依据，智能体该怎么办？</p>
+<p><img src="/../../../../img/article_img/image-20260326114759164.png" srcset="/img/loading.gif" lazyload alt="简单反射智能体的决策逻辑示意图"></p>
+<p>yin’wei</p>
+<h1 id="大语言模型"><a href="#大语言模型" class="headerlink" title="大语言模型"></a>大语言模型</h1>
                 
               
             </div>
@@ -620,15 +566,8 @@
     
       <span class="category-chain">
         
-  <a href="/database/" class="category-chain-item">database</a>
+  <a href="/AI/" class="category-chain-item">AI</a>
   
-  
-    <span>></span>
-    
-  <a href="/database/mysql/" class="category-chain-item">mysql</a>
-  
-  
-
   
 
       </span>
@@ -642,9 +581,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
       
-        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+        <a href="/tags/agent/" class="print-no-link">#agent</a>
       
     </div>
   
@@ -655,8 +594,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MySQL-存储引擎</div>
-      <div>https://yb0os1.github.io/2026/03/14/MySQL-存储引擎/</div>
+      <div>AI学习-helloAgents</div>
+      <div>https://yb0os1.github.io/2026/03/26/AI学习-helloAgent/</div>
     </div>
     <div class="license-meta">
       
@@ -668,7 +607,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年3月14日</div>
+          <div>2026年3月26日</div>
         </div>
       
       
@@ -699,18 +638,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/03/14/%E6%B3%9B%E5%9E%8B-%E5%8F%8D%E5%B0%84-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" title="泛型+反射+动态代理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">泛型+反射+动态代理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/03/12/Java%E9%9B%86%E5%90%88-map%E5%8F%8C%E5%88%97%E9%9B%86%E5%90%88/" title="map双列集合">
-                        <span class="hidden-mobile">map双列集合</span>
+                      <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="JVM-类加载">
+                        <span class="hidden-mobile">JVM-类加载</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

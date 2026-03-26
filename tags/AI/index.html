@@ -19,37 +19,26 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="执行sql请求过程 MySQL架构可以分为连接层、server层、存储引擎层 执行一条sql语句过程  连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份  查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；  解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；  词">
-<meta property="og:type" content="article">
-<meta property="og:title" content="MySQL-存储引擎">
-<meta property="og:url" content="https://yb0os1.github.io/2026/03/14/MySQL-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/index.html">
+    <meta name="description" content="yb0os1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="标签 - AI">
+<meta property="og:url" content="https://yb0os1.github.io/tags/AI/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="执行sql请求过程 MySQL架构可以分为连接层、server层、存储引擎层 执行一条sql语句过程  连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份  查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；  解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；  词">
+<meta property="og:description" content="yb0os1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yb0os1.github.io/img/avatar7.png">
-<meta property="article:published_time" content="2026-03-13T16:36:47.000Z">
-<meta property="article:modified_time" content="2026-03-18T07:17:52.788Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="MySQL">
-<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="yb0os1">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar7.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>MySQL-存储引擎 - yb0os1</title>
+  <title>标签 - AI - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -99,7 +88,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 70vh;">
+<div class="header-inner" style="height: 80vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -432,64 +421,17 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MySQL-存储引擎"></span>
+            <span id="subtitle" data-typed-text="标签 - AI"></span>
           
         </div>
 
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-03-14 00:36" pubdate>
-          2026年3月14日 凌晨
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          <!-- compatible with older versions-->
-          1.2k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          <!-- compatible with older versions-->
-          11 分钟
-        
-      </span>
-    
-
-    
-    
-      
-        <span id="busuanzi_container_page_pv" style="display: none">
-          <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="busuanzi_value_page_pv"></span> 次
-        </span>
-        
-
-      
-    
-  </div>
-
-
-        
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -501,288 +443,40 @@
 
   <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <!-- 左侧空白栏（原目录位置清空） -->
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-
-    <!-- 中间文章内容（保持不变） -->
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">MySQL-存储引擎</h1>
-            
-            
-            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
-            <div class="markdown-body" id="post-content">
-              
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
                 
-                <h1 id="执行sql请求过程"><a href="#执行sql请求过程" class="headerlink" title="执行sql请求过程"></a>执行sql请求过程</h1><p><img src="/../../../../img/article_img/image-20260315001748950.png" srcset="/img/loading.gif" lazyload alt="MySQL内部架构（by 小林coding）"></p>
-<p>MySQL架构可以分为连接层、server层、存储引擎层</p>
-<p>执行一条sql语句过程</p>
-<ol>
-<li><p>连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份</p>
-</li>
-<li><p>查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；</p>
-</li>
-<li><p>解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；</p>
-<blockquote>
-<p>词法分析：根据输入的sql语句识别出关键字和非关键字</p>
-<p>语法分析：根据词法分析的结果，语法解析器会根据语法规则判断这个SQL语句是否满足MySQL的语法</p>
-</blockquote>
-</li>
-<li><p>执行SQL：三个阶段</p>
-<ol>
-<li>预处理器：检查表或字段是否存在、select * 中*代替所有的字段</li>
-<li>优化器：基于查询成本（选择使用哪些索引，以及决定表之间的连接顺序等），选择查询成本最小的执行计划</li>
-<li>执行器：根据执行计划执行SQL查询语句，从存储引擎中读取记录返回给客户端</li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<p>执行器和存储引擎交互过程比如有主键索引查询、全表扫描、索引下推</p>
-<p>主键索引查询：</p>
-<ol>
-<li>执行器第一次查询执行函数，将条件交给存储引擎</li>
-<li>存储引擎通过主键索引B+树判断记录是否存在   存在返回给执行器；不存在上报查询不到的错误；</li>
-<li>执行器从存储引擎读取到记录再次判断是否符合条件   符合交给客户端；不符合跳过记录</li>
-<li>执行器查询过程是while循环，还是需要再次查询，同样执行函数（永远返回-1）执行器退出，结束查询</li>
-</ol>
-<p>全表扫描：</p>
-<ol>
-<li><p>执行器第一次查询，调用函数将条件交给存储引擎</p>
-</li>
-<li><p>存储引擎读取表中的第一条记录，符合条件返回给客户端，不符合跳过</p>
-<ol>
-<li><blockquote>
-<p>Server 层每从存储引擎读到一条记录就会发送给客户端，客户端显示的时候是直接显示所有记录的，是因为客户端是等查询语句查询完成后，才会显示出所有的记录</p>
-</blockquote>
-</li>
-</ol>
-</li>
-<li><p>执行器查询过程是while循环，还是需要再次查询，执行函数，重复1-2过程，直到存储引擎把表中所有记录读完，然后向执行器返回读取完毕的信息</p>
-</li>
-<li><p>执行器收到存储引擎报告的查询完毕的信息，退出循环，停止查询。</p>
-</li>
-</ol>
-<p>索引下推：</p>
-<p>为了减少二级索引在查询时的回表操作</p>
-<blockquote>
-<p>age和money建立了联合索引，由于&gt;导致age索引可用，money的索引失效</p>
-</blockquote>
-<p>比如一个查询语句<code>select * from a where age&gt;10 and money=1000</code></p>
-<p>如果不使用索引下推，那么每找到一个age&gt;10的记录都需要进行回表，将完整记录返回给serve层；serve层判断money是否等于1000再决定是否返回给客户端</p>
-<p>使用索引下推，找到age&gt;10的记录后，不执行回表操作，而是判断该索引中money列条件是否符合，不符合跳过，符合的话再进行回表操作，将完整记录返回给serve层</p>
-</blockquote>
-<h1 id="MySQL引擎"><a href="#MySQL引擎" class="headerlink" title="MySQL引擎"></a>MySQL引擎</h1><p>1、有什么了解？</p>
-<ul>
-<li>Innodb：默认存储引擎，具有ACID事务支持、行级锁、外键约束；使用高并发的读写操作，支持较好的数据完整性和并发控制</li>
-<li>MyISAM：具有较低的存储空间和内存消耗，适用于大量读操作的场景。不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li>
-<li>Memory：将数据存储在内存中，适用于对性能要求较高的读操作；在服务器重启或崩溃时数据会丢失；不支持事务、行级锁和外键约束</li>
-</ul>
-<p>2、为什么默认引擎是Innodb？</p>
-<p>InnoDB引擎在事务支持、并发性能、崩溃恢复等方面具有优势</p>
-<p>ACID、行级锁、redolog</p>
-<ul>
-<li>事务支持：InnoDB引擎提供了对事务的支持，可以进行ACID（原子性、一致性、隔离性、持久性）属性的操作</li>
-<li>并发性能：InnoDB引擎采用了行级锁定的机制，可以提供更好的并发性能</li>
-<li>崩溃恢复：InnoDB引引擎通过 redolog 日志实现了崩溃恢复，可以在数据库发生异常情况（如断电）时，通过日志文件进行恢复，保证数据的持久性和一致性</li>
-</ul>
-<p>3、MyISAM和Innodb对比</p>
-<ul>
-<li>事务支持：MyISAM不支持</li>
-<li>索引结构：MyISAM是非聚簇索引</li>
-<li>锁粒度：MyISAM最小级的锁是表锁</li>
-<li>count效率：MyISAM保存具体的行数</li>
-</ul>
-<h1 id="MySQL一行记录怎么存储"><a href="#MySQL一行记录怎么存储" class="headerlink" title="MySQL一行记录怎么存储"></a>MySQL一行记录怎么存储</h1>
-                
-              
-            </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
 
-<span class="category-chains">
+<div class="list-group">
+  <p class="h4">共计 1 篇文章</p>
+  <hr>
   
   
     
-      <span class="category-chain">
-        
-  <a href="/database/" class="category-chain-item">database</a>
-  
-  
-    <span>></span>
+      
+      <p class="h5">2026</p>
     
-  <a href="/database/mysql/" class="category-chain-item">mysql</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
-      
-        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
-      
-    </div>
+    <a href="/2026/03/26/AI%E5%AD%A6%E4%B9%A0-helloAgent/" class="list-group-item list-group-item-action">
+      <time>03-26</time>
+      <div class="list-group-item-title">AI学习-helloAgents</div>
+    </a>
   
 </div>
 
-              
-  
 
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>MySQL-存储引擎</div>
-      <div>https://yb0os1.github.io/2026/03/14/MySQL-存储引擎/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>yb0os1</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2026年3月14日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
+
+
+
+              </div>
+            </div>
           </div>
         </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2026/03/14/%E6%B3%9B%E5%9E%8B-%E5%8F%8D%E5%B0%84-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" title="泛型+反射+动态代理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">泛型+反射+动态代理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2026/03/12/Java%E9%9B%86%E5%90%88-map%E5%8F%8C%E5%88%97%E9%9B%86%E5%90%88/" title="map双列集合">
-                        <span class="hidden-mobile">map双列集合</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-            
-          </article>
-        </div>
       </div>
-    </div>
-
-    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-  </aside>
-
-
-      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
-        <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
     
 
     
@@ -901,101 +595,6 @@
 
 
 
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-      // 🔥 精准偏移（无冲突，不卡顿）
-      scrollSmoothOffset : -20
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 

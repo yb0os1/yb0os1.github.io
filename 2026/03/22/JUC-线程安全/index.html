@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar33.png">
 <meta property="article:published_time" content="2026-03-21T16:05:30.000Z">
-<meta property="article:modified_time" content="2026-03-25T04:43:40.849Z">
+<meta property="article:modified_time" content="2026-03-25T17:13:37.713Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="JUC">
 <meta property="article:tag" content="java">
@@ -332,9 +332,9 @@
               
                 
                     <li class="nav-item">
-                      <a class="nav-link" href="/algorithm" target="_self">
+                      <a class="nav-link" href="/scene" target="_self">
                         
-                          <span>🚀 算法练习</span>
+                          <span>🚀 场景/系统设计</span>
                       </a>
                     </li>
                     
@@ -456,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6k 字
+          6.1k 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          50 分钟
+          52 分钟
         
       </span>
     
@@ -541,8 +541,7 @@
 <ul>
 <li>最终结果：<code>i=1</code>（期望值为 <code>2</code>），出现错误</li>
 </ul>
-<p>三者怎么保证的？</p>
-<p><strong>原子性</strong>：主要通过加锁实现的</p>
+<h2 id="三者怎么保证"><a href="#三者怎么保证" class="headerlink" title="三者怎么保证"></a>三者怎么保证</h2><p><strong>原子性</strong>：主要通过加锁实现的</p>
 <p><strong>可见性</strong>：</p>
 <ul>
 <li>volatile修饰的变量：<ol>
@@ -575,6 +574,20 @@
 <blockquote>
 <p>MESI缓存一致性协议：主要用途是确保在多个 CPU 共享内存时，各个 CPU 的缓存数据能够保持一致性。当CPU修改共享内存中的变量时，由于其他CPU中也有该变量的副本，所以修改的时候会发出信号使其他CPU对该共享变量的缓存失效；当其他CPU读取该共享变量时，发现缓存失效那么就从内存重新读取</p>
 </blockquote>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><p>volatile线程可见性限制？线程可见性有什么方法？</p>
+<p>volatile能保证变量修改后立即刷新到主内存，读取时直接从主内存加载，存在限制：</p>
+<ol>
+<li>只适合单变量读写，仅对基本类型&#x2F;引用类型的值修改有效，但是引用类型内部属性修改无可见性保证</li>
+<li>不能代替锁，无法保证复合操作的原子性</li>
+</ol>
+<p>实现线程可见性的方法：</p>
+<ol>
+<li>volatile：禁止指令重排 + 主内存直读直写</li>
+<li>synchronized：加锁 + 刷新主内存</li>
+<li>Lock（ReentrantLock）： Condition 通知</li>
+<li>final关键字：初始化后不可修改，主内存可见</li>
+<li>ThreadLocal：线程私有变量，避免共享</li>
+</ol>
 <h1 id="死锁问题"><a href="#死锁问题" class="headerlink" title="死锁问题"></a>死锁问题</h1><h2 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h2><p>死锁发生在多个线程相互等待对方释放锁时，比如说线程1持有锁 R1等待锁R2，线程2持有锁R2等待锁R1</p>
 <p>发生死锁四个条件缺一不可：</p>
 <ul>
