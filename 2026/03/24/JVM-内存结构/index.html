@@ -19,18 +19,21 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="yb0os1">
+    <meta name="description" content="JVM内存区域 jvm运行时数据区：  线程独有：程序计数器、Java虚拟机栈、本地方法栈 线程共享：堆、方法区（元空间）  1、程序计数器：也叫PC寄存器，比较小的内存空间，记录当前线程正在执行字节码指令的地址 2、Java虚拟机栈：也叫线程栈  每个线程运行时所需要的内存，生命周期和线程相同 一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息 一个线程每">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM-内存结构">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/24/JVM-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="yb0os1">
+<meta property="og:description" content="JVM内存区域 jvm运行时数据区：  线程独有：程序计数器、Java虚拟机栈、本地方法栈 线程共享：堆、方法区（元空间）  1、程序计数器：也叫PC寄存器，比较小的内存空间，记录当前线程正在执行字节码指令的地址 2、Java虚拟机栈：也叫线程栈  每个线程运行时所需要的内存，生命周期和线程相同 一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息 一个线程每">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar34.png">
 <meta property="article:published_time" content="2026-03-23T16:36:21.000Z">
-<meta property="article:modified_time" content="2026-03-23T16:36:21.405Z">
+<meta property="article:modified_time" content="2026-03-27T03:57:08.766Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="yb0os1">
+<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar34.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -453,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          0 字
+          737 字
         
       </span>
     
@@ -465,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          7 分钟
         
       </span>
     
@@ -520,7 +523,67 @@
             <div class="markdown-body" id="post-content">
               
                 
-                
+                <h1>JVM内存区域</h1>
+<p>jvm运行时数据区：</p>
+<ol>
+<li>线程独有：程序计数器、Java虚拟机栈、本地方法栈</li>
+<li>线程共享：堆、方法区（元空间）</li>
+</ol>
+<p>1、程序计数器：也叫PC寄存器，比较小的内存空间，记录当前线程正在执行字节码指令的地址</p>
+<p>2、Java虚拟机栈：也叫线程栈</p>
+<ul>
+<li>每个线程运行时所需要的内存，生命周期和线程相同</li>
+<li>一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息</li>
+<li>一个线程每时刻只能有一个活动栈帧，对应当前执行的方法</li>
+</ul>
+<p>3、本地方法栈，和Java虚拟机栈相似，区别在于虚拟机栈是为 JVM 执行 Java 编写的方法服务的，而本地方法栈是为 Java 调用本地 native 方法服务的，通常由 C/C++ 编写</p>
+<p>4、堆，JVM最大的一块内存区域，所有线程共享</p>
+<ul>
+<li>主要用来保存对象实例（逃逸技术、线程TLAB空间可以不将对象不分配到堆上）</li>
+<li>由年轻代（存储生命周期短的对象）和老年代（生命周期长的对象）组成，一般比例为1：2</li>
+<li>字符串常量池在堆中</li>
+</ul>
+<p>5、方法区，线程共享区域</p>
+<ul>
+<li>主要存储类信息、静态变量、运行时常量池、即时编译器（JIT）编译后的代码缓存等</li>
+<li>JDK7之前叫永久代，占用堆空间，大小固定；JDK8叫元空间，占用本地内存空间，大小自动调整</li>
+</ul>
+<h1>堆和栈的区别</h1>
+<ol>
+<li>用途
+<ul>
+<li>栈用来存储局部变量、方法调用的参数、方法返回地址和一些临时数据</li>
+<li>堆用来存储对象实例</li>
+</ul>
+</li>
+<li>生命周期
+<ul>
+<li>栈中数据有明确生命周期，一个方法调用结束对应的栈帧也会被销毁；</li>
+<li>堆中对象生命周期不明确，对象在垃圾回收时不再被引用才会被回收</li>
+</ul>
+</li>
+<li>存取速度
+<ul>
+<li>栈存取速度通常比堆快，先进后出，操作简单</li>
+<li>堆存取速度相对慢，因为对象在堆上的分配和回收需要更多的时间，且垃圾回收机制的运行也会影响性能</li>
+</ul>
+</li>
+<li>存储空间
+<ul>
+<li>栈的空间相对较小，且固定，由操作系统管理；当栈溢出时，通常是因为递归过深或局部变量过大</li>
+<li>堆的空间较大，动态扩展，由JVM管理；堆溢出通常是由于创建了太多的大对象或未能及时回收不再使用的对象</li>
+</ul>
+</li>
+<li>可见性
+<ul>
+<li>栈中的数据对线程是私有的，每个线程有自己的栈空间</li>
+<li>堆中的数据对线程是共享的，所有线程都可以访问堆上的对象</li>
+</ul>
+</li>
+</ol>
+<h1>内存泄漏和内存溢出</h1>
+<h1>栈溢出和堆溢出</h1>
+
                 
               
             </div>
@@ -529,6 +592,43 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/java/" class="category-chain-item">java</a>
+  
+  
+    <span>></span>
+    
+  <a href="/java/JVM/" class="category-chain-item">JVM</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java/" class="print-no-link">#java</a>
+      
+        <a href="/tags/JVM/" class="print-no-link">#JVM</a>
+      
+    </div>
   
 </div>
 
