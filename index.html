@@ -670,47 +670,8 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" target="_self">
-          <img src="/img/article_img/default.png" srcset="/img/loading.gif" lazyload alt="JVM-类加载和对象创建">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" target="_self">
-          JVM-类加载和对象创建
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" target="_self">
-        <div>
-          
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-03-24 00:36" pubdate>
-              2026-03-24
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2026/03/24/JVM-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_self">
-          <img src="/img/article_img/default.png" srcset="/img/loading.gif" lazyload alt="JVM-垃圾回收">
+          <img src="/img/avatar38.png" srcset="/img/loading.gif" lazyload alt="JVM-垃圾回收">
         </a>
       </div>
     
@@ -725,7 +686,7 @@
       
       <a class="index-excerpt " href="/2026/03/24/JVM-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_self">
         <div>
-          
+          垃圾回收机制 发生在哪 垃圾回收主要在Java堆上。在JVM程序计数器、Java虚拟机栈和本地方法栈都是线程私有的，随着线程的结束而销毁，因此不需要考虑垃圾回收问题。 什么是垃圾？怎么判断？ 垃圾就是那些不再被程序使用，并且后续无法被访问的对象。判断对象是否是垃圾有两种方法：  引用计数法：对象没被引用一次，引用计数器+1；但是存在循环引用的问题，比如对象A引用对象B，同时对象B又引用着对象A 可
         </div>
       </a>
 
@@ -739,6 +700,119 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/java/" class="category-chain-item">java</a>
+  
+  
+    <span>></span>
+    
+  <a href="/java/JVM/" class="category-chain-item">JVM</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">#java</a>
+            
+              <a href="/tags/JVM/">#JVM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" target="_self">
+          <img src="/img/avatar36.png" srcset="/img/loading.gif" lazyload alt="JVM-类加载和对象创建">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" target="_self">
+          JVM-类加载和对象创建
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" target="_self">
+        <div>
+          21312312 类加载 类的生命周期 加载、链接（验证、准备、解析）、初始化、使用、卸载  加载  任务：通过类的全限定名查找字节码文件，将其二进制数据读入内存，并在方法区生成该类的元数据【运行时数据结构（如类元信息、常量池）】，同时在堆创建一个class对象作为访问入口 触发条件：类的首次主动使用（new、调用静态方法、访问静态字段、反射调用Class.forName()等） 关键：  类加载
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-03-24 00:36" pubdate>
+              2026-03-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/java/" class="category-chain-item">java</a>
+  
+  
+    <span>></span>
+    
+  <a href="/java/JVM/" class="category-chain-item">JVM</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">#java</a>
+            
+              <a href="/tags/JVM/">#JVM</a>
+            
+          </div>
         
       </div>
     </article>

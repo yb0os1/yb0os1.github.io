@@ -19,18 +19,21 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="yb0os1">
+    <meta name="description" content="垃圾回收机制 发生在哪 垃圾回收主要在Java堆上。在JVM程序计数器、Java虚拟机栈和本地方法栈都是线程私有的，随着线程的结束而销毁，因此不需要考虑垃圾回收问题。 什么是垃圾？怎么判断？ 垃圾就是那些不再被程序使用，并且后续无法被访问的对象。判断对象是否是垃圾有两种方法：  引用计数法：对象没被引用一次，引用计数器+1；但是存在循环引用的问题，比如对象A引用对象B，同时对象B又引用着对象A 可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM-垃圾回收">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/24/JVM-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="yb0os1">
+<meta property="og:description" content="垃圾回收机制 发生在哪 垃圾回收主要在Java堆上。在JVM程序计数器、Java虚拟机栈和本地方法栈都是线程私有的，随着线程的结束而销毁，因此不需要考虑垃圾回收问题。 什么是垃圾？怎么判断？ 垃圾就是那些不再被程序使用，并且后续无法被访问的对象。判断对象是否是垃圾有两种方法：  引用计数法：对象没被引用一次，引用计数器+1；但是存在循环引用的问题，比如对象A引用对象B，同时对象B又引用着对象A 可">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-03-23T16:36:28.000Z">
-<meta property="article:modified_time" content="2026-03-23T16:36:28.646Z">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar38.png">
+<meta property="article:published_time" content="2026-03-23T16:36:34.000Z">
+<meta property="article:modified_time" content="2026-03-28T03:41:09.881Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="yb0os1">
+<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar38.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -453,7 +456,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          0 字
+          3.5k 字
         
       </span>
     
@@ -465,7 +468,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          30 分钟
         
       </span>
     
@@ -520,7 +523,238 @@
             <div class="markdown-body" id="post-content">
               
                 
-                
+                <h1>垃圾回收机制</h1>
+<h2 id="发生在哪">发生在哪</h2>
+<p>垃圾回收主要在Java堆上。在JVM程序计数器、Java虚拟机栈和本地方法栈都是线程私有的，随着线程的结束而销毁，因此不需要考虑垃圾回收问题。</p>
+<h2 id="什么是垃圾？怎么判断？">什么是垃圾？怎么判断？</h2>
+<p>垃圾就是那些不再被程序使用，并且后续无法被访问的对象。判断对象是否是垃圾有两种方法：</p>
+<ul>
+<li>引用计数法：对象没被引用一次，引用计数器+1；但是存在循环引用的问题，比如对象A引用对象B，同时对象B又引用着对象A</li>
+<li>可达性分析法：GC Root为起点，遍历查找引用关系，如果某个对象到GC Root间没有任何引用链，那么就代表不可达。三色标记法就是该理论的实现</li>
+</ul>
+<h2 id="哪些对象可以作为GC-Root？">哪些对象可以作为GC Root？</h2>
+<p>GC Root是指在JVM中直接或间接被引用的对象，这些对象被视为不可回收的，是垃圾回收的根节点</p>
+<ol>
+<li>系统类加载器（应用程序类加载器）加载的实例对象</li>
+<li>当前活跃线程相关的实例对象</li>
+<li>Java虚拟机栈、本地方法栈中引用的对象</li>
+<li>方法区中常量、类静态属性引用的对象</li>
+<li>被加锁的对象</li>
+</ol>
+<h2 id="三色标记法是什么？">三色标记法是什么？</h2>
+<p>三色标记法是可达性分析算法的实现手段，是一种对象遍历和标记算法，用来在垃圾回收过程中区分存活对象和垃圾对象</p>
+<p>将对象分为三类：</p>
+<ol>
+<li>白色：尚未标记的对象。标记结束后，仍然为白色的对象会被认为是不可达的对象，可以清理</li>
+<li>灰色：已经标记但还没有标记其引用的对象，需要进一步处理</li>
+<li>黑色：已经标记并且其所有引用对象都已经标记，完全处理过了</li>
+</ol>
+<p>工作流程：</p>
+<ol>
+<li>初始标记（STW）：从 GC Roots 开始，标记所有根节点直接可达的对象为灰色</li>
+<li>并发标记（不需要STW）：在此阶段，标记所有灰色对象引用的对象为灰色，然后将灰色对象自身标记为黑色，不断的重复直到没有灰色对象。这个过程是并发的，和应用线程同时进行</li>
+<li>重新标记（STW）：重新标记阶段的目标是处理并发标记阶段遗漏的引用变化。为了确保所有存活对象都被正确标记，remark 需要在 STW 暂停期间执行</li>
+</ol>
+<p><strong>存在漏标和多标问题</strong></p>
+<p>漏标问题：</p>
+<p>只有当两个条件同时满足时：</p>
+<ol>
+<li>黑色对象新增到白色对象的引用（条件1）：黑色对象已经完成扫描，不会再次被处理。</li>
+<li>灰色对象到白色对象的所有路径被切断（条件2）：白色对象不再被任何灰色对象引用，无法通过灰色对象被标记。</li>
+</ol>
+<p>一句话概括：并发标记时，用户线程可能会插入了一条或多条从黑色对象到白色对象的新引用，并且去掉了灰色对象到该白色对象的直接引用或者间接引用，那么就会导致该白色对象无法被正确处理。</p>
+<p>解决方案：</p>
+<ul>
+<li>
+<p>CMS 采用 “增量更新” 解决</p>
+<ul>
+<li>
+<p>并发标记过程中，当新插入黑色对象指向白色对象的引用时，把该引用关系记录下来</p>
+</li>
+<li>
+<p>重新标记过程中，根据新增的引用关系，重新进行判断白色对象</p>
+</li>
+</ul>
+</li>
+<li>
+<p>G1 采用 “原始快照” 解决</p>
+<ul>
+<li>
+<p>并发标记过程中，当删除灰色对象指向白色对象的直接/间接引用时，把该引用关系记录下来</p>
+</li>
+<li>
+<p>最终标记过程中，根据删除的引用关系，重新进行判断白色对象</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>多标问题：</p>
+<ul>
+<li>多标：这个对象原先可能是黑色的存活对象，但是用户线程把指向该黑色对象的引用删除了，所以这个黑色对象应该变成白色对象，应该被回收掉。但是三色标记法是无法识别到它的。</li>
+<li>解决方案：不需要特别解决，在下一次GC中该浮动垃圾就会被回收掉</li>
+</ul>
+<h2 id="垃圾回收算法">垃圾回收算法</h2>
+<p>有三种，分别是标记清除、标记复制、标记整理</p>
+<ol>
+<li>标记清除，标记存活对象，统一回收所有未标记的对象
+<ul>
+<li>优点：垃圾回收速度块</li>
+<li>缺点：内存空间碎片化，导致内存的浪费；执行效率不稳定</li>
+</ul>
+</li>
+<li>标记复制，将可用内存分为两块，每次只使用一块，先标记，然后将存活对象从a移动到b，清理a内存区域，对换两个内存区域名称
+<ul>
+<li>优点：不会产生内存碎片</li>
+<li>缺点：浪费内存空间，内存空间开销大</li>
+</ul>
+</li>
+<li>标记整理，在标记完成后，让所有存活对象都向内存的一端移动，然后直接清理掉边界以外的内存
+<ul>
+<li>优点：不会产生内存碎片；可以充分利用内存空间</li>
+<li>缺点：效率低，对象移动比较复杂（可能在移动对象的时候需暂停用户线程）</li>
+</ul>
+</li>
+</ol>
+<p>但是一般不会单独使用一个垃圾回收算法，因为对象的生命周期是不同的，有的产生后很快回收，有的会存活很久，堆分为年轻代和老年代，年轻代一般使用标记复制算法，老年代一般使用标记整理算法</p>
+<h1>垃圾回收器</h1>
+<h2 id="有哪些">有哪些</h2>
+<p>Serial/Serial Old、ParNew、Parallel Scavenge/Paralled Old、CMS、G1</p>
+<p><img src="../../../../img/article_img/image-20260328112521789.png" srcset="/img/loading.gif" lazyload alt="Serial/Serial Old"></p>
+<p><img src="../../../../img/article_img/image-20260328112534232.png" srcset="/img/loading.gif" lazyload alt="ParNew"></p>
+<p><img src="../../../../img/article_img/image-20260328112545295.png" srcset="/img/loading.gif" lazyload alt="Parallel Scavenge/Paralled Old"></p>
+<p>Paralled 回收器关注于吞吐量（用户代码运行时间\（用户代码运行时间+垃圾回收时间））</p>
+<p><img src="../../../../img/article_img/image-20260328112608658.png" srcset="/img/loading.gif" lazyload alt="CMS"></p>
+<p>CMS针对老年代，是一种以获取最短回收暂停时间（STW）为目标的回收器，主要体现在两个方面，一、基于标记清除算法速度快；二、在CMS垃圾回收过程中，并发标记和并发清除是和用户线程并发执行的</p>
+<p><img src="../../../../img/article_img/image-20260328112618854.png" srcset="/img/loading.gif" lazyload alt="G1"></p>
+<p>G1是一个全年代的垃圾回收器、可设置每次垃圾回收的STW，G1将堆内存划分为若干个大小相同的区，每个区都会产生垃圾，但在垃圾回收时，可以选择性的回收垃圾较多的区域，垃圾较少的区域暂时不回收，这样效益较高，短时间内回收了尽可能多的垃圾，尽可能达到STW的暂停时间目标</p>
+<h2 id="CMS">CMS</h2>
+<p>以获取最短回收暂停时间为目标的垃圾回收器</p>
+<p><img src="../../../../img/article_img/image-20260328113836154.png" srcset="/img/loading.gif" lazyload alt="CMS"></p>
+<p>CMS采用标记清除算法，工作流程大致可以分为四个步骤：</p>
+<ol>
+<li>初始标记：标记GC Root直接关联到的对象，耗时短但是需要STW（暂停用户线程）</li>
+<li>并发标记：从初始标记到的对象开始遍历整个对象图，标记所有可达对象，耗时长但是不需要暂停用户线程</li>
+<li>重新标记：采用增量更新算法，对并发标记过程中因为用户线程运行而导致引用关系变动的对象进行重新标记，耗时比初始标记稍长且需要暂停用户线程；</li>
+<li>并发清除：并发清除掉已经死亡的对象，耗时长但不需要暂停用户线程</li>
+</ol>
+<p><strong>重新标记的增量更新算法是什么意思？</strong></p>
+<p>判断对象是否存活采用的是三色标记法，在并发标记过程中可能会存在黑色对象指向白色对象并且灰色对象对该白色对象的引用都切断了，这样就导致了漏标的现象；CMS在并发标记过程中，将黑色对象对白色对象新增的引用会记录下来，在重新标记时会处理这些记录，确保可达对象都正确的标为灰色或者黑色。</p>
+<p><strong>重新标记的步骤？</strong></p>
+<ol>
+<li>处理记录下的引用变化：在并发标记过程中，将黑色对象对白色对象新增的引用会记录下来，在重新标记时会处理这些记录，确保可达对象都正确的标为灰色或者黑色</li>
+<li>重新遍历灰色对象：再次遍历灰色对象，处理它们的所有引用，确保引用的对象正确标记为灰色或黑色</li>
+<li>清理：确保所有引用关系正确处理后，灰色对象标记为黑色，白色对象保持不变。这一步完成后，所有存活对象都应当是黑色的</li>
+</ol>
+<p><strong>CMS存在的问题？</strong></p>
+<ol>
+<li>产生内存碎片，使用的标记清除算法，会产生内存碎片，浪费内存空间。可能分配对象时老年代空间足够但是不能分配，触发fullgc</li>
+<li>存在浮动垃圾，清理的时候是并发清理，用户线程继续执行可能会产生垃圾，这些垃圾就是浮动垃圾，只能下一次垃圾回收的时候清理；如果浮动垃圾过多导致老年代空间不足，触发fullgc</li>
+<li>触发full GC将退化为Serial Old垃圾回收器，单线程并暂停用户线程，会导致长时间的STW</li>
+</ol>
+<h2 id="G1">G1</h2>
+<p>可以设置每次垃圾回收的暂停时间STW，把堆内存分为多个大小相等的区域（Region），每个区域根据需求扮演新生代的Eden、Survivor区、老年代区域，并且存在存储大对象的区域，当一个对象的大小超过区域的一半时直接存在存放大对象的区域</p>
+<p><img src="../../../../img/article_img/image-20260328113914853.png" srcset="/img/loading.gif" lazyload alt="G1"></p>
+<p>G1运行过程也分为四个步骤：（Mixed GC）</p>
+<ol>
+<li>初始标记：标记GC Root直接关联到的对象，耗时短但是需要STW（暂停用户线程）</li>
+<li>并发标记：从初始标记到的对象开始遍历整个对象图，标记所有可达对象，耗时长但是不需要暂停用户线程；并且采用原始快照的方案，当删除灰色对象和白色对象的引用时，会记录下来；（不需要暂停用户线程）</li>
+<li>最终标记：因为并发标记和用户线程时并发执行的，过程中可能会导致对象间引用关系的变化，因此需要最终标记遍历原始快照记录，防止漏标（暂停用户线程）</li>
+<li>筛选清除：G1清除垃圾时不会一次性全部清除，会对每个分区进行回收价值和成本排序，根据用户期望最大暂停时间进行指定回收计划，选择任意多个区域构成回收集，将回收集中 Regin 的存活对象复制到空的 Regin 中，再清理掉整个旧的 Regin 。涉及到存活对象的移动，需要暂停用户线程，并由多个收集线程并行执行</li>
+</ol>
+<h2 id="如果选择垃圾回收器？">如果选择垃圾回收器？</h2>
+<p>新生代收集器有 Serial、ParNew、Parallel Scavenge</p>
+<p>老年代收集器有 Serial Old、Parallel Old、CMS</p>
+<p>整堆收集器有G1、ZGC</p>
+<ol>
+<li>
+<p>串行垃圾回收器，如: Serial GC，Serial Old</p>
+<ul>
+<li>单线程垃圾收集器，适用于单核机器。暂停时间较长，不适用于多核环境和大内存应用。</li>
+</ul>
+</li>
+<li>
+<p>并行垃圾回收器，如: Parallel Scavenge，Parallel Old，ParNew</p>
+<ul>
+<li>
+<p>多线程垃圾收集器，适用于多核机器。适合批处理、后台作业等暂停时间不敏感的应用。</p>
+</li>
+<li>
+<p>暂停时间较长，不适合需要低延迟的应用。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>并发标记扫描垃圾回收器 (CMS GarbageCollector)</p>
+<ul>
+<li>
+<p>低延迟垃圾收集器，适合需要响应时间较短、高响应性要求的应用。</p>
+</li>
+<li>
+<p>容易产生碎片，可能需要Ful GC进行碎片整理，FulGC时会有较长暂停。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>G1垃圾回收器 (G1 Garbage Collector，JDK 7中推出，JDK 9中设置为默认)</p>
+<ul>
+<li>设计用于替代CMS，适合大内存、多核环境。较低的暂停时间，能够预测性地控制暂停时间，适合大数据量应用。</li>
+</ul>
+<p>ZGC垃圾回收器 (The Z Garbage Collector，JDK11 推出)、Shenandoah GC (JDK 12 推出)</p>
+<ul>
+<li>超低延迟垃圾收集器，适用于超大堆内存。暂停时间通常在10ms以下，适合对响应时间有极高要求的应用。</li>
+<li>目前只支持较新的JDK版本，可能存在一些不成熟的特性。</li>
+</ul>
+<p>综上，如何进行选择垃圾回收器</p>
+<ol>
+<li>
+<p>根据机器情况判断，如果是单核机器，或者内存较小的机器，则选择  Serial GC</p>
+</li>
+<li>
+<p>根据业务类型判断，看应用更在意的是吞吐量还是 STW 的时长</p>
+</li>
+<li>
+<p>比如批处理任务的应用，更在意的就是吞吐量。</p>
+</li>
+<li>
+<p>比如实时交易系统，更在意的就是 STW 的时长。</p>
+</li>
+<li>
+<p>根据机器分配的堆内存大小进行判断</p>
+</li>
+<li>
+<p>一般来说，我们认为至少达到4G 以上才可以用 G1、ZGC 等</p>
+</li>
+<li>
+<p>通常要比如超过8G、16G 这样效果才更好。</p>
+</li>
+<li>
+<p>根据 JDK 版本进行判断，不同的版本支持的垃圾收集器不一样。</p>
+</li>
+</ol>
+<h1>内存分配原则</h1>
+<ol>
+<li>对象优先分配到Eden区
+<ul>
+<li>大多数情况下，对象在新生代的 <code>Eden</code> 区中进行分配，当 <code>Eden</code> 区没有足够空间时，虚拟机将进行一次 Minor GC</li>
+</ul>
+</li>
+<li>大对象直接进入老年代
+<ul>
+<li>如果在新生代分配，因为其需要大量连续的内存空间，可能会导致提前触发垃圾回收；并且由于新生代的垃圾回收本身就很频繁，此时复制大对象也需要额外的性能开销</li>
+</ul>
+</li>
+<li>长期存活的对象进入老年代
+<ul>
+<li>每一次Minor GC对象年龄+1，当年龄达到15时进入老年代、</li>
+</ul>
+</li>
+<li>动态年龄判断
+<ul>
+<li>在 Survivor 空间中相同年龄的所有对象大小的总和大于 Survivor 空间的一半，那么年龄大于或等于该年龄的对象就可以直接进入老年代，而无需等待年龄到达 <code>-XX:MaxTenuringThreshold</code> 设置的值</li>
+</ul>
+</li>
+</ol>
+
                 
               
             </div>
@@ -529,6 +763,43 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/java/" class="category-chain-item">java</a>
+  
+  
+    <span>></span>
+    
+  <a href="/java/JVM/" class="category-chain-item">JVM</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java/" class="print-no-link">#java</a>
+      
+        <a href="/tags/JVM/" class="print-no-link">#JVM</a>
+      
+    </div>
   
 </div>
 
@@ -581,9 +852,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" title="JVM-类加载和对象创建">
+                      <a href="/2026/03/26/AI%E5%AD%A6%E4%B9%A0-helloAgent/" title="AI学习-helloAgents">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JVM-类加载和对象创建</span>
+                        <span class="hidden-mobile">AI学习-helloAgents</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -591,8 +862,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/03/24/JVM-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" title="JVM-内存结构">
-                        <span class="hidden-mobile">JVM-内存结构</span>
+                      <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" title="JVM-类加载和对象创建">
+                        <span class="hidden-mobile">JVM-类加载和对象创建</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
