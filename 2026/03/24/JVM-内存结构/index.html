@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="JVM内存区域 jvm运行时数据区：  线程独有：程序计数器、Java虚拟机栈、本地方法栈 线程共享：堆、方法区（元空间）  1、程序计数器：也叫PC寄存器，比较小的内存空间，记录当前线程正在执行字节码指令的地址 2、Java虚拟机栈：也叫线程栈  每个线程运行时所需要的内存，生命周期和线程相同 一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息 一个线程每">
+    <meta name="description" content="JVM内存区域jvm运行时数据区：  线程独有：程序计数器、Java虚拟机栈、本地方法栈 线程共享：堆、方法区（元空间）  1、程序计数器：也叫PC寄存器，比较小的内存空间，记录当前线程正在执行字节码指令的地址 2、Java虚拟机栈：也叫线程栈  每个线程运行时所需要的内存，生命周期和线程相同 一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息 一个线程每时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM-内存结构">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/24/JVM-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="JVM内存区域 jvm运行时数据区：  线程独有：程序计数器、Java虚拟机栈、本地方法栈 线程共享：堆、方法区（元空间）  1、程序计数器：也叫PC寄存器，比较小的内存空间，记录当前线程正在执行字节码指令的地址 2、Java虚拟机栈：也叫线程栈  每个线程运行时所需要的内存，生命周期和线程相同 一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息 一个线程每">
+<meta property="og:description" content="JVM内存区域jvm运行时数据区：  线程独有：程序计数器、Java虚拟机栈、本地方法栈 线程共享：堆、方法区（元空间）  1、程序计数器：也叫PC寄存器，比较小的内存空间，记录当前线程正在执行字节码指令的地址 2、Java虚拟机栈：也叫线程栈  每个线程运行时所需要的内存，生命周期和线程相同 一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息 一个线程每时">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar34.png">
 <meta property="article:published_time" content="2026-03-23T16:36:21.000Z">
@@ -504,8 +504,7 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>JVM内存区域</h1>
-<p>jvm运行时数据区：</p>
+                <h1 id="JVM内存区域"><a href="#JVM内存区域" class="headerlink" title="JVM内存区域"></a>JVM内存区域</h1><p>jvm运行时数据区：</p>
 <ol>
 <li>线程独有：程序计数器、Java虚拟机栈、本地方法栈</li>
 <li>线程共享：堆、方法区（元空间）</li>
@@ -517,7 +516,7 @@
 <li>一个方法执行时会创建对应的栈帧放到栈中，存储局部变量表、操作数栈、动态链接、方法出口等信息</li>
 <li>一个线程每时刻只能有一个活动栈帧，对应当前执行的方法</li>
 </ul>
-<p>3、本地方法栈，和Java虚拟机栈相似，区别在于虚拟机栈是为 JVM 执行 Java 编写的方法服务的，而本地方法栈是为 Java 调用本地 native 方法服务的，通常由 C/C++ 编写</p>
+<p>3、本地方法栈，和Java虚拟机栈相似，区别在于虚拟机栈是为 JVM 执行 Java 编写的方法服务的，而本地方法栈是为 Java 调用本地 native 方法服务的，通常由 C&#x2F;C++ 编写</p>
 <p>4、堆，JVM最大的一块内存区域，所有线程共享</p>
 <ul>
 <li>主要用来保存对象实例（逃逸技术、线程TLAB空间可以不将对象不分配到堆上）</li>
@@ -529,75 +528,62 @@
 <li>主要存储类信息、静态变量、运行时常量池、即时编译器（JIT）编译后的代码缓存等</li>
 <li>JDK7之前叫永久代，占用堆空间，大小固定；JDK8叫元空间，占用本地内存空间，大小自动调整</li>
 </ul>
-<h1>堆和栈的区别</h1>
-<ol>
-<li>用途
-<ul>
+<h1 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h1><ol>
+<li>用途<ul>
 <li>栈用来存储局部变量、方法调用的参数、方法返回地址和一些临时数据</li>
 <li>堆用来存储对象实例</li>
 </ul>
 </li>
-<li>生命周期
-<ul>
+<li>生命周期<ul>
 <li>栈中数据有明确生命周期，一个方法调用结束对应的栈帧也会被销毁；</li>
 <li>堆中对象生命周期不明确，对象在垃圾回收时不再被引用才会被回收</li>
 </ul>
 </li>
-<li>存取速度
-<ul>
+<li>存取速度<ul>
 <li>栈存取速度通常比堆快，先进后出，操作简单</li>
 <li>堆存取速度相对慢，因为对象在堆上的分配和回收需要更多的时间，且垃圾回收机制的运行也会影响性能</li>
 </ul>
 </li>
-<li>存储空间
-<ul>
+<li>存储空间<ul>
 <li>栈的空间相对较小，且固定，由操作系统管理；当栈溢出时，通常是因为递归过深或局部变量过大</li>
 <li>堆的空间较大，动态扩展，由JVM管理；堆溢出通常是由于创建了太多的大对象或未能及时回收不再使用的对象</li>
 </ul>
 </li>
-<li>可见性
-<ul>
+<li>可见性<ul>
 <li>栈中的数据对线程是私有的，每个线程有自己的栈空间</li>
 <li>堆中的数据对线程是共享的，所有线程都可以访问堆上的对象</li>
 </ul>
 </li>
 </ol>
-<h1>内存泄漏和内存溢出</h1>
-<h2 id="内存泄漏">内存泄漏</h2>
-<p>指的是程序在运行过程中不再使用的对象仍然被引用，无法被垃圾回收器回收，导致可用内存逐渐减少</p>
+<h1 id="内存泄漏和内存溢出"><a href="#内存泄漏和内存溢出" class="headerlink" title="内存泄漏和内存溢出"></a>内存泄漏和内存溢出</h1><h2 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h2><p>指的是程序在运行过程中不再使用的对象仍然被引用，无法被垃圾回收器回收，导致可用内存逐渐减少</p>
 <p>常见原因：</p>
 <ol>
 <li>静态集合：使用静态数据结构存储对象并且没有清理</li>
 <li>事件监听：未取消对事件源的监听，导致对象持续被引用</li>
 <li>线程：未停止的线程可以持有对象引用，无法被回收</li>
 </ol>
-<h2 id="内存溢出">内存溢出</h2>
-<p>指的是Java虚拟机在申请内存的时候，无法找到足够的内存，最终引发<code>OutOfMemoryError</code>，通常发生在堆内存不足以存放新创建的对象时</p>
+<h2 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h2><p>指的是Java虚拟机在申请内存的时候，无法找到足够的内存，最终引发<code>OutOfMemoryError</code>，通常发生在堆内存不足以存放新创建的对象时</p>
 <p>常见原因：</p>
 <ol>
 <li>大量对象创建：程序中不断创建大量对象，超出JVM堆的限制</li>
 <li>持久引用：大型数据结构（如缓存、集合等）长时间持有对象引用，导致内存积累</li>
 <li>递归调用：深度递归导致栈溢出</li>
 </ol>
-<h3 id="内存溢出的情况">内存溢出的情况</h3>
-<ol>
+<h3 id="内存溢出的情况"><a href="#内存溢出的情况" class="headerlink" title="内存溢出的情况"></a>内存溢出的情况</h3><ol>
 <li>堆内存溢出：当出现Java.lang.OutOfMemoryError:Java heap space异常时，就是堆内存溢出了。原因是代码中可能存在大对象分配，或者发生了内存泄露，导致在多次GC之后，还是无法找到一块足够大的内存容纳当前对象</li>
 <li>栈溢出：不断的进行递归调用，而且没有退出条件，就会导致不断地进行压栈；JVM 实际会抛出 StackOverFlowError；如果 JVM 试图去扩展栈空间的的时候失败，则会抛出 OutOfMemoryError</li>
 <li>元空间溢出：系统会抛出Java.lang.OutOfMemoryError: Metaspace；原因是系统的代码非常多或引用的第三方包非常多或者通过动态代码生成类加载等方法，导致元空间的内存占用很大</li>
 <li>直接内存内存溢出：使用ByteBuffer中的allocateDirect()的时候会用到，很多JavaNIO(像netty)的框架中被封装为其他的方法，出现该问题时会抛出Java.lang.OutOfMemoryError: Direct buffer memory异常</li>
 </ol>
-<h3 id="堆溢出">堆溢出</h3>
-<p>堆内存通常发生在程序持续创建对象且无法被 GC 及时回收的场景下</p>
+<h3 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h3><p>堆内存通常发生在程序持续创建对象且无法被 GC 及时回收的场景下</p>
 <p>解决堆溢出：</p>
 <ol>
-<li>定位原因
-<ul>
+<li>定位原因<ul>
 <li>捕获内存快照：JVM参数<code>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./heapdump.hprof</code>，让程序在发生OOM时自动生成堆快照文件</li>
 <li>分析快照文件：使用 MAT（Memory Analyzer Tool）或 JProfiler 等工具分析快照，重点看哪些对象占用了大量内存、是否存在内存泄漏（如对象长期被无用引用持有，无法回收）</li>
 </ul>
 </li>
-<li>解决思路
-<ul>
+<li>解决思路<ul>
 <li>如果是内存泄漏：比如静态集合无意识地缓存了大量对象、长生命周期对象持有短生命周期对象的引用（如单例类持有业务对象）等。这时候需要梳理对象引用链，找到未释放的根源，比如清理静态集合中不再使用的元素、解除不必要的对象关联。</li>
 <li>如果是内存不足：即程序确实需要大量内存（如处理大文件、加载大量数据到内存），但当前堆配置太小。这种情况下可以通过调整 JVM 参数扩大堆内存，比如<code>-Xms2g -Xmx4g</code>（初始堆 2G，最大堆 4G），但需注意不能超过物理内存限制，避免频繁 swap。</li>
 </ul>
@@ -605,8 +591,7 @@
 </ol>
 <p>另外，代码层面优化也很重要：比如避免一次性加载全部数据（改用分批处理）、使用缓存时设置合理的过期策略、及时释放资源（如 IO 流、数据库连接）等，从源头减少内存占用</p>
 <p>举个例子：曾遇到过一个批量处理任务，代码中把所有处理结果都存到了一个静态 List 里，导致对象越积越多，最终堆溢出。通过分析快照发现这个 List 占用了 80% 的堆内存，修改为处理完一批就写入数据库并清空 List 后，问题解决。</p>
-<h3 id="栈溢出">栈溢出</h3>
-<p>栈溢出主要发生在 Java 虚拟机栈（或本地方法栈）的内存空间被耗尽时，通常与方法调用的深度直接相关</p>
+<h3 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h3><p>栈溢出主要发生在 Java 虚拟机栈（或本地方法栈）的内存空间被耗尽时，通常与方法调用的深度直接相关</p>
 <p>从触发原因来看，最常见的场景是无限递归调用</p>
 <ul>
 <li>因为 Java 方法调用时会在栈中创建栈帧（存储局部变量、操作数栈、方法返回地址等），每递归一次就会新增一个栈帧。如果递归没有正确的终止条件，栈帧会不断累积，最终超过虚拟机栈的最大容量，导致栈溢出。</li>
@@ -618,104 +603,86 @@
 <li>调整栈内存大小：通过 JVM 参数<code>-Xss</code>（如<code>-Xss256k</code>）增大栈内存容量。但这种方式要谨慎，栈内存过大会导致线程可创建数量减少（总内存固定时，单个线程栈越大，能创建的线程数越少）</li>
 <li>优化方法栈帧：减少方法内局部变量的数量，避免在方法中创建过大的对象或数组，将大对象的创建移到堆中（通过 new 关键字），降低单个栈帧的内存占用</li>
 </ol>
-<h1>JIT编译器</h1>
-<ul>
+<h1 id="JIT编译器"><a href="#JIT编译器" class="headerlink" title="JIT编译器"></a>JIT编译器</h1><ul>
 <li>JIT 是 JVM 中的动态编译器，在运行时将热点代码编译为本地机器代码，提升程序性能。</li>
 <li>JIT 与解释器配合使用，结合了动态性和高效性。</li>
 <li>优化技术：包括方法内联、循环优化、逃逸分析等，使编译后的代码性能更高。</li>
 <li>缺点：首次运行性能较低，增加了内存开销，但总体性能收益显著。</li>
 </ul>
-<h2 id="定义">定义</h2>
-<p>通常具有更好的跨平台</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>通常具有更好的跨平台</p>
 <p>JIT（Just-In-Time）编译器是一种用于 Java 虚拟机（JVM）的动态编译技术。它在 Java 程序运行时，将 Java 字节码（Bytecode）转换为本地机器代码，从而提高程序的运行效率。</p>
 <ul>
 <li>位置：JIT 是 JVM 的一部分，内嵌在 JVM 内部。</li>
 <li>目标：提升字节码执行的速度，接近本地代码的性能。</li>
 </ul>
-<h2 id="工作原理">工作原理</h2>
-<p>1、JVM 的初始执行方式</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>1、JVM 的初始执行方式</p>
 <p>Java 是通过解释器（Interpreter）来逐行解释执行字节码的。这种方式简单灵活，但效率较低，因为每次运行都需要解释字节码。</p>
 <p>2、JIT 的介入</p>
 <p>当 JVM 发现某些代码被多次执行时，JIT 编译器会将这些热点代码（Hotspot Code）编译为机器码，并将其缓存。之后运行时直接执行这些本地代码，而不再解释，从而显著提高性能。</p>
-<h2 id="执行过程">执行过程</h2>
-<p>JIT 的执行过程可以分为以下几个阶段：</p>
+<h2 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h2><p>JIT 的执行过程可以分为以下几个阶段：</p>
 <ol>
-<li>
-<p><strong>字节码加载：</strong></p>
+<li><p><strong>字节码加载：</strong></p>
 <ul>
 <li>Java 类被加载到 JVM 中，并以字节码的形式存储。</li>
 </ul>
 </li>
-<li>
-<p><strong>热点检测：</strong></p>
+<li><p><strong>热点检测：</strong></p>
 <ul>
 <li>JVM 使用统计信息找到执行频率较高的热点代码。</li>
 </ul>
 </li>
-<li>
-<p><strong>即时编译：</strong></p>
+<li><p><strong>即时编译：</strong></p>
 <ul>
 <li>热点代码由 JIT 编译器编译为本地机器代码。</li>
 </ul>
 </li>
-<li>
-<p><strong>缓存与执行：</strong></p>
+<li><p><strong>缓存与执行：</strong></p>
 <ul>
 <li>编译后的机器代码被缓存，后续直接执行，避免了重复解释</li>
 </ul>
 </li>
 </ol>
-<h2 id="JIT-的优化技术">JIT 的优化技术</h2>
-<p>JIT 编译器使用多种优化技术来提升性能：</p>
+<h2 id="JIT-的优化技术"><a href="#JIT-的优化技术" class="headerlink" title="JIT 的优化技术"></a>JIT 的优化技术</h2><p>JIT 编译器使用多种优化技术来提升性能：</p>
 <ol>
-<li>
-<p><strong>方法内联（Method Inlining）</strong>：</p>
+<li><p><strong>方法内联（Method Inlining）</strong>：</p>
 <ul>
 <li>将小方法的代码直接嵌入调用点，减少方法调用的开销。</li>
 </ul>
 </li>
-<li>
-<p><strong>循环优化（Loop Optimization）</strong>：</p>
+<li><p><strong>循环优化（Loop Optimization）</strong>：</p>
 <ul>
 <li>对循环体进行展开、合并或消除等优化，减少循环开销。</li>
 </ul>
 </li>
-<li>
-<p><strong>死代码消除（Dead Code Elimination）</strong>：</p>
+<li><p><strong>死代码消除（Dead Code Elimination）</strong>：</p>
 <ul>
 <li>移除不会被执行的代码，精简代码逻辑。</li>
 </ul>
 </li>
-<li>
-<p><strong>常量折叠（Constant Folding）</strong>：</p>
+<li><p><strong>常量折叠（Constant Folding）</strong>：</p>
 <ul>
 <li>编译期间计算出常量表达式的结果，避免运行时计算。</li>
 </ul>
 </li>
-<li>
-<p><strong>逃逸分析（Escape Analysis）</strong>：</p>
+<li><p><strong>逃逸分析（Escape Analysis）</strong>：</p>
 <ul>
 <li>判断对象是否只在方法内部使用，如果是，则分配到栈中，而非堆中，减少 GC 压力</li>
 </ul>
 </li>
 </ol>
-<h2 id="优缺点">优缺点</h2>
-<p>优点</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点</p>
 <ol>
-<li>
-<p><strong>高性能</strong>：</p>
+<li><p><strong>高性能</strong>：</p>
 <ul>
 <li>热点代码编译为本地代码后执行速度接近本地程序。</li>
 </ul>
 </li>
-<li>
-<p><strong>动态优化</strong>：</p>
+<li><p><strong>动态优化</strong>：</p>
 <ul>
 <li>JIT 根据运行时信息进行优化，能够针对实际使用情况提升性能。</li>
 </ul>
 </li>
-<li>
-<p><strong>灵活性</strong>：</p>
+<li><p><strong>灵活性</strong>：</p>
 <ul>
 <li>兼顾解释执行和编译执行的优点，适应多种运行环境。</li>
 </ul>
@@ -723,20 +690,17 @@
 </ol>
 <p>缺点</p>
 <ol>
-<li>
-<p><strong>首次运行性能较低</strong>：</p>
+<li><p><strong>首次运行性能较低</strong>：</p>
 <ul>
 <li>热点代码在被编译前仍需解释执行。</li>
 </ul>
 </li>
-<li>
-<p><strong>额外的内存开销</strong>：</p>
+<li><p><strong>额外的内存开销</strong>：</p>
 <ul>
 <li>编译的机器代码需要占用额外的内存。</li>
 </ul>
 </li>
-<li>
-<p><strong>复杂性增加</strong>：</p>
+<li><p><strong>复杂性增加</strong>：</p>
 <ul>
 <li>JIT 编译器的优化需要复杂的算法和更多的资源。</li>
 </ul>

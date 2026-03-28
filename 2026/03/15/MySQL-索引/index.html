@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="索引基础 定义 索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关 索引分类  数据结构：B+数索引、Hash索引、Full-text索引   InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个  有主">
+    <meta name="description" content="索引基础定义索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关索引分类 数据结构：B+数索引、Hash索引、Full-text索引  InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个 有主键，主键作为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL-索引">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/15/MySQL-%E7%B4%A2%E5%BC%95/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="索引基础 定义 索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关 索引分类  数据结构：B+数索引、Hash索引、Full-text索引   InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个  有主">
+<meta property="og:description" content="索引基础定义索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关索引分类 数据结构：B+数索引、Hash索引、Full-text索引  InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个 有主键，主键作为">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar12.png">
 <meta property="article:published_time" content="2026-03-14T16:36:54.000Z">
@@ -504,21 +504,15 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>索引基础</h1>
-<h2 id="定义">定义</h2>
-<p>索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率</p>
+                <h1 id="索引基础"><a href="#索引基础" class="headerlink" title="索引基础"></a>索引基础</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率</p>
 <ul>
 <li>如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n)</li>
 <li>如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)</li>
 </ul>
-<h2 id="分类相关">分类相关</h2>
-<h3 id="索引分类">索引分类</h3>
-<ul>
-<li>数据结构：B+数索引、Hash索引、Full-text索引
-<ul>
-<li><img src="../../../../img/article_img/image-20260315234449914.png" srcset="/img/loading.gif" lazyload alt="image-20260315234449914"></li>
-<li>InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个
-<ol>
+<h2 id="分类相关"><a href="#分类相关" class="headerlink" title="分类相关"></a>分类相关</h2><h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><ul>
+<li>数据结构：B+数索引、Hash索引、Full-text索引<ul>
+<li><img src="/../../../../img/article_img/image-20260315234449914.png" srcset="/img/loading.gif" lazyload alt="image-20260315234449914"></li>
+<li>InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个<ol>
 <li>有主键，主键作为聚簇索引</li>
 <li>无主键，选择第一个不包含null的唯一列作为聚簇索引</li>
 <li>上面两个都没，自动生成一个隐式自增id列作为聚簇索引</li>
@@ -526,76 +520,66 @@
 </li>
 </ul>
 </li>
-<li>物理存储：聚簇索引、非聚簇索引（二级索引）
-<ul>
+<li>物理存储：聚簇索引、非聚簇索引（二级索引）<ul>
 <li>聚簇索引：b+树的叶子节点存储的是实际数据，所有完整的用户记录都存放</li>
 <li>二级索引：b+树的叶子节点存储的是主键值，而不是实际数据</li>
 <li>在查询时，使用二级索引如果查询的数据可以在二级索引找到，就不需要回表，这个过程就是覆盖索引；如果查询的数据不在二级索引中，那么先查二级索引找到对应的主键值，然后再查找主键索引找到对应的数据，这就是回表</li>
 </ul>
 </li>
-<li>字段特性：主键索引、唯一索引、普通索引、前缀索引
-<ul>
+<li>字段特性：主键索引、唯一索引、普通索引、前缀索引<ul>
 <li>主键索引：建立在主键上的索引，一个表最多只有一个，并且不允许有空值</li>
 <li>唯一索引：建立在 UNIQUE 字段上的索引，一张表可以有多个唯一索引，索引列的值必须唯一但是可以有空值</li>
 <li>普通索引：建立在普通字段上的索引，既不要求字段为主键，也不要求字段为 UNIQUE</li>
 <li>前缀索引：对字符类型字段的前几个字符建立的索引，而不是在整个字段上建立的索引，对字符类型字段的前几个字符建立的索引，而不是在整个字段上建立的索引；目的是为了减少索引占用的存储空间，提升查询效率</li>
 </ul>
 </li>
-<li>字段个数：单列索引、联合索引
-<ul>
+<li>字段个数：单列索引、联合索引<ul>
 <li>建立在单列上的索引</li>
 <li>建立在多列上的索引，怎么构建？a和b的索引，先按照a进行排序建立好，如果a有相同的在根据b</li>
 <li>最左匹配原则</li>
 </ul>
 </li>
 </ul>
-<h3 id="聚簇索引和非聚簇索引对比">聚簇索引和非聚簇索引对比</h3>
-<p><img src="../../../../img/article_img/image-20260315234738844.png" srcset="/img/loading.gif" lazyload alt="image-20260315234738844"></p>
+<h3 id="聚簇索引和非聚簇索引对比"><a href="#聚簇索引和非聚簇索引对比" class="headerlink" title="聚簇索引和非聚簇索引对比"></a>聚簇索引和非聚簇索引对比</h3><p><img src="/../../../../img/article_img/image-20260315234738844.png" srcset="/img/loading.gif" lazyload alt="image-20260315234738844"></p>
 <p>数据存储：存储整个数据行；存储主键</p>
 <p>索引和数据关系：回表</p>
 <p>唯一性：有且必须只有一个；不限</p>
 <p>效率：范围查询和排序查询，聚簇索引效率更高，避免了寻址开销；非聚簇索引回表查询效率低</p>
-<h3 id="联合索引原理">联合索引原理</h3>
-<p>多个列组合成一个索引，这就是联合索引</p>
-<p><img src="../../../../img/article_img/image-20260316171054209.png" srcset="/img/loading.gif" lazyload alt="联合索引B+tree示意图"></p>
+<h3 id="联合索引原理"><a href="#联合索引原理" class="headerlink" title="联合索引原理"></a>联合索引原理</h3><p>多个列组合成一个索引，这就是联合索引</p>
+<p><img src="/../../../../img/article_img/image-20260316171054209.png" srcset="/img/loading.gif" lazyload alt="联合索引B+tree示意图"></p>
 <p>比如说使用a和b构建联合索引，先按照a进行排序建立好，如果a有相同的在根据b</p>
 <p>查询的时候呢，先按照a字段进行比较，在a相同的情况下再按照b字段比较</p>
 <p>使用联合索引满足<strong>最左匹配原则</strong>，按照最左优先的方式进行索引匹配</p>
 <blockquote>
 <p>例子：建立了(a,b,c)联合索引</p>
 <p>走索引：</p>
-<p>a=x、a=x and b=x and c=x、a=x and c=x and b=x</p>
+<p>a&#x3D;x、a&#x3D;x and b&#x3D;x and c&#x3D;x、a&#x3D;x and c&#x3D;x and b&#x3D;x</p>
 <p>索引失效：</p>
-<p>b=x、b=x and c=x</p>
-<p>a=xx and c&lt;xxx  a走索引 c走索引下推</p>
-<p>b&gt;xxx and a=xxx  走联合索引</p>
-<p>a=2 and c=1  a走索引 c索引下推</p>
+<p>b&#x3D;x、b&#x3D;x and c&#x3D;x</p>
+<p>a&#x3D;xx and c&lt;xxx  a走索引 c走索引下推</p>
+<p>b&gt;xxx and a&#x3D;xxx  走联合索引</p>
+<p>a&#x3D;2 and c&#x3D;1  a走索引 c索引下推</p>
 </blockquote>
 <p>建立联合索引的时候，区分度高、经常被使用的字段建议放到靠左边</p>
-<h2 id="优缺点">优缺点</h2>
-<p>索引最大的好处是提高查询速度，但是索引也是有缺点的，比如</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>索引最大的好处是提高查询速度，但是索引也是有缺点的，比如</p>
 <ol>
 <li>需要占用物理空间，数量越大，占用空间越大</li>
 <li>创建索引和维护索引要耗费时间，这种时间随着数据量的增加而增大</li>
 <li>会降低表的增删改的效率，因为每次增删改索引，B+ 树为了维护索引有序性，都需要进行动态维护</li>
 </ol>
-<h1>索引数据结构</h1>
-<h2 id="MySQL索引如何实现">MySQL索引如何实现</h2>
-<p>InnoDB使用B+树作为底层数据结构</p>
+<h1 id="索引数据结构"><a href="#索引数据结构" class="headerlink" title="索引数据结构"></a>索引数据结构</h1><h2 id="MySQL索引如何实现"><a href="#MySQL索引如何实现" class="headerlink" title="MySQL索引如何实现"></a>MySQL索引如何实现</h2><p>InnoDB使用B+树作为底层数据结构</p>
 <p>B+树是一种多叉树，叶子节点存放数据，非叶子节点只存放索引，而且每个节点的数据是按主键顺序存储的；父节点的索引值都会出现在子节点中，因此叶子节点包含所有的索引值信息，每个叶子节点都有两个指针，形成双向链表</p>
-<p><img src="../../../../img/article_img/image-20260316163646896.png" srcset="/img/loading.gif" lazyload alt="主键索引B+tree"></p>
+<p><img src="/../../../../img/article_img/image-20260316163646896.png" srcset="/img/loading.gif" lazyload alt="主键索引B+tree"></p>
 <p>数据库索引和数据都是存储在磁盘的，每次读取节点可以看作一次磁盘IO，B+tree存储千万级数据只需要3-4层高度</p>
-<h2 id="B-树有什么特性">B+树有什么特性</h2>
-<p>B+树是多叉树，主要特性如：</p>
+<h2 id="B-树有什么特性"><a href="#B-树有什么特性" class="headerlink" title="B+树有什么特性"></a>B+树有什么特性</h2><p>B+树是多叉树，主要特性如：</p>
 <ol>
 <li>所有叶子节点都在同一层：可以确保所有数据项都是相同的磁盘IO，叶子节点之间形成双向链表，可以沿着叶子节点顺序访问，适合范围查询和排序扫描</li>
 <li>非叶子节点仅存键值，不存储数据记录：主要用来帮助快速定位到正确的叶子节点，相比B树在数据量相同情况下，B+树非叶子节点能存储更多索引，相比更加矮胖</li>
 <li>叶子节点存储数据记录</li>
 <li>自平衡：插入、删除、更新后自动重新平衡，确保树的高度相对稳定</li>
-<li>M叉B+树，（除去根节点）每个节点最多有M个子节点，最少有ceil(M/2)个子节点</li>
+<li>M叉B+树，（除去根节点）每个节点最多有M个子节点，最少有ceil(M&#x2F;2)个子节点</li>
 </ol>
-<h2 id="为什么使用B-树">为什么使用B+树</h2>
-<p>可以先回答B+树的特性</p>
+<h2 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h2><p>可以先回答B+树的特性</p>
 <p>对比B树、二叉树、红黑树、Hash、跳表</p>
 <p>1、对比B树</p>
 <ol>
@@ -617,64 +601,49 @@
 <li>千万级数据B+树3-4层就可以实现，但是对于跳表而言会导致跳表层数过高，磁盘IO次数就更高，效率低</li>
 <li>跳表的增删改需要维护多级索引，磁盘 IO 的修改成本远高于 B + 树（B + 树仅需修改叶子节点 + 少量父节点，跳表可能修改多个层级的索引</li>
 </ol>
-<h1>索引优化</h1>
-<h2 id="索引如何选择">索引如何选择</h2>
-<blockquote>
+<h1 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h1><h2 id="索引如何选择"><a href="#索引如何选择" class="headerlink" title="索引如何选择"></a>索引如何选择</h2><blockquote>
 <p>回答什么字段适合建立索引</p>
 </blockquote>
 <ol>
-<li>
-<p>字段唯一、非空、区分度高</p>
+<li><p>字段唯一、非空、区分度高</p>
 </li>
-<li>
-<p>经常作为查询条件、排序、分组、去重的字段</p>
+<li><p>经常作为查询条件、排序、分组、去重的字段</p>
 </li>
-<li>
-<p>字段最好有递增趋势，如果字段是随机无序的，可能会引发页分裂问题，造成性能影响</p>
+<li><p>字段最好有递增趋势，如果字段是随机无序的，可能会引发页分裂问题，造成性能影响</p>
 <blockquote>
 <p>如果是随机无序的，那么写入的顺序就是乱序的，不得不频繁的做页分裂操作，以便为新行分配空间，页分裂导致移动大量的数据，影响性能</p>
 <p>而且频繁的页分裂，页会变的稀疏并被不规则的填充，最终会导致数据有sui’pian</p>
 </blockquote>
 </li>
-<li>
-<p>超长文本字段不建议建立索引，如果必须建立的话考虑前缀索引</p>
+<li><p>超长文本字段不建议建立索引，如果必须建立的话考虑前缀索引</p>
 </li>
-<li>
-<p>尽量选择建立联合索引</p>
+<li><p>尽量选择建立联合索引</p>
 </li>
 </ol>
-<h2 id="索引失效">索引失效</h2>
-<ol>
-<li>
-<p>对索引进行 函数运算、表达式运算；（索引保存的是原始值）</p>
+<h2 id="索引失效"><a href="#索引失效" class="headerlink" title="索引失效"></a>索引失效</h2><ol>
+<li><p>对索引进行 函数运算、表达式运算；（索引保存的是原始值）</p>
 </li>
-<li>
-<p>索引列进行了隐式类型转换，比如字符串和数字，内部调用了case函数</p>
+<li><p>索引列进行了隐式类型转换，比如字符串和数字，内部调用了case函数</p>
 </li>
-<li>
-<p>使用否定、左或者左右模糊查询，<code>%xx、%xx%</code>；</p>
+<li><p>使用否定、左或者左右模糊查询，<code>%xx、%xx%</code>；</p>
 <blockquote>
 <p>否定查询需要遍历所有不满足条件的分支，优化器判断成本高于全表扫描</p>
-<p><code>LIKE '%xxx'</code>是 “后缀匹配”，B + 树按列值前缀排序，无法通过索引定位后缀相同的数据</p>
+<p><code>LIKE &#39;%xxx&#39;</code>是 “后缀匹配”，B + 树按列值前缀排序，无法通过索引定位后缀相同的数据</p>
 </blockquote>
 </li>
-<li>
-<p>联合索引违反最左匹配原则</p>
+<li><p>联合索引违反最左匹配原则</p>
 </li>
-<li>
-<p>范围查询(&gt; &lt; between)导致右侧索引失效(a&gt;xx and b=x)；</p>
+<li><p>范围查询(&gt; &lt; between)导致右侧索引失效(a&gt;xx and b&#x3D;x)；</p>
 <blockquote>
 <p>范围查询会定位到 B + 树的一个 区间，区间内的<code>b</code>列值不再保持全局有序</p>
 </blockquote>
 </li>
-<li>
-<p>OR条件包含非索引列</p>
+<li><p>OR条件包含非索引列</p>
 <blockquote>
 <p><code>OR</code>的逻辑是满足任一条件即可，若其中一列无索引，MySQL 无法通过索引快速筛选所有满足条件的行，只能全表扫描</p>
 </blockquote>
 </li>
-<li>
-<p>优化器判断执行当前查询时走索引的效率低于全表扫描，因此主动放弃使用索引，最终导致索引失效</p>
+<li><p>优化器判断执行当前查询时走索引的效率低于全表扫描，因此主动放弃使用索引，最终导致索引失效</p>
 </li>
 </ol>
 <p>怎么看走不走索引的？</p>
@@ -683,37 +652,31 @@
 <li>看<code>key</code>列：显示实际使用的索引名（<code>NULL</code>表示索引失效）；</li>
 <li>看<code>rows</code>列：预估扫描行数，行数接近表总行数说明索引失效。</li>
 </ol>
-<h2 id="索引优化详细">索引优化详细</h2>
-<p>索引优化应该围绕【减少磁盘 IO、避免回表、防止索引失效】这些方面展开吧</p>
+<h2 id="索引优化详细"><a href="#索引优化详细" class="headerlink" title="索引优化详细"></a>索引优化详细</h2><p>索引优化应该围绕【减少磁盘 IO、避免回表、防止索引失效】这些方面展开吧</p>
 <ol>
-<li>
-<p>前缀索引优化</p>
+<li><p>前缀索引优化</p>
 <blockquote>
-<p>对大字符串字段（如<code>VARCHAR</code>/<code>TEXT</code>），只取前 N 个字符建索引，减小索引体积，让单个磁盘页存更多索引值，降低 IO 次数</p>
+<p>对大字符串字段（如<code>VARCHAR</code>&#x2F;<code>TEXT</code>），只取前 N 个字符建索引，减小索引体积，让单个磁盘页存更多索引值，降低 IO 次数</p>
 </blockquote>
 </li>
-<li>
-<p>覆盖索引优化</p>
+<li><p>覆盖索引优化</p>
 <blockquote>
 <p>让索引包含查询所需的所有字段（<code>SELECT</code>+<code>WHERE</code>+<code>ORDER BY</code>），直接从二级索引取数据，避免回表查聚簇索引，减少一次 IO</p>
 <p>按最左匹配原则组合高频查询字段，比如<code>WHERE a=1 ORDER BY b</code>，就建<code>idx_a_b(a,b)</code></p>
 </blockquote>
 </li>
-<li>
-<p>主键自增优化</p>
+<li><p>主键自增优化</p>
 <blockquote>
 <p>如果我们使用自增主键，那么每次插入的新数据就会按顺序添加到当前索引节点的位置，不需要移动已有的数据，当页面写满，就会自动开辟一个新页面。因为每次插入一条新记录，都是追加操作，不需要重新移动数据，因此这种插入数据的方法效率非常高。</p>
 <p>如果我们使用非自增主键，由于每次插入主键的索引值都是随机的，因此每次插入新的数据时，就可能会插入到现有数据页中间的某个位置，这将不得不移动其它数据来满足新数据的插入，甚至需要从一个页面复制数据到另外一个页面，我们通常将这种情况称为页分裂。页分裂还有可能会造成大量的内存碎片，导致索引结构不紧凑，从而影响查询效率。</p>
 </blockquote>
 </li>
-<li>
-<p>防止索引失效</p>
+<li><p>防止索引失效</p>
 <blockquote>
 <p>详情见索引失效</p>
 </blockquote>
 </li>
-<li>
-<p>避免建立过多索引</p>
+<li><p>避免建立过多索引</p>
 <blockquote>
 <p>一张表索引≤5 个，减少写入维护开销</p>
 <p>缺点</p>
