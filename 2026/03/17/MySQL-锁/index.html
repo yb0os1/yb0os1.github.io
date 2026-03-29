@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="分类MySQL锁可分为分为全局锁、表级锁、行级锁  全局锁：通过flush tables with read lock语句将会把整个数据库处理只读状态；主要用于全库逻辑备份，备份期间不会出现数据或表结构的更新，因此备份文件的数据和预期就相同 表级锁： 表锁：通过lock tables对表加锁，表锁会限制别的线程读写，也会限制本线程接下来的读写 元数据锁：对数据库表进行操作时，自动加上MDL，对数据">
+    <meta name="description" content="分类 MySQL锁可分为分为全局锁、表级锁、行级锁  全局锁：通过flush tables with read lock语句将会把整个数据库处理只读状态；主要用于全库逻辑备份，备份期间不会出现数据或表结构的更新，因此备份文件的数据和预期就相同 表级锁：  表锁：通过lock tables对表加锁，表锁会限制别的线程读写，也会限制本线程接下来的读写 元数据锁：对数据库表进行操作时，自动加上MDL，对">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL-锁">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/17/MySQL-%E9%94%81/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="分类MySQL锁可分为分为全局锁、表级锁、行级锁  全局锁：通过flush tables with read lock语句将会把整个数据库处理只读状态；主要用于全库逻辑备份，备份期间不会出现数据或表结构的更新，因此备份文件的数据和预期就相同 表级锁： 表锁：通过lock tables对表加锁，表锁会限制别的线程读写，也会限制本线程接下来的读写 元数据锁：对数据库表进行操作时，自动加上MDL，对数据">
+<meta property="og:description" content="分类 MySQL锁可分为分为全局锁、表级锁、行级锁  全局锁：通过flush tables with read lock语句将会把整个数据库处理只读状态；主要用于全库逻辑备份，备份期间不会出现数据或表结构的更新，因此备份文件的数据和预期就相同 表级锁：  表锁：通过lock tables对表加锁，表锁会限制别的线程读写，也会限制本线程接下来的读写 元数据锁：对数据库表进行操作时，自动加上MDL，对">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar26.png">
 <meta property="article:published_time" content="2026-03-17T08:16:03.000Z">
@@ -504,17 +504,20 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><p>MySQL锁可分为分为全局锁、表级锁、行级锁</p>
+                <h1>分类</h1>
+<p>MySQL锁可分为分为全局锁、表级锁、行级锁</p>
 <ul>
 <li>全局锁：通过<code>flush tables with read lock</code>语句将会把整个数据库处理只读状态；主要用于<strong>全库逻辑备份</strong>，备份期间不会出现数据或表结构的更新，因此备份文件的数据和预期就相同</li>
-<li>表级锁：<ul>
+<li>表级锁：
+<ul>
 <li>表锁：通过<code>lock tables</code>对表加锁，表锁会限制别的线程读写，也会限制本线程接下来的读写</li>
 <li>元数据锁：对数据库表进行操作时，自动加上MDL，对数据表继续crud操作加MDL读锁，表结构变更加MDL写锁；MDL<strong>目的</strong>是为了保证当用户对表进行CRUD操作时，防止其他线程对表结构进行变更</li>
 <li>意向锁：当插入、删除、更新操作，需要先对表加上意向独占锁，然后对该记录加上独占锁；意向锁<strong>目的</strong>是为了快速判断表中是否有记录被加锁</li>
 <li>Auto-inc锁：主键自增锁</li>
 </ul>
 </li>
-<li>行级锁：<ul>
+<li>行级锁：
+<ul>
 <li>记录锁：锁住一条记录；分S锁和X锁，满足读写互斥、写写互斥</li>
 <li>间隙锁：只存在可重复读隔离级别，<strong>目的</strong>是为了解决可重复读下的幻读现象</li>
 <li>临建锁：记录锁+间隙锁，锁住的是一个范围和记录本身</li>
@@ -522,10 +525,12 @@
 </ul>
 </li>
 </ul>
-<h1 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h1><h2 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a>表锁</h2><p>表锁会限制别的线程的读写，也会限制本线程接下来的读写</p>
+<h1>表级锁</h1>
+<h2 id="表锁">表锁</h2>
+<p>表锁会限制别的线程的读写，也会限制本线程接下来的读写</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">#表级别的共享锁，也就是读锁<br>#允许当前会话读取被锁定的表，不可写，不可读取其他表；其他线程可读不可写<br>lock tables t_student read;<br><br>#表级别的独占锁，也就是写锁；<br>#允许当前会话对表进行读写操作，但阻止其他会话对这些表进行任何操作（读或写）<br>lock tables t_student write;<br></code></pre></td></tr></table></figure>
-
-<h2 id="元数据锁"><a href="#元数据锁" class="headerlink" title="元数据锁"></a>元数据锁</h2><p>不需要显式使用，对数据库表操作时自动加：</p>
+<h2 id="元数据锁">元数据锁</h2>
+<p>不需要显式使用，对数据库表操作时自动加：</p>
 <ul>
 <li>CRUD操作，加MDL读锁</li>
 <li>表结构变更，加MDL写锁</li>
@@ -534,7 +539,8 @@
 <p>（读写互斥、写写互斥）</p>
 <p>什么时候释放？事务提交才释放</p>
 <p>申请MDL表会形成一个队列，队列中写锁优先级高于读锁，当MDL写锁等待时，后续所有的CRUD操作都会被阻塞</p>
-<h2 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h2><p>目的是快速判断当前表中是不是有记录被加锁</p>
+<h2 id="意向锁">意向锁</h2>
+<p>目的是快速判断当前表中是不是有记录被加锁</p>
 <ul>
 <li>对记录加共享锁时，需要先对表加上意向共享锁</li>
 <li>对记录加独占锁时，需要先对表加上意向独占锁</li>
@@ -543,40 +549,47 @@
 <p>普通select是无锁 MVCC</p>
 <p>但select也是可以加共享锁和独占锁的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mysql">#先在表上加上意向共享锁，然后对读取的记录加共享锁<br>select ... lock in share mode;<br><br>#先表上加上意向独占锁，然后对读取的记录加独占锁<br>select ... for update;<br></code></pre></td></tr></table></figure>
-
 <p>意向锁之间不会冲突，但会和表锁发生冲突</p>
-<h2 id="AUTO-INC锁"><a href="#AUTO-INC锁" class="headerlink" title="AUTO-INC锁"></a>AUTO-INC锁</h2><p>主键自增</p>
+<h2 id="AUTO-INC锁">AUTO-INC锁</h2>
+<p>主键自增</p>
 <p>该锁不会等待事务提交之后再释放，而是在执行完插入语句之后就立即释放</p>
 <p><code>innodb_autoinc_lock_mode</code>的系统变量用来控制选择用 AUTO-INC 锁，还是轻量级锁</p>
 <ul>
 <li>当<code>innodb_autoinc_lock_mode=0</code>，就采用AUTO-INC锁，语句执行结束后才释放锁</li>
 <li>当<code>innodb_autoinc lock_mode=2</code>，就采用轻量级锁，申请自增主键后就释放锁，并不需要等语句执行后才释放</li>
-<li>当<code>innodb_autoinc_lock_mode =1</code>:<ul>
+<li>当<code>innodb_autoinc_lock_mode =1</code>:
+<ul>
 <li>普通<code>insert</code>语句，自增锁在申请之后就马上释放（轻量级</li>
 <li>类似<code>insert...select</code>这样的批量插入数据的语句，自增锁还是要等语句结束后才被释放（AUTO-INC</li>
 </ul>
 </li>
 </ul>
-<h1 id="行级锁"><a href="#行级锁" class="headerlink" title="行级锁"></a>行级锁</h1><p>S：共享锁，X：独占锁</p>
+<h1>行级锁</h1>
+<p>S：共享锁，X：独占锁</p>
 <p>SS兼容，其余均不兼容</p>
-<h2 id="记录锁"><a href="#记录锁" class="headerlink" title="记录锁"></a>记录锁</h2><p>锁住的是一条记录，分为S锁和X锁，兼容性如上</p>
+<h2 id="记录锁">记录锁</h2>
+<p>锁住的是一条记录，分为S锁和X锁，兼容性如上</p>
 <ul>
 <li>一个事务对一条记录加了 S 型记录锁后，其他事务也可以继续对该记录加 S 型记录锁，但是不可以对该记录加 X 型记录锁一个事务</li>
 <li>一个事务对一条记录加了 X 型记录锁后，其他事务既不可以对该记录加 S 型记录锁，也不可以对该记录加 X 型记录锁</li>
 </ul>
-<h2 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h2><p>存在可重复读隔离级别中，为了解决可重复读幻读问题</p>
-<p>比如存在id(3,5)的间隙锁，那么其他事务就不可以插入id&#x3D;4这个记录了</p>
+<h2 id="间隙锁">间隙锁</h2>
+<p>存在可重复读隔离级别中，为了解决可重复读幻读问题</p>
+<p>比如存在id(3,5)的间隙锁，那么其他事务就不可以插入id=4这个记录了</p>
 <p>间隙锁之间是兼容的，即两个事务可以同时持有包含共同间隙范围的间隙锁</p>
-<h2 id="临键锁"><a href="#临键锁" class="headerlink" title="临键锁"></a>临键锁</h2><p>兼容性同样如上</p>
+<h2 id="临键锁">临键锁</h2>
+<p>兼容性同样如上</p>
 <p>如果一个事务获取了 X 型的 next-key lock，那么另外一个事务在获取相同范围的 X 型的 next-key lock 时，是会被阻塞的。</p>
-<h2 id="插入意向锁"><a href="#插入意向锁" class="headerlink" title="插入意向锁"></a>插入意向锁</h2><p>特殊的间隙锁，该锁只用于并发插入操作</p>
+<h2 id="插入意向锁">插入意向锁</h2>
+<p>特殊的间隙锁，该锁只用于并发插入操作</p>
 <p>间隙锁锁住的是一个区间，那么插入意向锁锁住的就是一个点</p>
 <p>插入意向锁也属于间隙锁，但两个事务却不能在同一时间内，一个拥有间隙锁，另一个拥有该间隙区间内的插入意向锁（插入意向锁如果不在间隙锁区间内则是可以的）。所以，插入意向锁和间隙锁之间是冲突的。</p>
 <p><strong>插入意向锁的生成时机</strong></p>
 <ul>
 <li>每插入一条记录，都要看下待插入的位置是否已经被加上间隙锁，如果加上了就会生成一个插入意向锁</li>
 </ul>
-<h2 id="update不加索引导致什么？"><a href="#update不加索引导致什么？" class="headerlink" title="update不加索引导致什么？"></a>update不加索引导致什么？</h2><p>update的条件没有加索引的话那么就会走全表扫描，这样会对所有的记录加上临键锁，想到与锁住了整个表，变成了全表只读</p>
+<h2 id="update不加索引导致什么？">update不加索引导致什么？</h2>
+<p>update的条件没有加索引的话那么就会走全表扫描，这样会对所有的记录加上临键锁，想到与锁住了整个表，变成了全表只读</p>
 <p>如何避免？</p>
 <p>当 sql_safe_updates 设置为 1 时。</p>
 <p>update 语句必须满足如下条件之一才能执行成功：</p>
@@ -589,28 +602,34 @@
 <ul>
 <li>同时使用 where 和 limit，此时 where 条件中可以没有索引列；</li>
 </ul>
-<h2 id="MySQL是怎么加行锁的？"><a href="#MySQL是怎么加行锁的？" class="headerlink" title="MySQL是怎么加行锁的？"></a>MySQL是怎么加行锁的？</h2><p>加锁的对象是索引，加锁的基本单位是临键锁</p>
+<h2 id="MySQL是怎么加行锁的？">MySQL是怎么加行锁的？</h2>
+<p>加锁的对象是索引，加锁的基本单位是临键锁</p>
 <p>加什么锁主要看：走的什么索引、是等值查询还是范围查询、记录存不存在</p>
 <blockquote>
-<p> update x set s&#x3D;100 where id&#x3D;2（id是主键）</p>
-<p>1、如果id&#x3D;2存在，那么加上的是记录独占锁</p>
-<p>2、如果id&#x3D;2不存在，那么加上的是间隙锁</p>
+<p>update x set s=100 where id=2（id是主键）</p>
+<p>1、如果id=2存在，那么加上的是记录独占锁</p>
+<p>2、如果id=2不存在，那么加上的是间隙锁</p>
 </blockquote>
 <p>可重复读隔离级别下，唯一索引（包含主键索引）和非唯一索引针对当前读的加锁规则：</p>
 <ul>
-<li>唯一索引<ul>
-<li>等值查询<ul>
-<li>记录存在，在索引树定位到该记录&#x3D;》临键锁退化成<strong>记录锁</strong></li>
-<li>记录不存在，在索引树定位到第一个大于和小于该记录&#x3D;》临键锁退化成<strong>间隙锁</strong></li>
+<li>唯一索引
+<ul>
+<li>等值查询
+<ul>
+<li>记录存在，在索引树定位到该记录=》临键锁退化成<strong>记录锁</strong></li>
+<li>记录不存在，在索引树定位到第一个大于和小于该记录=》临键锁退化成<strong>间隙锁</strong></li>
 </ul>
 </li>
-<li>范围查询（为什么不一样，临键锁是左闭右开的）<ul>
-<li>大于等于（存在等值查询）<ul>
-<li>等值查询的记录在表中&#x3D;》对该等值的索引退化为<strong>记录锁</strong>，对大于该等值的索引还是<strong>临键锁</strong>  ；</li>
-<li>等值查询的记录不在表中&#x3D;》<strong>临键锁</strong></li>
+<li>范围查询（为什么不一样，临键锁是左闭右开的）
+<ul>
+<li>大于等于（存在等值查询）
+<ul>
+<li>等值查询的记录在表中=》对该等值的索引退化为<strong>记录锁</strong>，对大于该等值的索引还是<strong>临键锁</strong>  ；</li>
+<li>等值查询的记录不在表中=》<strong>临键锁</strong></li>
 </ul>
 </li>
-<li>小于等于<ul>
+<li>小于等于
+<ul>
 <li>等值查询的记录在表中，都是<strong>临键锁</strong></li>
 <li>等值查询的记录不在表中，终止范围前后退化为<strong>间隙锁</strong>，之前还是<strong>临键锁</strong></li>
 </ul>
@@ -619,13 +638,16 @@
 </li>
 </ul>
 </li>
-<li>非唯一索引<ul>
-<li>等值查询<ul>
+<li>非唯一索引
+<ul>
+<li>等值查询
+<ul>
 <li>记录不存在，找到等值的前后两个，临键锁退还为<strong>间隙锁</strong></li>
 <li>记录存在，因为非唯一索引可能存在值相同的记录，所以是一个扫描的过程，等值前到等值<strong>临键锁</strong>，等值到等值后一个<strong>间隙锁</strong>，等值对应的主键<strong>记录锁</strong></li>
 </ul>
 </li>
-<li>范围查询<ul>
+<li>范围查询
+<ul>
 <li>都是临键锁</li>
 </ul>
 </li>

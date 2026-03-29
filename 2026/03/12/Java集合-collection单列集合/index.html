@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="总览示意图 List List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Linked">
+    <meta name="description" content="总览示意图  List  List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Link">
 <meta property="og:type" content="article">
 <meta property="og:title" content="collection单列集合">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/12/Java%E9%9B%86%E5%90%88-collection%E5%8D%95%E5%88%97%E9%9B%86%E5%90%88/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="总览示意图 List List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Linked">
+<meta property="og:description" content="总览示意图  List  List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Link">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar8.png">
 <meta property="article:published_time" content="2026-03-12T15:31:50.000Z">
@@ -504,8 +504,10 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1 id="总览示意图"><a href="#总览示意图" class="headerlink" title="总览示意图"></a>总览示意图</h1><p><img src="/../../../../img/article_img/image-20260313103656777.png" srcset="/img/loading.gif" lazyload alt="重要集合示意图"></p>
-<h1 id="List"><a href="#List" class="headerlink" title="List"></a>List</h1><p><img src="/../../../../img/article_img/image-20260313103621541.png" srcset="/img/loading.gif" lazyload alt="四个集合"></p>
+                <h1>总览示意图</h1>
+<p><img src="../../../../img/article_img/image-20260313103656777.png" srcset="/img/loading.gif" lazyload alt="重要集合示意图"></p>
+<h1>List</h1>
+<p><img src="../../../../img/article_img/image-20260313103621541.png" srcset="/img/loading.gif" lazyload alt="四个集合"></p>
 <p>List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList</p>
 <ul>
 <li>ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景</li>
@@ -513,52 +515,65 @@
 <li>vector：和arraylist类似，也是基于数组实现的，他的大部分放大都是同步的（在方法上加synchronized关键字），可以保证线程安全，但是单线程环境下性能没有arraylist高</li>
 <li>CopyOnWriteArrayList：容量可变线程安全的结合，底层也是数组；读写分离，写入的时候写入新数组，读取的时候仍旧读取老数组，这样读操作不会写操作阻塞，写操作是要加锁，防止出现并发写入时元素覆盖的问题；缺点读的数据可能不是最新的，占用内存大，适合读多写少的并发场景</li>
 </ul>
-<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><h3 id="ArrayList和LinkedList区别"><a href="#ArrayList和LinkedList区别" class="headerlink" title="ArrayList和LinkedList区别"></a>ArrayList和LinkedList区别</h3><ul>
+<h2 id="ArrayList">ArrayList</h2>
+<h3 id="ArrayList和LinkedList区别">ArrayList和LinkedList区别</h3>
+<ul>
 <li>底层数据结构：ArrayList使用数组实现，通过索引进行快速访问元素；LinkedList使用链表实现，通过节点之间的指针进行元素的访问和操作</li>
 <li>插入和删除效率：ArrayList在尾部的插入和删除操作效率较高，但在中间或开头的插入和删除操作效率较低，需要移动元素。LinkedList在任意位置的插入和删除操作效率都比较高，只需要调整节点之间的指针，但是LinkedList是不支持随机访问的，所以除了头结点外插入和删除的时间复杂度都是0(n)，效率也不是很高所以LinkedList基本没人用。</li>
 <li>随机访问：ArrayList支持通过索引进行快速随机访问；LinkedList需要从头或尾开始遍历链表</li>
 <li>空间占用：ArrayList在创建时需要分配一段连续的内存空间，因此会占用较大的空间；LinkedList每个节点只需要存储元素和指针，因此相对较小</li>
 <li>使用场景：ArrayList适用于频繁随机访问和尾部的插入删除操作；LinkedList适用于频繁的中间插入删除操作和不需要随机访问的场景。</li>
 </ul>
-<h3 id="ArrayList和Vector区别"><a href="#ArrayList和Vector区别" class="headerlink" title="ArrayList和Vector区别"></a>ArrayList和Vector区别</h3><p>看两个方面：线程安全和扩容（前者1.5倍后者2倍）</p>
-<h3 id="ArrayList线程不安全体现在？如何把他变成线程安全？"><a href="#ArrayList线程不安全体现在？如何把他变成线程安全？" class="headerlink" title="ArrayList线程不安全体现在？如何把他变成线程安全？"></a>ArrayList线程不安全体现在？如何把他变成线程安全？</h3><p>线程不安全：</p>
+<h3 id="ArrayList和Vector区别">ArrayList和Vector区别</h3>
+<p>看两个方面：线程安全和扩容（前者1.5倍后者2倍）</p>
+<h3 id="ArrayList线程不安全体现在？如何把他变成线程安全？">ArrayList线程不安全体现在？如何把他变成线程安全？</h3>
+<p>线程不安全：</p>
 <ul>
 <li>add覆盖：下面也可以解释 都是在相同的size设置了值</li>
 <li>size与实际add数量不符合：size++是非原子的；线程1和线程2拿到一样的size值加完了同时覆盖，就会导致一次没有加上</li>
 <li>部分null和索引越界：当前长度为9，容量为10，线程1和线程2都先判断不需要扩容，然后他们先后执行size++就会导致长度变成11</li>
 </ul>
 <p><code> Collections.synchronizedList</code>、<code>CopyOnWriteArrayList</code>、<code>Vector</code></p>
-<h3 id="ArrayList的扩容机制"><a href="#ArrayList的扩容机制" class="headerlink" title="ArrayList的扩容机制"></a>ArrayList的扩容机制</h3><blockquote>
+<h3 id="ArrayList的扩容机制">ArrayList的扩容机制</h3>
+<blockquote>
 <p>arraylist默认容量是10（一开始磁层显示空数组，当第一次add的时候才会给10）</p>
 </blockquote>
 <p>添加元素的时候，如果当前元素个数已经达到内部数组最大上限，就会触发扩容操作：</p>
 <ol>
-<li><p>计算新容量：一般情况新的数组的容量是旧数组的1.5倍，然后检查是否超过最大容量限制</p>
+<li>
+<p>计算新容量：一般情况新的数组的容量是旧数组的1.5倍，然后检查是否超过最大容量限制</p>
 <blockquote>
 <p>为什么是1.5倍？1.5倍是可以充分的利用位运算，减少浮点数或者运算时间和操作</p>
 </blockquote>
 </li>
-<li><p>创建新数组：创建新容量大小的数组</p>
+<li>
+<p>创建新数组：创建新容量大小的数组</p>
 </li>
-<li><p>元素复制：把旧数据逐个复制到新数组里面</p>
+<li>
+<p>元素复制：把旧数据逐个复制到新数组里面</p>
 </li>
-<li><p>更新引用：将ArrayList原先的引用指向新的数组</p>
+<li>
+<p>更新引用：将ArrayList原先的引用指向新的数组</p>
 </li>
 </ol>
 <p>扩容涉及到数组复制、内存重新分配，是影响性能的，在创建的时候可以评估一下初始容量，防止频繁触发扩容操作影响性能</p>
-<h2 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h2><h3 id="怎么实现线程安全？"><a href="#怎么实现线程安全？" class="headerlink" title="怎么实现线程安全？"></a>怎么实现线程安全？</h3><p>底层也是一个数组，volatile修饰</p>
+<h2 id="CopyOnWriteArrayList">CopyOnWriteArrayList</h2>
+<h3 id="怎么实现线程安全？">怎么实现线程安全？</h3>
+<p>底层也是一个数组，volatile修饰</p>
 <p>整个写入操作都是加锁的，保证写入的线程安全</p>
 <p>写入新元素的时候，首先会先将旧数组数据拷贝到长度+1的新数组中，然后将新加入的元素放置都在新数组最后一个位置后，最后用新数组的地址替换掉老数组的地址就能得到最新的数据</p>
 <p>读取操作就是直接getindex，是没有加锁的</p>
 <p>缺点：读的数据可能不是最新的，占用内存大，适合读多写少的并发场景</p>
-<h1 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h1><p>set是无序的collection，不允许存在重复的元素，常见的实现有hashset、linkedhashset、treeset（set的实现都是基于map的）</p>
+<h1>Set</h1>
+<p>set是无序的collection，不允许存在重复的元素，常见的实现有hashset、linkedhashset、treeset（set的实现都是基于map的）</p>
 <ul>
 <li>HashSet通过HashMap实现，HashMap的Key即HashSet存储的元素，所有Key都是用相同的Value；Key保证元素唯一性，但不保证有序性；线程不安全</li>
 <li>LinkedHashSet继承自HashSet，通过LinkedHashMap实现，使用双向链表维护元素插入顺序</li>
 <li>TreeSet通过TreeMap实现的，添加元素到集合时按照比较规则将其插入合适的位置，保证插入后的集合仍然有序</li>
 </ul>
 <p>实现都是基于map的，把map的key作为set的value，所以原理上都是和map一致的</p>
-<h2 id="如何保证元素唯一？"><a href="#如何保证元素唯一？" class="headerlink" title="如何保证元素唯一？"></a>如何保证元素唯一？</h2><p>Set集合通过内部的数据结构（如哈希表、红黑树等）来实现key的无重复</p>
+<h2 id="如何保证元素唯一？">如何保证元素唯一？</h2>
+<p>Set集合通过内部的数据结构（如哈希表、红黑树等）来实现key的无重复</p>
 <p>当向Set集合中插入元素时，会先根据元素的hashCode值来确定元素的存储位置，当向Set集合中插入元素时，会先根据元素的hashCode值来确定元素的存储位置，</p>
 
                 
