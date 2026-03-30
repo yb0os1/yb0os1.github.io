@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="智能体和发展史概念在人工智能领域，智能体被定义为任何能够通过传感器（Sensors）感知其所处环境（Environment），并自主地通过**执行器（Actuators）采取行动（Action）**以达成特定目标的实体 上述概念包含四个基本要素：  环境是智能体所处的外部世界  对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它通过其">
+    <meta name="description" content="智能体和发展史 概念 在人工智能领域，智能体被定义为任何能够通过传感器（Sensors）感知其所处环境（Environment），并自主地通过**执行器（Actuators）采取行动（Action）**以达成特定目标的实体 上述概念包含四个基本要素：   环境是智能体所处的外部世界  对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AI学习-helloAgents">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/26/AI%E5%AD%A6%E4%B9%A0-helloAgent/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="智能体和发展史概念在人工智能领域，智能体被定义为任何能够通过传感器（Sensors）感知其所处环境（Environment），并自主地通过**执行器（Actuators）采取行动（Action）**以达成特定目标的实体 上述概念包含四个基本要素：  环境是智能体所处的外部世界  对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它通过其">
+<meta property="og:description" content="智能体和发展史 概念 在人工智能领域，智能体被定义为任何能够通过传感器（Sensors）感知其所处环境（Environment），并自主地通过**执行器（Actuators）采取行动（Action）**以达成特定目标的实体 上述概念包含四个基本要素：   环境是智能体所处的外部世界  对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar25.png">
 <meta property="article:published_time" content="2026-03-25T17:20:16.000Z">
@@ -550,31 +550,38 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1 id="智能体和发展史"><a href="#智能体和发展史" class="headerlink" title="智能体和发展史"></a>智能体和发展史</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>在人工智能领域，智能体被定义为任何能够通过<strong>传感器（Sensors）<strong>感知其所处</strong>环境（Environment）</strong>，并<strong>自主</strong>地通过**执行器（Actuators）<strong>采取</strong>行动（Action）**以达成特定目标的实体</p>
+                <h1>智能体和发展史</h1>
+<h2 id="概念">概念</h2>
+<p>在人工智能领域，智能体被定义为任何能够通过<strong>传感器（Sensors）<strong>感知其所处</strong>环境（Environment）</strong>，并<strong>自主</strong>地通过**执行器（Actuators）<strong>采取</strong>行动（Action）**以达成特定目标的实体</p>
 <p>上述概念包含四个基本要素：</p>
 <ol>
-<li><p>环境是智能体所处的外部世界</p>
+<li>
+<p>环境是智能体所处的外部世界</p>
 <blockquote>
 <p>对于自动驾驶汽车，环境是动态变化的道路交通；对于一个交易算法，环境则是瞬息万变的金融市场。智能体并非与环境隔离，它通过其传感器持续地感知环境状态。摄像头、麦克风、雷达或各类**应用程序编程接口（Application Programming Interface, API）**返回的数据流，都是其感知能力的延伸</p>
 </blockquote>
 </li>
-<li><p>获取信息后，智能体需要采取行动来对环境施加影响，它通过执行器来改变环境的状态</p>
+<li>
+<p>获取信息后，智能体需要采取行动来对环境施加影响，它通过执行器来改变环境的状态</p>
 <blockquote>
 <p>执行器可以是物理设备（如机械臂、方向盘）或虚拟工具（如执行一段代码、调用一个服务）</p>
 </blockquote>
 </li>
-<li><p>真正赋予智能体智能的，是其自主性（Autonomy）</p>
+<li>
+<p>真正赋予智能体智能的，是其自主性（Autonomy）</p>
 <blockquote>
 <p>智能体并非只是被动响应外部刺激或严格执行预设指令的程序，它能够基于其感知和内部状态进行独立决策，以达成其设计目标。这种从感知到行动的闭环，构成了所有智能体行为的基础</p>
 </blockquote>
 </li>
 </ol>
-<p><img src="/../../../../img/article_img/image-20260326114330418.png" srcset="/img/loading.gif" lazyload alt="智能体与环境的基本交互循环"></p>
-<h3 id="传统视角下的智能体"><a href="#传统视角下的智能体" class="headerlink" title="传统视角下的智能体"></a>传统视角下的智能体</h3><p>传统视角下的智能体，是在大语言模型出现之前，是那些结构最简单的<strong>反射智能体（Simple Reflex Agent）</strong>。它们的决策核心由工程师明确设计的“条件-动作”规则构成</p>
+<p><img src="../../../../img/article_img/image-20260326114330418.png" srcset="/img/loading.gif" lazyload alt="智能体与环境的基本交互循环"></p>
+<h3 id="传统视角下的智能体">传统视角下的智能体</h3>
+<p>传统视角下的智能体，是在大语言模型出现之前，是那些结构最简单的<strong>反射智能体（Simple Reflex Agent）</strong>。它们的决策核心由工程师明确设计的“条件-动作”规则构成</p>
 <p>完全依赖于当前的感知输入，不具备记忆或预测能力。它像一种数字化的本能，可靠且高效，但也因此无法应对需要理解上下文的复杂任务，局限性引出了一个关键问题：如果环境的当前状态不足以作为决策的全部依据，智能体该怎么办？</p>
-<p><img src="/../../../../img/article_img/image-20260326114759164.png" srcset="/img/loading.gif" lazyload alt="简单反射智能体的决策逻辑示意图"></p>
+<p><img src="../../../../img/article_img/image-20260326114759164.png" srcset="/img/loading.gif" lazyload alt="简单反射智能体的决策逻辑示意图"></p>
 <p>yin’wei</p>
-<h1 id="大语言模型"><a href="#大语言模型" class="headerlink" title="大语言模型"></a>大语言模型</h1>
+<h1>大语言模型</h1>
+
                 
               
             </div>
