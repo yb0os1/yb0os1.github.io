@@ -201,6 +201,15 @@
                                   <span>JUC</span>
                               </a>
                               
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
                     </div>
                   </li>
                   
@@ -289,13 +298,50 @@
             
               
                 
-                    <li class="nav-item">
-                      <a class="nav-link" href="/queue" target="_self">
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
                         
-                          <span>📬 消息队列</span>
-                      </a>
-                    </li>
-                    
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
                       
           
             
@@ -304,7 +350,7 @@
                     <li class="nav-item">
                       <a class="nav-link" href="/scene" target="_self">
                         
-                          <span>🚀 场景/系统设计</span>
+                          <span>🚀 场景</span>
                       </a>
                     </li>
                     
@@ -473,93 +519,6 @@
     
     <div class="category-sub row nomargin-x">
       <a class="category-subitem collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mysql"
-        id="heading-81c3b080dad537de7e10e0987a4bf52e" role="tab" data-toggle="collapse" href="#collapse-81c3b080dad537de7e10e0987a4bf52e"
-        aria-expanded="false"
-      >
-        mysql
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/database/mysql/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>6</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-81c3b080dad537de7e10e0987a4bf52e"
-           role="tabpanel" aria-labelledby="heading-81c3b080dad537de7e10e0987a4bf52e">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2026/03/19/MySQL-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" title="MySQL-性能调优"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">MySQL-性能调优</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/03/17/MySQL-%E6%97%A5%E5%BF%97/" title="MySQL-日志"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">MySQL-日志</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/03/17/MySQL-%E9%94%81/" title="MySQL-锁"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">MySQL-锁</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/03/16/MySQL-%E4%BA%8B%E5%8A%A1/" title="MySQL-事务"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">MySQL-事务</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/03/15/MySQL-%E7%B4%A2%E5%BC%95/" title="MySQL-索引"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">MySQL-索引</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/03/14/MySQL-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="MySQL-存储引擎"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">MySQL-存储引擎</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category-sub row nomargin-x">
-      <a class="category-subitem collapsed
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="redis"
         id="heading-86a1b907d54bf7010394bf316e183e67" role="tab" data-toggle="collapse" href="#collapse-86a1b907d54bf7010394bf316e183e67"
         aria-expanded="false"
@@ -633,6 +592,93 @@
            class="list-group-item list-group-item-action
            ">
           <span class="category-post">Redis-数据结构</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mysql"
+        id="heading-81c3b080dad537de7e10e0987a4bf52e" role="tab" data-toggle="collapse" href="#collapse-81c3b080dad537de7e10e0987a4bf52e"
+        aria-expanded="false"
+      >
+        mysql
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/database/mysql/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>6</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-81c3b080dad537de7e10e0987a4bf52e"
+           role="tabpanel" aria-labelledby="heading-81c3b080dad537de7e10e0987a4bf52e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2026/03/19/MySQL-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" title="MySQL-性能调优"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL-性能调优</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/03/17/MySQL-%E6%97%A5%E5%BF%97/" title="MySQL-日志"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL-日志</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/03/17/MySQL-%E9%94%81/" title="MySQL-锁"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL-锁</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/03/16/MySQL-%E4%BA%8B%E5%8A%A1/" title="MySQL-事务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL-事务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/03/15/MySQL-%E7%B4%A2%E5%BC%95/" title="MySQL-索引"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL-索引</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/03/14/MySQL-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="MySQL-存储引擎"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL-存储引擎</span>
         </a>
       
     
@@ -752,66 +798,6 @@
     
     <div class="category-sub row nomargin-x">
       <a class="category-subitem collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="JVM"
-        id="heading-18b5a217c4dad25662d3a05edb0e39d7" role="tab" data-toggle="collapse" href="#collapse-18b5a217c4dad25662d3a05edb0e39d7"
-        aria-expanded="false"
-      >
-        JVM
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/java/JVM/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>3</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-18b5a217c4dad25662d3a05edb0e39d7"
-           role="tabpanel" aria-labelledby="heading-18b5a217c4dad25662d3a05edb0e39d7">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2026/03/24/JVM-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" title="JVM-垃圾回收"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">JVM-垃圾回收</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" title="JVM-类加载和对象创建"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">JVM-类加载和对象创建</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/03/24/JVM-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" title="JVM-内存结构"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">JVM-内存结构</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category-sub row nomargin-x">
-      <a class="category-subitem collapsed
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="basics"
         id="heading-785546c0d11017b8ed5931226041b498" role="tab" data-toggle="collapse" href="#collapse-785546c0d11017b8ed5931226041b498"
         aria-expanded="false"
@@ -867,6 +853,66 @@
       </div>
     </div>
   
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="JVM"
+        id="heading-18b5a217c4dad25662d3a05edb0e39d7" role="tab" data-toggle="collapse" href="#collapse-18b5a217c4dad25662d3a05edb0e39d7"
+        aria-expanded="false"
+      >
+        JVM
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/java/JVM/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>3</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-18b5a217c4dad25662d3a05edb0e39d7"
+           role="tabpanel" aria-labelledby="heading-18b5a217c4dad25662d3a05edb0e39d7">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2026/03/24/JVM-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" title="JVM-垃圾回收"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">JVM-垃圾回收</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/03/24/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" title="JVM-类加载和对象创建"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">JVM-类加载和对象创建</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/03/24/JVM-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" title="JVM-内存结构"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">JVM-内存结构</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
         
       </div>
     </div>
@@ -913,48 +959,6 @@
            class="list-group-item list-group-item-action
            ">
           <span class="category-post">实习整理</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="algorithm"
-        id="heading-ed469618898d75b149e5c7c4b6a1c415" role="tab" data-toggle="collapse" href="#collapse-ed469618898d75b149e5c7c4b6a1c415"
-        aria-expanded="false"
-      >
-        algorithm
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/algorithm/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>1</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-ed469618898d75b149e5c7c4b6a1c415"
-           role="tabpanel" aria-labelledby="heading-ed469618898d75b149e5c7c4b6a1c415">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2026/03/11/1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" title="1.两数之和"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">1.两数之和</span>
         </a>
       
     
@@ -1053,6 +1057,80 @@
     
     <div class="category row nomargin-x">
       <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="algorithm"
+        id="heading-ed469618898d75b149e5c7c4b6a1c415" role="tab" data-toggle="collapse" href="#collapse-ed469618898d75b149e5c7c4b6a1c415"
+        aria-expanded="false"
+      >
+        algorithm
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/algorithm/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-ed469618898d75b149e5c7c4b6a1c415"
+           role="tabpanel" aria-labelledby="heading-ed469618898d75b149e5c7c4b6a1c415">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2026/03/11/1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" title="1.两数之和"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">1.两数之和</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="distributed"
+        id="heading-8201b6e3d88dd2de76c3ccec9fcc3f8a" role="tab" data-toggle="collapse" href="#collapse-8201b6e3d88dd2de76c3ccec9fcc3f8a"
+        aria-expanded="false"
+      >
+        distributed
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/distributed/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-8201b6e3d88dd2de76c3ccec9fcc3f8a"
+           role="tabpanel" aria-labelledby="heading-8201b6e3d88dd2de76c3ccec9fcc3f8a">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="queue"
         id="heading-a9d1cbf71942327e98b40cf5ef38a960" role="tab" data-toggle="collapse" href="#collapse-a9d1cbf71942327e98b40cf5ef38a960"
         aria-expanded="false"
@@ -1062,7 +1140,7 @@
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-        <a href="/queue/" class="category-count col-2 col-md-1 col-xm-1">
+        <a href="/distributed/queue/" class="category-count col-2 col-md-1 col-xm-1">
           <i class="iconfont icon-articles"></i>
           <span>1</span>
         </a>
@@ -1077,15 +1155,19 @@
     
       
       
-        <a href="/2026/03/28/kafka/" title="kafka"
+        <a href="/2026/03/28/Kafka/" title="Kafka"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">kafka</span>
+          <span class="category-post">Kafka</span>
         </a>
       
     
   </div>
 
+        
+      </div>
+    </div>
+  
         
       </div>
     </div>

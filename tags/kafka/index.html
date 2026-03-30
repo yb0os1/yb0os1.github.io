@@ -201,6 +201,15 @@
                                   <span>JUC</span>
                               </a>
                               
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
                     </div>
                   </li>
                   
@@ -289,13 +298,50 @@
             
               
                 
-                    <li class="nav-item">
-                      <a class="nav-link" href="/queue" target="_self">
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
                         
-                          <span>📬 消息队列</span>
-                      </a>
-                    </li>
-                    
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
                       
           
             
@@ -304,7 +350,7 @@
                     <li class="nav-item">
                       <a class="nav-link" href="/scene" target="_self">
                         
-                          <span>🚀 场景/系统设计</span>
+                          <span>🚀 场景</span>
                       </a>
                     </li>
                     
@@ -442,9 +488,9 @@
       
       <p class="h5">2026</p>
     
-    <a href="/2026/03/28/kafka/" class="list-group-item list-group-item-action">
+    <a href="/2026/03/28/Kafka/" class="list-group-item list-group-item-action">
       <time>03-28</time>
-      <div class="list-group-item-title">kafka</div>
+      <div class="list-group-item-title">Kafka</div>
     </a>
   
 </div>

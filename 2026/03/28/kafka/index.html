@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="核心架构组件  本章节是重理解  体系结构 Kafka 包含若干 Producer、若干 Broker、若干 Consumer 以及一个 Zookeeper 集群   Zookeeper 是 Kafka 用来负责集群元数据管理、控制器选举等操作的  2.8开始，引入了KRaft，尝试使用Raft共识算法代替Zookeeper管理元数据 3.3 开始，KRaft 模式成为默认选项    Produc">
+    <meta name="description" content="核心架构组件 本章节是重理解  作用使用消息队列的主要目的主要记住这三个关键词：解耦、异步、削峰填谷  解耦：在一个复杂的系统中，不同的模块或服务之间可能需要相互依赖，如果直接使用函数调用或者 API调用的方式，会造成模块之间的耦合，当其中一个模块发生改变时，需要同时修改调用方和被调用方的代码。而使用消息队列作为中间件，不同的模块可以将消息发送到消息队列中，不需要知道具体的接收方是谁，接收方可以独">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kafka">
-<meta property="og:url" content="https://yb0os1.github.io/2026/03/28/kafka/index.html">
+<meta property="og:title" content="Kafka">
+<meta property="og:url" content="https://yb0os1.github.io/2026/03/28/Kafka/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="核心架构组件  本章节是重理解  体系结构 Kafka 包含若干 Producer、若干 Broker、若干 Consumer 以及一个 Zookeeper 集群   Zookeeper 是 Kafka 用来负责集群元数据管理、控制器选举等操作的  2.8开始，引入了KRaft，尝试使用Raft共识算法代替Zookeeper管理元数据 3.3 开始，KRaft 模式成为默认选项    Produc">
+<meta property="og:description" content="核心架构组件 本章节是重理解  作用使用消息队列的主要目的主要记住这三个关键词：解耦、异步、削峰填谷  解耦：在一个复杂的系统中，不同的模块或服务之间可能需要相互依赖，如果直接使用函数调用或者 API调用的方式，会造成模块之间的耦合，当其中一个模块发生改变时，需要同时修改调用方和被调用方的代码。而使用消息队列作为中间件，不同的模块可以将消息发送到消息队列中，不需要知道具体的接收方是谁，接收方可以独">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar28.png">
 <meta property="article:published_time" content="2026-03-28T09:47:49.000Z">
-<meta property="article:modified_time" content="2026-03-28T16:43:04.627Z">
+<meta property="article:modified_time" content="2026-03-30T03:44:55.415Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="kafka">
 <meta property="article:tag" content="queue">
@@ -39,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>kafka - yb0os1</title>
+  <title>Kafka - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,6 +212,15 @@
                                   <span>JUC</span>
                               </a>
                               
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
                     </div>
                   </li>
                   
@@ -300,13 +309,50 @@
             
               
                 
-                    <li class="nav-item">
-                      <a class="nav-link" href="/queue" target="_self">
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
                         
-                          <span>📬 消息队列</span>
-                      </a>
-                    </li>
-                    
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
                       
           
             
@@ -315,7 +361,7 @@
                     <li class="nav-item">
                       <a class="nav-link" href="/scene" target="_self">
                         
-                          <span>🚀 场景/系统设计</span>
+                          <span>🚀 场景</span>
                       </a>
                     </li>
                     
@@ -413,7 +459,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="kafka"></span>
+            <span id="subtitle" data-typed-text="Kafka"></span>
           
         </div>
 
@@ -437,7 +483,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.3k 字
+          4.9k 字
         
       </span>
     
@@ -449,7 +495,7 @@
         
         
           <!-- compatible with older versions-->
-          28 分钟
+          41 分钟
         
       </span>
     
@@ -497,71 +543,65 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">kafka</h1>
+            <h1 id="seo-header">Kafka</h1>
             
             
             <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>核心架构组件</h1>
-<blockquote>
+                <h1 id="核心架构组件"><a href="#核心架构组件" class="headerlink" title="核心架构组件"></a>核心架构组件</h1><blockquote>
 <p>本章节是重理解</p>
 </blockquote>
-<h2 id="体系结构">体系结构</h2>
-<p>Kafka 包含若干 Producer、若干 Broker、若干 Consumer 以及一个 Zookeeper 集群</p>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>使用消息队列的主要目的主要记住这三个关键词：<strong>解耦、异步、削峰填谷</strong></p>
+<ol>
+<li><p><strong>解耦</strong>：在一个复杂的系统中，不同的模块或服务之间可能需要相互依赖，如果直接使用函数调用或者 API调用的方式，会造成模块之间的耦合，当其中一个模块发生改变时，需要同时修改调用方和被调用方的代码。而使用消息队列作为中间件，不同的模块可以将消息发送到消息队列中，不需要知道具体的接收方是谁，接收方可以独立地消费消息，实现了模块之间的解耦。</p>
+</li>
+<li><p><strong>异步</strong>：有些操作比较耗时，例如发送邮件、生成报表等，如果使用同步的方式处理，会阻塞主线程或者进程，导致系统的性能下降。而使用消息队列，可以将这些操作封装成消息，放入消息队列中，异步地处理这些操作，不影响主流程的执行，提高了系统的性能和响应速度。</p>
+</li>
+<li><p><strong>削峰填谷</strong>：削峰填谷是一种在高并发场景下平衡系统压力的技术，通常用于平衡系统在高峰期和低谷期的资源利用率，提高系统的吞吐量和响应速度。在削峰填谷的过程中，通常使用消息队列作为缓冲区，将请求放入消息队列中，然后在系统负载低的时候进行处理。这种方式可以将系统的峰值压力分散到较长的时间段内，减少瞬时压力对系统的影响，从而提高系统的稳定性和可靠性。</p>
+</li>
+</ol>
+<h2 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h2><p>Kafka 包含若干 Producer、若干 Broker、若干 Consumer 以及一个 Zookeeper 集群</p>
 <ul>
-<li>
-<p>Zookeeper 是 Kafka 用来负责集群元数据管理、控制器选举等操作的</p>
+<li><p>Zookeeper 是 Kafka 用来负责集群元数据管理、控制器选举等操作的</p>
 <blockquote>
 <p>2.8开始，引入了KRaft，尝试使用Raft共识算法代替Zookeeper管理元数据</p>
 <p>3.3 开始，KRaft 模式成为默认选项</p>
 </blockquote>
 </li>
-<li>
-<p>Producer 是负责将消息发送到Broker的</p>
+<li><p>Producer 是负责将消息发送到Broker的</p>
 </li>
-<li>
-<p>Broker 负责接受消息，将消息持久化到磁盘</p>
+<li><p>Broker 负责接受消息，将消息持久化到磁盘</p>
 </li>
-<li>
-<p>Consumer 是负责从 Broker 订阅并消费消息</p>
+<li><p>Consumer 是负责从 Broker 订阅并消费消息</p>
 </li>
 </ul>
-<p><img src="../../../../img/article_img/image-20260328180448812.png" srcset="/img/loading.gif" lazyload alt="kafka运行体系结构"></p>
-<h2 id="Broker">Broker</h2>
-<ul>
+<p><img src="/../../../../img/article_img/image-20260328180448812.png" srcset="/img/loading.gif" lazyload alt="kafka运行体系结构"></p>
+<h2 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h2><ul>
 <li>一个Kafka的集群通常由多个Broker组成，这样才能实现负载均衡、以及容错</li>
 <li>Broker是**无状态（Sateless）**的，它们是通过ZooKeeper来维护集群状态</li>
 <li>一个Kafka的Broker每秒可以处理数十万次读写，每个Broker都可以处理TB消息而不影响性能</li>
 </ul>
-<h2 id="Zookeeper">Zookeeper</h2>
-<ul>
+<h2 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h2><ul>
 <li>ZK用来管理和协调 Broker，并且存储了Kafka的元数据（例如：有多少topic、partition、consumer、producer）</li>
 <li>ZK服务主要用于通知生产者和消费者Kafka集群中有新的Broker加入、或者Kafka集群中出现故障的Broker</li>
 </ul>
-<h2 id="Topic">Topic</h2>
+<h2 id="Topic"><a href="#Topic" class="headerlink" title="Topic"></a>Topic</h2><ul>
+<li><p>所谓发布订阅机制</p>
 <ul>
-<li>
-<p>所谓发布订阅机制</p>
-<ul>
-<li>
-<p>生产者发布的消息是需要指定一个Topic的，含义即这个消息属于这个“主题”Topic，也可以把“主题”理解为“类别”，生产者就会把消息发送到所指定的Topic。</p>
+<li><p>生产者发布的消息是需要指定一个Topic的，含义即这个消息属于这个“主题”Topic，也可以把“主题”理解为“类别”，生产者就会把消息发送到所指定的Topic。</p>
 </li>
-<li>
-<p>通常一个Topic中只会专门存储某一类的（消息）信息，比如 Topic（A）专门存储用户观看直播时长信息、Topic（B）专门存储直播PK开始信息。并且在一个Topic中的消息是有固定结构的。</p>
+<li><p>通常一个Topic中只会专门存储某一类的（消息）信息，比如 Topic（A）专门存储用户观看直播时长信息、Topic（B）专门存储直播PK开始信息。并且在一个Topic中的消息是有固定结构的。</p>
 </li>
-<li>
-<p>消费者是从它所指定订阅的 “主题”Topic 中去拉取的。</p>
+<li><p>消费者是从它所指定订阅的 “主题”Topic 中去拉取的。</p>
 </li>
 </ul>
 </li>
-<li>
-<p>一个主题Topic被分成多个Partition分区</p>
+<li><p>一个主题Topic被分成多个Partition分区</p>
 </li>
 </ul>
-<h2 id="Partition">Partition</h2>
-<p>一个主题Topic被分成多个Partition分区（Topic是逻辑概念，即无实体的）</p>
+<h2 id="Partition"><a href="#Partition" class="headerlink" title="Partition"></a>Partition</h2><p>一个主题Topic被分成多个Partition分区（Topic是逻辑概念，即无实体的）</p>
 <ul>
 <li>Partition分区 是最小的存储单元，掌握着一个Topic的部分数据。</li>
 <li>每个 Partition 分区都是一个单独的 log 文件，每条记录都以追加的形式写入。</li>
@@ -570,30 +610,24 @@
 <li>一个 Partition 会生成多个副本Replica，并且把它们分散存储在不同的 Broker 中</li>
 <li>在Kafka中，一般都会设计副本Replica的个数 &gt; 1</li>
 </ul>
-<p><img src="../../../../img/article_img/image-20260328181412861.png" srcset="/img/loading.gif" lazyload alt="分区示意图"></p>
-<h2 id="Offset">Offset</h2>
-<h3 id="定义">定义</h3>
-<ul>
+<p><img src="/../../../../img/article_img/image-20260328181412861.png" srcset="/img/loading.gif" lazyload alt="分区示意图"></p>
+<h2 id="Offset"><a href="#Offset" class="headerlink" title="Offset"></a>Offset</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
 <li>Offset 是一个递增的、不可变的数字，当一条记录写入 Partition 的时候，它就被追加到该 Partition 对应的 log 文件的末尾，并被分配一个序号，作为 Offset。即使消息被删除或过期，Offset 也不会改变或重用</li>
 <li><strong>Offset 是 Kafka 为每条消息分配的一个唯一的编号，它表示消息在分区中的顺序位置</strong></li>
 <li>Offset 是从 0 开始的，每当有新的消息写入 Partition 时，Offset 就会加 1</li>
 </ul>
-<h3 id="作用">作用</h3>
-<ul>
+<h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><ul>
 <li>一是用来定位消息。<strong>通过指定 offset，消费者可以准确地找到分区中的某条消息，或者从某个位置开始消费消息</strong>。</li>
 <li>二是用来<strong>记录消费进度</strong>。消费者在消费完一条消息后，需要提交 offset 来告诉 Kafka broker 自己消费到哪里了。这样，如果消费者发生故障或重启，它可以根据保存的 offset 来恢复消费状态</li>
 </ul>
-<h3 id="存储">存储</h3>
-<ul>
+<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><ul>
 <li>老版本默认Kafka将Offset存储在Zookeeper中</li>
 <li>Kafka 0.9.0 版本后，offset 的实际存储位置都是在 Kafka 的一个内置主题中：consumer_offsets。这个主题有 50 个分区（可配置），每个分区存储一部分消费组（Consumer Group）的 offset 信息。Kafka broker 会根据消费组 ID 和主题名来计算出一个哈希值，并将其映射到 consumer_offsets 主题的某个分区上。</li>
 </ul>
 <p>consumer_offsets 主题是 Kafka 0.9.0 版本引入的新特性，之前的版本是将 offset 存储在 Zookeeper 中。但是 Zookeeper 不适合大量写入，因此后来改为存储在 Kafka 自身中，提高了性能和可靠性。</p>
-<h3 id="提交和重置">提交和重置</h3>
-<p>提交 offset 是消费者在消费完一条消息后，将当前消费的 offset 值更新到 Kafka broker 中的操作。提交 offset 的目的是为了记录消费进度，以便在消费者发生故障或重启时，能够从上次消费的位置继续消费。</p>
+<h3 id="提交和重置"><a href="#提交和重置" class="headerlink" title="提交和重置"></a>提交和重置</h3><p>提交 offset 是消费者在消费完一条消息后，将当前消费的 offset 值更新到 Kafka broker 中的操作。提交 offset 的目的是为了记录消费进度，以便在消费者发生故障或重启时，能够从上次消费的位置继续消费。</p>
 <p>重置 offset 是消费者在启动或运行过程中，将当前消费的 offset 值修改为其他值的操作。重置 offset 的目的是为了调整消费位置，以便在需要重新消费或跳过某些消息时，能够实现这个需求。</p>
-<h4 id="提交-offset">提交 offset</h4>
-<p>消费者在消费 Kafka 消息时，需要维护</p>
+<h4 id="提交-offset"><a href="#提交-offset" class="headerlink" title="提交 offset"></a>提交 offset</h4><p>消费者在消费 Kafka 消息时，需要维护</p>
 <ul>
 <li>当前消费的 offset 值，表示消费者正在消费的消息的位置，</li>
 <li>已提交的 offset 值，表示消费者已经跟Kafka确认了已消费过的消息的位置。</li>
@@ -601,53 +635,45 @@
 <p>消费者在消费完一条消息后，需要提交 offset 来更新已提交的 offset 值。</p>
 <p>提交 offset 的方式有两种：自动提交和手动提交。</p>
 <ul>
-<li>自动提交：Kafka 提供了一个配置参数 enable.auto.commit，默认为 true，表示开启自动提交功能。<strong>自动提交功能会在后台定期</strong>（由 <a target="_blank" rel="noopener" href="http://auto.commit.interval.ms">auto.commit.interval.ms</a> 参数控制）<strong>将当前消费的 offset 值提交给 Kafka broker。</strong></li>
+<li>自动提交：Kafka 提供了一个配置参数 enable.auto.commit，默认为 true，表示开启自动提交功能。<strong>自动提交功能会在后台定期</strong>（由 auto.commit.interval.ms 参数控制）<strong>将当前消费的 offset 值提交给 Kafka broker。</strong></li>
 <li>手动提交：如果 enable.auto.commit 设置为 false，则表示关闭自动提交功能，此时**消费者需要手动调用 commitSync 或 commitAsync 方法来提交 offset。**手动提交功能可以让消费者更灵活地控制何时以及如何提交 offset。</li>
 </ul>
 <p>需要注意的是，无论是自动提交还是手动提交，都不保证提交成功。因为 Kafka broker 可能发生故障或网络延迟，导致提交失败或延迟。因此，消费者需要处理提交失败或延迟的情况。</p>
 <ul>
 <li>提交失败：如果提交失败，消费者可以选择重试或放弃。重试的话，可能会导致多次提交同一个 offset 值，但是不会影响正确性，因为 Kafka broker 会忽略重复的 offset 值。放弃的话，可能会导致下次启动时重新消费已经消费过的消息。</li>
-<li>提交延迟：如果提交延迟，消费者可以选择等待或继续。等待的话，可能会导致消费速度变慢，或者超过 <a target="_blank" rel="noopener" href="http://session.timeout.ms">session.timeout.ms</a> 参数设置的时间而被认为已经死亡。继续的话，可能会导致下次启动时漏掉一些没有提交成功的消息。</li>
+<li>提交延迟：如果提交延迟，消费者可以选择等待或继续。等待的话，可能会导致消费速度变慢，或者超过 session.timeout.ms 参数设置的时间而被认为已经死亡。继续的话，可能会导致下次启动时漏掉一些没有提交成功的消息。</li>
 </ul>
-<h4 id="重置-offset">重置 offset</h4>
-<p>重置 offset 的方式有两种：手动重置和自动重置。手动重置是指消费者主动调用 seek 或 seekToBeginning 或 seekToEnd 方法来修改当前消费的 offset 值。自动重置是指消费者在启动时根据 auto.offset.reset 参数来决定从哪个位置开始消费。</p>
+<h4 id="重置-offset"><a href="#重置-offset" class="headerlink" title="重置 offset"></a>重置 offset</h4><p>重置 offset 的方式有两种：手动重置和自动重置。手动重置是指消费者主动调用 seek 或 seekToBeginning 或 seekToEnd 方法来修改当前消费的 offset 值。自动重置是指消费者在启动时根据 auto.offset.reset 参数来决定从哪个位置开始消费。</p>
 <ul>
 <li>手动重置：手动重置可以让消费者精确地控制从哪个位置开始消费。例如，如果想要重新消费某个分区的所有消息，可以调用 seekToBeginning 方法将 offset 设置为 0；如果想要跳过某个分区的所有消息，可以调用 seekToEnd 方法将 offset 设置为最大值；如果想要从某个具体的位置开始消费，可以调用 seek 方法将 offset 设置为任意值。</li>
 <li>自动重置：自动重置可以让消费者在启动时根据 auto.offset.reset 参数来决定从哪个位置开始消费。auto.offset.reset 参数有三个可选值：earliest, latest 和 none。earliest 表示从最早的可用消息开始消费；latest 表示从最新的可用消息开始消费；none 表示如果没有可用的 offset，则抛出异常。</li>
 </ul>
-<h2 id="消费者组">消费者组</h2>
-<p>多个消费者，只要指定了相同的 group_id ，即属于同一个消费者组</p>
+<h2 id="消费者组"><a href="#消费者组" class="headerlink" title="消费者组"></a>消费者组</h2><p>多个消费者，只要指定了相同的 group_id ，即属于同一个消费者组</p>
 <p>同一个消费者组内的消费者可以共同消费一个Topic中的数据，</p>
 <p>但是一个Topic中是有很多Partition的，消费者是怎么分配 Partition 的呢？</p>
 <ul>
-<li>
-<p>例如有一个Topic，含有一个Partition，有一个消费者组（有消费者A，B），此时消费者A和消费者B中只有一个消费者可以消费到消息，另外一个消费者将不会消费到消息。<strong>这说明当一个消费者组内的消费者数量 &gt; 某 Topic 的 Partition 数量时，多余的消费者是会空闲的</strong>。</p>
+<li><p>例如有一个Topic，含有一个Partition，有一个消费者组（有消费者A，B），此时消费者A和消费者B中只有一个消费者可以消费到消息，另外一个消费者将不会消费到消息。<strong>这说明当一个消费者组内的消费者数量 &gt; 某 Topic 的 Partition 数量时，多余的消费者是会空闲的</strong>。</p>
 </li>
-<li>
-<p>例如有一个Topic，含有两个Partition，有一个消费者组（有消费者A，B），此时消费者A和消费者B会分别单独只消费某一个Partition，A和B不会交叉消费不同Partition。<strong>这说明当一个消费者组内的消费者数量 == 某 Topic 的 Partition 数量时，每个消费者对应一个Partition。</strong></p>
+<li><p>例如有一个Topic，含有两个Partition，有一个消费者组（有消费者A，B），此时消费者A和消费者B会分别单独只消费某一个Partition，A和B不会交叉消费不同Partition。<strong>这说明当一个消费者组内的消费者数量 &#x3D;&#x3D; 某 Topic 的 Partition 数量时，每个消费者对应一个Partition。</strong></p>
 </li>
-<li>
-<p>例如有一个Topic，含有三个Partition，有一个消费者组（有消费者A，B），此时消费者A和消费者B会有一个消费者消费多个分区。<strong>这说明当一个消费者组内的消费者数量 &lt; 某Topic的Partition数量时，部分消费者会消费多个Partition的消息。</strong></p>
+<li><p>例如有一个Topic，含有三个Partition，有一个消费者组（有消费者A，B），此时消费者A和消费者B会有一个消费者消费多个分区。<strong>这说明当一个消费者组内的消费者数量 &lt; 某Topic的Partition数量时，部分消费者会消费多个Partition的消息。</strong></p>
 </li>
 </ul>
 <p>不同消费者组也可以共同消费同一个Topic中的数据。</p>
 <ul>
 <li>假设有两个消费者组A和B，都订阅了同一个Topic，这时候Topic的某一条消息，消费者组A和消费者组B都可以拉取到。即消费者组A会消费一次，消费者组B也会消费一次。消费组内具体的消费逻辑同上单个消费者组组内消费的逻辑。</li>
 </ul>
-<h3 id="Partition和消费组内消费者数量">Partition和消费组内消费者数量</h3>
-<p>针对<strong>单个消费者组</strong>来说，</p>
+<h3 id="Partition和消费组内消费者数量"><a href="#Partition和消费组内消费者数量" class="headerlink" title="Partition和消费组内消费者数量"></a>Partition和消费组内消费者数量</h3><p>针对<strong>单个消费者组</strong>来说，</p>
 <ul>
 <li>若消费者数量大于partition数量，会造成闲置的消费者，产生浪费。</li>
 <li>若消费者数量小于partition数量，会导致均衡失效，其中的某个或某些消费者会消费更多的任务。</li>
 </ul>
 <p>因此，一般消费组内消费者的数量应该等于Partition的数量；</p>
 <p>但是如果需要消费的任务压力不大。也可以是第二种情况，即消费者的数量小于Partition数量。</p>
-<h3 id="单播消费">单播消费</h3>
-<ul>
+<h3 id="单播消费"><a href="#单播消费" class="headerlink" title="单播消费"></a>单播消费</h3><ul>
 <li>让所有消费者处在同一个消费组里，消费组中的多个消费者只有一个消费者可以消费到Partition分区中的消息。一条消息只能被某一个消费者消费。</li>
 </ul>
-<h3 id="多播消费">多播消费</h3>
-<ul>
+<h3 id="多播消费"><a href="#多播消费" class="headerlink" title="多播消费"></a>多播消费</h3><ul>
 <li>针对Kafka同一条消息只能被同一个消费组下的某一个消费者消费的特性，要实现多播只要保证这些消费者属于不同的消费组即可。</li>
 <li>假设有两个消费者组A和B，结果是A消费者组和B消费者组中各有一个消费者成功消费到消息。</li>
 <li>多播消费其实是一条消息能被多个消费者 (不同的消费者组) 消费的模式</li>
@@ -661,10 +687,7 @@
 <li>请注意Offset的定义和作用</li>
 <li><strong>一般一个Topic被一个指定的消费者组消费，组中的消费者数量等于Partition数量。</strong></li>
 </ul>
-<h1>核心运行机制</h1>
-<h2 id="Zookeeper和KRaft">Zookeeper和KRaft</h2>
-<h3 id="对比">对比</h3>
-<table>
+<h1 id="核心运行机制"><a href="#核心运行机制" class="headerlink" title="核心运行机制"></a>核心运行机制</h1><h2 id="Zookeeper和KRaft"><a href="#Zookeeper和KRaft" class="headerlink" title="Zookeeper和KRaft"></a>Zookeeper和KRaft</h2><h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><table>
 <thead>
 <tr>
 <th>维度</th>
@@ -672,8 +695,7 @@
 <th>KRaft 模式</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><strong>架构依赖</strong></td>
 <td>依赖外部独立 ZooKeeper 集群</td>
 <td>内置到 Kafka 中，无外部依赖</td>
@@ -708,35 +730,69 @@
 <td>需要单独部署、维护 ZK 集群</td>
 <td>一体化部署，运维更简单</td>
 </tr>
-</tbody>
-</table>
-<h3 id="为什么要替换为KRaft？">为什么要替换为KRaft？</h3>
-<ol>
+</tbody></table>
+<h3 id="为什么要替换为KRaft？"><a href="#为什么要替换为KRaft？" class="headerlink" title="为什么要替换为KRaft？"></a>为什么要替换为KRaft？</h3><ol>
 <li>消除外部依赖，不再需要单独部署、监控、维护 ZooKeeper 集群，减少故障点和运维成本；架构更简洁，部署和扩容更便捷</li>
-<li>性能与扩展性提升
-<ul>
+<li>性能与扩展性提升<ul>
 <li>元数据操作延迟大幅降低：KRaft 直接在 Kafka 内部处理元数据，避免跨网络与 ZK 通信的开销</li>
-<li>支持更大规模集群：解决 ZK 在海量主题 / 分区场景下的性能瓶颈，理论上可支持百万级分区</li>
+<li>支持更大规模集群：解决 ZK 在海量主题 &#x2F; 分区场景下的性能瓶颈，理论上可支持百万级分区</li>
 </ul>
 </li>
-<li>更高效的故障恢复
-<ul>
+<li>更高效的故障恢复<ul>
 <li>Raft 算法的 Leader 选举速度远快于 ZAB，Controller 故障后能快速恢复元数据服务，减少集群不可用时间</li>
 <li>元数据以日志形式存储，结合快照机制，恢复速度更快、数据更可靠</li>
 </ul>
 </li>
-<li>技术栈统一
-<ul>
+<li>技术栈统一<ul>
 <li>KRaft 用 Java 实现，与 Kafka 原生技术栈一致，便于调试、优化和二次开发</li>
 <li>避免了跨语言（ZK 用 Java 但生态不同）带来的协作问题</li>
 </ul>
 </li>
 </ol>
-<h3 id="大">大</h3>
-<h1>存储与高吞吐原理</h1>
-<h1>高可用机制</h1>
-<h1>消息可靠性</h1>
-<h1></h1>
+<h3 id="Raft共识算法"><a href="#Raft共识算法" class="headerlink" title="Raft共识算法"></a>Raft共识算法</h3><p><strong>介绍</strong></p>
+<p>Raft 是一种为了管理日志复制的共识算法，其核心目标是易理解性，在 Raft 出现之前，Paxos 算法一直是共识领域的标准，但 Paxos 难懂<br>它通过将复杂的共识问题分解为领导者选举和日志复制两个独立的子问题，确保在分布式环境下，即便部分节点故障，整个集群仍能达成一致</p>
+<p>Raft运行过程中，节点有三个状态：</p>
+<ol>
+<li><p>leader（领导者）：处理所有客户端请求，负责日志的复制和管理</p>
+</li>
+<li><p>follower（跟随者）：被动接收 Leader 的心跳和日志复制请求。如果长时间没收到心跳，会转变为 Candidate</p>
+</li>
+<li><p>Candidate（候选者）：试图竞选成为 Leader 的中间状态</p>
+</li>
+</ol>
+<p><strong>领导者选举</strong></p>
+<ul>
+<li>采用心跳机制进行选举</li>
+<li>集群开始或 Leader 挂掉时，Follower 变成 Candidate 并发起选举（如果 Follower 在一个选举超时时间内没收到心跳，它就认为集群没有 Leader转换为 Candidate 并向其他节点发起投票请求）</li>
+<li>通过随机超时时间和大多数原则 (超过半数  $N&#x2F;2 + 1$) 选出新 Leader</li>
+<li>选举超时时间是<strong>随机</strong>的（通常在 150ms-300ms 之间），这降低了多个节点同时发起选举导致“票数瓜分”的概率</li>
+</ul>
+<p><strong>日志复制</strong></p>
+<ul>
+<li>所有的写请求都由 Leader 处理。</li>
+<li>Leader 先将日志追加到自己日志中，然后并行发送给 Follower</li>
+<li>当leader收到超过半数节点响应成功后，认为该日志已提交，将其应用到本地状态机，并通知客户端</li>
+<li>Leader 在后续的心跳中告诉 Follower 哪些日志已提交，Follower 随后也将这些日志应用到本地</li>
+</ul>
+<p><strong>安全性保证</strong></p>
+<ul>
+<li>选举限制：只有包含了所有已提交日志的节点，才有可能赢得选举。通过比较日志的索引和任期号，确保 Candidate 的日志至少和 Follower 一样“新”</li>
+<li>日志匹配原则：如果两个日志条目拥有相同的索引和任期号，那么它们存储的指令必然相同，且之前的所有日志也完全一致</li>
+<li>Leader 完备性：一旦某个日志条目在某个任期内被提交，那么这个条目必将出现在所有更高任期的 Leader 的日志中</li>
+</ul>
+<h3 id="出现脑裂Raft怎么处理？"><a href="#出现脑裂Raft怎么处理？" class="headerlink" title="出现脑裂Raft怎么处理？"></a>出现脑裂Raft怎么处理？</h3><p>如果发生网络分区，可能会出现两个 Leader。但根据 Raft 的多数派原则，只有能联系到超过半数节点的那个分区才能成功提交日志。人数不够的分区虽然可能有 Leader，但它无法获得 $N&#x2F;2+1$ 的确认，因此请求会失败。当网络恢复后，任期号小的 Leader 会发现有更高任期的存在，自动降级为 Follower，并同步最新的日志。</p>
+<h3 id="Raft-选举中，如果多个-Candidate-同时发起选举导致平票怎么办？"><a href="#Raft-选举中，如果多个-Candidate-同时发起选举导致平票怎么办？" class="headerlink" title="Raft 选举中，如果多个 Candidate 同时发起选举导致平票怎么办？"></a>Raft 选举中，如果多个 Candidate 同时发起选举导致平票怎么办？</h3><p>Raft 引入了随机选举超时时间。每个节点等待选举的时间是不一样的（例如 150-300ms）。这样大概率会有一个节点先超时并率先发出投票请求，从而打破平票僵局。如果真的平票了，大家会增加任期号进入下一轮重新随机等待</p>
+<h3 id="Raft-是强一致性还是最终一致性？"><a href="#Raft-是强一致性还是最终一致性？" class="headerlink" title="Raft 是强一致性还是最终一致性？"></a>Raft 是强一致性还是最终一致性？</h3><p>Raft 提供的是强一致性（线性一致性）。因为它要求客户端的所有读写都通过 Leader 进行，且 Leader 必须等到大多数节点确认后才返回成功。这意味着一旦一个值被提交，后续任何读取操作都能拿到这个最新的值</p>
+<h2 id="ISR-机制"><a href="#ISR-机制" class="headerlink" title="ISR 机制"></a>ISR 机制</h2><h2 id="Rebalance机制"><a href="#Rebalance机制" class="headerlink" title="Rebalance机制"></a>Rebalance机制</h2><h1 id="存储与高吞吐原理"><a href="#存储与高吞吐原理" class="headerlink" title="存储与高吞吐原理"></a>存储与高吞吐原理</h1><h2 id="日志存储机制"><a href="#日志存储机制" class="headerlink" title="日志存储机制"></a>日志存储机制</h2><h2 id="日志清理策略"><a href="#日志清理策略" class="headerlink" title="日志清理策略"></a>日志清理策略</h2><h2 id="索引机制"><a href="#索引机制" class="headerlink" title="索引机制"></a>索引机制</h2><h2 id="零拷贝与Kafka高吞吐原理"><a href="#零拷贝与Kafka高吞吐原理" class="headerlink" title="零拷贝与Kafka高吞吐原理"></a>零拷贝与Kafka高吞吐原理</h2><h1 id="高可用机制"><a href="#高可用机制" class="headerlink" title="高可用机制"></a>高可用机制</h1><h1 id="⭐消息可靠性"><a href="#⭐消息可靠性" class="headerlink" title="⭐消息可靠性"></a>⭐消息可靠性</h1><blockquote>
+<p>相对最重要的</p>
+</blockquote>
+<h2 id="消息不丢失"><a href="#消息不丢失" class="headerlink" title="消息不丢失"></a>消息不丢失</h2><p>（生产&#x2F;存储&#x2F;消费三端保障）</p>
+<ol>
+<li>生产者：可以理解消息发送成功；也可以理解业务处理和消息发送同步成功（分布式事务）</li>
+</ol>
+<h2 id="消息不重复消费"><a href="#消息不重复消费" class="headerlink" title="消息不重复消费"></a>消息不重复消费</h2><p>（幂等性方案）</p>
+<h2 id="消息顺序消费"><a href="#消息顺序消费" class="headerlink" title="消息顺序消费"></a>消息顺序消费</h2><p>（分区有序性）</p>
+<h2 id="消息堆积"><a href="#消息堆积" class="headerlink" title="消息堆积"></a>消息堆积</h2><p>（原因与解决方案）</p>
 
                 
               
@@ -756,8 +812,15 @@
     
       <span class="category-chain">
         
-  <a href="/queue/" class="category-chain-item">queue</a>
+  <a href="/distributed/" class="category-chain-item">distributed</a>
   
+  
+    <span>></span>
+    
+  <a href="/distributed/queue/" class="category-chain-item">queue</a>
+  
+  
+
   
 
       </span>
@@ -784,8 +847,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>kafka</div>
-      <div>https://yb0os1.github.io/2026/03/28/kafka/</div>
+      <div>Kafka</div>
+      <div>https://yb0os1.github.io/2026/03/28/Kafka/</div>
     </div>
     <div class="license-meta">
       

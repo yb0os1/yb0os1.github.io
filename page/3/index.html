@@ -201,6 +201,15 @@
                                   <span>JUC</span>
                               </a>
                               
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
                     </div>
                   </li>
                   
@@ -289,13 +298,50 @@
             
               
                 
-                    <li class="nav-item">
-                      <a class="nav-link" href="/queue" target="_self">
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
                         
-                          <span>📬 消息队列</span>
-                      </a>
-                    </li>
-                    
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
                       
           
             
@@ -304,7 +350,7 @@
                     <li class="nav-item">
                       <a class="nav-link" href="/scene" target="_self">
                         
-                          <span>🚀 场景/系统设计</span>
+                          <span>🚀 场景</span>
                       </a>
                     </li>
                     
@@ -454,7 +500,7 @@
       
       <a class="index-excerpt " href="/2026/03/16/MySQL-%E4%BA%8B%E5%8A%A1/" target="_self">
         <div>
-          事务基础 事务特性和原理 ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多
+          事务基础事务特性和原理ACID （原子性、一致性、隔离性、持久性）  原子性Atomicity，通过undolog保证，一个事务中的所有操作要么全部完成，要么全部不完成，并且事务执行过程中报错会回滚到事务开始的阶段 一致性Consistency，通过持久性+原子性+隔离性来保证，事务操作前后，数据满足完整性约束，数据库保持一致性状态 隔离性Isolation，通过锁和MVCC保证，数据库允许多个并
         </div>
       </a>
 
@@ -530,7 +576,7 @@
       
       <a class="index-excerpt " href="/2026/03/15/MySQL-%E7%B4%A2%E5%BC%95/" target="_self">
         <div>
-          索引基础 定义 索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关 索引分类  数据结构：B+数索引、Hash索引、Full-text索引   InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个  有主
+          索引基础定义索引类似书籍的目录，可以减少扫描的数据量、提高查询的效率  如果查询时没有用到索引，那么就进行全表扫描，时间复杂度是O(n) 如果使用到索引，可以基于二分查找快速定位到目标数据，时间复杂度是O(logn)  分类相关索引分类 数据结构：B+数索引、Hash索引、Full-text索引  InnoDB存储引擎根据不同的场景选择不同列作为索引：聚簇索引必须有并且只能有一个 有主键，主键作为
         </div>
       </a>
 
@@ -606,7 +652,7 @@
       
       <a class="index-excerpt " href="/2026/03/14/%E6%B3%9B%E5%9E%8B-%E5%8F%8D%E5%B0%84-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" target="_self">
         <div>
-          泛型 定义 JDK5引入的，允许在定义类、方法或接口时使用类型参数，声明的类型参数在使用时用具体的类型来替换。 作用：  类型安全：  问题：没有泛型的时候集合类默认使用Object存储元素，取出的时候需要强制类型转化 解决：泛型在编译时检查类型匹配，避免运行时类型转换错误   代码复用：泛型允许我们  为多种数据类型编写同一套逻辑，提高代码的复用性  类型擦除 类型擦除，简单来说，编译器在编译阶
+          泛型定义JDK5引入的，允许在定义类、方法或接口时使用类型参数，声明的类型参数在使用时用具体的类型来替换。 作用：  类型安全： 问题：没有泛型的时候集合类默认使用Object存储元素，取出的时候需要强制类型转化 解决：泛型在编译时检查类型匹配，避免运行时类型转换错误   代码复用：泛型允许我们  为多种数据类型编写同一套逻辑，提高代码的复用性  类型擦除类型擦除，简单来说，编译器在编译阶段将泛型
         </div>
       </a>
 
@@ -682,7 +728,7 @@
       
       <a class="index-excerpt " href="/2026/03/14/MySQL-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" target="_self">
         <div>
-          执行sql请求过程  MySQL架构可以分为连接层、server层、存储引擎层 执行一条sql语句过程   连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份   查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；   解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型
+          执行sql请求过程 MySQL架构可以分为连接层、server层、存储引擎层 执行一条sql语句过程  连接器，基于TCP协议传输。主要进行建立连接，管理连接、校验用户身份  查询缓存，查询语句如果命中查询缓存则直接返回，否则继续往下执行。MySQL 8.0 已删除该模块；  解析器，通过解析器对 SQL 查询语句进行词法分析、语法分析，然后构建语法树，方便后续模块读取表名、字段、语句类型；  词
         </div>
       </a>
 
@@ -758,7 +804,7 @@
       
       <a class="index-excerpt " href="/2026/03/12/Java%E9%9B%86%E5%90%88-map%E5%8F%8C%E5%88%97%E9%9B%86%E5%90%88/" target="_self">
         <div>
-          总览示意图  map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了
+          总览示意图 map是一个键值对集合，key无序唯一，value不要求有序可重复，主要实现由hashmap、linkedhashmap、treemap、hashtable、concurrenthashmap  hashmap：1.8 之前 HashMap 由数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）；1.8 以后在解决哈希冲突时有了较
         </div>
       </a>
 
@@ -834,7 +880,7 @@
       
       <a class="index-excerpt " href="/2026/03/12/Java%E9%9B%86%E5%90%88-collection%E5%8D%95%E5%88%97%E9%9B%86%E5%90%88/" target="_self">
         <div>
-          总览示意图  List  List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Link
+          总览示意图 List List是有序的Collection，常见的实现有arraylist、linkedlist、vector、CopyOnWriteArrayList  ArrayList：容量可变、线程不安全的集合，底层使用数组；扩容时创建一个当前容量1.5倍的数组，把原数组复制到新数组；支持对元素的随机访问O(1)，但插入和删除速度慢（需要移动元素），适合频繁随机访问元素的场景 Linked
         </div>
       </a>
 
