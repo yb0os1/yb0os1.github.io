@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar5.png">
 <meta property="article:published_time" content="2026-03-12T15:50:50.000Z">
-<meta property="article:modified_time" content="2026-03-16T07:32:10.729Z">
+<meta property="article:modified_time" content="2026-03-31T05:45:47.031Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="集合">
@@ -483,7 +483,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.1k 字
+          2.4k 字
         
       </span>
     
@@ -495,7 +495,7 @@
         
         
           <!-- compatible with older versions-->
-          18 分钟
+          20 分钟
         
       </span>
     
@@ -641,6 +641,22 @@
 </ol>
 <p>HashMap默认容量是16，扩容是<code>2n</code></p>
 <p>HashTable默认容量是11，扩容是<code>2n+1</code></p>
+<h2 id="怎么计算hash值的">怎么计算hash值的</h2>
+<p>hashmap对key的类型没有做限制，也就是任何类型都可以作为key，那么hash值怎么计算的？</p>
+<ol>
+<li>所有的类都是继承<code>Object</code>，它有一个 <code>hashCode()</code> 方法来计算hash值（int类型）</li>
+<li>对于<code>null</code>的话hash值是写死的，直接为0</li>
+<li>对于基本数据类型，都有自己对应的包装类</li>
+</ol>
+<p>通过Object的hashCode()函数计算后，HashMap还会进行二次哈希（扰动），把计算的hashCode的高16位和低16位进行异或</p>
+<blockquote>
+<p>1、为什么？高位扰动的意义？</p>
+<p>因为数组长度通常很小（比如初始是 16），直接用 <code>hashCode</code> 取模的话，只有低位参与运算，高位全浪费了。通过 <code>^ (h &gt;&gt;&gt; 16)</code>，把高位的特征混合到低位，能让哈希值分布更均匀</p>
+<p>2、为什么高位扰动使用异或？</p>
+<p>或的话存在大量的1，与的话存在大量的0，都会导致哈希值高度集中、分布不均匀</p>
+<p>3、为什么(n-1)&amp;hash可以代替取模？</p>
+<p>hashmap中桶数组的长度是2的幂次方，比如是n=2^k，n-1可以保证低k位都是1，这时候(n-1)&amp;hash就会把 hash 的高位全部清 0，<strong>只保留最后 k 位</strong>，结果和取模运算完全相等</p>
+</blockquote>
 <h1>ConcurrentHashMap</h1>
 <h2 id="原理">原理</h2>
 <p><strong>JDK1.7 分段锁 Segment</strong></p>
