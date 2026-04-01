@@ -66,7 +66,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -509,7 +509,7 @@
       
       <a class="index-excerpt " href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
         <div>
-          为什么要有线程池？  开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能
+          为什么要有线程池？ 开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能立
         </div>
       </a>
 
@@ -585,7 +585,7 @@
       
       <a class="index-excerpt " href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E3%80%81%E8%BF%9B%E7%A8%8B/" target="_self">
         <div>
-          线程和进程 如何理解线程和进程 线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源  进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分
+          线程和进程如何理解线程和进程线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源 进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分开的，
         </div>
       </a>
 
@@ -661,7 +661,7 @@
       
       <a class="index-excerpt " href="/2026/03/20/Redis-%E5%9C%BA%E6%99%AF/" target="_self">
         <div>
-          缓存 本地缓存 本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访
+          缓存本地缓存本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访问
         </div>
       </a>
 
@@ -737,7 +737,7 @@
       
       <a class="index-excerpt " href="/2026/03/20/Redis-%E9%9B%86%E7%BE%A4/" target="_self">
         <div>
-          如何实现服务高可用 实现redis高可用肯定要从redis的多服务节点考虑，比如redis的主从复制、哨兵模式、切片集群 redis集群的优缺点 优点：  高可用性：最主要的优点，节点之间采用主从复制机制，保证数据的持久性和容错性 高性能：切片集群把数据分散到多个节点，提高读写能力，增加吞吐量 扩展性好：可以根据实际动态增加或减少节点  缺点：  部署和维护复杂 集群同步问题：当某些节点失败或网络
+          如何实现服务高可用实现redis高可用肯定要从redis的多服务节点考虑，比如redis的主从复制、哨兵模式、切片集群 redis集群的优缺点优点：  高可用性：最主要的优点，节点之间采用主从复制机制，保证数据的持久性和容错性 高性能：切片集群把数据分散到多个节点，提高读写能力，增加吞吐量 扩展性好：可以根据实际动态增加或减少节点  缺点：  部署和维护复杂 集群同步问题：当某些节点失败或网络出现
         </div>
       </a>
 
@@ -813,7 +813,7 @@
       
       <a class="index-excerpt " href="/2026/03/20/Redis-%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5%E4%B8%8E%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0/" target="_self">
         <div>
-          过期删除 什么是过期删除？ 将已过期的键值对进行删除，redis采用惰性删除+定期删除 惰性删除 不主动删除过期键，每次从数据库访问key时，检查key是否过期，如果过期则删除这个key 优点：访问才检查，索引只使用很少的系统资源，对CPU事件最友好 缺点：key已经过期，只要一直不被访问就一直在数据库，造成内存空间的浪费，对内存不友好 定期删除 每隔一段时间，从数据库随机取一定数量的key进行检
+          过期删除什么是过期删除？ 将已过期的键值对进行删除，redis采用惰性删除+定期删除 惰性删除不主动删除过期键，每次从数据库访问key时，检查key是否过期，如果过期则删除这个key 优点：访问才检查，索引只使用很少的系统资源，对CPU事件最友好 缺点：key已经过期，只要一直不被访问就一直在数据库，造成内存空间的浪费，对内存不友好 定期删除每隔一段时间，从数据库随机取一定数量的key进行检查，并
         </div>
       </a>
 
@@ -889,7 +889,7 @@
       
       <a class="index-excerpt " href="/2026/03/20/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/" target="_self">
         <div>
-          redis如何保证数据不丢失 redis的读写操作都是在内存中的，所以redis性能才会很高，当redis重启时内存中的数据就会丢失，为了保证内存中的数据不会丢失，redis实现了持久化的机制，这个机制会把数据存储到磁盘，这样redis重启就能从磁盘中读取到原有的数据 redis共有三种持久化方式：  AOF日志：每执行一条写操作，就把该命令追加到一个文件中 RDB快照：将某时刻的内存数据以二进制
+          redis如何保证数据不丢失redis的读写操作都是在内存中的，所以redis性能才会很高，当redis重启时内存中的数据就会丢失，为了保证内存中的数据不会丢失，redis实现了持久化的机制，这个机制会把数据存储到磁盘，这样redis重启就能从磁盘中读取到原有的数据 redis共有三种持久化方式：  AOF日志：每执行一条写操作，就把该命令追加到一个文件中 RDB快照：将某时刻的内存数据以二进制方
         </div>
       </a>
 
@@ -965,7 +965,7 @@
       
       <a class="index-excerpt " href="/2026/03/20/Redis-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" target="_self">
         <div>
-          redis为什么快  基于内存。redis是一种基于内存的数据库，数据存储在内存中，读写速度非常快；而且redis采用了高效的数据结构 执行命令是单线程模型。因为redis是基于内存，因此瓶颈可能是机器内存或网络带宽，而不是cpu，那么执行命令采用单线程模型，避免了多线程之间的竞争，省去多线程之间切换带来的时间和性能上的开销，而且还不存在死锁问题 IO多路复用技术。在单线程的基础上，采用了I/O
+          redis为什么快 基于内存。redis是一种基于内存的数据库，数据存储在内存中，读写速度非常快；而且redis采用了高效的数据结构 执行命令是单线程模型。因为redis是基于内存，因此瓶颈可能是机器内存或网络带宽，而不是cpu，那么执行命令采用单线程模型，避免了多线程之间的竞争，省去多线程之间切换带来的时间和性能上的开销，而且还不存在死锁问题 IO多路复用技术。在单线程的基础上，采用了I&#x2
         </div>
       </a>
 
@@ -1041,7 +1041,7 @@
       
       <a class="index-excerpt " href="/2026/03/19/Redis-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" target="_self">
         <div>
-          数据类型 总览  注：压缩列表后续都被listpack替代     类型 用途 描述     **String（字符串）**可存储字符串、整数或浮点数 计数器分布式锁存储序列化对象 int（如果存的全数字）、SDS 简单动态字符串；最大可以容纳512MB   **Hash（哈希）**可存储多个键值对 缓存对象 zipList 压缩列表（连续占用内存，因此存储的元素不能太多）一旦元素存储太多，会转
+          数据类型总览 注：压缩列表后续都被listpack替代     类型 用途 描述    **String（字符串）**可存储字符串、整数或浮点数 计数器分布式锁存储序列化对象 int（如果存的全数字）、SDS 简单动态字符串；最大可以容纳512MB   **Hash（哈希）**可存储多个键值对 缓存对象 zipList 压缩列表（连续占用内存，因此存储的元素不能太多）一旦元素存储太多，会转为 D
         </div>
       </a>
 
@@ -1117,7 +1117,7 @@
       
       <a class="index-excerpt " href="/2026/03/19/MySQL-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" target="_self">
         <div>
-          explain作用 explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什
+          explain作用explain就是查看sql的执行计划，分析sql语句的执行过程，比如有没有走索引，有没有外部排序，有没有索引覆盖等等 主要参数：  possible_keys：可能用到的索引 key：实际用到的索引，如果是null代表没用用到索引 ken_len：索引长度 rows：扫描的数据行数 type：数据扫描类型 重点就是这个type   type描述找到所需数据时使用的扫描方式是什么
         </div>
       </a>
 
@@ -1193,7 +1193,7 @@
       
       <a class="index-excerpt " href="/2026/03/17/MySQL-%E6%97%A5%E5%BF%97/" target="_self">
         <div>
-          分类  redo log 重做日志，InnoDB存储引擎层生成的日志，实现事务的持久性，主要用于故障回复 undo log 回滚日志，InnoDB存储引擎层生成的日志，实现事务的原子性，主要用于事务回滚和MVCC binlog 二进制日志，Server层生成的日志，主要用于数据备份和主从复制 relay log 中继日志，用于主从复制场景下，从节点通过io线程拷贝主节点的binlog后本地生成的日
+          分类 redo log 重做日志，InnoDB存储引擎层生成的日志，实现事务的持久性，主要用于故障回复 undo log 回滚日志，InnoDB存储引擎层生成的日志，实现事务的原子性，主要用于事务回滚和MVCC binlog 二进制日志，Server层生成的日志，主要用于数据备份和主从复制 relay log 中继日志，用于主从复制场景下，从节点通过io线程拷贝主节点的binlog后本地生成的日志
         </div>
       </a>
 
