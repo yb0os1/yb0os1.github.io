@@ -290,6 +290,15 @@
                                   <span>Redis</span>
                               </a>
                               
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
                     </div>
                   </li>
                   
@@ -479,6 +488,82 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
+          <img src="/img/avatar30.png" srcset="/img/loading.gif" lazyload alt="JUC-线程池">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
+          JUC-线程池
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
+        <div>
+          为什么要有线程池？  开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-03-22 00:05" pubdate>
+              2026-03-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/java/" class="category-chain-item">java</a>
+  
+  
+    <span>></span>
+    
+  <a href="/java/JUC/" class="category-chain-item">JUC</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">#java</a>
+            
+              <a href="/tags/JUC/">#JUC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -1078,9 +1163,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/MySQL/">#MySQL</a>
-            
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
+            
+              <a href="/tags/MySQL/">#MySQL</a>
             
           </div>
         
@@ -1154,85 +1239,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/MySQL/">#MySQL</a>
-            
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2026/03/17/MySQL-%E9%94%81/" target="_self">
-          <img src="/img/avatar26.png" srcset="/img/loading.gif" lazyload alt="MySQL-锁">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/03/17/MySQL-%E9%94%81/" target="_self">
-          MySQL-锁
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2026/03/17/MySQL-%E9%94%81/" target="_self">
-        <div>
-          分类 MySQL锁可分为分为全局锁、表级锁、行级锁  全局锁：通过flush tables with read lock语句将会把整个数据库处理只读状态；主要用于全库逻辑备份，备份期间不会出现数据或表结构的更新，因此备份文件的数据和预期就相同 表级锁：  表锁：通过lock tables对表加锁，表锁会限制别的线程读写，也会限制本线程接下来的读写 元数据锁：对数据库表进行操作时，自动加上MDL，对
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-03-17 16:16" pubdate>
-              2026-03-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/database/" class="category-chain-item">database</a>
-  
-  
-    <span>></span>
-    
-  <a href="/database/mysql/" class="category-chain-item">mysql</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
               <a href="/tags/MySQL/">#MySQL</a>
-            
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
             
           </div>
         
