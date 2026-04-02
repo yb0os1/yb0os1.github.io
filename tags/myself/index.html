@@ -19,37 +19,26 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="redis如何保证数据不丢失redis的读写操作都是在内存中的，所以redis性能才会很高，当redis重启时内存中的数据就会丢失，为了保证内存中的数据不会丢失，redis实现了持久化的机制，这个机制会把数据存储到磁盘，这样redis重启就能从磁盘中读取到原有的数据 redis共有三种持久化方式：  AOF日志：每执行一条写操作，就把该命令追加到一个文件中 RDB快照：将某时刻的内存数据以二进制方">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Redis-持久化">
-<meta property="og:url" content="https://yb0os1.github.io/2026/03/20/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
+    <meta name="description" content="yb0os1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="标签 - myself">
+<meta property="og:url" content="https://yb0os1.github.io/tags/myself/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="redis如何保证数据不丢失redis的读写操作都是在内存中的，所以redis性能才会很高，当redis重启时内存中的数据就会丢失，为了保证内存中的数据不会丢失，redis实现了持久化的机制，这个机制会把数据存储到磁盘，这样redis重启就能从磁盘中读取到原有的数据 redis共有三种持久化方式：  AOF日志：每执行一条写操作，就把该命令追加到一个文件中 RDB快照：将某时刻的内存数据以二进制方">
+<meta property="og:description" content="yb0os1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yb0os1.github.io/img/avatar26.png">
-<meta property="article:published_time" content="2026-03-20T08:25:05.000Z">
-<meta property="article:modified_time" content="2026-03-20T16:11:26.138Z">
 <meta property="article:author" content="yb0os1">
-<meta property="article:tag" content="redis">
-<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="yb0os1">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar26.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Redis-持久化 - yb0os1</title>
+  <title>标签 - myself - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -99,7 +88,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 70vh;">
+<div class="header-inner" style="height: 80vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -468,64 +457,17 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Redis-持久化"></span>
+            <span id="subtitle" data-typed-text="标签 - myself"></span>
           
         </div>
 
         
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-03-20 16:25" pubdate>
-          2026年3月20日 下午
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          <!-- compatible with older versions-->
-          1.6k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          <!-- compatible with older versions-->
-          14 分钟
-        
-      </span>
-    
-
-    
-    
-      
-        <span id="busuanzi_container_page_pv" style="display: none">
-          <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="busuanzi_value_page_pv"></span> 次
-        </span>
-        
-
-      
-    
-  </div>
-
-
-        
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -537,285 +479,40 @@
 
   <main>
     
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <!-- 左侧空白栏（原目录位置清空） -->
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-
-    <!-- 中间文章内容（保持不变） -->
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">Redis-持久化</h1>
-            
-            
-            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
-            <div class="markdown-body" id="post-content">
-              
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
                 
-                <h1 id="redis如何保证数据不丢失"><a href="#redis如何保证数据不丢失" class="headerlink" title="redis如何保证数据不丢失"></a>redis如何保证数据不丢失</h1><p>redis的读写操作都是在内存中的，所以redis性能才会很高，当redis重启时内存中的数据就会丢失，为了保证内存中的数据不会丢失，redis实现了持久化的机制，这个机制会把数据存储到磁盘，这样redis重启就能从磁盘中读取到原有的数据</p>
-<p>redis共有三种持久化方式：</p>
-<ol>
-<li>AOF日志：每执行一条写操作，就把该命令追加到一个文件中</li>
-<li>RDB快照：将某时刻的内存数据以二进制方式写入磁盘</li>
-<li>混合持久化：结合AOF和RDB的优点</li>
-</ol>
-<p>AOF和RDB对比</p>
-<p>AOF：</p>
-<ul>
-<li>优点：更好的数据安全性，默认每次接收到一个写命令就追加到文件末尾；支持多种同步策略；还可以通过重写优化减少文件体积</li>
-<li>缺点：记录每个写操作，因此文件通常比RDB大，消耗更多磁盘空间；频繁的磁盘IO（always）可能对redis写入性能造成一定影响；如果没有开启重写，恢复过程可能较慢</li>
-</ul>
-<p>RDB：</p>
-<ul>
-<li>优点：以快照形式保存某时刻的数据，文件体积小，备份和恢复速度快；RDB是子进程进行创建的，不会阻塞服务器处理命令请求</li>
-<li>缺点：RDB在两次快照之间，如果服务器发生故障，那么这段事件的数据将完全丢失；如果创建快照到恢复期间有写操作，恢复后的数据可能与故障前数据不一致</li>
-</ul>
-<h1 id="AOF日志"><a href="#AOF日志" class="headerlink" title="AOF日志"></a>AOF日志</h1><h2 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h2><p>redis每当执行一条写操作命令后，就会把该命令以追加写的方式写入到一个文件中，redis重启的时候可以读取该文件记录的命令，逐一执行来恢复数据</p>
-<blockquote>
-<p>要写执行命令再写入日志</p>
-<ol>
-<li>避免额外的开销：如果先写日志再执行命令的话，可能当前命令语法有问题，那么就会把错误的命令记录到AOF日志里了</li>
-<li>防止写命令被阻塞</li>
-</ol>
-<p>也有两个缺点：</p>
-<ol>
-<li>数据可能丢失，这是两个操作，redis还没将命令写入磁盘时 服务器发生宕机，这个数据就会有丢失的风险</li>
-<li>可能阻塞其他操作，记录AOF日志也是redis主线程执行的</li>
-</ol>
-</blockquote>
-<p>redis写AOF日志的详细过程：</p>
-<ul>
-<li>用户态：执行写操作-&gt; 命令追加到aof缓冲区</li>
-<li>IO系统调用write</li>
-<li>内核态： 写入内核缓冲区-&gt; 内核发起写操作 -&gt; 写入磁盘</li>
-</ul>
-<p>redis写回硬盘的策略：</p>
-<ol>
-<li>always：总是，每次写操作执行完后，同步把AOF日志写回到磁盘</li>
-<li>everysec：每秒，每次执行完写操作，先把命令写入aof内核缓冲区，每隔一秒把缓冲区内容写入</li>
-<li>no：不由redis控制写回磁盘的时机，转交给操作系统控制写回的时机</li>
-</ol>
-<p><img src="/../../../../img/article_img/image-20260320164347911.png" srcset="/img/loading.gif" lazyload alt="写回策略对比"></p>
-<h2 id="AOF重写机制"><a href="#AOF重写机制" class="headerlink" title="AOF重写机制"></a>AOF重写机制</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>AOF是个文件，随着写操作越来越多，文件越来越大；为了避免因为文件过大导致恢复数据慢的情况，redis提供了AOF重写机制（当AOF文件大小超过所设阈值，就会启用来压缩AOF文件）</p>
-<p>重写：读取当前数据库所有的键值对，将<strong>每个键值对用一条命令</strong>记录到新的AOF文件，等到全部记录完后，使用新的AOF文件替换现有的AOF文件</p>
-<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>AOF重写是后台子进程完成的，好处</p>
-<ol>
-<li>AOF重写期间，主进程还可以继续处理命令请求，避免阻塞主进程</li>
-<li>子进程带有主进程的数据副本，共享的内存是只读的，有一方修改该共享内存就会发生写时复制，通过不加锁保证数据安全</li>
-</ol>
-<p>为了避免数据不一致，redis设置了一个AOF重写缓冲区（重写过程中主进程处理写操作）</p>
-<p>重写期间，redis执行完一个写命令后，同时把这个写命令写入缓冲区和重写缓冲区；当子进程重写完后，会向主进程发送一条信号，主进程收到信号后，调用信号处理函数，主要做：把AOF重写缓冲区的内容追加到新AOF文件中，新的AOF文件代替旧AOF文件</p>
-<p><img src="/../../../../img/article_img/image-20260320165933473.png" srcset="/img/loading.gif" lazyload alt="AOF重写"></p>
-<h1 id="RDB快照"><a href="#RDB快照" class="headerlink" title="RDB快照"></a>RDB快照</h1><h2 id="如何实现-1"><a href="#如何实现-1" class="headerlink" title="如何实现"></a>如何实现</h2><p>RDB快照就是记录某一瞬间的内存数据，记录的是实际数据</p>
-<p>RDB的快照是全量快照，也就是每次执行快照都会把内存中所有数据记录到磁盘中</p>
-<p>提供save和bgsave两个命令，区别在于是否在主线程中执行</p>
-<ul>
-<li>save会在主线程生成RDB文件，如果写入文件事件太长，会阻塞主线程</li>
-<li>bgsave，创建一个子进程生成RDB文件</li>
-</ul>
-<h2 id="RDB写时复制"><a href="#RDB写时复制" class="headerlink" title="RDB写时复制"></a>RDB写时复制</h2><p>bgsave过程中，redis依旧可以执行命令，关键就是写时复制技术</p>
-<p>执行bgsave，会fork创建子进程，此时子进程和父进程共享同一片内存数据，如果此时主进程执行写操作，那么会复制一份副本，子进程把副本写入RDB，主进程可以直接修改</p>
-<p><img src="/../../../../img/article_img/image-20260320175359884.png" srcset="/img/loading.gif" lazyload alt="RDB写时复制"></p>
-<h1 id="混合持久化"><a href="#混合持久化" class="headerlink" title="混合持久化"></a>混合持久化</h1><p>AOF是数据安全性高，但是数据恢复不快</p>
-<p>RDB是数据恢复快，但是快照频率不好把握</p>
-<p>因此结合两者的优点，提出了混合持久化方式，工作在<strong>AOF重写阶段</strong></p>
-<p>开启混合持久化，当AOF日志重写时，fork出来的子进程会写把与主进程共享的内存数据以RDB快照的形式写入到AOF文件，这个节点主进程处理的命令会被放到AOF重写缓冲区，重写缓冲区中的内容以AOF方式写入到AOF文件，写入完成后把新的含有RDB和AOF文件替换原有的AOF文件</p>
-<p>混合持久化后的文件，前半部分是RDB格式，后半部分是AOF格式</p>
-<p>优点：结合了AOF和RDB的优点，开头是RDB快照，恢复的快，同时结合AOF</p>
-<p>缺点：</p>
-<ol>
-<li>AOF文件可读性变差</li>
-<li>兼容性差，开启之后不能在redis4.0之前用</li>
-</ol>
 
-                
-              
-            </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
+<div class="list-group">
+  <p class="h4">共计 1 篇文章</p>
+  <hr>
   
   
     
-      <span class="category-chain">
-        
-  <a href="/database/" class="category-chain-item">database</a>
-  
-  
-    <span>></span>
+      
+      <p class="h5">2026</p>
     
-  <a href="/database/redis/" class="category-chain-item">redis</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
-      
-        <a href="/tags/redis/" class="print-no-link">#redis</a>
-      
-    </div>
+    <a href="/2026/03/10/%E5%AE%9E%E4%B9%A0%E6%95%B4%E7%90%86/" class="list-group-item list-group-item-action">
+      <time>03-10</time>
+      <div class="list-group-item-title">实习整理</div>
+    </a>
   
 </div>
 
-              
-  
 
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Redis-持久化</div>
-      <div>https://yb0os1.github.io/2026/03/20/Redis-持久化/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>yb0os1</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2026年3月20日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
+
+
+
+              </div>
+            </div>
           </div>
         </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2026/03/20/Redis-%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5%E4%B8%8E%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0/" title="Redis-删除策略与内存淘汰">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Redis-删除策略与内存淘汰</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2026/03/20/Redis-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" title="Redis-线程模型">
-                        <span class="hidden-mobile">Redis-线程模型</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-            
-          </article>
-        </div>
       </div>
-    </div>
-
-    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-  </aside>
-
-
-      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
-        <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
     
 
     
@@ -934,101 +631,6 @@
 
 
 
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-      // 🔥 精准偏移（无冲突，不卡顿）
-      scrollSmoothOffset : -20
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
