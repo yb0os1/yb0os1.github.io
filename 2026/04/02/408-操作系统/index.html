@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="31212">
+    <meta name="description" content="用户态和内核态 区别 内核态和用户态是两种运行模式，主要区别在权限和可执行的操作：  内核态：在内核态下CPU可以执行所有的指令和访问所有的硬件资源，这种模式下操作具有更高的权限，主要用于操作系统内核的运行；内核态的底层操作主要包括：内存管理、进程管理、设备驱动程序控制、系统调用等，这些操作涉及到操作系统的核心功能，需要较高的权限来执行 用户态：在用户态下CPU只能执行部分指令集，无法直接访问硬件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统">
 <meta property="og:url" content="https://yb0os1.github.io/2026/04/02/408-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="31212">
+<meta property="og:description" content="用户态和内核态 区别 内核态和用户态是两种运行模式，主要区别在权限和可执行的操作：  内核态：在内核态下CPU可以执行所有的指令和访问所有的硬件资源，这种模式下操作具有更高的权限，主要用于操作系统内核的运行；内核态的底层操作主要包括：内存管理、进程管理、设备驱动程序控制、系统调用等，这些操作涉及到操作系统的核心功能，需要较高的权限来执行 用户态：在用户态下CPU只能执行部分指令集，无法直接访问硬件">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar8.png">
 <meta property="article:published_time" content="2026-04-02T05:42:06.000Z">
-<meta property="article:modified_time" content="2026-04-02T06:22:38.799Z">
+<meta property="article:modified_time" content="2026-04-02T06:48:15.243Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="操作系统">
 <meta property="article:tag" content="计算机基础">
@@ -464,7 +464,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1 字
+          758 字
         
       </span>
     
@@ -476,7 +476,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          7 分钟
         
       </span>
     
@@ -531,7 +531,35 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <p>31212</p>
+                <h1>用户态和内核态</h1>
+<h2 id="区别">区别</h2>
+<p>内核态和用户态是两种运行模式，主要区别在权限和可执行的操作：</p>
+<ol>
+<li>内核态：在内核态下CPU可以执行所有的指令和访问所有的硬件资源，这种模式下操作具有更高的权限，主要用于操作系统内核的运行；内核态的底层操作主要包括：内存管理、进程管理、设备驱动程序控制、系统调用等，这些操作涉及到操作系统的核心功能，需要较高的权限来执行</li>
+<li>用户态：在用户态下CPU只能执行部分指令集，无法直接访问硬件资源，操作权限较低，主要用于运行用户程序</li>
+</ol>
+<h2 id="原因">原因</h2>
+<p>分为内核态和用户态的原因：</p>
+<ol>
+<li>安全性：通过对权限的划分，用户程序无法直接访问硬件资源，从而避免了恶意程序对系统资源的破坏</li>
+<li>稳定性：用户态程序出现问题时，不会影响到整个系统，避免了程序故障导致系统崩溃的风险</li>
+<li>隔离性：内核态和用户态的划分使得操作系统内核与用户程序之间有了明确的边界，有利于系统的模块化和维护</li>
+</ol>
+<h2 id="读写文件的切换">读写文件的切换</h2>
+<p>应用进程可能也需要进行一些系统调用，比如读写文件这种IO操作，这时候就会触发用户态向内核态的切换。此时，CPU会暂停当前进程的执行，保存当前进程的状态 (包括程序计数器、寄存器、栈指针等) 并切换到内核态执行相应的操作，操作完成后再将控制权切换回用户态，恢复进程的执行。</p>
+<p>为什么需要切换？</p>
+<ol>
+<li>权限隔离，用户态的权限比较低，不能直接访问磁盘、网卡等硬件设备；内核态拥有最高权限，可以操控硬件、管理文件、调度资源。如果允许用户态直接读写磁盘，恶意程序可以随意破坏文件系统。</li>
+<li>统一管理与资源协调，多个进程同时读写同一个文件，内核负责并发控制、加锁、保证一致性</li>
+<li>提供稳定统一的系统调用接口，用户进程不能自己写驱动，只能通过 <code>read</code> / <code>write</code> 这类系统调用进入内核，由内核的文件系统、驱动去真正执行 IO</li>
+<li>保护内核数据结构，文件描述符、inode、dentry、页缓存等都在内核空间，用户态不能直接访问，必须通过切换态、陷入内核来操作</li>
+</ol>
+<p>用户态没权限、不安全，内核态管硬件、管资源。IO 是硬件相关操作，必须切换到内核态让操作系统代劳，这是保护系统稳定和安全的基础机制。</p>
+<h1>进程管理</h1>
+<h1>内存管理</h1>
+<h1>锁</h1>
+<h1>中断</h1>
+<h1>网络IO</h1>
 
                 
               
