@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="分类 redo log 重做日志，InnoDB存储引擎层生成的日志，实现事务的持久性，主要用于故障回复 undo log 回滚日志，InnoDB存储引擎层生成的日志，实现事务的原子性，主要用于事务回滚和MVCC binlog 二进制日志，Server层生成的日志，主要用于数据备份和主从复制 relay log 中继日志，用于主从复制场景下，从节点通过io线程拷贝主节点的binlog后本地生成的日志">
+    <meta name="description" content="分类  redo log 重做日志，InnoDB存储引擎层生成的日志，实现事务的持久性，主要用于故障回复 undo log 回滚日志，InnoDB存储引擎层生成的日志，实现事务的原子性，主要用于事务回滚和MVCC binlog 二进制日志，Server层生成的日志，主要用于数据备份和主从复制 relay log 中继日志，用于主从复制场景下，从节点通过io线程拷贝主节点的binlog后本地生成的日">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL-日志">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/17/MySQL-%E6%97%A5%E5%BF%97/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="分类 redo log 重做日志，InnoDB存储引擎层生成的日志，实现事务的持久性，主要用于故障回复 undo log 回滚日志，InnoDB存储引擎层生成的日志，实现事务的原子性，主要用于事务回滚和MVCC binlog 二进制日志，Server层生成的日志，主要用于数据备份和主从复制 relay log 中继日志，用于主从复制场景下，从节点通过io线程拷贝主节点的binlog后本地生成的日志">
+<meta property="og:description" content="分类  redo log 重做日志，InnoDB存储引擎层生成的日志，实现事务的持久性，主要用于故障回复 undo log 回滚日志，InnoDB存储引擎层生成的日志，实现事务的原子性，主要用于事务回滚和MVCC binlog 二进制日志，Server层生成的日志，主要用于数据备份和主从复制 relay log 中继日志，用于主从复制场景下，从节点通过io线程拷贝主节点的binlog后本地生成的日">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar20.png">
 <meta property="article:published_time" content="2026-03-17T14:54:48.000Z">
@@ -559,14 +559,17 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><ul>
+                <h1>分类</h1>
+<ul>
 <li>redo log 重做日志，InnoDB存储引擎层生成的日志，实现事务的持久性，主要用于故障回复</li>
 <li>undo log 回滚日志，InnoDB存储引擎层生成的日志，实现事务的原子性，主要用于事务回滚和MVCC</li>
 <li>binlog 二进制日志，Server层生成的日志，主要用于数据备份和主从复制</li>
 <li>relay log 中继日志，用于主从复制场景下，从节点通过io线程拷贝主节点的binlog后本地生成的日志</li>
 <li>慢查询日志，记录执行时间过长的sql，需要设置阈值后手动开启</li>
 </ul>
-<h1 id="binlog"><a href="#binlog" class="headerlink" title="binlog"></a>binlog</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MySQL完成更新操作后会生成一条binlog，等之后事务提交，将该事务的执行过程中产生的所有的binlog统一写入binlog文件</p>
+<h1>binlog</h1>
+<h2 id="介绍">介绍</h2>
+<p>MySQL完成更新操作后会生成一条binlog，等之后事务提交，将该事务的执行过程中产生的所有的binlog统一写入binlog文件</p>
 <p>binlog是追加写，写满一个文件就创建一个新的文件继续写，不会覆盖以前的日志，保存全量日志，用于备份回复、主从复制</p>
 <p>binlog文件记录所有数据库表结构变更和数据库表数据修改的日志，不会记录查询操作</p>
 <p>binlog的三种格式：statement（默认）、row、mixed</p>
@@ -575,7 +578,8 @@
 <li>row：记录行数据最终被修改成什么样子，不存在动态函数问题，缺点是记录的是每行数据的变化的结果，会导致binlog文件变大</li>
 <li>mixed：包含前两种，根据不同情况自动使用statement还是row</li>
 </ul>
-<h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><p>MySQL主从复制依赖于binlog，记录MySQL所有的变化以二进制形式保存到磁盘上；复制的过程就是将binlog中的数据从主库传输到从库上（异步）</p>
+<h2 id="主从复制">主从复制</h2>
+<p>MySQL主从复制依赖于binlog，记录MySQL所有的变化以二进制形式保存到磁盘上；复制的过程就是将binlog中的数据从主库传输到从库上（异步）</p>
 <p>异步复制（默认）具体流程：</p>
 <ol>
 <li>写入binlog，主库收到客户端提交事务请求会先写入binlog，然后提交事务，更新数据</li>
@@ -583,16 +587,18 @@
 <li>回放binlog，从库创建一个专门回放binlog的线程，读取中继日志，回放binlog更新数据，实现主从数据一致性</li>
 </ol>
 <p>读写分离，只写入主库，读只从从库</p>
-<p><img src="/../../../../img/article_img/image-20260318002006440.png" srcset="/img/loading.gif" lazyload alt="主从复制"></p>
+<p><img src="../../../../img/article_img/image-20260318002006440.png" srcset="/img/loading.gif" lazyload alt="主从复制"></p>
 <p>还有同步复制（主库提交事务的线程要等待所有从库同步完成才返回客户端结果）、半同步复制（主库不等到所有从库同步完成，等待一部分即可）、异步复制（主库不会等待binlog同步到从库，直接返回给客户端）</p>
-<h2 id="binlog什么时候刷盘？"><a href="#binlog什么时候刷盘？" class="headerlink" title="binlog什么时候刷盘？"></a>binlog什么时候刷盘？</h2><p>默认事务提交的时候将binlog cache写入binlog文件，可以通过参数控制<code>sync_binlog</code>：</p>
+<h2 id="binlog什么时候刷盘？">binlog什么时候刷盘？</h2>
+<p>默认事务提交的时候将binlog cache写入binlog文件，可以通过参数控制<code>sync_binlog</code>：</p>
 <ul>
 <li>0，操作系统决定什么时候将数据持久化磁盘</li>
 <li>1，每次事务提交</li>
 <li>N，每N次事务提交</li>
 </ul>
-<p><img src="/../../../../img/article_img/image-20260318002757225.png" srcset="/img/loading.gif" lazyload alt="binlog刷盘"></p>
-<h1 id="undolog"><a href="#undolog" class="headerlink" title="undolog"></a>undolog</h1><p>逻辑日志，用于撤销回滚的日志，保证事务原子性</p>
+<p><img src="../../../../img/article_img/image-20260318002757225.png" srcset="/img/loading.gif" lazyload alt="binlog刷盘"></p>
+<h1>undolog</h1>
+<p>逻辑日志，用于撤销回滚的日志，保证事务原子性</p>
 <p>作用</p>
 <p>1、事务回滚：每对一行记录进行操作（插入、更新、删除）时，要把回滚时需要的信息记录到undo log中，也就是记录相反的内容</p>
 <ul>
@@ -601,20 +607,24 @@
 <li>更新一条数据时，记被更新列的旧值，回滚时更新为旧值</li>
 </ul>
 <p>2、实现MVCC</p>
-<p><img src="/../../../../img/article_img/image-20260317233907690.png" srcset="/img/loading.gif" lazyload alt="undo log保障原子性"></p>
-<h1 id="redolog"><a href="#redolog" class="headerlink" title="redolog"></a>redolog</h1><h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2><p>redolog可以保证事务的持久性，防止断电导致数据丢失的问题</p>
+<p><img src="../../../../img/article_img/image-20260317233907690.png" srcset="/img/loading.gif" lazyload alt="undo log保障原子性"></p>
+<h1>redolog</h1>
+<h2 id="介绍-2">介绍</h2>
+<p>redolog可以保证事务的持久性，防止断电导致数据丢失的问题</p>
 <p>redo log是物理日志，记录某个数据也做了什么修改，每当执行一个事务就会产生这样的一条或者多条物理日志</p>
 <p>对于修改的数据，是需要先写到buffer pool中，对应数据页变成脏页，然后在合适的时间刷新到磁盘中（undolog一个后写技术），这是WAL后写技术</p>
 <blockquote>
 <p>WAL：简单来说就是 先写日志到磁盘，数据延迟刷盘</p>
-<p> MySQL 的写操作并不是立刻写到磁盘上，而是先把redolog日志写入磁盘，然后在合适的时间再写到磁盘上</p>
+<p>MySQL 的写操作并不是立刻写到磁盘上，而是先把redolog日志写入磁盘，然后在合适的时间再写到磁盘上</p>
 </blockquote>
-<p><img src="/../../../../img/article_img/image-20260317234531374.png" srcset="/img/loading.gif" lazyload alt="WAL技术"></p>
-<h2 id="数据要写入磁盘，为什么redolog也要写入磁盘？"><a href="#数据要写入磁盘，为什么redolog也要写入磁盘？" class="headerlink" title="数据要写入磁盘，为什么redolog也要写入磁盘？"></a>数据要写入磁盘，为什么redolog也要写入磁盘？</h2><ol>
+<p><img src="../../../../img/article_img/image-20260317234531374.png" srcset="/img/loading.gif" lazyload alt="WAL技术"></p>
+<h2 id="数据要写入磁盘，为什么redolog也要写入磁盘？">数据要写入磁盘，为什么redolog也要写入磁盘？</h2>
+<ol>
 <li>实现了事务的持久性，让MySQL有了灾难恢复的能力，保障MySQL在任何时间段突然崩溃，重启之后已提交的记录都不会小时</li>
 <li>redolog是追加操作，磁盘操作是顺序写；写入数据要先要找到写入位置，然后写入，是随机写，WAL技术将写操作从随机写变成了顺序写，提高了MySQL写入磁盘的性能</li>
 </ol>
-<h2 id="redo-log什么时候刷盘？"><a href="#redo-log什么时候刷盘？" class="headerlink" title="redo log什么时候刷盘？"></a>redo log什么时候刷盘？</h2><p>首先要知道，redo log日志并不是直接写入磁盘的，直接写入会产生大量IO操作，redo log是先写入自己的缓存 redo log buffer（默认16MB），后续进行刷盘</p>
+<h2 id="redo-log什么时候刷盘？">redo log什么时候刷盘？</h2>
+<p>首先要知道，redo log日志并不是直接写入磁盘的，直接写入会产生大量IO操作，redo log是先写入自己的缓存 redo log buffer（默认16MB），后续进行刷盘</p>
 <p>刷盘的时机：</p>
 <ol>
 <li>MySQL正常关闭</li>
@@ -623,36 +633,46 @@
 <li>每次事务提交把buffer持久化到磁盘（通过<code>innodb_flush_log_at_trx_commit</code>参数控制）</li>
 </ol>
 <p><code>innodb_flush_log_at_trx_commit</code>参数控制事务提交是否持久化：</p>
-<p><img src="/../../../../img/article_img/image-20260318000706856.png" srcset="/img/loading.gif" lazyload alt="innodb_flush_log_at_trx_commit不同参数对比"></p>
-<h2 id="redo-log文件写满了怎么办？"><a href="#redo-log文件写满了怎么办？" class="headerlink" title="redo log文件写满了怎么办？"></a>redo log文件写满了怎么办？</h2><p>redo log是有两个文件，文件的大小可以通过redo log file设置，进行循环写写入的，当buffer pool脏页刷新到磁盘对应的redo log记录就没用了，可以进行擦除</p>
+<p><img src="../../../../img/article_img/image-20260318000706856.png" srcset="/img/loading.gif" lazyload alt="innodb_flush_log_at_trx_commit不同参数对比"></p>
+<h2 id="redo-log文件写满了怎么办？">redo log文件写满了怎么办？</h2>
+<p>redo log是有两个文件，文件的大小可以通过redo log file设置，进行循环写写入的，当buffer pool脏页刷新到磁盘对应的redo log记录就没用了，可以进行擦除</p>
 <p>针对并发量大的系统，redologfile的大小很重要，因为如果redolog文件满了，那么意味这MySQL不能执行新的更新操作，导致MySQL被阻塞，等待buffer pool中的脏页刷新到磁盘，也就是redo log file腾出位置，MySQL才会恢复正常运行</p>
-<p><img src="/../../../../img/article_img/image-20260318000838778.png" srcset="/img/loading.gif" lazyload alt="redolog写入文件逻辑图"></p>
-<h1 id="三者结合的问题"><a href="#三者结合的问题" class="headerlink" title="三者结合的问题"></a>三者结合的问题</h1><h2 id="有了undo-log为什么还要redo-log？"><a href="#有了undo-log为什么还要redo-log？" class="headerlink" title="有了undo log为什么还要redo log？"></a>有了undo log为什么还要redo log？</h2><p>undo log 记录的是修改前的数据，主要用于事务回滚和 MVCC，保证的是原子性；redo log 记录的是对数据页的物理修改，主要用于数据库宕机后的重做恢复，保证的是持久性。</p>
+<p><img src="../../../../img/article_img/image-20260318000838778.png" srcset="/img/loading.gif" lazyload alt="redolog写入文件逻辑图"></p>
+<h1>三者结合的问题</h1>
+<h2 id="有了undo-log为什么还要redo-log？">有了undo log为什么还要redo log？</h2>
+<p>undo log 记录的是修改前的数据，主要用于事务回滚和 MVCC，保证的是原子性；redo log 记录的是对数据页的物理修改，主要用于数据库宕机后的重做恢复，保证的是持久性。</p>
 <p>数据库崩溃时，不仅要把未提交事务回滚掉，还要把已经提交但数据页还没刷盘的修改恢复出来。undo log只能解决回滚未提交的事务，解决不了把已提交的数据恢复，这个事情必须靠 redo log</p>
-<h2 id="有了binlog为什么还要redolog？"><a href="#有了binlog为什么还要redolog？" class="headerlink" title="有了binlog为什么还要redolog？"></a>有了binlog为什么还要redolog？</h2><p>binlog日志是server层的，作用只是用来归档 备份 主从复制，没用crash-safe能力</p>
+<h2 id="有了binlog为什么还要redolog？">有了binlog为什么还要redolog？</h2>
+<p>binlog日志是server层的，作用只是用来归档 备份 主从复制，没用crash-safe能力</p>
 <p>redo log是InnoDB存储引擎的，实现crash-safe能力</p>
 <p><strong>两者区别</strong>：</p>
 <ol>
-<li>使用对象不同，server层&#x2F;InnoDB</li>
-<li>文件格式不同，三种格式&#x2F;物理日志</li>
-<li>写入方式不同，追加写&#x2F;循环写</li>
-<li>用途不同，备份、主从复制&#x2F;故障恢复</li>
+<li>使用对象不同，server层/InnoDB</li>
+<li>文件格式不同，三种格式/物理日志</li>
+<li>写入方式不同，追加写/循环写</li>
+<li>用途不同，备份、主从复制/故障恢复</li>
 </ol>
-<h2 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h2><p><strong>为什么需要</strong>：事务提交后，redo log和binlog都要持久化磁盘，这两个是独立逻辑，可能存在半成功的状态；为了保证两个日志一致性，MySQL使用内部XA事务 两阶段提交</p>
-<h3 id="两阶段提交流程"><a href="#两阶段提交流程" class="headerlink" title="两阶段提交流程"></a>两阶段提交流程</h3><p>分为prepare和commit两个阶段</p>
+<h2 id="两阶段提交">两阶段提交</h2>
+<p><strong>为什么需要</strong>：事务提交后，redo log和binlog都要持久化磁盘，这两个是独立逻辑，可能存在半成功的状态；为了保证两个日志一致性，MySQL使用内部XA事务 两阶段提交</p>
+<h3 id="两阶段提交流程">两阶段提交流程</h3>
+<p>分为prepare和commit两个阶段</p>
 <ol>
 <li>prepare阶段：将内部XA事务id写入到redo log，同时把redo log对应的事务状态设置为prepare，将redo log持久化到磁盘</li>
 <li>commit阶段：把内部XA事务id写入到binlog，然后把binlog持久化到磁盘，接着把redo log对应的事务状态设置为commit，这个过程不需要持久化到磁盘，只需要写到文件系统的page cache</li>
 </ol>
-<p><img src="/../../../../img/article_img/image-20260318003247100.png" srcset="/img/loading.gif" lazyload alt="内部XA事务两阶段提交流程"></p>
-<h3 id="两阶段提交异常处理"><a href="#两阶段提交异常处理" class="headerlink" title="两阶段提交异常处理"></a>两阶段提交异常处理</h3><ol>
+<p><img src="../../../../img/article_img/image-20260318003247100.png" srcset="/img/loading.gif" lazyload alt="内部XA事务两阶段提交流程"></p>
+<h3 id="两阶段提交异常处理">两阶段提交异常处理</h3>
+<ol>
 <li>不管是prepare还是commit阶段发生异常，只要事务没用提交commit那么redo log事务状态都是prepare，可以根据XID去binlog找是否有相同对应的，如果有那么提交事务，如果没用回滚事务</li>
 <li>对于处于 prepare 阶段的 redo log，即可以提交事务，也可以回滚事务，这取决于是否能在binlog 中查找到与 redo log 相同的 XID，如果有就提交事务，如果没有就回滚事务。这样就可以保证redo log 和 binlog 这两份日志的一致性了</li>
 </ol>
-<h3 id="两阶段提交的问题"><a href="#两阶段提交的问题" class="headerlink" title="两阶段提交的问题"></a>两阶段提交的问题</h3><ol>
-<li><p>磁盘IO次数高：双1配置，每次事务提交，redolog和binlog都要持久化磁盘</p>
+<h3 id="两阶段提交的问题">两阶段提交的问题</h3>
+<ol>
+<li>
+<p>磁盘IO次数高：双1配置，每次事务提交，redolog和binlog都要持久化磁盘</p>
 </li>
-<li><p>锁竞争激烈：能保证单事务两个日志内容一致，但在多事务情况下，不能保证两者的提交顺序一致，所以需要加锁保证多事务一致性</p>
+<li>
+<p>锁竞争激烈：能保证单事务两个日志内容一致，但在多事务情况下，不能保证两者的提交顺序一致，所以需要加锁保证多事务一致性</p>
 <blockquote>
 <p>为什么锁竞争激烈？</p>
 <p>一个事务获取到锁才能进入prepare，一直到commit阶段结束才能释放锁，下一个事务才能进入prepare阶段</p>
@@ -660,23 +680,28 @@
 </blockquote>
 </li>
 </ol>
-<h3 id="两阶段提交的优化"><a href="#两阶段提交的优化" class="headerlink" title="两阶段提交的优化"></a>两阶段提交的优化</h3><ul>
+<h3 id="两阶段提交的优化">两阶段提交的优化</h3>
+<ul>
 <li>引入了binlog组提交，当有多个事务的时候，会将多个binlog刷盘合并到一个，从而减少磁盘IO</li>
-<li>prepare阶段不变，commit拆分为三个阶段<ol>
+<li>prepare阶段不变，commit拆分为三个阶段
+<ol>
 <li>flush阶段：多个事务按进入的顺序将 binlog 从 cache 写入文件（不刷盘）</li>
 <li>sync阶段：对 binlog 文件做 fsync 操作（多个事务的 binlog 合并一次刷盘）</li>
 <li>commit阶段：各个事务按顺序做 InnoDB commit 操作</li>
 </ol>
 </li>
 </ul>
-<h2 id="update语句具体执行流程"><a href="#update语句具体执行流程" class="headerlink" title="update语句具体执行流程"></a>update语句具体执行流程</h2><p>比如说具体执行一条更新语句<code>update t set name = &#39;y&#39; where id = 1</code></p>
+<h2 id="update语句具体执行流程">update语句具体执行流程</h2>
+<p>比如说具体执行一条更新语句<code>update t set name = 'y' where id = 1</code></p>
 <ol>
-<li>执行器负责具体执行，会调用存储引擎接口，通过主键索引树搜索获取id&#x3D;1的记录<ul>
-<li>如果id&#x3D;1所在的数据页在buffer pool中，那么直接返回给执行器执行</li>
-<li>如果id&#x3D;1所在数据页不在buffer pool中，那么把这个数据页从磁盘读入到buffer，返回记录给执行器</li>
+<li>执行器负责具体执行，会调用存储引擎接口，通过主键索引树搜索获取id=1的记录
+<ul>
+<li>如果id=1所在的数据页在buffer pool中，那么直接返回给执行器执行</li>
+<li>如果id=1所在数据页不在buffer pool中，那么把这个数据页从磁盘读入到buffer，返回记录给执行器</li>
 </ul>
 </li>
-<li>执行器得到聚簇索引后，先对比更新前后记录是否相同<ul>
+<li>执行器得到聚簇索引后，先对比更新前后记录是否相同
+<ul>
 <li>相同，直接返回不进行后续更新操作</li>
 <li>不相同，把更新前后的记录都作为参数传个InnoDB层，让InnoDB执行更新操作</li>
 </ul>
@@ -687,7 +712,7 @@
 <li>事务提交，采用两阶段提交保证redo log和binlog一致性</li>
 </ol>
 <p>简单说下：</p>
-<p>看数据页是不是在buffer pool中&#x3D;》对比更新前后是否相同&#x3D;》记录undolog&#x3D;》数据页标记为脏页，记录redo log&#x3D;》记录binlog&#x3D;》两阶段提交</p>
+<p>看数据页是不是在buffer pool中=》对比更新前后是否相同=》记录undolog=》数据页标记为脏页，记录redo log=》记录binlog=》两阶段提交</p>
 
                 
               
