@@ -22,13 +22,13 @@
     <meta name="description" content="如何理解线程安全 线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JUC-线程安全">
-<meta property="og:url" content="https://yb0os1.github.io/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:url" content="https://yb0os1.github.io/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%88%E9%94%81%EF%BC%89/index.html">
 <meta property="og:site_name" content="yb0os1">
 <meta property="og:description" content="如何理解线程安全 线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar33.png">
 <meta property="article:published_time" content="2026-03-21T16:05:30.000Z">
-<meta property="article:modified_time" content="2026-03-25T17:13:37.713Z">
+<meta property="article:modified_time" content="2026-04-02T04:07:35.247Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="JUC">
 <meta property="article:tag" content="java">
@@ -492,7 +492,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6.1k 字
+          6.6k 字
         
       </span>
     
@@ -504,7 +504,7 @@
         
         
           <!-- compatible with older versions-->
-          51 分钟
+          56 分钟
         
       </span>
     
@@ -721,8 +721,16 @@
 <h3 id="原理（重量级锁）">原理（重量级锁）</h3>
 <blockquote>
 <p>每个对象头部都有一个Mark Word，存储着对象的运行时数据，如哈希码、锁状态信息、GC分代年龄等，锁状态信息标志了Synchronized的状态</p>
+<p>当升级为重量级锁时，Mark Word 会保存一个指针，指向 JVM 底层 C++ 实现的 ObjectMonitor（监视器）</p>
 </blockquote>
-<p>基于JVM的监视器Monitor实现线程同步，自动加锁释放锁，对应两条字节码指令monitorenter和monitorexit</p>
+<p>Monitor 是 JVM 同步的核心，包含：</p>
+<ul>
+<li><code>_owner</code>：当前持有锁的线程</li>
+<li><code>_count</code>：重入计数</li>
+<li><code>_EntryList</code>：竞争锁的阻塞队列</li>
+<li><code>_WaitSet</code>：调用 wait () 的等待队列</li>
+</ul>
+<p>基于监视器Monitor实现线程同步，自动加锁释放锁，对应两条字节码指令monitorenter和monitorexit</p>
 <ol>
 <li>线程执行monitorenter时，JVM检查锁对象的监视器
 <ul>
@@ -798,7 +806,7 @@
 </ol>
 <h2 id="AQS">AQS</h2>
 <p>AbstractQueuedSynchronizer，抽象队列同步器</p>
-<p>AQS主要由两部分组成：volatile修饰的int类型的state属性和FIFO的等待队列（双向链表）</p>
+<p>AQS组成：volatile修饰的int类型的state属性、FIFO的同步队列（双向链表）、</p>
 <ul>
 <li>state表示共享资源的状态，不同子类中的实现对于state的值有不同的涵义，由CAS进行修改的，保证了线程安全性
 <ul>
@@ -817,7 +825,26 @@
 </li>
 </ul>
 </li>
-<li>等待队列(双向链表)：用于存储等待获取锁的线程，因为有些线程可以抢占到锁，而有些线程无法抢占到锁，此时，没有竞争到锁的线程就会被打包为一个Node节点，插入双向链表的尾部，并且阻塞线程。当释放锁时，会唤醒双向链表中的head的后继节点节点</li>
+<li>同步队列(双向链表)：用于存储等待获取锁的线程（获取锁失败的线程），因为有些线程可以抢占到锁，而有些线程无法抢占到锁，此时，没有竞争到锁的线程就会被打包为一个Node节点，插入双向链表的尾部，并且阻塞线程。当释放锁时，会唤醒双向链表中的head的后继节点节点</li>
+<li>条件队列：存放调用<code>condition.await()</code>的线程。
+<ul>
+<li>
+<p>调用<code>await()</code>：入队、释放锁、挂起</p>
+<ol>
+<li>把当前线程封装成 Node（状态为 CONDITION），加入 条件队列（尾部入队）</li>
+<li>完全释放在 AQS 上占有的锁（同步状态 State），唤醒同步队列里的后继线程去抢锁</li>
+<li>当前线程阻塞（park），进入 WAITING 状态，等待唤醒</li>
+</ol>
+</li>
+<li>
+<p>调用<code>signal()</code>：迁移、唤醒、重竞争</p>
+<ol>
+<li>从条件队列头部取出一个等待节点，移动到同步同步队列的尾部，重新加入抢锁大军</li>
+<li>唤醒该节点，让它去竞争锁（但它不会立刻执行，而是去排队）</li>
+</ol>
+</li>
+</ul>
+</li>
 </ul>
 <p><img src="../../../../img/article_img/image-20260323163009476.png" srcset="/img/loading.gif" lazyload alt="AQS"></p>
 <p>基于AQS实现：</p>
@@ -829,7 +856,53 @@
 <p>基于AQS+CAS+LockSupport实现，Lock是接口，ReentrantLock是实现类</p>
 <p>LockSupport.park(); //阻塞线程<br>
 LockSupoort.unpark(Thread);//唤醒线程</p>
-<h1>Lock和Synchronized对比</h1>
+<h2 id="notify和wait原理">notify和wait原理</h2>
+<p>notify wait notifyAll都是在持有锁的时候才可以使用的</p>
+<ol>
+<li>wait：会原子地释放锁，将 <code>_owner</code> 置空、<code>_count</code> 重置，然后把当前线程加入 <code>_WaitSet</code> 并挂起，进入 WAITING 状态</li>
+<li><code>notify</code> 时，线程必须仍然持有锁。JVM 会从 <code>_WaitSet</code> 中取出一个等待线程，将它移动到 <code>_EntryList</code>，使其重新进入锁竞争队列。被唤醒的线程不会立即执行，而是先进入 BLOCKED 状态，竞争成功后才能从 <code>wait</code> 处继续运行</li>
+<li><code>notifyAll</code> 则是将 <code>_WaitSet</code> 中所有线程一次性全部移入 <code>_EntryList</code>，让它们一起竞争锁</li>
+</ol>
+<blockquote>
+<p>AQS和synchronized的对比</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>synchronized (ObjectMonitor)</th>
+<th>AQS (ReentrantLock + Condition)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>等待队列数量</td>
+<td>1 个 (全局唯一 WaitSet)</td>
+<td>N 个 (每把锁可对应多个 Condition)</td>
+</tr>
+<tr>
+<td>唤醒机制</td>
+<td>随机唤醒 (notify) / 全部唤醒 (notifyAll)</td>
+<td>精准唤醒 (signal) 指定队列的线程</td>
+</tr>
+<tr>
+<td>底层结构</td>
+<td>对象头 Mark Word + ObjectMonitor</td>
+<td>AQS 同步队列 + Node 节点链表</td>
+</tr>
+<tr>
+<td>功能限制</td>
+<td>不能实现精准控制（如生产者消费者分离）</td>
+<td>可以精确控制 “组” 级别的线程等待 / 唤醒</td>
+</tr>
+<tr>
+<td>超时机制</td>
+<td>不支持（除非抛异常中断）</td>
+<td>支持 <code>await(timeout)</code>，可中断</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Lock和Synchronized对比">Lock和Synchronized对比</h2>
 <ul>
 <li>Lock锁基于AQS封装，结合CAS和LockSupport.park/unpark实现的，锁的升级需要手动的实现</li>
 <li>synchronized基于C++虚拟机封装，自动实现锁升级的过程</li>
@@ -1010,7 +1083,7 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
   <div class="license-box my-3">
     <div class="license-title">
       <div>JUC-线程安全</div>
-      <div>https://yb0os1.github.io/2026/03/22/JUC-线程安全/</div>
+      <div>https://yb0os1.github.io/2026/03/22/JUC-线程安全（锁）/</div>
     </div>
     <div class="license-meta">
       
