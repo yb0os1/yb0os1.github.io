@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="缓存 本地缓存 本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访">
+    <meta name="description" content="缓存本地缓存本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访问">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis-场景">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/20/Redis-%E5%9C%BA%E6%99%AF/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="缓存 本地缓存 本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访">
+<meta property="og:description" content="缓存本地缓存本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访问">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar25.png">
 <meta property="article:published_time" content="2026-03-20T08:25:53.000Z">
@@ -229,41 +229,13 @@
             
               
                 
-                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
-                  <li class="nav-item dropdown">
-                    <!-- 可跳转的主文字区域 -->
-                    <a class="nav-link" href="/408" target="_self" style="display: inline-block;">
-                      
-                        <span>💻 计算机基础</span>
-                    </a>
-                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
-                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false"
-                      style="display: inline-block; margin-left: -20px !important;">
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
                         
-                          
-                            
-                              <a class="dropdown-item" href="/408/data-structure/"
-                                target="_self">
-                                
-                                  <span>数据结构</span>
-                              </a>
-                              
-                        
-                          
-                            
-                              <a class="dropdown-item" href="/408/computer-network/"
-                                target="_self">
-                                
-                                  <span>计算机网络</span>
-                              </a>
-                              
-                    </div>
-                  </li>
-                  
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
                       
           
             
@@ -559,9 +531,7 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>缓存</h1>
-<h2 id="本地缓存">本地缓存</h2>
-<p>本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写</p>
+                <h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><h2 id="本地缓存"><a href="#本地缓存" class="headerlink" title="本地缓存"></a>本地缓存</h2><p>本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写</p>
 <p>优势：</p>
 <ol>
 <li>访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求</li>
@@ -571,7 +541,7 @@
 <p>不足：</p>
 <ol>
 <li>可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访问</li>
-<li>服务重启/发布，缓存全部丢失</li>
+<li>服务重启&#x2F;发布，缓存全部丢失</li>
 <li>集群环境下数据不一致</li>
 </ol>
 <p>常见本地缓存框架：</p>
@@ -580,11 +550,10 @@
 <li>Ehcache</li>
 <li>ConcurrentHashMap +自定义淘汰策略</li>
 </ol>
-<h2 id="分布式缓存">分布式缓存</h2>
-<p>如redis，将数据存储在多个分布式节点上，通过协同工作提供高性能的数据访问</p>
+<h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><p>如redis，将数据存储在多个分布式节点上，通过协同工作提供高性能的数据访问</p>
 <p>优势：</p>
 <ol>
-<li>扩展性强：节点可以动态扩展，支持大规模数据存储和访问需求</li>
+<li>扩展性强：节点可以动态扩展，支持大规模数据存储和访问需求 </li>
 <li>数据一致性高：分布式缓存能够保证数据在多个节点之间的一致性</li>
 <li>易于维护：自动化管理方式，能够降低维护成本和管理的复杂性</li>
 </ol>
@@ -593,17 +562,15 @@
 <li>访问速度相对本地缓存慢，数据需要多个节点进行访问和协同</li>
 <li>网络开销大：分布式缓存需要通过网络进行数据传输和协同</li>
 </ol>
-<h2 id="缓存穿透">缓存穿透</h2>
-<p>客户端请求的数据在缓存和数据库中都不存在这样缓存永远不会生效，请求一直都会到数据库</p>
+<h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p>客户端请求的数据在缓存和数据库中都不存在这样缓存永远不会生效，请求一直都会到数据库</p>
 <p>解决方案：</p>
 <ol>
 <li>非法请求限制：恶意请求访问不存在的数据时也会缓存击穿，可以在API入口判断请求参数是否合理</li>
 <li>缓存空值或默认值：实现简单维护方便，但是可能会出现短暂数据不一致、额外的内存消耗</li>
 <li>布隆过滤器：写入数据库数据时，使用布隆过滤器做个标记，然后在用户请求到来时，可以通过查询布隆过滤器快速判断数据是否存在；存在误判的可能89</li>
 </ol>
-<p><img src="D:.blog%5Cmy-blog%5Csource%5Cimg%5Carticle_img%5Cimage-20260321164211789.png" srcset="/img/loading.gif" lazyload alt="缓存穿透"></p>
-<h2 id="缓存雪崩">缓存雪崩</h2>
-<p>大量缓存数据同一时间过期或redis故障宕机时，导致大量请求直接到达数据库，从而导致数据库压力骤增甚至导致数据库宕机</p>
+<p><img src="D:.blog\my-blog\source\img\article_img\image-20260321164211789.png" srcset="/img/loading.gif" lazyload alt="缓存穿透"></p>
+<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p>大量缓存数据同一时间过期或redis故障宕机时，导致大量请求直接到达数据库，从而导致数据库压力骤增甚至导致数据库宕机</p>
 <p>解决方案：</p>
 <ol>
 <li>给不同的key添加随机的ttl （针对key失效）</li>
@@ -611,17 +578,15 @@
 <li>给缓存业务添加降级限流策略</li>
 <li>给业务添加多级缓存</li>
 </ol>
-<p><img src="D:.blog%5Cmy-blog%5Csource%5Cimg%5Carticle_img%5Cimage-20260321164233348.png" srcset="/img/loading.gif" lazyload alt="缓存雪崩"></p>
-<h2 id="缓冲击穿">缓冲击穿</h2>
-<p>热点数据过期，大量请求访问该热点数据，直接访问数据库，数据库容易被高并发击垮</p>
+<p><img src="D:.blog\my-blog\source\img\article_img\image-20260321164233348.png" srcset="/img/loading.gif" lazyload alt="缓存雪崩"></p>
+<h2 id="缓冲击穿"><a href="#缓冲击穿" class="headerlink" title="缓冲击穿"></a>缓冲击穿</h2><p>热点数据过期，大量请求访问该热点数据，直接访问数据库，数据库容易被高并发击垮</p>
 <p>解决方案：</p>
 <ol>
 <li>互斥锁，保证同一时间只有一个线程访问数据；没有额外的内存消耗、保证一致性、实现简单；但是其他线程等待性能受影响、可能有死锁风险</li>
 <li>逻辑过期，不给热点数据设置过期时间，额外存一个过期时间，但是过期不删除，等到查询的时候如果过期删除重新写入缓存；线程无需等待性能好，但是不保证一致性，额外内存消耗</li>
 </ol>
-<p><img src="D:.blog%5Cmy-blog%5Csource%5Cimg%5Carticle_img%5Cimage-20260321164225690.png" srcset="/img/loading.gif" lazyload alt="缓冲击穿"></p>
-<h2 id="数据一致性">数据一致性</h2>
-<p>如何保证MySQL和redis数据一致性？</p>
+<p><img src="D:.blog\my-blog\source\img\article_img\image-20260321164225690.png" srcset="/img/loading.gif" lazyload alt="缓冲击穿"></p>
+<h2 id="数据一致性"><a href="#数据一致性" class="headerlink" title="数据一致性"></a>数据一致性</h2><p>如何保证MySQL和redis数据一致性？</p>
 <p>一般采用旁路缓存策略</p>
 <ul>
 <li>读数据，如果缓存不命中，会从数据库加载到缓存中</li>
@@ -630,25 +595,22 @@
 <p>但是旁路缓存策略有个问题，两个操作只要第二个操作出现问题都会出现数据不一致（更新数据库成功，删除缓存失败）</p>
 <p>保证最终一致性两种方案：</p>
 <ol>
-<li>引入消息队列，将删除缓存操作的数据加入消息队列，由消费者操作数据
-<ol>
+<li>引入消息队列，将删除缓存操作的数据加入消息队列，由消费者操作数据<ol>
 <li>如果删除缓存失败，那么会重试</li>
 <li>如果成功，就移除</li>
 </ol>
 </li>
 <li>订阅binlog，更新数据库成功会产生一条日志记录在binlog中，canal模拟成一个MySQL的从节点，向主节点发送dump请求，主节点就会推送binlog给canal，解析后供下游订阅使用</li>
 </ol>
-<h1>分布式锁</h1>
-<p>分布式锁用于分布式环境下并发控制的一种机制，用于控制某个资源在同一时刻只能被一个应用所持有</p>
+<h1 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h1><p>分布式锁用于分布式环境下并发控制的一种机制，用于控制某个资源在同一时刻只能被一个应用所持有</p>
 <p>实现原理：</p>
 <ol>
 <li>基于set nx互斥性、ex避免死锁实现不可重入分布式锁，不可重入、无法重试、锁超时失效</li>
 <li>基于hash结构记录线程id和重入次数实现可重入的分布式锁，lua脚本保证原子性</li>
-<li>redisson
-<ol>
+<li>redisson<ol>
 <li>利用hash基于线程id和重入次数实现可重入</li>
 <li>基于lua脚本实现原子性</li>
-<li>超时续约机制，当没指定锁过期时间是，利用看门狗机制，每隔一段时间（releaseTime/3）进行锁续约，防止业务未完成锁提前释放</li>
+<li>超时续约机制，当没指定锁过期时间是，利用看门狗机制，每隔一段时间（releaseTime&#x2F;3）进行锁续约，防止业务未完成锁提前释放</li>
 <li>可重试机制，加锁失败自旋重试；利用信号量和pubsub功能实现等待、唤醒，获取锁失败的重试机制</li>
 </ol>
 </li>
@@ -661,8 +623,7 @@
 <li>MultiLock 联锁方案：要求 所有主节点加锁成功，否则立即失败并释放已获取的锁</li>
 </ol>
 <p>加红锁的话性能太低了，主从一致性是小概率，如果业务非要保证数据的强一致性采用zookeeper</p>
-<h1>热点key</h1>
-<p>什么是热点key？短时间内被高频访问的key是热点key</p>
+<h1 id="热点key"><a href="#热点key" class="headerlink" title="热点key"></a>热点key</h1><p>什么是热点key？短时间内被高频访问的key是热点key</p>
 <p>如何解决热点key问题：</p>
 <ol>
 <li>本地缓存，例如Java的Caffeine地本地缓存，减少Redis的压力，注意设置过期时间</li>
@@ -670,8 +631,7 @@
 <li>读写分离(含主从架构)，读请求分流到多个从节点</li>
 <li>针对热点key做主动数据预热，系统启动时提前加载到缓存</li>
 </ol>
-<h1>大key</h1>
-<p>某个key对应的value值占用的内存空间比较大，导致性能下降、内存不足、数据不均衡以及主从同步延迟的问题</p>
+<h1 id="大key"><a href="#大key" class="headerlink" title="大key"></a>大key</h1><p>某个key对应的value值占用的内存空间比较大，导致性能下降、内存不足、数据不均衡以及主从同步延迟的问题</p>
 <blockquote>
 <p>大key一般可以认为字符串类型超过1M，集合类型元素数量超过1w 但是不是一成不变的</p>
 </blockquote>
@@ -689,24 +649,20 @@
 <li>对大key使用异步删除：使用<code>UNLINK</code>（非阻塞）替代<code>DEL</code>，后台异步线程删除，避免影响主线程</li>
 <li>对过期数据进行定期清：堆积大量过期数据会造成大key的产生（hash类型）</li>
 </ol>
-<h1>消息队列</h1>
-<p>基于list</p>
+<h1 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h1><p>基于list  </p>
 <p>基于stream</p>
-<h1>布隆过滤器</h1>
-<h2 id="介绍">介绍</h2>
-<p>布隆过滤器是一种空间高效的概率型数据结构，核心能力是：快速判断一个元素是否可能存在于集合中（存在误判，不存在则 100% 准确）。由位图（bitmap）和k个独立的哈希函数组成</p>
+<h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>布隆过滤器是一种空间高效的概率型数据结构，核心能力是：快速判断一个元素是否可能存在于集合中（存在误判，不存在则 100% 准确）。由位图（bitmap）和k个独立的哈希函数组成</p>
 <p>核心操作就是添加和判断</p>
 <ol>
 <li>添加：用 k 个哈希函数，分别计算元素的哈希值，再通过取模运算（模位图大小 m），得到 k 个不同的位图索引（如索引 3、7、12）；将位图中这 k 个索引对应的 bit 位，从 0 设为 1（无论之前是否为 1，只置位不复位）。</li>
 <li>判断：同样用 k 个哈希函数，计算元素的 k 个位图索引；检查这 k 个索引对应的 bit 位：若<strong>任意一个 bit 位为 0</strong>：元素绝对不存在（直接拦截，无需查底层存储）；若<strong>所有 bit 位都为 1</strong>：元素可能存在（存在误判，需进一步查底层存储确认）</li>
 </ol>
-<p>存在问题：当底层存储的元素过期 / 删除后（如 Redis 中商品 Key 过期、数据库中数据被删除），布隆过滤器中对应的 bit 位依然是 1，会导致：</p>
+<p>存在问题：当底层存储的元素过期 &#x2F; 删除后（如 Redis 中商品 Key 过期、数据库中数据被删除），布隆过滤器中对应的 bit 位依然是 1，会导致：</p>
 <ol>
-<li>过期元素仍被布隆过滤器判定为可能存在，进而触发无效查询（查 Redis/DB 发现不存在）</li>
+<li>过期元素仍被布隆过滤器判定为可能存在，进而触发无效查询（查 Redis&#x2F;DB 发现不存在）</li>
 <li>长期运行后，位图中 1 的比例越来越高，误判率急剧上升（极端情况所有 bit 位都是 1，布隆过滤器完全失效）</li>
 </ol>
-<h2 id="处理无效数据">处理无效数据</h2>
-<p>布隆过滤器过期怎么办？过期之后很多无效的判断怎么处理？</p>
+<h2 id="处理无效数据"><a href="#处理无效数据" class="headerlink" title="处理无效数据"></a>处理无效数据</h2><p>布隆过滤器过期怎么办？过期之后很多无效的判断怎么处理？</p>
 <p>1、定期重建和滚动替换</p>
 <p>设定一个重建周期，在后台，根据当前所有有效的、未过期的数据集，构建一个全新的布隆过滤器（B）</p>
 <p>一旦 B 构建完成，系统在进行查询时，会先查询 B。如果B 中不存在，则继续查询 A（旧过滤器）。经过一段观察期，确认 B 稳定且准确后，完全废弃 A，让 B 成为主过滤器</p>
@@ -715,11 +671,9 @@
 <p>2、计数型布隆过滤器</p>
 <p>标准布隆过滤器的变体，用一个小的计数器数组（例如，每个槽位用 4 个 bit 表示 0-15 的计数）代替了单个位，从而支持删除操作</p>
 <ol>
-<li>
-<p>插入：对元素对应的所有索引位置，计数器加 1。</p>
+<li><p>插入：对元素对应的所有索引位置，计数器加 1。</p>
 </li>
-<li>
-<p>删除/过期：对元素对应的所有索引位置，计数器减 1。</p>
+<li><p>删除&#x2F;过期：对元素对应的所有索引位置，计数器减 1。</p>
 <p>优势：支持对单个过期元素进行清理，无需整体重建。</p>
 <p>劣势：</p>
 <ul>

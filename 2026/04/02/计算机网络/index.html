@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="2131231">
+    <meta name="description" content="TCP&amp;&amp;UDPHttp状态码重点的几个状态码：  200（成功）：客户端请求成功 301（永久重定向）：该资源已被永久移动到新位置，将来任何对该资源的访问都要使用本响应返回的若干个URL之一  302（临时重定向）：请求的资源现在临时从不同的URI中获得  304（未修改）：自上次请求后，请求的网页未修改过，服务器不返回网页内容，重定向到已存在的缓存文件 400（请求报文语法有误">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络">
 <meta property="og:url" content="https://yb0os1.github.io/2026/04/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="2131231">
+<meta property="og:description" content="TCP&amp;&amp;UDPHttp状态码重点的几个状态码：  200（成功）：客户端请求成功 301（永久重定向）：该资源已被永久移动到新位置，将来任何对该资源的访问都要使用本响应返回的若干个URL之一  302（临时重定向）：请求的资源现在临时从不同的URI中获得  304（未修改）：自上次请求后，请求的网页未修改过，服务器不返回网页内容，重定向到已存在的缓存文件 400（请求报文语法有误">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar5.png">
 <meta property="article:published_time" content="2026-04-02T05:27:53.000Z">
-<meta property="article:modified_time" content="2026-04-02T05:28:40.949Z">
+<meta property="article:modified_time" content="2026-04-02T05:39:47.381Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="计算机基础">
 <meta property="article:tag" content="计算机网络">
@@ -229,41 +229,13 @@
             
               
                 
-                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
-                  <li class="nav-item dropdown">
-                    <!-- 可跳转的主文字区域 -->
-                    <a class="nav-link" href="/408" target="_self" style="display: inline-block;">
-                      
-                        <span>💻 计算机基础</span>
-                    </a>
-                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
-                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false"
-                      style="display: inline-block; margin-left: -20px !important;">
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
                         
-                          
-                            
-                              <a class="dropdown-item" href="/408/data-structure/"
-                                target="_self">
-                                
-                                  <span>数据结构</span>
-                              </a>
-                              
-                        
-                          
-                            
-                              <a class="dropdown-item" href="/408/computer-network/"
-                                target="_self">
-                                
-                                  <span>计算机网络</span>
-                              </a>
-                              
-                    </div>
-                  </li>
-                  
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
                       
           
             
@@ -492,7 +464,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1 字
+          300 字
         
       </span>
     
@@ -504,7 +476,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          3 分钟
         
       </span>
     
@@ -559,8 +531,25 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <p>2131231</p>
-
+                <h1 id="TCP-UDP"><a href="#TCP-UDP" class="headerlink" title="TCP&amp;&amp;UDP"></a>TCP&amp;&amp;UDP</h1><h1 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h1><h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><p><strong>重点的几个状态码：</strong></p>
+<ul>
+<li><strong>200（成功）</strong>：客户端请求成功</li>
+<li><strong>301（永久重定向）</strong>：该资源已被永久移动到新位置，将来任何对该资源的访问都要使用本响应返回的若干个URL之一 </li>
+<li><strong>302（临时重定向）</strong>：请求的资源现在临时从不同的URI中获得 </li>
+<li><strong>304（未修改）</strong>：自上次请求后，请求的网页未修改过，服务器不返回网页内容，重定向到已存在的缓存文件</li>
+<li><strong>400（请求报文语法有误）</strong>：请求报文语法有误，服务器无法识别 </li>
+<li><strong>401（未授权）</strong>：请求需要认证 </li>
+<li><strong>403（禁止）</strong>：请求的对应资源禁止被访问 </li>
+<li><strong>404（未找到）</strong>：服务器无法找到对应资源 </li>
+<li><strong>500（服务器内部错误）</strong>：服务器内部错误</li>
+<li><strong>503（服务不可用）</strong>：服务器正忙</li>
+</ul>
+<p><img src="D:.blog\my-blog\source\img\article_img\image-20260402132931098.png" srcset="/img/loading.gif" lazyload alt="HTTP状态码"></p>
+<h2 id="Http1-0-VS-Http1-1"><a href="#Http1-0-VS-Http1-1" class="headerlink" title="Http1.0 VS Http1.1"></a>Http1.0 VS Http1.1</h2><ul>
+<li>HTTP1.0 是短连接，每个请求和响应都需要独立的连接，频繁的建立&#x2F;断开连接导致高延迟</li>
+<li>HTTP1.1 引入长连接：多个请求可以复用同一个TCP连接，减少每次请求建立TCP连接的消耗</li>
+</ul>
+<h2 id="Http1-1-VS-Http2-0"><a href="#Http1-1-VS-Http2-0" class="headerlink" title="Http1.1 VS Http2.0"></a>Http1.1 VS Http2.0</h2><h2 id="Http2-0-VS-Http3-0"><a href="#Http2-0-VS-Http3-0" class="headerlink" title="Http2.0 VS Http3.0"></a>Http2.0 VS Http3.0</h2><h2 id="Https"><a href="#Https" class="headerlink" title="Https"></a>Https</h2>
                 
               
             </div>
@@ -581,13 +570,6 @@
         
   <a href="/408/" class="category-chain-item">408</a>
   
-  
-    <span>></span>
-    
-  <a href="/408/computer-network/" class="category-chain-item">computer-network</a>
-  
-  
-
   
 
       </span>
