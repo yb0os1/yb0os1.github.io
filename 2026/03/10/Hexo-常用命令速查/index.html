@@ -472,7 +472,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          851 字
+          850 字
         
       </span>
     
@@ -539,41 +539,36 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h1><h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>清除 生成 本地启动命令</p>
+                <h1>hexo</h1>
+<h2 id="启动">启动</h2>
+<p>清除 生成 本地启动命令</p>
 <figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas">hexo cl <span class="hljs-variable">&amp;&amp;</span> hexo g <span class="hljs-variable">&amp;&amp;</span> hexo s<br></code></pre></td></tr></table></figure>
-
 <p>清除 生成 部署命令</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">hexo cl &amp;&amp; hexo g &amp;&amp; hexo d<br></code></pre></td></tr></table></figure>
-
-<h2 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h2><h3 id="生成一个文章"><a href="#生成一个文章" class="headerlink" title="生成一个文章"></a>生成一个文章</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta">hexo <span class="hljs-keyword">new</span> <span class="hljs-string">&quot;文章标题&quot;</span> -c <span class="hljs-string">&quot;文章目录&quot;</span><br>hexo <span class="hljs-keyword">new</span> <span class="hljs-string">&quot;开始&quot;</span> -c <span class="hljs-string">&quot;java/spring/开始&quot;</span> <span class="hljs-meta">#多级目录</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="开头部分"><a href="#开头部分" class="headerlink" title="开头部分"></a>开头部分</h3><figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs md">title: Hexo 常用命令速查<br>c: hexo # 文章所属目录<br>categories: hexo  # 核心：指定分类为 hexo<br>date: 2026-03-10 01:11:15<br>index<span class="hljs-emphasis">_img: /img/avatar.png # 文章头像  放在/source/img</span><br><span class="hljs-emphasis">banner_</span>img: /img/post<span class="hljs-emphasis">_banner.jpg # 单个文章的 Banner</span><br><span class="hljs-emphasis">excerpt: 这是摘要 # 摘要部分</span><br><span class="hljs-emphasis">archive: true # 文章在首页隐藏 但是在归档显示</span><br><span class="hljs-emphasis">sticky: 100 # 文章排序 sticky 数值越大，该文章越靠前，达到类似于置顶的效果，其他未设置的文章依然按默认排序。</span><br><span class="hljs-emphasis">description: &quot;🔒 该文章已加密&quot; # 自定义该文章的列表页提示 配合tags myself</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">password: 123456  # 设置密码</span><br><span class="hljs-emphasis">abstract: 这是一篇加密文章，请输入密码查看内容。</span><br><span class="hljs-emphasis">message: 请输入密码以继续阅读。</span><br><span class="hljs-emphasis">wrong_</span>pass<span class="hljs-emphasis">_message: 密码错误，请重试。</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">tags:</span><br><span class="hljs-emphasis">  - java	</span><br><span class="hljs-emphasis">  - 实习</span><br></code></pre></td></tr></table></figure>
-
+<h2 id="写作">写作</h2>
+<h3 id="生成一个文章">生成一个文章</h3>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta">hexo <span class="hljs-keyword">new</span> <span class="hljs-string">&quot;文章标题&quot;</span> -c <span class="hljs-string">&quot;文章目录&quot;</span><br>hexo <span class="hljs-keyword">new</span> <span class="hljs-string">&quot;开始&quot;</span> -c <span class="hljs-string">&quot;java/spring/开始&quot;</span> <span class="hljs-meta">#多级目录</span><br></code></pre></td></tr></table></figure>
+<h3 id="开头部分">开头部分</h3>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs md">title: Hexo 常用命令速查<br>c: hexo # 文章所属目录<br>categories: hexo  # 核心：指定分类为 hexo<br>date: 2026-03-10 01:11:15<br>index<span class="hljs-emphasis">_img: /img/avatar.png # 文章头像  放在/source/img</span><br><span class="hljs-emphasis">banner_</span>img: /img/post<span class="hljs-emphasis">_banner.jpg # 单个文章的 Banner</span><br><span class="hljs-emphasis">excerpt: 这是摘要 # 摘要部分</span><br><span class="hljs-emphasis">archive: true # 文章在首页隐藏 但是在归档显示</span><br><span class="hljs-emphasis">sticky: 100 # 文章排序 sticky 数值越大，该文章越靠前，达到类似于置顶的效果，其他未设置的文章依然按默认排序。</span><br><span class="hljs-emphasis">description: &quot;🔒 该文章已加密&quot; # 自定义该文章的列表页提示 配合tags myself</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">password: 123456  # 设置密码</span><br><span class="hljs-emphasis">abstract: 这是一篇加密文章，请输入密码查看内容。</span><br><span class="hljs-emphasis">message: 请输入密码以继续阅读。</span><br><span class="hljs-emphasis">wrong_</span>pass<span class="hljs-emphasis">_message: 密码错误，请重试。</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">tags:</span><br><span class="hljs-emphasis">  - java	</span><br><span class="hljs-emphasis">  - 实习</span><br></code></pre></td></tr></table></figure>
 <p>可以直接复制的开头部分</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs md">categories: [Java, 基础]    # 核心：指定分类为 Java下的Java基础<br>index<span class="hljs-emphasis">_img: /img/avatar.png # 文章头像  放在/source/img</span><br><span class="hljs-emphasis">sticky: 100 # 文章排序 sticky 数值越大，该文章越靠前，达到类似于置顶的效果，其他未设置的文章依然按默认排序。</span><br><span class="hljs-emphasis">description: &quot;🔒 该文章已加密&quot; # 自定义该文章的列表页提示 配合tags myself</span><br><span class="hljs-emphasis">tags:</span><br><span class="hljs-emphasis">  - java	</span><br><span class="hljs-emphasis">  - 实习</span><br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section">#文章图片 本地图片存放位置同上</span><br>![](<span class="hljs-link">/img/article_img/example.jpg</span>) <br><span class="hljs-section"># 部署上去要对应的文章的地址  也就是将 D:\.blog\my-blog\source\img\article<span class="hljs-emphasis">_img\  替换为  ../../../../img/article_</span>img/</span><br>![<span class="hljs-string">四个集合</span>](<span class="hljs-link">../../../../img/article_img/xxxx.png</span>)<br></code></pre></td></tr></table></figure>
-
-<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% note success %&#125;<br>文字 或者 <span class="hljs-code">`markdown`</span> 均可<br>&#123;% endnote %&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="图片">图片</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section">#文章图片 本地图片存放位置同上</span><br>![](<span class="hljs-link">/img/article_img/example.jpg</span>) <br><span class="hljs-section"># 部署上去要对应的文章的地址  也就是将 D:\.blog\my-blog\source\img\article<span class="hljs-emphasis">_img\  替换为  ../../../../img/article_</span>img/</span><br>![<span class="hljs-string">四个集合</span>](<span class="hljs-link">../../../../img/article_img/xxxx.png</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="标签">标签</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% note success %&#125;<br>文字 或者 <span class="hljs-code">`markdown`</span> 均可<br>&#123;% endnote %&#125;<br></code></pre></td></tr></table></figure>
 <div class="note note-success">
             <p>文字 或者 <code>markdown</code> 均可</p>
           </div>
-
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;note note-primary&quot;</span>&gt;</span>标签<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p class="note note-primary">标签</p>
-
-
-<h3 id="行内标签"><a href="#行内标签" class="headerlink" title="行内标签"></a>行内标签</h3><p>在 markdown 中加入如下的代码来使用 Label：<span class="label label-primary">text</span></p>
+<h3 id="行内标签">行内标签</h3>
+<p>在 markdown 中加入如下的代码来使用 Label：<span class="label label-primary">text</span></p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% label primary @text %&#125;<br></code></pre></td></tr></table></figure>
-
 <p>或者使用 HTML 形式：<span class="label label-primary">Label</span></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;label label-primary&quot;</span>&gt;</span>Label<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="折叠块"><a href="#折叠块" class="headerlink" title="折叠块"></a>折叠块</h3><p>使用折叠块，可以折叠代码、图片、文字等任何内容，你可以在 markdown 中按如下格式：</p>
+<h3 id="折叠块">折叠块</h3>
+<p>使用折叠块，可以折叠代码、图片、文字等任何内容，你可以在 markdown 中按如下格式：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% fold info @title %&#125;<br>需要折叠的一段内容，支持 markdown<br>&#123;% endfold %&#125;<br></code></pre></td></tr></table></figure>
-
 <p>info: 和行内标签类似的可选参数 title: 折叠块上的标题</p>
 
     <div class="fold">
@@ -586,28 +581,33 @@
         </div>
       </div>
     </div>
-
-<h3 id="勾选框"><a href="#勾选框" class="headerlink" title="勾选框"></a>勾选框</h3><p>在 markdown 中加入如下的代码来使用 Checkbox：</p>
+<h3 id="勾选框">勾选框</h3>
+<p>在 markdown 中加入如下的代码来使用 Checkbox：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% cb text, checked?, incline? %&#125;<br></code></pre></td></tr></table></figure>
-
-<p>text：显示的文字<br>checked：默认是否已勾选，默认 false<br>incline: 是否内联（可以理解为后面的文字是否换行），默认 false</p>
+<p>text：显示的文字<br>
+checked：默认是否已勾选，默认 false<br>
+incline: 是否内联（可以理解为后面的文字是否换行），默认 false</p>
 
             <input type="checkbox"  checked="checked">text
 
           
-
-<h3 id="按钮"><a href="#按钮" class="headerlink" title="按钮"></a>按钮</h3><p>你可以在 markdown 中加入如下的代码来使用 Button：<a class="btn" href="url"  title="title" target="_blank">text</a></p>
+<h3 id="按钮">按钮</h3>
+<p>你可以在 markdown 中加入如下的代码来使用 Button：<a class="btn" href="url"  title="title" target="_blank">text</a></p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% btn url, text, title %&#125;<br></code></pre></td></tr></table></figure>
-
 <p>或者使用 HTML 形式：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;url&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;title&quot;</span>&gt;</span>text<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>url：跳转链接<br>text：显示的文字<br>title：鼠标悬停时显示的文字（可选）</p>
-<h3 id="组图"><a href="#组图" class="headerlink" title="组图"></a>组图</h3><p>如果想把多张图片按一定布局组合显示，你可以在 markdown 中按如下格式：</p>
+<p>url：跳转链接<br>
+text：显示的文字<br>
+title：鼠标悬停时显示的文字（可选）</p>
+<h3 id="组图">组图</h3>
+<p>如果想把多张图片按一定布局组合显示，你可以在 markdown 中按如下格式：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% gi total n1-n2-... %&#125;<br>  ![](<span class="hljs-link">url</span>)<br>  ![](<span class="hljs-link">url</span>)<br>  ![](<span class="hljs-link">url</span>)<br>  ![](<span class="hljs-link">url</span>)<br>  ![](<span class="hljs-link">url</span>)<br>&#123;% endgi %&#125;<br></code></pre></td></tr></table></figure>
-
-<p>total：图片总数量，对应中间包含的图片 url 数量<br>n1-n2-…：每行的图片数量，可以省略，默认单行最多 3 张图，求和必须相等于 total，否则按默认样式</p>
-<p>如下图为 <code>&#123;% gi 5 3-2 %&#125;</code> 示例，代表共 5 张图，第一行 3 张图，第二行 2 张图。<br>$$<br>E&#x3D;mc^2<br>$$</p>
+<p>total：图片总数量，对应中间包含的图片 url 数量<br>
+n1-n2-…：每行的图片数量，可以省略，默认单行最多 3 张图，求和必须相等于 total，否则按默认样式</p>
+<p>如下图为 <code>&#123;% gi 5 3-2 %&#125;</code> 示例，代表共 5 张图，第一行 3 张图，第二行 2 张图。<br>
+$$<br>
+E=mc^2<br>
+$$</p>
 
                 
               
