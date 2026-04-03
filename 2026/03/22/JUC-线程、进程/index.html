@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="线程和进程 如何理解线程和进程 线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源  进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分">
+    <meta name="description" content="线程和进程如何理解线程和进程线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源 进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分开的，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JUC-线程、进程、JMM">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E3%80%81%E8%BF%9B%E7%A8%8B/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="线程和进程 如何理解线程和进程 线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源  进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分">
+<meta property="og:description" content="线程和进程如何理解线程和进程线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同  进程是操作系统进行资源分配的基本单位，线程是操作系统进行任务调度的基本单位，CPU分配时间的单位 进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有内存地址空间和其他系统资源 进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分开的，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar23.png">
 <meta property="article:published_time" content="2026-03-21T16:05:16.000Z">
@@ -325,6 +325,15 @@
                         
                           
                             
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
                               <a class="dropdown-item" href="/distributed/microservice/"
                                 target="_self">
                                 
@@ -531,67 +540,55 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>线程和进程</h1>
-<h2 id="如何理解线程和进程">如何理解线程和进程</h2>
-<p>线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同</p>
+                <h1 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h1><h2 id="如何理解线程和进程"><a href="#如何理解线程和进程" class="headerlink" title="如何理解线程和进程"></a>如何理解线程和进程</h2><p>线程和进程都是操作系统用于并发的方式，但是他们在资源管理、独立性、开销以及影响范围等方面有所不同</p>
 <ul>
 <li>进程是操作系统进行<strong>资源分配</strong>的基本单位，线程是操作系统进行<strong>任务调度</strong>的基本单位，CPU分配时间的单位</li>
-<li>进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有<strong>内存地址空间和其他系统资源</strong>
-<ul>
+<li>进程是独立的运行环境，线程是进程中执行的一个任务；两者本质区别就是是否单独占有<strong>内存地址空间和其他系统资源</strong><ul>
 <li>进程单独占有一定内存地址空间，所以进程间存在内存隔离，数据是分开的，数据共享复杂同步简单，各个进程之间互不干扰；线程共享所属进程的内存地址空间和资源，数据共享简单但是同步复杂</li>
 <li>一个进程出现问题不会影响其他进程，不影响主程序稳定性，可靠性高；一个线程的崩溃可能影响整个程序的稳定性，可靠性较低</li>
 <li>进程的创建和销毁不仅需要保存寄存器、栈信息，还需要资源分配、回收以及页调度，开销大；线程只需要保存寄存器、栈信息就行</li>
 </ul>
 </li>
 </ul>
-<h2 id="线程状态及流转">线程状态及流转</h2>
-<h3 id="线程状态">线程状态</h3>
-<p>Thread类有一个枚举明确了线程有六种状态</p>
+<h2 id="线程状态及流转"><a href="#线程状态及流转" class="headerlink" title="线程状态及流转"></a>线程状态及流转</h2><h3 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h3><p>Thread类有一个枚举明确了线程有六种状态</p>
 <ol>
-<li>新建状态new
-<ul>
+<li>新建状态new<ul>
 <li>创建线程对象，通过start方法进入运行状态</li>
 </ul>
 </li>
-<li>运行状态runnable：运行态分为就绪状态和运行状态
-<ul>
+<li>运行状态runnable：运行态分为就绪状态和运行状态<ul>
 <li>就绪状态：调用start方法，线程可以执行，但是等待系统调度</li>
 <li>运行状态：就绪状态抢到CPU执行权就变成运行状态，调用<code>yield()</code>运行进入就绪</li>
 </ul>
 </li>
-<li>阻塞状态blocked
-<ul>
+<li>阻塞状态blocked<ul>
 <li>遇到无法获取锁对象进入阻塞</li>
 </ul>
 </li>
-<li>等待状态waiting
-<ul>
+<li>等待状态waiting<ul>
 <li>进入等待状态表示该线程需要等待其他线程做一些动作（通知或中断）</li>
 <li>调用<code>Object.wait()</code>、<code>LockSupport.park()</code>、<code>Object.join()</code>从运行进入等待</li>
 <li>调用<code>Object.notify()</code>、<code>Object.notifyAll()</code>、<code>LockSupport.unpark(Thread)</code>从等待进入运行</li>
 </ul>
 </li>
-<li>超时等待状态timed_waiting
-<ul>
+<li>超时等待状态timed_waiting<ul>
 <li>进入等待状态，但是一段时间内超时自动恢复</li>
 <li>调用<code>Thread.sleep(long millis)</code>、<code>Object.wait(long timeout)</code> 、<code>LockSupport.parkNanos()</code>、<code>LockSupport.parkUntil()</code>从运行进入超时等待</li>
 <li>调用<code>Object.notify()</code>、<code>Object.notifyAll()</code>、<code>LockSupport.unpark(Thread)</code>从等待进入运行</li>
 </ul>
 </li>
-<li>终止状态terminated
-<ul>
+<li>终止状态terminated<ul>
 <li>线程已经执行完毕，并且进入终止状态不会再次被start唤醒</li>
 </ul>
 </li>
 </ol>
-<p><img src="../../../../img/article_img/image-20260322113922395.png" srcset="/img/loading.gif" lazyload alt="线程生命周期"></p>
-<h3 id="怎么停止一个线程的运行">怎么停止一个线程的运行</h3>
-<ol>
+<p><img src="/../../../../img/article_img/image-20260322113922395.png" srcset="/img/loading.gif" lazyload alt="线程生命周期"></p>
+<h3 id="怎么停止一个线程的运行"><a href="#怎么停止一个线程的运行" class="headerlink" title="怎么停止一个线程的运行"></a>怎么停止一个线程的运行</h3><ol>
 <li>stop暴力停止，线程调用stop()方法会被暴力停止，方法已弃用</li>
 <li>通过共享标志位主动终止，定义一个可见状态变量，主线程控制其值，工作线程循环检测该变量决定是否退出</li>
 <li>线程中断，调用<code>interrupt()</code>触发中断状态，结合中断检测逻辑实现安全停止</li>
 <li>Future取消任务，使用线程池提交任务，通过Future.cancel停止线程，依赖中断机制</li>
-<li>处理不可中断的阻塞操作，某些 I/O 或同步操作如 <code>Socket.accept()</code>、<code>Lock.lock()</code>）无法通过中断直接响应，结合资源关闭操作</li>
+<li>处理不可中断的阻塞操作，某些 I&#x2F;O 或同步操作如 <code>Socket.accept()</code>、<code>Lock.lock()</code>）无法通过中断直接响应，结合资源关闭操作</li>
 </ol>
 <blockquote>
 <p>每个线程都有与其关联的布尔属性表示中断状态，默认为false，当一个线程被其他线程调用调用interrupt方法中断时，根据实际做出响应</p>
@@ -600,48 +597,44 @@
 <li>否则仅设置该线程为中断状态，后续珂通过轮询中断状态决定是否停止当前执行任务</li>
 </ol>
 </blockquote>
-<h3 id="sleep和wait区别">sleep和wait区别</h3>
-<table>
+<h3 id="sleep和wait区别"><a href="#sleep和wait区别" class="headerlink" title="sleep和wait区别"></a>sleep和wait区别</h3><table>
 <thead>
 <tr>
 <th>特性</th>
-<th style="text-align:center">sleep</th>
-<th style="text-align:center">wait</th>
+<th align="center">sleep</th>
+<th align="center">wait</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>所属类</td>
-<td style="text-align:center">Thread类的静态方法，任何地方可以调用</td>
-<td style="text-align:center">Object的实例方法，必须是对象实例才能调用</td>
+<td align="center">Thread类的静态方法，任何地方可以调用</td>
+<td align="center">Object的实例方法，必须是对象实例才能调用</td>
 </tr>
 <tr>
 <td>所释放</td>
-<td style="text-align:center">sleep调用不是释放锁（释放CPU时间片）</td>
-<td style="text-align:center">wait调用会释放锁</td>
+<td align="center">sleep调用不是释放锁（释放CPU时间片）</td>
+<td align="center">wait调用会释放锁</td>
 </tr>
 <tr>
 <td>使用前提</td>
-<td style="text-align:center">任意位置调用</td>
-<td style="text-align:center">必须在同步代码块内调用（持有锁）</td>
+<td align="center">任意位置调用</td>
+<td align="center">必须在同步代码块内调用（持有锁）</td>
 </tr>
 <tr>
 <td>唤醒机制</td>
-<td style="text-align:center">超时自动唤醒</td>
-<td style="text-align:center">notify、notifyAll、超时唤醒</td>
+<td align="center">超时自动唤醒</td>
+<td align="center">notify、notifyAll、超时唤醒</td>
 </tr>
 <tr>
 <td>设计用途</td>
-<td style="text-align:center">暂停线程执行，不涉及锁</td>
-<td style="text-align:center">线程间协调，释放锁让其他线程工作</td>
+<td align="center">暂停线程执行，不涉及锁</td>
+<td align="center">线程间协调，释放锁让其他线程工作</td>
 </tr>
-</tbody>
-</table>
-<h2 id="JMM内存模型">JMM内存模型</h2>
-<p>线程之间如何通信？</p>
+</tbody></table>
+<h2 id="JMM内存模型"><a href="#JMM内存模型" class="headerlink" title="JMM内存模型"></a>JMM内存模型</h2><p>线程之间如何通信？</p>
 <ol>
-<li>消息传递：线程间通过「发消息」通信，数据隔离，天然安全但性能略低，核心实现是 BlockingQueue / 管道</li>
-<li>共享内存：线程直接读写「同一块内存」，性能高但需手动同步，核心实现是 synchronized/volatile/ 原子类</li>
+<li>消息传递：线程间通过「发消息」通信，数据隔离，天然安全但性能略低，核心实现是 BlockingQueue &#x2F; 管道</li>
+<li>共享内存：线程直接读写「同一块内存」，性能高但需手动同步，核心实现是 synchronized&#x2F;volatile&#x2F; 原子类</li>
 </ol>
 <p>Java中使用的是共享内存的并发模型</p>
 <p>共享变量存储在主内存中，每个线程有自己的本地内存，存储该共享变量的副本</p>
@@ -655,54 +648,44 @@
 <li>线程从主内存拷贝变量到工作内存，可以减少CPU访问主内存的开销</li>
 <li>每个线程都有自己的变量副本，可以避免多个线程同时修改共享变量导致的数据冲突</li>
 </ol>
-<p><img src="../../../../img/article_img/image-20260322180018843.png" srcset="/img/loading.gif" lazyload alt="JMM模型"></p>
-<h2 id="创建线程的方式">创建线程的方式</h2>
-<ol>
+<p><img src="/../../../../img/article_img/image-20260322180018843.png" srcset="/img/loading.gif" lazyload alt="JMM模型"></p>
+<h2 id="创建线程的方式"><a href="#创建线程的方式" class="headerlink" title="创建线程的方式"></a>创建线程的方式</h2><ol>
 <li>继承Thread类</li>
 <li>实现Runnable接口</li>
 <li>实现Callable接口结合FutureTash，适用于执行有返回值的任务</li>
 <li>通过线程池创建</li>
 </ol>
-<h2 id="多线程上下文切换">多线程上下文切换</h2>
-<h3 id="定义">定义</h3>
-<p>上下文切换是指 CPU 从一个线程转到另一个线程时，需要保存当前线程的上下文状态，恢复另一个线程的上下文状态，以便于下一次恢复执行该线程时能够正确地运行。</p>
+<h2 id="多线程上下文切换"><a href="#多线程上下文切换" class="headerlink" title="多线程上下文切换"></a>多线程上下文切换</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>上下文切换是指 CPU 从一个线程转到另一个线程时，需要保存当前线程的上下文状态，恢复另一个线程的上下文状态，以便于下一次恢复执行该线程时能够正确地运行。</p>
 <blockquote>
 <p>在多线程编程中，上下文切换是一种常见的操作，上下文切换通常是指在一个CPU 上，由于多个线程共享 CPU时间片，当一个线程的时间片用完后，需要切换到另一个线程运行。此时需要保存当前线程的状态信息，包括<strong>程序计数器、寄存器、栈指针</strong>等，以便下次继续执行该线程时能够恢复到正确的执行状态。同时，需要将切换到的线程的状态信息恢复，以便于该线程能够正确运行。</p>
 </blockquote>
 <p>在多线程中，上下文切换的开销比直接用单线程大，因为在多线程中，需要保存和恢复更多的上下文信息。过多的上下文切换会降低系统的运行效率，因此需要尽可能减少上下文切换的次数。</p>
-<h3 id="什么时候发生">什么时候发生</h3>
-<ol>
+<h3 id="什么时候发生"><a href="#什么时候发生" class="headerlink" title="什么时候发生"></a>什么时候发生</h3><ol>
 <li>时间片耗尽：操作系统为每个线程分配固定的CPU时间片（如10ms），当时间片用完后，强制切换至其他就绪线程</li>
-<li>线程主动阻塞：例如线程等待I/O操作（如文件读写）、获取锁失败（如<code>synchronized</code>或<code>ReentrantLock</code>）、调用<code>sleep()</code>或<code>wait()</code>方法。线程主动让出CPU，触发调度器执行其他线程</li>
+<li>线程主动阻塞：例如线程等待I&#x2F;O操作（如文件读写）、获取锁失败（如<code>synchronized</code>或<code>ReentrantLock</code>）、调用<code>sleep()</code>或<code>wait()</code>方法。线程主动让出CPU，触发调度器执行其他线程</li>
 <li>高优先级线程抢占：操作系统支持抢占式调度，且更高优先级线程进入就绪状态。当前线程被中断，CPU立即执行高优先级任务</li>
 <li>线程主动让出：例如Java中<code>**Thread.yield()**</code>可能让当前线程回到就绪队列，允许其他线程运行</li>
-<li>中断处理：硬件事件（如磁盘I/O完成、网络数据到达）引发中断，CPU暂停当前线程，执行中断服务程序（ISR）</li>
+<li>中断处理：硬件事件（如磁盘I&#x2F;O完成、网络数据到达）引发中断，CPU暂停当前线程，执行中断服务程序（ISR）</li>
 <li>线程终止：线程执行完毕或异常退出时，释放CPU资源，调度器选择新线程运行</li>
 </ol>
-<h3 id="如何避免上下文切换">如何避免上下文切换</h3>
-<ol>
+<h3 id="如何避免上下文切换"><a href="#如何避免上下文切换" class="headerlink" title="如何避免上下文切换"></a>如何避免上下文切换</h3><ol>
 <li>减少线程数：通过合理的线程池管理来减少线程的创建和销毁，线程数不是越多越好，合理的线程数可以避免线程过多导致频繁的上下文切换</li>
 <li>使用无锁并发编程：无锁并发编程可以避免线程因等待锁而进入阻塞状态，从而减少上下文切换的发生</li>
 <li>虚拟线程：协程是一种用户态线程，其切换不需要操作系统的参与，因此可以避免上下文切换。(避免的是操作系统级别的上下文切换，但是仍然需要在JVM层面做一些保存和恢复线程的状态，但是也成本低得多)</li>
 <li>合理使用锁：在使用锁的过程中，尽量缩小同步块或同步方法的范围，从而减少线程的等待时间，避免上下文切换的发生</li>
 </ol>
-<h1>协程/虚拟线程</h1>
-<h2 id="如何理解协程-虚拟线程？">如何理解协程/虚拟线程？</h2>
-<p>协程是被视为比线程更轻量级的并发单元，可以在单个线程中实现并发执行，由开发者显示调度</p>
+<h1 id="协程-虚拟线程"><a href="#协程-虚拟线程" class="headerlink" title="协程&#x2F;虚拟线程"></a>协程&#x2F;虚拟线程</h1><h2 id="如何理解协程-虚拟线程？"><a href="#如何理解协程-虚拟线程？" class="headerlink" title="如何理解协程&#x2F;虚拟线程？"></a>如何理解协程&#x2F;虚拟线程？</h2><p>协程是被视为比线程更轻量级的并发单元，可以在单个线程中实现并发执行，由开发者显示调度</p>
 <p>协程是在用户态进行调度的，避免了线程之间切换时的内核态开销</p>
-<h2 id="虚拟线程和平台线程的对比">虚拟线程和平台线程的对比</h2>
-<ol>
+<h2 id="虚拟线程和平台线程的对比"><a href="#虚拟线程和平台线程的对比" class="headerlink" title="虚拟线程和平台线程的对比"></a>虚拟线程和平台线程的对比</h2><ol>
 <li>调度映射：平台线程和OS内核线程1:1，内核调度的；虚拟线程是M:N映射到平台线程，JVM用户态调度</li>
-<li>上下文切换，平台线程是内核态 / 用户态切换，开销大；虚拟线程是纯用户态切换，开销小</li>
+<li>上下文切换，平台线程是内核态 &#x2F; 用户态切换，开销大；虚拟线程是纯用户态切换，开销小</li>
 <li>内存方面，平台线程固定栈内存，默认 1M，创建成本高；虚拟线程栈内存按需分配，初始几百字节，创建成本几乎为 0</li>
 <li>阻塞处理方面，平台线程 IO 阻塞时内核线程被挂起，浪费资源；虚拟线程 IO 阻塞时 JVM 卸载它，载体线程继续执行其他任务，CPU 利用率高</li>
 <li>数量上限方面，平台线程单机最多上千个，再多 OOM；虚拟线程单机轻松百万级</li>
 </ol>
-<h2 id="虚拟线程原理">虚拟线程原理</h2>
-<p>实现虚拟线程的核心组件主要是ExecutorService执行器+Continuation续体，执行器：默认是ForkJoinPool，默认线程数量等于运行计算机上的处理器数量（核数），续体：可挂起和可恢复的Runnable，可以分段执行的Runnable</p>
-<p>当（IO等待/互斥资源等待释放的时候）执行到阻塞点的时候，会把当前调用栈保存为 continuation 并从载体线程卸载，载体线程继续去跑其他虚拟线程，当阻塞条件满足（比如 IO 返回）时，调度器会把 continuation 恢复并继续执行，这使得 JVM 能用少量载体线程支撑非常多的并发任务，从而在 IO 密集场景下显著提升并发能力并降低线程栈内存占用。</p>
-<h2 id="虚拟线程的坑">虚拟线程的坑</h2>
-<ol>
+<h2 id="虚拟线程原理"><a href="#虚拟线程原理" class="headerlink" title="虚拟线程原理"></a>虚拟线程原理</h2><p>实现虚拟线程的核心组件主要是ExecutorService执行器+Continuation续体，执行器：默认是ForkJoinPool，默认线程数量等于运行计算机上的处理器数量（核数），续体：可挂起和可恢复的Runnable，可以分段执行的Runnable</p>
+<p>当（IO等待&#x2F;互斥资源等待释放的时候）执行到阻塞点的时候，会把当前调用栈保存为 continuation 并从载体线程卸载，载体线程继续去跑其他虚拟线程，当阻塞条件满足（比如 IO 返回）时，调度器会把 continuation 恢复并继续执行，这使得 JVM 能用少量载体线程支撑非常多的并发任务，从而在 IO 密集场景下显著提升并发能力并降低线程栈内存占用。</p>
+<h2 id="虚拟线程的坑"><a href="#虚拟线程的坑" class="headerlink" title="虚拟线程的坑"></a>虚拟线程的坑</h2><ol>
 <li>不适合 CPU 密集型任务，CPU 密集时虚拟线程和平台线程都占 CPU，没有优势，反而调度开销可能更大</li>
 <li>pinning问题：synchronized同步关键字和本地方法，虚拟线程被固定pinned在某个平台线程无法被挂起（卸载），导致并发效率下降</li>
 </ol>

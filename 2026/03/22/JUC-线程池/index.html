@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="为什么要有线程池？  开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能">
+    <meta name="description" content="为什么要有线程池？ 开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能立">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JUC-线程池">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="为什么要有线程池？  开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能">
+<meta property="og:description" content="为什么要有线程池？ 开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低 线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗 好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能立">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar30.png">
 <meta property="article:published_time" content="2026-03-21T16:05:22.000Z">
@@ -325,6 +325,15 @@
                         
                           
                             
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
                               <a class="dropdown-item" href="/distributed/microservice/"
                                 target="_self">
                                 
@@ -531,8 +540,7 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>为什么要有线程池？</h1>
-<ul>
+                <h1 id="为什么要有线程池？"><a href="#为什么要有线程池？" class="headerlink" title="为什么要有线程池？"></a>为什么要有线程池？</h1><ul>
 <li>开启线程，也就是start的时候并不会直接进入运行状态而是就绪状态，等待cpu将该线程调度到运行状态，需要发生cpu上下文的切换，这样效率非常低</li>
 <li>线程池就是对线程进行统一的管理和维护，实现对线程的复用，从而减少频繁的创建和销毁线程带来的性能损耗</li>
 <li>好处：降低资源消耗（重复利用已创建的线程，降低线程创建和销毁造成的消耗）、提高响应速度（当任务到达时，任务可以不需要等到线程创建就能立即执行）、提高线程的可管理性（使用线程池可以进行统一的分配，调优和监控）</li>
@@ -540,27 +548,23 @@
 <blockquote>
 <p>线程的创建和销毁是一项开销较大的操作，频繁地创建和销毁线程会耗费大量的系统资源。通过使用线程池，可以事先创建一定数量的线程，并将它们放入池中，需要执行任务时直接从池子中获取复用线程。这样可以避免频繁地创建和销毁线程，提高系统的资源利用率。</p>
 </blockquote>
-<h1>线程池创建方式？</h1>
-<ul>
+<h1 id="线程池创建方式？"><a href="#线程池创建方式？" class="headerlink" title="线程池创建方式？"></a>线程池创建方式？</h1><ul>
 <li>ThreadPoolExecutor构造函数（推荐）</li>
-<li>（Java提供创建）工具类Executors（不推荐，因为任务队列或者最大线程的数量是Integer.MAX_VALUE，容易造成OOM）
-<ul>
-<li>FixedThreadPool：固定数量线程池（core==max），任务队列为LinkedBlockingQueue，是无限长（）</li>
+<li>（Java提供创建）工具类Executors（不推荐，因为任务队列或者最大线程的数量是Integer.MAX_VALUE，容易造成OOM）<ul>
+<li>FixedThreadPool：固定数量线程池（core&#x3D;&#x3D;max），任务队列为LinkedBlockingQueue，是无限长（）</li>
 <li>CachedThreadPool：core为0，max为无限大</li>
-<li>SingleThreadExecutor：core=max=1，任务队列为LinkedBlockingQueue</li>
+<li>SingleThreadExecutor：core&#x3D;max&#x3D;1，任务队列为LinkedBlockingQueue</li>
 <li>ScheduledThreadPool：定时任务</li>
 </ul>
 </li>
 </ul>
-<h1>线程池详解</h1>
-<h2 id="原理">原理</h2>
-<p><img src="../../../../img/article_img/image-20250523180633812.png" srcset="/img/loading.gif" lazyload alt="image-20250523180633812"></p>
+<h1 id="线程池详解"><a href="#线程池详解" class="headerlink" title="线程池详解"></a>线程池详解</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><img src="/../../../../img/article_img/image-20250523180633812.png" srcset="/img/loading.gif" lazyload alt="image-20250523180633812"></p>
 <p>核心点：线程复用</p>
 <ol>
-<li>创建好固定的线程（核心线程）一直处于运行状态 ---- 死循环</li>
+<li>创建好固定的线程（核心线程）一直处于运行状态 —- 死循环</li>
 <li>将任务对象放到阻塞队列里面，线程获取任务</li>
 </ol>
-<p>线程池原理/创建过程：</p>
+<p>线程池原理&#x2F;创建过程：</p>
 <ol>
 <li>线程池有一个存储线程的集合和一个存储任务的阻塞队列</li>
 <li>当提交一个任务的时候，判断核心线程是否满了，如果没有满则启动一个核心线程放到线程集合里面，然后执行任务</li>
@@ -568,8 +572,7 @@
 <li>如果任务队列也满了，创建非核心线程并执行任务（非核心线程一般都是由存活时间的）</li>
 <li>如果最大线程也满了，那么执行拒绝策略</li>
 </ol>
-<h2 id="ThreadPoolExecutor线程池参数详解">ThreadPoolExecutor线程池参数详解</h2>
-<p>其实手撕线程池之后这些参数就很明确</p>
+<h2 id="ThreadPoolExecutor线程池参数详解"><a href="#ThreadPoolExecutor线程池参数详解" class="headerlink" title="ThreadPoolExecutor线程池参数详解"></a>ThreadPoolExecutor线程池参数详解</h2><p>其实手撕线程池之后这些参数就很明确</p>
 <ul>
 <li>corePoolSize：核心线程的数量，默认情况下，这些线程是会一直运行的，不会被销毁；但是allowCoreThreadTimeOut，开启后核心线程和非核心线程一样会超时销毁</li>
 <li>maxPoolSize：最大线程的数量，这是当corePoolSize满了并且阻塞队列也满了之后会创建的线程，有存活期 不会一直运行</li>
@@ -579,20 +582,18 @@
 <li>threadFactory：线程池内部创建的线程所有的工厂，可以用来创建核心、辅助线程的方法，也可以自定义线程名称等参数</li>
 <li>handler：拒绝策略，是一个策略模式，在线程池的代码中，当任务队列满时就会触发该接口的方法，所以我们只要实现这个接口方法，再把实现类传入线程池即可，并且方法里还可以拿到被拒绝的任务、线程池对象来实现自己的拒绝逻辑。</li>
 </ul>
-<h2 id="拒绝策略类型">拒绝策略类型</h2>
-<ul>
+<h2 id="拒绝策略类型"><a href="#拒绝策略类型" class="headerlink" title="拒绝策略类型"></a>拒绝策略类型</h2><ul>
 <li>AbortPolicy：抛出异常</li>
 <li>DiscardPolicy：忽视，丢弃任务</li>
 <li>CallerRunsPolicy：执行任务</li>
 <li>DiscardOldestPolicy：从队列踢出最先进入队列的任务</li>
 <li>自定义，实现RejectExecutionHandler接口，自定义处理器（缓存到redis、本地、主线程执行等等）</li>
 </ul>
-<h1>为什么不建议使用Executors</h1>
-<p>工具类Executors（不推荐，因为任务队列或者最大线程的数量是Integer.MAX_VALUE，容易造成OOM）</p>
+<h1 id="为什么不建议使用Executors"><a href="#为什么不建议使用Executors" class="headerlink" title="为什么不建议使用Executors"></a>为什么不建议使用Executors</h1><p>工具类Executors（不推荐，因为任务队列或者最大线程的数量是Integer.MAX_VALUE，容易造成OOM）</p>
 <ul>
-<li>FixedThreadPool：固定数量线程池（core==max），任务队列为LinkedBlockingQueue，是无限长（）</li>
+<li>FixedThreadPool：固定数量线程池（core&#x3D;&#x3D;max），任务队列为LinkedBlockingQueue，是无限长（）</li>
 <li>CachedThreadPool：core为0，max为无限大</li>
-<li>SingleThreadExecutor：core=max=1，任务队列为LinkedBlockingQueue</li>
+<li>SingleThreadExecutor：core&#x3D;max&#x3D;1，任务队列为LinkedBlockingQueue</li>
 <li>ScheduledThreadPool：定时任务</li>
 </ul>
 <p>无限队列可能导致内存溢出，会使得最大线程数量失效</p>
