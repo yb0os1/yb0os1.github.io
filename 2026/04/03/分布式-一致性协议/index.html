@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="Paxos Raft ZAB 分布式一致性怎么保障  共识协议保证集群节点一致 分布式事务保证跨服务业务一致 幂等+分布式避免并发错误 消息重试+定时补偿修复故障数据 多副本+高可用防止数据丢失">
+    <meta name="description" content="Paxos Raft ZAB 分布式一致性怎么保障  共识协议保证集群节点一致 分布式事务保证跨服务业务一致 幂等+分布式避免并发错误 消息重试+定时补偿修复故障数据 多副本+高可用防止数据丢失  graph TD     %% 定义全局样式     classDef layerFill fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dashar">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式-一致性协议">
 <meta property="og:url" content="https://yb0os1.github.io/2026/04/03/%E5%88%86%E5%B8%83%E5%BC%8F-%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="Paxos Raft ZAB 分布式一致性怎么保障  共识协议保证集群节点一致 分布式事务保证跨服务业务一致 幂等+分布式避免并发错误 消息重试+定时补偿修复故障数据 多副本+高可用防止数据丢失">
+<meta property="og:description" content="Paxos Raft ZAB 分布式一致性怎么保障  共识协议保证集群节点一致 分布式事务保证跨服务业务一致 幂等+分布式避免并发错误 消息重试+定时补偿修复故障数据 多副本+高可用防止数据丢失  graph TD     %% 定义全局样式     classDef layerFill fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dashar">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar28.png">
 <meta property="article:published_time" content="2026-04-03T08:37:12.000Z">
-<meta property="article:modified_time" content="2026-04-03T08:48:18.637Z">
+<meta property="article:modified_time" content="2026-04-04T06:46:15.039Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="一致性协议">
 <meta property="article:tag" content="分布式">
@@ -473,7 +473,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          74 字
+          1.5k 字
         
       </span>
     
@@ -485,7 +485,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          13 分钟
         
       </span>
     
@@ -551,6 +551,185 @@
 <li>消息重试+定时补偿修复故障数据</li>
 <li>多副本+高可用防止数据丢失</li>
 </ol>
+<pre><code class=" mermaid">graph TD
+    %% 定义全局样式
+    classDef layerFill fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5;
+    classDef coreFill fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef actionFill fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef targetFill fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+
+    %% 顶层目标
+    Target((最终目标: 面向电力物联网的高效、后量子安全认证系统)):::targetFill
+
+    %% 第一层：理论基础与原语层
+    subgraph Layer1 [1. 理论基础与密码学原语层]
+        direction LR
+        A1[困难问题假设: MLWE / MSIS]:::coreFill
+        A2[零知识证明: Fiat-Shamir with Aborts]:::coreFill
+        A3[撤销机制基础: 格基动态累加器]:::coreFill
+    end
+
+    %% 第二层：核心协议设计层
+    subgraph Layer2 [2. 核心协议设计层]
+        direction TB
+        B1(研究内容一: 格基双向匿名认证协议):::actionFill
+        B2(研究内容二: 多粒度可撤销匿名认证机制):::actionFill
+        
+        B1_1[离线/在线分离预计算策略]
+        B1_2[抗信号泄露与重放攻击设计]
+        B1 --&gt; B1_1 &amp; B1_2
+        
+        B2_1[资源受限终端轻量化改造]
+        B2_2[多粒度撤销模型建构与隐私保护]
+        B2 --&gt; B2_1 &amp; B2_2
+    end
+
+    %% 第三层：安全性与性能评估层
+    subgraph Layer3 [3. 安全性证明与性能评估层]
+        direction LR
+        C1[安全性归约: 量子随机预言机模型 QROM]:::coreFill
+        C2[性能评估: 计算开销与通信开销分析]:::coreFill
+    end
+
+    %% 第四层：系统实现与验证层
+    subgraph Layer4 [4. 系统实现与应用层]
+        direction TB
+        D1(研究内容三: 后量子安全认证系统原型构建):::actionFill
+        D2[感知层: ARM Cortex-M4 模拟终端]
+        D3[网络层: 结合 MQTT 与集中器/网关]
+        D4[应用层: x86 调度主站高并发处理]
+        
+        D1 --&gt; D2 &amp; D3 &amp; D4
+    end
+
+    %% 逻辑连线
+    Layer1 --&gt; Layer2
+    B1_1 &amp; B1_2 --&gt; C1 &amp; C2
+    B2_1 &amp; B2_2 --&gt; C1 &amp; C2
+    C1 &amp; C2 --&gt; Layer4
+    Layer4 --&gt; Target
+
+    %% 应用样式
+    class Layer1,Layer2,Layer3,Layer4 layerFill;
+</code></pre>
+<pre><code class=" mermaid">flowchart LR
+    %% 样式定义
+    classDef device fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;
+    classDef edge fill:#fff3e0,stroke:#fb8c00,stroke-width:2px;
+    classDef cloud fill:#e8f5e9,stroke:#43a047,stroke-width:2px;
+    classDef net fill:#f5f5f5,stroke:#9e9e9e,stroke-width:1px,stroke-dasharray: 5 5;
+
+    %% 节点定义 (使用双引号和 &lt;br/&gt; 解决解析报错)
+    subgraph Layer1 [1. 感知层 Perception Layer]
+        direction TB
+        M1[&quot;智能电表 1&lt;br/&gt;(ARM Cortex-M4)&quot;]:::device
+        M2[&quot;智能电表 N&lt;br/&gt;(资源受限)&quot;]:::device
+        DER[&quot;分布式能源终端&lt;br/&gt;(高频上报)&quot;]:::device
+    end
+
+    subgraph Layer2 [2. 网络边缘层 Edge Layer]
+        direction TB
+        G1[&quot;数据集中器 / 边缘网关&lt;br/&gt;(代理验证/状态缓存)&quot;]:::edge
+    end
+
+    subgraph Layer3 [3. 应用层 Application Layer]
+        direction TB
+        C1[&quot;电力调度主站 / 云平台&lt;br/&gt;(信任根/高算力/全量状态)&quot;]:::cloud
+    end
+
+    %% 连接与协议
+    M1 &amp; M2 &amp; DER -- &quot;MQTT / PLC / LoRa&lt;br/&gt;(低带宽)&quot; --&gt; G1
+    G1 -- &quot;5G / 光纤专网&lt;br/&gt;(高速回传)&quot; --&gt; C1
+
+    %% 动作标注
+    Layer1 -. &quot;1️⃣ 发起离线/在线匿名认证&quot; .-&gt; Layer2
+    Layer2 -. &quot;2️⃣ 汇聚转发与初步校验&quot; .-&gt; Layer3
+    Layer3 -. &quot;3️⃣ 验证更新与增量撤销下发&quot; .-&gt; Layer2
+
+    class Layer1,Layer2,Layer3 net;
+</code></pre>
+<pre><code class=" mermaid">sequenceDiagram
+    autonumber
+    participant T as 终端设备 (智能电表)
+    participant G as 边缘网关 (集中器)
+    participant C as 调度主站 (信任根)
+
+    rect rgb(240, 248, 255)
+    Note over T, C: 阶段一：基于 MLWE/MSIS 的双向匿名认证
+    Note over T: 离线阶段：预计算格上采样与承诺运算&lt;br/&gt;降低在线计算延迟
+    
+    T-&gt;&gt;G: 发起认证请求 (Auth_Req) + 匿名凭证承诺 (Commitment)
+    G-&gt;&gt;C: 转发请求及承诺数据
+    
+    C-&gt;&gt;G: 生成随机挑战 (Challenge_c)
+    G-&gt;&gt;T: 下发挑战信息
+    
+    Note over T: Fiat-Shamir with Aborts&lt;br/&gt;执行拒绝采样避免私钥泄露
+    T-&gt;&gt;G: 计算并发送响应 (Response_z)
+    G-&gt;&gt;C: 汇聚并转发响应
+    
+    Note over C: QROM模型下验证零知识证明&lt;br/&gt;确认终端合法性及匿名属性
+    C-&gt;&gt;G: 返回认证结果 + 会话密钥协商参数
+    G-&gt;&gt;T: 建立安全信道，开始业务数据传输
+    end
+
+    rect rgb(255, 240, 245)
+    Note over T, C: 阶段二：多粒度动态撤销与状态更新
+    Note over C: 触发事件：发现终端固件漏洞 / 设备退役
+    C-&gt;&gt;C: 更新格基动态累加器状态 (Accumulator Update)&lt;br/&gt;计算撤销节点的 Witness 增量包
+    
+    C-&gt;&gt;G: 下发增量撤销列表 (CRL_Delta) &amp; 主站签名
+    Note over G: 缓存最新累加器状态&lt;br/&gt;实现验证者本地撤销 (VLR)
+    
+    T-&gt;&gt;G: 再次发起高频业务请求
+    G--&gt;&gt;T: 拒绝连接 (本地拦截，无需上报主站)
+    end
+</code></pre>
+<pre><code class=" mermaid">graph TD
+    %% 样式
+    classDef ext fill:#eceff1,stroke:#607d8b,stroke-width:2px;
+    classDef msg fill:#fff9c4,stroke:#fbc02d,stroke-width:2px;
+    classDef micro fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+    classDef store fill:#c8e6c9,stroke:#388e3c,stroke-width:2px;
+
+    %% 外部请求
+    Client[&quot;海量边缘网关 / 集中器集群&quot;]:::ext
+
+    %% 接入层 (使用安全的 ID 加上方括号内的显示文本)
+    subgraph IngressLayer [接入与削峰层 Traffic Ingress]
+        LB[&quot;Nginx 负载均衡集群&quot;]:::ext
+        MQ[(&quot;Kafka / RabbitMQ&lt;br/&gt;消息队列削峰&quot;)]:::msg
+    end
+
+    %% 计算层
+    subgraph ComputeLayer [后量子认证微服务集群 Computing Layer]
+        Auth1[&quot;认证服务 Node 1&lt;br/&gt;(执行矩阵乘法/ZKP验证)&quot;]:::micro
+        Auth2[&quot;认证服务 Node 2&quot;]:::micro
+        Auth3[&quot;认证服务 Node N&quot;]:::micro
+    end
+
+    %% 存储与状态层
+    subgraph StorageLayer [高速缓存与持久化层 Storage Layer]
+        Redis[(&quot;Redis 集群&lt;br/&gt;缓存累加器状态/防重放Nonce&quot;)]:::store
+        DB[(&quot;MySQL / 实时数据库&lt;br/&gt;设备全生命周期底账&quot;)]:::store
+    end
+
+    %% 数据流向
+    Client == &quot;高频 MQTT 认证并发请求&quot; ==&gt; LB
+    LB --&gt; MQ
+    MQ -. &quot;异步拉取消费&quot; .-&gt; Auth1 &amp; Auth2 &amp; Auth3
+    
+    Auth1 &amp; Auth2 &amp; Auth3 &lt;--&gt; |&quot;1. 极速查询设备状态&lt;br/&gt;2. 校验防重放时间戳&quot;| Redis
+    Auth1 &amp; Auth2 &amp; Auth3 &lt;--&gt; |&quot;定期落库与持久化&quot;| DB
+    
+    %% 注释说明
+    classDef note fill:#ffe0b2,stroke:#ff9800,stroke-width:1px,stroke-dasharray: 5 5;
+    N1[&quot;设计亮点: 利用Kafka异步解耦缓解格密码瞬时计算压力&quot;]:::note
+    N2[&quot;设计亮点: Redis支撑O(1)复杂度的本地撤销列表极速核验&quot;]:::note
+    
+    MQ -.- N1
+    Redis -.- N2
+</code></pre>
 
                 
               
