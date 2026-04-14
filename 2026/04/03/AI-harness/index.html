@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="Harness Engineering 演进     提示词工程：优化意图表达。同一个模型，换种说法，结果可能差别很大，擅长的就是澄清任务、约束输出、激发模型已有能力，不擅长弥补缺失知识、管理大量动态信息、处理长链路状态信息   上下文工程：优化信息供给。比如RAG、Agent Skills，给正确的信息  上面两者主要都是解决输入侧的问题，    编排工程：让模型不跑偏、跑的稳、出错还能纠正。模">
+    <meta name="description" content="Harness Engineering   Hermes是Harness概念的产品化 演进   提示词工程：优化意图表达。同一个模型，换种说法，结果可能差别很大，擅长的就是澄清任务、约束输出、激发模型已有能力，不擅长弥补缺失知识、管理大量动态信息、处理长链路状态信息  上下文工程：优化信息供给。比如RAG、Agent Skills，给正确的信息  上面两者主要都是解决输入侧的问题，   编排工程：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AI-harness">
 <meta property="og:url" content="https://yb0os1.github.io/2026/04/03/AI-harness/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="Harness Engineering 演进     提示词工程：优化意图表达。同一个模型，换种说法，结果可能差别很大，擅长的就是澄清任务、约束输出、激发模型已有能力，不擅长弥补缺失知识、管理大量动态信息、处理长链路状态信息   上下文工程：优化信息供给。比如RAG、Agent Skills，给正确的信息  上面两者主要都是解决输入侧的问题，    编排工程：让模型不跑偏、跑的稳、出错还能纠正。模">
+<meta property="og:description" content="Harness Engineering   Hermes是Harness概念的产品化 演进   提示词工程：优化意图表达。同一个模型，换种说法，结果可能差别很大，擅长的就是澄清任务、约束输出、激发模型已有能力，不擅长弥补缺失知识、管理大量动态信息、处理长链路状态信息  上下文工程：优化信息供给。比如RAG、Agent Skills，给正确的信息  上面两者主要都是解决输入侧的问题，   编排工程：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar19.png">
 <meta property="article:published_time" content="2026-04-03T14:23:10.000Z">
-<meta property="article:modified_time" content="2026-04-03T16:19:20.814Z">
+<meta property="article:modified_time" content="2026-04-09T05:47:20.201Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="harness">
@@ -473,7 +473,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          450 字
+          571 字
         
       </span>
     
@@ -485,7 +485,7 @@
         
         
           <!-- compatible with older versions-->
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -540,59 +540,53 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <p>Harness Engineering</p>
-<h1>演进</h1>
-<p><img src="../../../../img/article_img/image-20260403222740414.png" srcset="/img/loading.gif" lazyload alt="演进"></p>
-<p><img src="../../../../img/article_img/image-20260403224257367.png" srcset="/img/loading.gif" lazyload alt="概念"></p>
+                <p>Harness Engineering  </p>
+<p>Hermes是Harness概念的产品化</p>
+<h1 id="演进"><a href="#演进" class="headerlink" title="演进"></a>演进</h1><p><img src="/../../../../img/article_img/image-20260403222740414.png" srcset="/img/loading.gif" lazyload alt="演进"></p>
+<p><img src="/../../../../img/article_img/image-20260403224257367.png" srcset="/img/loading.gif" lazyload alt="概念"></p>
 <ul>
-<li>
-<p>提示词工程：优化意图表达。同一个模型，换种说法，结果可能差别很大，擅长的就是澄清任务、约束输出、激发模型已有能力，不擅长弥补缺失知识、管理大量动态信息、处理长链路状态信息</p>
+<li><p>提示词工程：优化意图表达。同一个模型，换种说法，结果可能差别很大，擅长的就是澄清任务、约束输出、激发模型已有能力，不擅长弥补缺失知识、管理大量动态信息、处理长链路状态信息</p>
 </li>
-<li>
-<p>上下文工程：优化信息供给。比如RAG、Agent Skills，给正确的信息</p>
+<li><p>上下文工程：优化信息供给。比如RAG、Agent Skills，给正确的信息</p>
 <blockquote>
 <p>上面两者主要都是解决输入侧的问题，</p>
 </blockquote>
 </li>
-<li>
-<p>编排工程：让模型不跑偏、跑的稳、出错还能纠正。模型从回答问题到执行任务中，系统不仅只负责喂信息，还要负责执行的过程</p>
+<li><p>编排工程：瓶颈不是模型，是环境，让模型不跑偏、跑的稳、出错还能纠正。模型从回答问题到执行任务中，系统不仅只负责喂信息，还要负责执行的过程</p>
 </li>
 </ul>
-<h1>构成</h1>
-<p>Agent = Model + Harness</p>
+<blockquote>
+<p>2026年初，AI编程圈出现了一个共识：瓶颈不是模型，是环境。LangChain团队做了一个实验，用同一个模型（GPT-5.2- Codex），只调整周围的「缰绳」配置，成绩从52.8%涨到66.5%，排名从Top 30跳到Top 5。模型一行没改。把上面这个命名为harness engineering，每次AI犯错，就加一条规则，让它永远不再犯同一个错，</p>
+</blockquote>
+<h1 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h1><p>Agent &#x3D; Model + Harness</p>
 <p>分六层：</p>
 <ol>
-<li>上下文管理：harness的视角看上下文
-<ol>
+<li>上下文管理：harness的视角看上下文<ol>
 <li>角色的目标定义：模型要知道自己是谁、任务是什么、成功标准是什么</li>
 <li>信息选择和裁剪：上下文是要越相关越好</li>
 <li>结构化组织：固定规则放在哪、当前任务放在哪、运行状态放在哪等等</li>
 </ol>
 </li>
-<li>工具系统：
-<ol>
+<li>工具系统：<ol>
 <li>给它什么工具：太少能力不够，太多模型乱用</li>
 <li>什么时候调用工具：不需要查的时候别乱查，需要的时候也不能硬答</li>
 <li>结果怎么重新喂回：搜索回来的结果需要提炼、筛选、保持和任务的相关性</li>
 </ol>
 </li>
 <li>执行编排：模型下一步该做什么</li>
-<li>状态和记忆
-<ol>
+<li>状态和记忆<ol>
 <li>当前任务状态</li>
 <li>会话中间结果</li>
 <li>长期记忆和偏好</li>
 </ol>
 </li>
-<li>评估和观测：生成之后，评估自己做的好不好
-<ol>
+<li>评估和观测：生成之后，评估自己做的好不好<ol>
 <li>输出和验收</li>
 <li>环境验证</li>
 <li>自动测试</li>
 </ol>
 </li>
-<li>约束、校验、失败与恢复：
-<ol>
+<li>约束、校验、失败与恢复：<ol>
 <li>哪些能做，哪些不能做</li>
 <li>输出前怎么检查</li>
 <li>失败后怎么重试、切路径、回滚到稳定状态</li>
@@ -689,6 +683,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2026/04/10/AI-%E9%A1%B9%E7%9B%AE%EF%BC%88%E6%9C%88%E7%A5%9E%EF%BC%89/" title="AI-项目（月神）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AI-项目（月神）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
