@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar30.png">
 <meta property="article:published_time" content="2026-03-21T16:05:22.000Z">
-<meta property="article:modified_time" content="2026-03-22T16:06:04.678Z">
+<meta property="article:modified_time" content="2026-04-16T10:21:38.310Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="JUC">
 <meta property="article:tag" content="java">
@@ -473,7 +473,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.1k 字
+          1.5k 字
         
       </span>
     
@@ -485,7 +485,7 @@
         
         
           <!-- compatible with older versions-->
-          10 分钟
+          13 分钟
         
       </span>
     
@@ -589,6 +589,11 @@
 <li>DiscardOldestPolicy：从队列踢出最先进入队列的任务</li>
 <li>自定义，实现RejectExecutionHandler接口，自定义处理器（缓存到redis、本地、主线程执行等等）</li>
 </ul>
+<h1 id="线程池参数配置"><a href="#线程池参数配置" class="headerlink" title="线程池参数配置"></a>线程池参数配置</h1><p>针对CPU密集型：一般是<code>CPU核数+1</code>，CPU满负荷的时候，多加线程只会增加上下文切换开销；+1 是为了容错，比如说出现某线程缺页中断 &#x2F; 阻塞时补位&#x2F;GC 停顿等等</p>
+<p>针对IO密集型：一般先设置为<code>2*CPU核数</code>，后续修改可以根据为<code>CPU核心数 × (1 + 平均等待时间/平均计算时间)</code>，线程 90% 的时间在阻塞等待 IO，CPU 是空的；多开线程能把 CPU 空窗期填满</p>
+<blockquote>
+<p>一开始设置2*CPU核数，只是一个经验初值，先给线程池一个不太保守、也不至于太激进的初始值，后面修改为CPU核心数 × (1 + 平均等待时间&#x2F;平均计算时间)，这个是因为更贴近线程真实运行状态。一个线程的生命周期是计算一会儿再等待一会儿，所以总时间其实是计算时间 + 等待时间。等待时间 &#x2F; 计算时间反映的是为了覆盖阻塞等待，还需要补多少额外线程，前面的 1 代表本身正在占用 CPU 做计算的那部分线程；如果不加 1，那公式就只剩补偿等待的线程数了，连真正执行计算的基础线程都没算进去。比如等待时间为 0 时，公式就会变成 0，这显然不合理。因为哪怕没有等待，线程数至少也应该接近 CPU 核数</p>
+</blockquote>
 <h1 id="为什么不建议使用Executors"><a href="#为什么不建议使用Executors" class="headerlink" title="为什么不建议使用Executors"></a>为什么不建议使用Executors</h1><p>工具类Executors（不推荐，因为任务队列或者最大线程的数量是Integer.MAX_VALUE，容易造成OOM）</p>
 <ul>
 <li>FixedThreadPool：固定数量线程池（core&#x3D;&#x3D;max），任务队列为LinkedBlockingQueue，是无限长（）</li>

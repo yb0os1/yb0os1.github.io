@@ -474,6 +474,82 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/03/28/kafka/" target="_self">
+          <img src="/img/avatar28.png" srcset="/img/loading.gif" lazyload alt="kafka">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/03/28/kafka/" target="_self">
+          kafka
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/03/28/kafka/" target="_self">
+        <div>
+          核心架构组件 本章节是重理解  作用使用消息队列的主要目的主要记住这三个关键词：解耦、异步、削峰填谷  解耦：在一个复杂的系统中，不同的模块或服务之间可能需要相互依赖，如果直接使用函数调用或者 API调用的方式，会造成模块之间的耦合，当其中一个模块发生改变时，需要同时修改调用方和被调用方的代码。而使用消息队列作为中间件，不同的模块可以将消息发送到消息队列中，不需要知道具体的接收方是谁，接收方可以独
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-03-28 17:47" pubdate>
+              2026-03-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/distributed/" class="category-chain-item">distributed</a>
+  
+  
+    <span>></span>
+    
+  <a href="/distributed/queue/" class="category-chain-item">queue</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/queue/">#queue</a>
+            
+              <a href="/tags/kafka/">#kafka</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2026/03/26/AI-%E6%A6%82%E5%BF%B5/" target="_self">
           <img src="/img/avatar25.png" srcset="/img/loading.gif" lazyload alt="AI-概念">
         </a>
@@ -1092,82 +1168,6 @@
       <a class="index-excerpt " href="/2026/03/20/Redis-%E5%9C%BA%E6%99%AF/" target="_self">
         <div>
           缓存本地缓存本地缓存指数据存储在本地应用程序或服务器上，通常用于加速数据访问和提高响应速度。通常使用内存为存储介质，利用内存的高速读写 优势：  访问速度快：本地缓存存储在本地内存，可以，满足频繁访问和及时响应需求 减轻网络压力：降低对远程服务器的访问次数 低延迟：本地缓存位于本地设备上，适用对实时性要求高的  不足：  可扩展性有限：本地缓存可扩展性手硬件资源限制，无法支持大规模数据存储和访问
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-03-20 16:25" pubdate>
-              2026-03-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/database/" class="category-chain-item">database</a>
-  
-  
-    <span>></span>
-    
-  <a href="/database/redis/" class="category-chain-item">redis</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
-            
-              <a href="/tags/redis/">#redis</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2026/03/20/Redis-%E9%9B%86%E7%BE%A4/" target="_self">
-          <img src="/img/avatar6.png" srcset="/img/loading.gif" lazyload alt="Redis-集群">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/03/20/Redis-%E9%9B%86%E7%BE%A4/" target="_self">
-          Redis-集群
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2026/03/20/Redis-%E9%9B%86%E7%BE%A4/" target="_self">
-        <div>
-          如何实现服务高可用实现redis高可用肯定要从redis的多服务节点考虑，比如redis的主从复制、哨兵模式、切片集群 redis集群的优缺点优点：  高可用性：最主要的优点，节点之间采用主从复制机制，保证数据的持久性和容错性 高性能：切片集群把数据分散到多个节点，提高读写能力，增加吞吐量 扩展性好：可以根据实际动态增加或减少节点  缺点：  部署和维护复杂 集群同步问题：当某些节点失败或网络出现
         </div>
       </a>
 
