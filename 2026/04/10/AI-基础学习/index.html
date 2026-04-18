@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="会话记忆 构建真正 智能、连贯、个性化 的对话系统的核心挑战之一 概述和作用 大模型本身是无状态的，我们给模型的输入有且只有 提示词（Prompt）。所以，大模型本身其实是不具备记忆能力的 但是看到的大模型看似是有记忆的，这是通过一定策略实现的。比如 把历史对话记录存储起来，每次调用大模型时，把历史对话记录取出来，再加入融合到 提示词中，使得大模型看似具有记忆。但这个记忆系统如何设计呢？ 短期记忆">
+    <meta name="description" content="简单概念 Agent：智能体，会自主思考、会用工具的大模型。不只是被动回答问题，还能分步规划、调用工具（比如查数据库、写代码、调接口），自动完成复杂任务，像一个智能小助手 MCP，模型上下文协议，简单来说，MCP就是让AI碰到外面的世界，一种推出的工具协议，标准化AI怎么调用外部系统，核心是Tools，就是AI可以执行的函数，每个MCP Server的工具定义都会被提前塞进上下文，当很多MCP的时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AI-基础学习">
 <meta property="og:url" content="https://yb0os1.github.io/2026/04/10/AI-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="会话记忆 构建真正 智能、连贯、个性化 的对话系统的核心挑战之一 概述和作用 大模型本身是无状态的，我们给模型的输入有且只有 提示词（Prompt）。所以，大模型本身其实是不具备记忆能力的 但是看到的大模型看似是有记忆的，这是通过一定策略实现的。比如 把历史对话记录存储起来，每次调用大模型时，把历史对话记录取出来，再加入融合到 提示词中，使得大模型看似具有记忆。但这个记忆系统如何设计呢？ 短期记忆">
+<meta property="og:description" content="简单概念 Agent：智能体，会自主思考、会用工具的大模型。不只是被动回答问题，还能分步规划、调用工具（比如查数据库、写代码、调接口），自动完成复杂任务，像一个智能小助手 MCP，模型上下文协议，简单来说，MCP就是让AI碰到外面的世界，一种推出的工具协议，标准化AI怎么调用外部系统，核心是Tools，就是AI可以执行的函数，每个MCP Server的工具定义都会被提前塞进上下文，当很多MCP的时">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar22.png">
 <meta property="article:published_time" content="2026-04-10T08:31:38.000Z">
-<meta property="article:modified_time" content="2026-04-17T03:47:09.293Z">
+<meta property="article:modified_time" content="2026-04-18T04:10:52.739Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="agent">
@@ -473,7 +473,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          4.1k 字
+          5.1k 字
         
       </span>
     
@@ -485,7 +485,7 @@
         
         
           <!-- compatible with older versions-->
-          35 分钟
+          43 分钟
         
       </span>
     
@@ -540,7 +540,36 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>会话记忆</h1>
+                <h1>简单概念</h1>
+<p><strong>Agent</strong>：智能体，会自主思考、会用工具的大模型。不只是被动回答问题，还能分步规划、调用工具（比如查数据库、写代码、调接口），自动完成复杂任务，像一个智能小助手</p>
+<p><strong>MCP</strong>，模型上下文协议，简单来说，MCP就是让AI碰到外面的世界，一种推出的工具协议，标准化AI怎么调用外部系统，核心是Tools，就是AI可以执行的函数，每个MCP Server的工具定义都会被提前塞进上下文，当很多MCP的时候上下文开销很大，而且是持久连接</p>
+<p><strong>Skill</strong>，简单来说，skill是教AI怎么处理碰到的东西，本质上是一个文件夹，里面装着Skill.md的指令文件，关键就是渐进式信息公开，每次启动时AI只能看到skill的名称和简短描述，占用的token可以忽略不计，当用户问题和某个skill的描述匹配时就会自动加载这个完整的指令文件</p>
+<p><strong>Function Calling</strong>，</p>
+<h2 id="Agent和大模型区别">Agent和大模型区别</h2>
+<p>Agent解决的本质问题：把大模型从信息生成器变成了任务执行者，解决了大模型只能输出文本、不能真正落地执行任务的核心痛点</p>
+<p>模型的本质是预测下一个 token，它的所有输出都只是文本，他有下面的缺陷：</p>
+<ol>
+<li>没有执行能力，只能输出文本，不能调用接口、查数据库</li>
+<li>没有长期记忆，上下文再大也会失忆</li>
+<li>不会规划复杂任务，只能一步到位</li>
+<li>不会纠错迭代，错了就错了</li>
+</ol>
+<p>Agent 通过给大模型集成工具调用、记忆系统、任务规划和反思能力解决了上面的问题</p>
+<blockquote>
+<p>Agent 可以通过工具调用解决了执行问题，通过向量数据库解决了记忆问题，通过 ReAct/CoT 框架解决了规划问题，通过反思机制解决了迭代问题</p>
+</blockquote>
+<h2 id="Skill">Skill</h2>
+<p>skill把某类能力沉淀成可复用的提示词 + 工具调用规则 + 执行流程，是教AI怎么处理碰到的东西，本质上是一个文件夹，里面装着Skill.md的指令文件，关键就是渐进式信息公开，每次启动时AI只能看到skill的名称和简短描述，占用的token可以忽略不计，当用户问题和某个skill的描述匹配时就会自动加载这个完整的指令文件</p>
+<p>平时用过skill，比如说固定格式的信息抽取、代码生成或代码审查、知识库问答里的检索和回答约束等等，但是没有自己写过skill，如果我来写的话会重点关注三个内容</p>
+<p>明确输入输出格式、绑定可调用工具和约束、给模型加上边界条件和失败处理策略</p>
+<h2 id="如何看待AI">如何看待AI</h2>
+<p>我平时用 AI 主要有三类场景。</p>
+<p>第一类是 提效，比如查资料、总结文档、整理思路、写初稿。<br>
+第二类是 研发辅助，比如写代码、解释报错、补测试、做方案对比。<br>
+第三类是 认知放大，比如快速进入陌生领域，先建立一个初步框架，再自己验证和细化。</p>
+<p>但我的使用原则是：AI 可以帮我加速，但不能替我负责。尤其是在代码、数据、业务规则这类场景，我不会直接照抄，而是会做验证、压测或者人工复核。</p>
+<p>我对 AI 的看法是，它本质上是一个很强的通用能力放大器。短期看，它会先重构很多岗位的工作方式；长期看，谁更会把 AI 接进工作流、接进业务系统，谁的效率优势会越来越明显。</p>
+<h1>会话记忆</h1>
 <p>构建真正 <strong>智能、连贯、个性化</strong> 的对话系统的核心挑战之一</p>
 <h2 id="概述和作用">概述和作用</h2>
 <p>大模型本身是无状态的，我们给模型的输入有且只有 提示词（Prompt）。所以，大模型本身其实是不具备记忆能力的</p>
