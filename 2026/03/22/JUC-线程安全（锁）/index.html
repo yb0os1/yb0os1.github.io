@@ -19,12 +19,12 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="如何理解线程安全 线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执">
+    <meta name="description" content="如何理解线程安全线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JUC-线程安全">
 <meta property="og:url" content="https://yb0os1.github.io/2026/03/22/JUC-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%88%E9%94%81%EF%BC%89/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="如何理解线程安全 线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执">
+<meta property="og:description" content="如何理解线程安全线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题  原子性：操作不可分割，要么全部成功执行要么全部执行失败 可见性：线程对共享变量的修改是对其他线程立刻可见的 有序性：代码执行的顺序是否可能被编译器或CPU进行指令重排序   指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执行">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar33.png">
 <meta property="article:published_time" content="2026-03-21T16:05:30.000Z">
@@ -540,8 +540,7 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1>如何理解线程安全</h1>
-<p>线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题</p>
+                <h1 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h1><p>线程安全的核心是 在多线程并发访问共享资源（变量、对象、文件等）时。程序执行结果始终符合预期且不会出现数据错误和逻辑错误，根源在三个层面的问题</p>
 <ol>
 <li>原子性：操作不可分割，要么全部成功执行要么全部执行失败</li>
 <li>可见性：线程对共享变量的修改是对其他线程立刻可见的</li>
@@ -550,8 +549,7 @@
 <blockquote>
 <p>指令重排序：CPU 或编译器为了提高程序的执行效率，改变代码执行顺序的一种优化技术</p>
 </blockquote>
-<p>线程安全问题：<br>
-假设线程 A 和线程 B 同时执行 <code>i++</code>（初始值 <code>i=0</code>）：</p>
+<p>线程安全问题：<br>假设线程 A 和线程 B 同时执行 <code>i++</code>（初始值 <code>i=0</code>）：</p>
 <ol>
 <li>线程 A 读取 <code>i=0</code>，线程 B 也读取 <code>i=0</code></li>
 <li>线程 A 计算 <code>i+1=1</code>，线程 B 计算 <code>i+1=1</code></li>
@@ -560,18 +558,15 @@
 <ul>
 <li>最终结果：<code>i=1</code>（期望值为 <code>2</code>），出现错误</li>
 </ul>
-<h2 id="三者怎么保证">三者怎么保证</h2>
-<p><strong>原子性</strong>：主要通过加锁实现的</p>
+<h2 id="三者怎么保证"><a href="#三者怎么保证" class="headerlink" title="三者怎么保证"></a>三者怎么保证</h2><p><strong>原子性</strong>：主要通过加锁实现的</p>
 <p><strong>可见性</strong>：</p>
 <ul>
-<li>volatile修饰的变量：
-<ol>
+<li>volatile修饰的变量：<ol>
 <li>写操作：JVM 会发出一个StoreStore内存屏障指令，保证对当前线程工作内存中共享变量修改完之后写入到主内存，硬件层次上使用了MESI缓存一致性保障物理可见性</li>
 <li>读操作：JVM 会发出一个loadload内存屏障指令，清空当前线程工作内存中共享内存变量的副本 ，直接从主内存中读取该变量的值</li>
 </ol>
 </li>
-<li>synchronized，基于内存屏障：
-<ol>
+<li>synchronized，基于内存屏障：<ol>
 <li>在获取锁的时候jvm会执行MonitorEnter操作，代表获取锁并且同时执行一个loadload内存屏障指令（作用就是清空当前线程工作内存中共享内存变量的副本），使得线程在后续对这些变量的首次读取操作都必须从主内存中读取最新的值；</li>
 <li>释放锁的时候，jvm执行MonitoExit释放锁，然后还会执行storestore内存屏障指令（将当前线程工作内存中被修改过的变量值刷新回主内存）</li>
 </ol>
@@ -579,15 +574,13 @@
 </ul>
 <p><strong>有序性</strong>：通过插入内存屏障，内存屏障前后自动禁用指令重排序优化</p>
 <ul>
-<li>
-<p>volatile：编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排</p>
+<li><p>volatile：编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排</p>
 <ol>
 <li>读操作后加入loadload屏障    后添加loadstore屏障</li>
 <li>写操作前加入storestore屏障  后添加storeload屏障</li>
 </ol>
 </li>
-<li>
-<p>synchronized</p>
+<li><p>synchronized</p>
 <ol>
 <li>monitorenter 和 monitorexit，来确保加锁代码块内的指令不会被重排</li>
 <li>获取锁后加入loadload屏障</li>
@@ -598,11 +591,10 @@
 <blockquote>
 <p>MESI缓存一致性协议：主要用途是确保在多个 CPU 共享内存时，各个 CPU 的缓存数据能够保持一致性。当CPU修改共享内存中的变量时，由于其他CPU中也有该变量的副本，所以修改的时候会发出信号使其他CPU对该共享变量的缓存失效；当其他CPU读取该共享变量时，发现缓存失效那么就从内存重新读取</p>
 </blockquote>
-<h2 id="可见性">可见性</h2>
-<p>volatile线程可见性限制？线程可见性有什么方法？</p>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><p>volatile线程可见性限制？线程可见性有什么方法？</p>
 <p>volatile能保证变量修改后立即刷新到主内存，读取时直接从主内存加载，存在限制：</p>
 <ol>
-<li>只适合单变量读写，仅对基本类型/引用类型的值修改有效，但是引用类型内部属性修改无可见性保证</li>
+<li>只适合单变量读写，仅对基本类型&#x2F;引用类型的值修改有效，但是引用类型内部属性修改无可见性保证</li>
 <li>不能代替锁，无法保证复合操作的原子性</li>
 </ol>
 <p>实现线程可见性的方法：</p>
@@ -613,9 +605,7 @@
 <li>final关键字：初始化后不可修改，主内存可见</li>
 <li>ThreadLocal：线程私有变量，避免共享</li>
 </ol>
-<h1>死锁问题</h1>
-<h2 id="条件">条件</h2>
-<p>死锁发生在多个线程相互等待对方释放锁时，比如说线程1持有锁 R1等待锁R2，线程2持有锁R2等待锁R1</p>
+<h1 id="死锁问题"><a href="#死锁问题" class="headerlink" title="死锁问题"></a>死锁问题</h1><h2 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h2><p>死锁发生在多个线程相互等待对方释放锁时，比如说线程1持有锁 R1等待锁R2，线程2持有锁R2等待锁R1</p>
 <p>发生死锁四个条件缺一不可：</p>
 <ul>
 <li>互斥：资源不能被多个线程共享，一次只能由一个线程使用。如果一个线程已经占用了一个资源，其他请求该资源的线程必须等待，直到资源被释放</li>
@@ -623,20 +613,16 @@
 <li>不可抢占：资源不能被强制从线程中夺走，必须等线程自己释放</li>
 <li>循环等待：存在一种线程等待链，线程 A 等待线程 B 持有的资源，线程 B 等待线程 C 持有的资源，直到线程 N 又等待线程 A 持有的资源</li>
 </ul>
-<h2 id="避免">避免</h2>
-<ul>
+<h2 id="避免"><a href="#避免" class="headerlink" title="避免"></a>避免</h2><ul>
 <li>所有线程按照固定顺序进行申请资源，比如先申请R1再申请R2</li>
 <li>如果线程发现无法获取某个资源可以先释放已经持有的资源再重新尝试申请</li>
 </ul>
-<h2 id="排查">排查</h2>
-<ol>
+<h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><ol>
 <li>系统层面，比如在Linux生产环境下可以使用<code>top ps</code>等命令查看CPU、进程状态，看看是否有进程占用了过多的资源</li>
 <li>JVM层面，自带的性能监控工具，比如<code>jps -l</code> 查看当前进程，然后使用 <code>jstack 进程号</code> 查看当前进程的线程堆栈信息，看看是否有线程在等待锁资源</li>
 <li>可视化的性能监控工具，比如说 JConsole、VisualVM 等，查看线程的运行状态、锁的竞争情况等。</li>
 </ol>
-<h1>锁</h1>
-<h2 id="分类">分类</h2>
-<ul>
+<h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
 <li>悲观锁、乐观锁</li>
 <li>公平锁、非公平锁</li>
 <li>自旋锁</li>
@@ -644,18 +630,15 @@
 <li>重量级锁和轻量级锁</li>
 <li>独占锁和共享锁</li>
 </ul>
-<h3 id="悲观锁、乐观锁">悲观锁、乐观锁</h3>
-<ul>
-<li>
-<p>悲观锁：总是假设最坏的情况，认为共享资源每次被访问都会出现问题，每次在获取共享资源的时候都会上锁，其他线程想要拿到这个资源就会阻塞等待。大量阻塞线程会导致系统上下文切换，增加系统性能开销；</p>
+<h3 id="悲观锁、乐观锁"><a href="#悲观锁、乐观锁" class="headerlink" title="悲观锁、乐观锁"></a>悲观锁、乐观锁</h3><ul>
+<li><p>悲观锁：总是假设最坏的情况，认为共享资源每次被访问都会出现问题，每次在获取共享资源的时候都会上锁，其他线程想要拿到这个资源就会阻塞等待。大量阻塞线程会导致系统上下文切换，增加系统性能开销；</p>
 <blockquote>
 <p>悲观锁：synchronized、ReentrantLock、MySQL中写锁</p>
 <p>适合写多读少，并发冲突概率高；数据一致性要求极高（金融系统）的场景</p>
 <p>并发性能低（串行化）</p>
 </blockquote>
 </li>
-<li>
-<p>乐观锁：认为共享资源每次被访问的时候不会出现问题，在提交修改的时候去验证对应的资源（版本号）是否被其它线程修改，若未被修改则提交，否则重试（自旋重试）或抛出异常。具体方法可以使用版本号机制或 CAS 算法。</p>
+<li><p>乐观锁：认为共享资源每次被访问的时候不会出现问题，在提交修改的时候去验证对应的资源（版本号）是否被其它线程修改，若未被修改则提交，否则重试（自旋重试）或抛出异常。具体方法可以使用版本号机制或 CAS 算法。</p>
 <blockquote>
 <p>适合读多写少(并发冲突的概率低)，可以降低锁定带来的性能开销；系统能够容忍或者处理失败的情况，因为乐观锁可能会因为并发冲突导致执行失败；并发性能高</p>
 <p>可能存在的问题：</p>
@@ -663,20 +646,16 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="公平锁、非公平锁">公平锁、非公平锁</h3>
-<ul>
-<li>
-<p>ReentrantLock可以实现公平锁和非公平锁，底层是由AQS是实现的，默认是非公平锁。synchronized是一个非公平锁</p>
+<h3 id="公平锁、非公平锁"><a href="#公平锁、非公平锁" class="headerlink" title="公平锁、非公平锁"></a>公平锁、非公平锁</h3><ul>
+<li><p>ReentrantLock可以实现公平锁和非公平锁，底层是由AQS是实现的，默认是非公平锁。synchronized是一个非公平锁</p>
 </li>
-<li>
-<p>公平锁：锁被释放之后，先申请的线程先得到锁</p>
+<li><p>公平锁：锁被释放之后，先申请的线程先得到锁</p>
 <ul>
 <li>性能较差一些，因为公平锁为了保证时间上的绝对顺序，上下文切换更频繁</li>
 <li>当线程在竞争锁资源时，会判断双向链表中是否有线程在等待，如果有就加入到链表的尾部进行等待</li>
 </ul>
 </li>
-<li>
-<p>非公平锁：锁被释放之后，后申请的线程可能会先获取到锁，通过争抢的方式获取锁。</p>
+<li><p>非公平锁：锁被释放之后，后申请的线程可能会先获取到锁，通过争抢的方式获取锁。</p>
 <ul>
 <li>性能更好，但可能会导致某些线程永远无法获取到锁</li>
 <li>当线程在竞争锁资源时，不管双向链表中是否有线程在等待，都会去尝试抢占锁资源，如果抢占不到，再加入双向链表</li>
@@ -684,23 +663,19 @@
 <p>公平和非公平其实是相对于在双向链表中等待的线程而言的：进入等待队列就必须等待唤醒，新来的线程在有插队的权力</p>
 </li>
 </ul>
-<h3 id="可重入锁">可重入锁</h3>
-<p>synchronized、ReentrantLock等都是可重入锁，可以防止死锁的问题</p>
+<h3 id="可重入锁"><a href="#可重入锁" class="headerlink" title="可重入锁"></a>可重入锁</h3><p>synchronized、ReentrantLock等都是可重入锁，可以防止死锁的问题</p>
 <blockquote>
 <p>死锁：多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止</p>
 </blockquote>
 <p>可重入就是同一个线程中锁可以不断传递，可以直接获取</p>
-<h2 id="Synchronized">Synchronized</h2>
-<h3 id="使用">使用</h3>
-<p>可以保证原子性、可见性、有序性</p>
+<h2 id="Synchronized"><a href="#Synchronized" class="headerlink" title="Synchronized"></a>Synchronized</h2><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>可以保证原子性、可见性、有序性</p>
 <ol>
 <li>在普通方法上时，上锁的是执行这个方法的对象</li>
 <li>在静态方法上时，上锁的是这个类的 Class 对象</li>
 <li>在代码块上时，上锁的是括号中指定的对象，比如说当前对象 this</li>
 </ol>
 <p>在操作系统层面，需要从用户态切换到内核态，向操作系统底层申请互斥量mutex，性能开销很大，因此称其为重量级锁</p>
-<h3 id="原理（重量级锁）">原理（重量级锁）</h3>
-<blockquote>
+<h3 id="原理（重量级锁）"><a href="#原理（重量级锁）" class="headerlink" title="原理（重量级锁）"></a>原理（重量级锁）</h3><blockquote>
 <p>每个对象头部都有一个Mark Word，存储着对象的运行时数据，如哈希码、锁状态信息、GC分代年龄等，锁状态信息标志了Synchronized的状态</p>
 <p>当升级为重量级锁时，Mark Word 会保存一个指针，指向 JVM 底层 C++ 实现的 ObjectMonitor（监视器）</p>
 </blockquote>
@@ -713,71 +688,59 @@
 </ul>
 <p>基于监视器Monitor实现线程同步，自动加锁释放锁，对应两条字节码指令monitorenter和monitorexit</p>
 <ol>
-<li>线程执行monitorenter时，JVM检查锁对象的监视器
-<ul>
+<li>线程执行monitorenter时，JVM检查锁对象的监视器<ul>
 <li>如果Owner为空，那么当前线程成为owner，count++</li>
-<li>如果Owner被占用，检查锁对象的Mark Word的线程ID是否为当前线程
-<ul>
+<li>如果Owner被占用，检查锁对象的Mark Word的线程ID是否为当前线程<ul>
 <li>是的话count++，当前线程持有锁</li>
 <li>不是的话，当前线程进入EntryList阻塞等待</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>线程执行monitorexit时，count–，检查count是否为0
-<ul>
+<li>线程执行monitorexit时，count–，检查count是否为0<ul>
 <li>为0，JVM释放锁，唤醒EntryList中的线程，让他们竞争锁</li>
 <li>不为0，那么继续等待释放</li>
 </ul>
 </li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">ObjectMonitor() &#123;<br>    _count        = <span class="hljs-number">0</span>; <span class="hljs-comment">// 记录线程获取锁的次数</span><br>    _owner        = NULL;  <span class="hljs-comment">// 指向持有ObjectMonitor对象的线程</span><br>    _WaitSet      = NULL;  <span class="hljs-comment">// 处于wait状态的线程，会被加入到_WaitSet</span><br>    _cxq          = NULL ;<br>    _EntryList    = NULL ;  <span class="hljs-comment">// 处于等待锁block状态的线程，会被加入到该列表</span><br>  &#125;<br></code></pre></td></tr></table></figure>
-<h3 id="锁升级">锁升级</h3>
-<p>JDK1.6以前 直接就是重量级锁，使用到了操作系统的互斥锁，也就是一个线程持有锁时，其他试图进入synchronized块的线程将被阻塞，直到锁被释放。涉及到了线程上下文切换和用户态与内核态的切换，因此效率较低。</p>
+
+<h3 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a>锁升级</h3><p>JDK1.6以前 直接就是重量级锁，使用到了操作系统的互斥锁，也就是一个线程持有锁时，其他试图进入synchronized块的线程将被阻塞，直到锁被释放。涉及到了线程上下文切换和用户态与内核态的切换，因此效率较低。</p>
 <p>JDK1.6引入了锁升级：无所、偏向锁、轻量级锁、重量级锁</p>
 <ol>
-<li>
-<p>无锁-&gt;偏向锁：当一个线程首次进入synchronized代码块时，JVM会将锁标记为偏向锁，并且在锁对象头记录该线程ID；后续如果该线程再次请求同一把锁，通过比较线程ID直接获取锁，这个是为了没有锁竞争且需要重入场景引入的</p>
+<li><p>无锁-&gt;偏向锁：当一个线程首次进入synchronized代码块时，JVM会将锁标记为偏向锁，并且在锁对象头记录该线程ID；后续如果该线程再次请求同一把锁，通过比较线程ID直接获取锁，这个是为了没有锁竞争且需要重入场景引入的</p>
 </li>
-<li>
-<p>偏向锁-&gt;轻量级锁：如果再有其他线程来请求获取锁，那么偏向锁就会被撤销，两个线程通过CAS的方式自旋尝试获取锁，获取锁后JVM将锁标记为轻量级锁</p>
+<li><p>偏向锁-&gt;轻量级锁：如果再有其他线程来请求获取锁，那么偏向锁就会被撤销，两个线程通过CAS的方式自旋尝试获取锁，获取锁后JVM将锁标记为轻量级锁</p>
 <blockquote>
 <p>获取锁的方式：</p>
 <p>1、将锁对象的Mark Word复制到当前线程栈中的锁记录中</p>
 <p>2、通过CAS操作将锁对象头的Mark Word更新为自己的锁记录，更新成功就是获取到了锁</p>
 </blockquote>
 </li>
-<li>
-<p>轻量级锁-&gt;重量级锁：当有较多线程短时间内请求获取锁，意味着当前竞争比较激烈，而轻量级锁使用的CAS的方式会占用CPU，因此此时会发生锁膨胀，JVM将锁标记为重量级锁，重量级锁中竞争失败的锁会陷入阻塞，不会占用CPU，而重量级锁的原理：（请看上方Synchronized的原理）</p>
+<li><p>轻量级锁-&gt;重量级锁：当有较多线程短时间内请求获取锁，意味着当前竞争比较激烈，而轻量级锁使用的CAS的方式会占用CPU，因此此时会发生锁膨胀，JVM将锁标记为重量级锁，重量级锁中竞争失败的锁会陷入阻塞，不会占用CPU，而重量级锁的原理：（请看上方Synchronized的原理）</p>
 </li>
 </ol>
-<h2 id="CAS">CAS</h2>
-<h3 id="原理">原理</h3>
-<p>CAS，Compare And Swap（比较再交换），<strong>基本原理</strong>就是在更新前检查数据是否被修改，若未被修改则更新，否则自旋重试。</p>
+<h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>CAS，Compare And Swap（比较再交换），<strong>基本原理</strong>就是在更新前检查数据是否被修改，若未被修改则更新，否则自旋重试。</p>
 <p><strong>详细来说</strong>的话，CAS有三个操作数：主存共享变量V、旧的预期值E、要修改的新值N（E N都是每个线程独有的）</p>
 <p>当线程想要去修改主存共享变量V的时候，要先把V的值拷贝到线程的工作内存中，也就是作为旧的预期值E，然后计算得到新的值N。然后线程带着E和要修改的新值N再次找到主存共享变量V，先比较E和V是否相同。</p>
 <ul>
-<li>V==E，若相同，说明在这期间没有其他线程修改过主存共享变量V，是线程安全的。因此把新值N写入主存共享变量V</li>
-<li>V!=E，若不同，说明在这期间有其他线程修改过主存共享变量V，不是线程安全的。因此此时需要自旋重试
-<ul>
+<li>V&#x3D;&#x3D;E，若相同，说明在这期间没有其他线程修改过主存共享变量V，是线程安全的。因此把新值N写入主存共享变量V</li>
+<li>V!&#x3D;E，若不同，说明在这期间有其他线程修改过主存共享变量V，不是线程安全的。因此此时需要自旋重试<ul>
 <li>自旋：再次取得主存共享变量V的值，再次比较旧的预期值E和主存共享变量V的值是否相同。又回到刚刚的逻辑。直至自旋成功</li>
 </ul>
 </li>
 </ul>
-<h3 id="原子性">原子性</h3>
-<p>当时我再学习CAS的时候考虑到比较和交换是两个操作怎么保证的原子性？查了一下将它维持原子性的原理：依靠硬件实现的</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>当时我再学习CAS的时候考虑到比较和交换是两个操作怎么保证的原子性？查了一下将它维持原子性的原理：依靠硬件实现的</p>
 <ol>
 <li>首先在Java中直接使用CAS需要调用unsafe类的compareAndSawpInt或者compareAndSawpObject等方法，这些方法都是由native修饰的本地方法，是c++实现的。这些本地方法依赖了cpu的原子指令（cmpxchg），由硬件支持保证原子性，硬件就是通过锁定总线或者锁定缓存避免其他CPU访问公共资源。硬件的操作性能高，代价低，不阻塞线程</li>
 <li>锁定总线：早期处理器（如 486、Pentium）中，<code>LOCK</code>前缀会触发处理器在总线上发出<strong>LOCK# 信号</strong>，阻止其他处理器访问共享内存地址，直到当前指令执行完毕。这种方式通过物理总线仲裁实现原子性，但会导致总线带宽被独占，性能开销较大。</li>
-<li>锁定缓存：现代处理器（如 P6 架构之后）引入缓存一致性协议（如 MESI），<code>LOCK</code>前缀不再强制锁总线，而是尝试在缓存层面实现原子性：
-<ul>
+<li>锁定缓存：现代处理器（如 P6 架构之后）引入缓存一致性协议（如 MESI），<code>LOCK</code>前缀不再强制锁总线，而是尝试在缓存层面实现原子性：<ul>
 <li>当目标内存地址已被缓存时，处理器将对应的<strong>缓存行（Cache Line）标记为 Modified 状态</strong>，并通过 MESI 协议通知其他处理器将该缓存行置为 Invalid，从而独占访问权。</li>
 <li>若缓存行处于 Exclusive 状态（仅当前处理器持有且与内存一致），可直接修改；若为 Shared 状态，则需先触发缓存行状态升级为 Modified，确保其他处理器无法同时操作。</li>
 </ul>
 </li>
 </ol>
-<h3 id="CAS的优缺点">CAS的优缺点</h3>
-<p><strong>优点</strong></p>
+<h3 id="CAS的优缺点"><a href="#CAS的优缺点" class="headerlink" title="CAS的优缺点"></a>CAS的优缺点</h3><p><strong>优点</strong></p>
 <p>没有获取的线程不会阻塞，一直处于用户态，通过循环进行重试。减少了线程上下文的切换</p>
 <p><strong>缺点</strong>：</p>
 <ol>
@@ -785,40 +748,33 @@
 <li><strong>自旋时间长开销大</strong>。CAS 经常会用到自旋操作来进行重试，也就是不成功就一直循环执行直到成功。如果长时间不成功，会给 CPU 带来非常大的执行开销。可以进行控制循环的次数或者时间来避免消耗过多的CPU资源</li>
 <li>只能<strong>保证一个共享变量的原子操作</strong>。CAS 操作仅能对单个共享变量有效。当需要操作多个共享变量时，CAS 就显得无能为力。从 JDK 1.5 开始，Java 提供了<code>AtomicReference</code>类，将多个变量封装在一个对象中，这使得我们能够保证引用对象之间的原子性。</li>
 </ol>
-<h2 id="AQS">AQS</h2>
-<p>AbstractQueuedSynchronizer，抽象队列同步器</p>
+<h2 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h2><p>AbstractQueuedSynchronizer，抽象队列同步器</p>
 <p>AQS组成：volatile修饰的int类型的state属性、FIFO的同步队列（双向链表）、</p>
 <ul>
-<li>state表示共享资源的状态，不同子类中的实现对于state的值有不同的涵义，由CAS进行修改的，保证了线程安全性
-<ul>
+<li>state表示共享资源的状态，不同子类中的实现对于state的值有不同的涵义，由CAS进行修改的，保证了线程安全性<ul>
 <li>独占模式是只有一个线程能够访问资源（ReentrantLock），共享模式可以允许多个线程同时访问资源（CountDownLatch）</li>
-<li>ReentrantLock：
-<ul>
+<li>ReentrantLock：<ul>
 <li>0：当前资源没有被加锁</li>
 <li>1：当前资源已经被加锁</li>
 <li><code>&gt;</code>1：当前资源已经被加了多把锁（可重入锁</li>
 </ul>
 </li>
-<li>CountDownLatch：
-<ul>
+<li>CountDownLatch：<ul>
 <li><code>state</code> 表示剩余的计数</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>同步队列(双向链表)：用于存储等待获取锁的线程（获取锁失败的线程），因为有些线程可以抢占到锁，而有些线程无法抢占到锁，此时，没有竞争到锁的线程就会被打包为一个Node节点，插入双向链表的尾部，并且阻塞线程。当释放锁时，会唤醒双向链表中的head的后继节点节点</li>
-<li>条件队列：存放调用<code>condition.await()</code>的线程。
-<ul>
-<li>
-<p>调用<code>await()</code>：入队、释放锁、挂起</p>
+<li>条件队列：存放调用<code>condition.await()</code>的线程。<ul>
+<li><p>调用<code>await()</code>：入队、释放锁、挂起</p>
 <ol>
 <li>把当前线程封装成 Node（状态为 CONDITION），加入 条件队列（尾部入队）</li>
 <li>完全释放在 AQS 上占有的锁（同步状态 State），唤醒同步队列里的后继线程去抢锁</li>
 <li>当前线程阻塞（park），进入 WAITING 状态，等待唤醒</li>
 </ol>
 </li>
-<li>
-<p>调用<code>signal()</code>：迁移、唤醒、重竞争</p>
+<li><p>调用<code>signal()</code>：迁移、唤醒、重竞争</p>
 <ol>
 <li>从条件队列头部取出一个等待节点，移动到同步同步队列的尾部，重新加入抢锁大军</li>
 <li>唤醒该节点，让它去竞争锁（但它不会立刻执行，而是去排队）</li>
@@ -827,18 +783,15 @@
 </ul>
 </li>
 </ul>
-<p><img src="../../../../img/article_img/image-20260323163009476.png" srcset="/img/loading.gif" lazyload alt="AQS"></p>
+<p><img src="/../../../../img/article_img/image-20260323163009476.png" srcset="/img/loading.gif" lazyload alt="AQS"></p>
 <p>基于AQS实现：</p>
 <ol>
 <li>独享模式：ReentrantLock</li>
 <li>共享模式：Semaphore（信号量）、CountDownLatch</li>
 </ol>
-<h2 id="ReentrantLock">ReentrantLock</h2>
-<p>基于AQS+CAS+LockSupport实现，Lock是接口，ReentrantLock是实现类</p>
-<p>LockSupport.park(); //阻塞线程<br>
-LockSupoort.unpark(Thread);//唤醒线程</p>
-<h2 id="notify和wait原理">notify和wait原理</h2>
-<p>notify wait notifyAll都是在持有锁的时候才可以使用的</p>
+<h2 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h2><p>基于AQS+CAS+LockSupport实现，Lock是接口，ReentrantLock是实现类</p>
+<p>LockSupport.park(); &#x2F;&#x2F;阻塞线程<br>LockSupoort.unpark(Thread);&#x2F;&#x2F;唤醒线程</p>
+<h2 id="notify和wait原理"><a href="#notify和wait原理" class="headerlink" title="notify和wait原理"></a>notify和wait原理</h2><p>notify wait notifyAll都是在持有锁的时候才可以使用的</p>
 <ol>
 <li>wait：会原子地释放锁，将 <code>_owner</code> 置空、<code>_count</code> 重置，然后把当前线程加入 <code>_WaitSet</code> 并挂起，进入 WAITING 状态</li>
 <li><code>notify</code> 时，线程必须仍然持有锁。JVM 会从 <code>_WaitSet</code> 中取出一个等待线程，将它移动到 <code>_EntryList</code>，使其重新进入锁竞争队列。被唤醒的线程不会立即执行，而是先进入 BLOCKED 状态，竞争成功后才能从 <code>wait</code> 处继续运行</li>
@@ -855,15 +808,14 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <th>AQS (ReentrantLock + Condition)</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>等待队列数量</td>
 <td>1 个 (全局唯一 WaitSet)</td>
 <td>N 个 (每把锁可对应多个 Condition)</td>
 </tr>
 <tr>
 <td>唤醒机制</td>
-<td>随机唤醒 (notify) / 全部唤醒 (notifyAll)</td>
+<td>随机唤醒 (notify) &#x2F; 全部唤醒 (notifyAll)</td>
 <td>精准唤醒 (signal) 指定队列的线程</td>
 </tr>
 <tr>
@@ -874,18 +826,16 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <tr>
 <td>功能限制</td>
 <td>不能实现精准控制（如生产者消费者分离）</td>
-<td>可以精确控制 “组” 级别的线程等待 / 唤醒</td>
+<td>可以精确控制 “组” 级别的线程等待 &#x2F; 唤醒</td>
 </tr>
 <tr>
 <td>超时机制</td>
 <td>不支持（除非抛异常中断）</td>
 <td>支持 <code>await(timeout)</code>，可中断</td>
 </tr>
-</tbody>
-</table>
-<h2 id="Lock和Synchronized对比">Lock和Synchronized对比</h2>
-<ul>
-<li>Lock锁基于AQS封装，结合CAS和LockSupport.park/unpark实现的，锁的升级需要手动的实现</li>
+</tbody></table>
+<h2 id="Lock和Synchronized对比"><a href="#Lock和Synchronized对比" class="headerlink" title="Lock和Synchronized对比"></a>Lock和Synchronized对比</h2><ul>
+<li>Lock锁基于AQS封装，结合CAS和LockSupport.park&#x2F;unpark实现的，锁的升级需要手动的实现</li>
 <li>synchronized基于C++虚拟机封装，自动实现锁升级的过程</li>
 </ul>
 <table>
@@ -896,8 +846,7 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <th><strong>Synchronized</strong></th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><strong>特性</strong></td>
 <td>JDK提供的一个类</td>
 <td>Java内置关键字</td>
@@ -915,7 +864,7 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <tr>
 <td><strong>用法区别</strong></td>
 <td>lock()和unlock()加锁解锁，非常灵活</td>
-<td>一般修饰在方法/代码块上</td>
+<td>一般修饰在方法&#x2F;代码块上</td>
 </tr>
 <tr>
 <td><strong>公平锁</strong></td>
@@ -932,24 +881,19 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <td>适合复杂场景</td>
 <td>适合简单场景</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>更详细的话：</p>
 <ol>
 <li>ReentrantLock 可以实现多路选择通知，绑定多个Condition；而 synchronized 只能通过 wait 和 notify 唤醒，属于单路通知</li>
 <li>synchronized 可以在方法和代码块上加锁，ReentrantLock 只能在代码块上加锁，但可以指定是公平锁还是非公平锁</li>
 <li>ReentrantLock 提供了一种能够中断等待锁的线程机制，通过 <code>lock.lockInterruptibly()</code> 来实现</li>
 </ol>
-<h1>ThreadLocal</h1>
-<h2 id="理解">理解</h2>
-<p>ThreadLocal 提供了一种线程级别的数据存储机制。每个线程都拥有自己独立的</p>
+<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>ThreadLocal 提供了一种线程级别的数据存储机制。每个线程都拥有自己独立的 </p>
 <p>ThreadLocal，意味着每个线程都可以独立地、安全地操作这些变量，而不会影响其他线程。</p>
-<h2 id="使用场景">使用场景</h2>
-<ol>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ol>
 <li>设计模式，模板方法</li>
-<li>SpringMVC获取Httprequest对象
-<ul>
-<li><strong>用户身份信息存储</strong>：在请求的拦截器/过滤器中鉴权校验用户身份，把用户信息(如用户ID、权限)存入 ThreadLocal 中，在请求的后续链路中如果需要获取用户信息的，直接在 ThreadLocal 中获取即可（项目中使用到了）</li>
+<li>SpringMVC获取Httprequest对象<ul>
+<li><strong>用户身份信息存储</strong>：在请求的拦截器&#x2F;过滤器中鉴权校验用户身份，把用户信息(如用户ID、权限)存入 ThreadLocal 中，在请求的后续链路中如果需要获取用户信息的，直接在 ThreadLocal 中获取即可（项目中使用到了）</li>
 <li><strong>线程安全</strong>：ThreadLocal 可以用来存储一些需要并发安全处理的成员变量，比如SimpleDateFormat，由于 SimpleDateFormat 不是线程安全的，可以使用 ThreadLocal 为每个线程创建一个独立的 SimpleDateFormat实例，从而避免线程安全问题</li>
 <li><strong>日志上下文存储</strong>：在常见的日志框架中，经常使用 ThreadLocal 来存储与当前线程相关的日志上下文。这允许开发者在打印日志消息时包含特定于线程的信息，如用户ID，这对于调试和监控是非常有用的（相当于为了打印每条日志时能看到用户ID或其他信息）</li>
 <li><strong>traceld 存储</strong>：和上面存储日志上下文类似，在分布式链路追踪中，需要存储本次请求的 traceld，通常也都是基于 ThreadLocal 存储的</li>
@@ -962,15 +906,13 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <li>在线程中传递数据，在同一个线程执行过程中，ThreadLocal 的数据一直在，所以可以在前面把数据放到 ThreadLocal 中，在后面需要时再取出来用，就可以避免数据通过参数在多层方法传递</li>
 <li>解决并发问题</li>
 </ol>
-<h2 id="原理-2">原理</h2>
-<p>ThreadLocal类维护了一个ThreadLocalMap类型的变量，默认情况下是为null，只有set和get的时候才会创建。ThreadLocalMap里面维护Entry数组，Entry对象就存储着ThreadLocal和Value，每个Entry对象在数组中的位置就是通过ThreadLocal计算哈希得到的</p>
+<h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p>ThreadLocal类维护了一个ThreadLocalMap类型的变量，默认情况下是为null，只有set和get的时候才会创建。ThreadLocalMap里面维护Entry数组，Entry对象就存储着ThreadLocal和Value，每个Entry对象在数组中的位置就是通过ThreadLocal计算哈希得到的</p>
 <ul>
 <li>set的过程：获取当前线程，获取当前线程的ThreadLocalMap，调用其set方法，存入的 key 是this(即ThreadLocal对象本身)，value是要存入的数据</li>
 <li>get的过程：获取当前线程，获取当前线程的ThreadLocalMap，调用其get方法，通过this(即ThreadLocal对象本身) 获取到之前存入的数据</li>
 </ul>
-<p><img src="../../../../img/article_img/image-20260323212909881.png" srcset="/img/loading.gif" lazyload alt="ThreadLocal原理"></p>
-<h2 id="内存泄漏问题">内存泄漏问题</h2>
-<p>引用链：Thread-&gt;ThreadLocalMap-&gt;Entry[]-&gt;key，value</p>
+<p><img src="/../../../../img/article_img/image-20260323212909881.png" srcset="/img/loading.gif" lazyload alt="ThreadLocal原理"></p>
+<h2 id="内存泄漏问题"><a href="#内存泄漏问题" class="headerlink" title="内存泄漏问题"></a>内存泄漏问题</h2><p>引用链：Thread-&gt;ThreadLocalMap-&gt;Entry[]-&gt;key，value   </p>
 <p>前置：强软弱虚引用</p>
 <ul>
 <li>强引用：一个对象如果具有强引用那么只要这种引用还存在就不会被回收。如果内存不足时，JVM开始GC，对于强引用对象就算出现OOM该对象也不会被回收</li>
@@ -985,12 +927,11 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <p>使用线程池的方式，核心线程是会反复使用的，线程中对应的 ThreadLocalMap 会被线程强引用，所以 ThreadLocalMap 不能被 GC 自动回收，而 ThreadLocalMap 中包含一个 Entry  数组，Entry 数组中含有多个&lt; Key 为 ThreadLocal，value为存储的数据 &gt; 的Entry对象。虽然 Entry 对象中的 Key 是弱引用，能够被 GC 自动回收；但 value 是强引用，不能被 GC 自动回收。所以，在线程池中使用ThreadLocal会存在内存泄露的风险。</p>
 <p>解决方法：</p>
 <ol>
-<li>手动的调用remove方法（拦截器/过滤器，finally）</li>
+<li>手动的调用remove方法（拦截器&#x2F;过滤器，finally）</li>
 <li>ThreadLocal是弱引用，底层每次在set的时候都会清除之前key为null的value</li>
 </ol>
-<p><img src="../../../../img/article_img/image-20260323215825291.png" srcset="/img/loading.gif" lazyload alt="引用链"></p>
-<h2 id="为什么ThreadLocal的key是弱引用？value是强引用？">为什么ThreadLocal的key是弱引用？value是强引用？</h2>
-<p>弱引用：ThreadLocalMap 中在进行 set 和 get 操作时会进行<strong>启发式清理</strong>和<strong>探测式清理</strong>，清理一部分 key 为 null 的 Entry 对象，如果key也是强引用的话，那么只要没有remove或者线程结束这个key一直存在，启发式和探测式清理都会失效了，后备方案都不存在了</p>
+<p><img src="/../../../../img/article_img/image-20260323215825291.png" srcset="/img/loading.gif" lazyload alt="引用链"></p>
+<h2 id="为什么ThreadLocal的key是弱引用？value是强引用？"><a href="#为什么ThreadLocal的key是弱引用？value是强引用？" class="headerlink" title="为什么ThreadLocal的key是弱引用？value是强引用？"></a>为什么ThreadLocal的key是弱引用？value是强引用？</h2><p>弱引用：ThreadLocalMap 中在进行 set 和 get 操作时会进行<strong>启发式清理</strong>和<strong>探测式清理</strong>，清理一部分 key 为 null 的 Entry 对象，如果key也是强引用的话，那么只要没有remove或者线程结束这个key一直存在，启发式和探测式清理都会失效了，后备方案都不存在了</p>
 <p>强引用：Entry的value假如只是被Entry引用，有可能没被业务系统中的其他地方引用。如果将value改成了弱引用，被GC贸然回收了（数据突然没了），可能会导致业务系统出现异常</p>
 <blockquote>
 <p>探索式清理：从当前节点开始遍历数组，将key等于null的entry置为null，key不等于null则rehash重新分配位置，若重新分配上的位置有元素则往后顺延</p>
@@ -998,15 +939,15 @@ LockSupoort.unpark(Thread);//唤醒线程</p>
 <p>触发时机：</p>
 <ul>
 <li>set方法最后会执行一次启发式清理</li>
-<li>set方法遇到key=null、rehash方法、get方法遇到key过期、启发式清理遇到key=null时进行一轮探索式清理</li>
+<li>set方法遇到key&#x3D;null、rehash方法、get方法遇到key过期、启发式清理遇到key&#x3D;null时进行一轮探索式清理</li>
 </ul>
 </blockquote>
-<h2 id="缺点">缺点</h2>
-<p>父线程无法通过ThreadLocal给子线程传值</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>父线程无法通过ThreadLocal给子线程传值</p>
 <p>解决：<code>InheritableThreadLocal</code></p>
 <p>原理</p>
 <p>在 Thread 类的定义中，每个线程都有两个 ThreadLocalMap：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Thread</span> &#123;<br>    <span class="hljs-comment">/* 普通 ThreadLocal 变量存储的地方 */</span><br>    ThreadLocal.<span class="hljs-type">ThreadLocalMap</span> <span class="hljs-variable">threadLocals</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>    <span class="hljs-comment">/* InheritableThreadLocal 变量存储的地方 */</span><br>    ThreadLocal.<span class="hljs-type">ThreadLocalMap</span> <span class="hljs-variable">inheritableThreadLocals</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>普通 ThreadLocal 变量存储在 threadLocals 中，不会被子线程继承。</p>
 <p>InheritableThreadLocal 变量存储在 inheritableThreadLocals 中，当 <code>new Thread()</code> 创建一个子线程时，Thread 的 <code>init()</code> 方法会检查父线程是否有 inheritableThreadLocals，如果有，就会拷贝 InheritableThreadLocal 变量到子线程。</p>
 
