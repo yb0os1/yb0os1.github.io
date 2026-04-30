@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar27.png">
 <meta property="article:published_time" content="2026-03-18T17:13:23.000Z">
-<meta property="article:modified_time" content="2026-04-09T09:29:45.437Z">
+<meta property="article:modified_time" content="2026-04-30T16:35:41.605Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="redis">
 <meta property="article:tag" content="数据库">
@@ -473,7 +473,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.7k 字
+          3.3k 字
         
       </span>
     
@@ -485,7 +485,7 @@
         
         
           <!-- compatible with older versions-->
-          23 分钟
+          28 分钟
         
       </span>
     
@@ -684,10 +684,48 @@
 <p>比如，现在所有的元素都是250字节，在第一个节点插入了一个超过254字节的元素，那么后续所有的节点记录前一个节点长度的字段长度都要由1B变为5B</p>
 </blockquote>
 <h2 id="quicklist"><a href="#quicklist" class="headerlink" title="quicklist"></a>quicklist</h2><p>quicklist是想要解决压缩列表的不足，采用双向链表+压缩列表的结构，是一个链表，但是链表的每个元素是一个压缩列表；简单来说就是通过控制每个链表节点中压缩列表的大小或者元素个数，来规避连锁更新的（越小就会连锁更新带来的影响就越小</p>
-<p><img src="/../../../../img/article_img/image-20260320121742352.png" srcset="/img/loading.gif" lazyload alt="quicklist结构示意图"></p>
+<p><img src="/../../../../image-20260430235251137.png" srcset="/img/loading.gif" lazyload alt="quicklist结构示意图"></p>
 <h2 id="listpack"><a href="#listpack" class="headerlink" title="listpack"></a>listpack</h2><p>quicklist是通过控制节点中压缩列表中元素的格式来减少连锁更新带来的性能影响，但是没有完全解决连锁更新问题</p>
 <p>listpack就是为了代替压缩列表，最大特点是 listpack 中每个节点不再包含前一个节点的长度了</p>
 <p><img src="/../../../../img/article_img/image-20260320122120376.png" srcset="/img/loading.gif" lazyload alt="listpack结构示意图"></p>
+<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><p>先做边界检查 + 方向优化（减少一半遍历）</p>
+<ul>
+<li>先判断 <code>index</code> 是否在 <code>[0, len-1]</code> 范围内，不在直接报错</li>
+<li>比较 index和len&#x2F;2<ul>
+<li>若 <code>index</code> 靠近头部（<code>index &lt; len/2</code>），从 <code>head</code> 开始向后遍历</li>
+<li>若 <code>index</code> 靠近尾部，从 <code>tail</code> 开始向前遍历</li>
+<li><strong>直接减少一半的遍历次数</strong></li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>节点级粒度累加定位（核心！）</li>
+</ol>
+<p>不需要遍历每个元素，只需要遍历节点，通过累加 <code>count</code> 快速锁定目标节点：</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs axapta">假设目标 <span class="hljs-keyword">index</span> = <span class="hljs-number">1000</span>，每个节点 <span class="hljs-keyword">count</span> 如下：<br>Node1: <span class="hljs-keyword">count</span>=<span class="hljs-number">500</span> → <span class="hljs-number">1000</span> &gt;= <span class="hljs-number">500</span> → <span class="hljs-keyword">index</span> -= <span class="hljs-number">500</span> → 剩余 <span class="hljs-keyword">index</span>=<span class="hljs-number">500</span><br>Node2: <span class="hljs-keyword">count</span>=<span class="hljs-number">600</span> → <span class="hljs-number">500</span> &lt; <span class="hljs-number">600</span> → 命中！目标在 Node2 内<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>从选定方向开始，逐个节点检查 <code>count</code></li>
+<li>若目标 <code>index</code> 大于当前节点 <code>count</code>，则 <code>index -= count</code>，继续下一个节点</li>
+<li>若目标 <code>index</code> 小于当前节点 <code>count</code>，则<strong>命中该节点</strong></li>
+</ul>
+<ol start="3">
+<li>节点内最终定位</li>
+</ol>
+<p>找到目标 <code>quicklistNode</code> 后，在其内部的 <code>ziplist</code> 里，通过剩余的 <code>index</code> 直接偏移定位到具体元素（<code>ziplist</code> 是紧凑数组，偏移定位极快）。</p>
+<h3 id="更优的查找"><a href="#更优的查找" class="headerlink" title="更优的查找"></a>更优的查找</h3><p>节点维护：该节点存储的元素数量、该节点的内存首地址</p>
+<p>list 本身会记录整个列表的总元素数，相当于提前知道了「总共有多少段、每段有多少个元素」</p>
+<p>不需要从头开始逐个遍历链表节点，而是通过简单的数学计算一步找到目标段：</p>
+<ul>
+<li>可以把所有节点的首地址存在一个连续的数组里（类似哈希表但无冲突），因为分段数量是确定的</li>
+<li>用目标索引除以单段的元素数量（或通过分段计数的前缀和），直接算出目标所在的数组下标</li>
+<li>一步拿到对应节点的内存首地址，完全跳过链表遍历过程</li>
+</ul>
+<p>特别处理头节点的特殊情况：因为 quicklist 支持头插（lpush）操作，第一个节点通常不是满的，所以需要额外记录每个节点的起始偏移量。</p>
+<ul>
+<li>定位到目标节点后，用目标索引减去前面所有节点的元素总数，得到该节点内部的偏移量</li>
+<li>最后在节点内部的 ziplist 中，通过这个内部偏移量直接找到具体的元素</li>
+</ul>
 <h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><h3 id="怎么扩容的？"><a href="#怎么扩容的？" class="headerlink" title="怎么扩容的？"></a>怎么扩容的？</h3><p>扩容就是rehash的过程，涉及到两个哈希表了</p>
 <p>正常的情况下插入的数据都会写入哈希表1，哈希表2并没有被分配空间，随着数据的增多，就要进行扩容，那么触发rehash</p>
 <ol>
