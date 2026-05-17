@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar6.png">
 <meta property="article:published_time" content="2026-03-12T13:43:40.000Z">
-<meta property="article:modified_time" content="2026-05-11T06:42:25.881Z">
+<meta property="article:modified_time" content="2026-05-15T08:23:49.349Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="实习">
@@ -219,6 +219,37 @@
                                 target="_self">
                                 
                                   <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/c++/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/c++/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
                               </a>
                               
                     </div>
@@ -473,7 +504,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.3k 字
+          6.5k 字
         
       </span>
     
@@ -485,7 +516,7 @@
         
         
           <!-- compatible with older versions-->
-          28 分钟
+          54 分钟
         
       </span>
     
@@ -609,12 +640,12 @@
 <p><strong>流程</strong>：</p>
 <ol>
 <li>爱奇艺（日常） 4.27一面</li>
-<li>腾讯-wxg 4.30一面  5.7二面 5.12三面</li>
-<li>字节广告架构 5.12一面</li>
+<li>字节广告架构 ads 5.12一面 5.15二面 5.19hr面</li>
 </ol>
 <p><strong>OC</strong>：</p>
 <ol>
-<li>百度 4.23一面 4.27二面 4.28三面 4.28oc</li>
+<li>百度 4.23一面 4.27二面 4.28三面 4.28口头oc 4.30书面oc</li>
+<li>腾讯-wxg 4.30一面  5.7二面 5.12三面 5.13hr面 5.14书面oc</li>
 <li>VAST  4.28一面 4.30Hr面 oc</li>
 </ol>
 <h1 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h1><h2 id="字节广告部门一面"><a href="#字节广告部门一面" class="headerlink" title="字节广告部门一面"></a>字节广告部门一面</h2><span class="label label-primary">实习</span>
@@ -875,7 +906,151 @@
 <li>短期记忆和长期记忆</li>
 </ul>
 <h2 id="IEG二面"><a href="#IEG二面" class="headerlink" title="IEG二面"></a>IEG二面</h2><p>挂</p>
-<h2 id="WXG一面"><a href="#WXG一面" class="headerlink" title="WXG一面"></a>WXG一面</h2><p>2个小时有点顶不住了</p>
+<h2 id="WXG一面"><a href="#WXG一面" class="headerlink" title="WXG一面"></a>WXG一面</h2><p>两个小时（三道手撕+实习+技术讨论）</p>
+<p>1、两道算法题</p>
+<ol>
+<li><p>最大子序列和：给定一个整数数组nums，找到一个具有最大和的连续子数组(至少包含一个元素)，返回其最大和。要求使用动态规划方法实现，并尝试优化空间复杂度至O(1)(即状态压缩)</p>
+</li>
+<li><p>字符串替换：将字符串 <code>template</code> 中所有 <code>&#123;&#123;key&#125;&#125;</code> 格式的占位符，替换为 <code>params</code> 中对应的 <code>value</code>；若 <code>key</code> 不存在则保留原占位符，同时支持同一占位符多次出现。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">输入: <span class="hljs-attribute">template</span>=<span class="hljs-string">&quot;你违反了&#123;&#123;reason&#125;，被停止使用功能&#123;&#123;duration&#125;天&quot;</span>params=&#123;<span class="hljs-string">&quot;reason&quot;</span>:<span class="hljs-string">&quot;运营规则&quot;</span>，<span class="hljs-string">&quot;duration&quot;</span>: <span class="hljs-string">&quot;3&quot;</span>)<br><br>输出:<span class="hljs-string">&quot;你违反了运营规则，被停止使用功能3天”</span><br></code></pre></td></tr></table></figure>
+
+<p>追问：不用正则怎么做？扩展功能 如果方括号的大括号内容不存在 则全部移除 怎么实现？</p>
+</li>
+</ol>
+<p>2、实习拷打（50min）</p>
+<ol>
+<li>系统将自然语言规则转为脚本并通过笛卡尔积组合参数，当参数数量很多时，会出现 nⁿ级别的组合爆炸问题，如何解决？</li>
+<li>系统中使用虚拟线程处理逻辑，如果在虚拟线程中使用了同步原语（如锁）或者发起了公钥调用这类阻塞操作，会发生什么问题？</li>
+<li>项目中提到用<code>NOT EXISTS</code>原子 SQL 解决并发的静态问题，这里的具体业务背景是什么？解决了什么并发冲突？</li>
+<li>用例执行完成后，基于 MQ 的产业 APP 执行链路主要做什么？解决了什么核心问题？</li>
+<li>关于任务拆解粒度：如果将 MQ 任务粒度设置为单个测试用例，是否就能解决上述链路中的问题？这种设计有什么优缺点？</li>
+<li>分仓存储为什么最终选择了 ClickHouse？选型时对比过哪些其他组件？</li>
+<li>你认为这个项目中技术难度最大、最有挑战的是哪一块？</li>
+<li>你提到产出是客诉率下降 50%，这个指标是如何评估的？如何证明是你的系统带来的效果？</li>
+<li>如何通过事务消息 + 幂等校验来保证多系统数据最终一致性的？请展开说明具体实现流程。</li>
+<li>RocketMQ 是如何保证消息的可靠投递的？（从生产、存储、消费三个阶段说明）</li>
+<li>除了事务消息 + 幂等校验，你还了解哪些分布式事务的技术方案？</li>
+</ol>
+<p>3、一些八股（30min）</p>
+<ol>
+<li>进程、线程和协程的核心区别是什么？它们各自的适用场景是什么？</li>
+<li>操作系统的虚拟内存机制是什么？它解决了什么问题？</li>
+<li>你了解操作系统从开机到启动完成的完整过程吗？</li>
+<li>AIO 和 IO 多路复用有什么区别？你有没有手写过基于 epoll 的 IO 多路复用代码？</li>
+<li>计算机网络的五层架构分别是什么？每层的核心协议和作用是什么？</li>
+<li>从家里的计算机通过浏览器打开一个网页的完整流程是什么？请详细说明每一层的协议工作过程，以及如何找到外网 IP（DNS 解析流程）。</li>
+<li>数据库 ACID 四个特性的底层实现原理分别是什么？（以 MySQL 为例）</li>
+<li>你了解哪些分布式共识算法？Raft 算法中的任期（Term）概念有什么作用？如何评价 Raft 算法中新成员加入的机制？</li>
+<li>如果发现某一台线上服务器响应很慢，你会按照什么步骤和思路去排查定位问题？</li>
+<li>Redis 中键的过期时间是如何实现的？过期键的删除策略有哪些？</li>
+</ol>
+<h2 id="WXG二面"><a href="#WXG二面" class="headerlink" title="WXG二面"></a>WXG二面</h2><p>两个小时（实习+技术讨论+三道手撕）</p>
+<p>1、实习拷打</p>
+<ol>
+<li>测试用例执行系统为什么需要用到这么多组件？</li>
+<li>消费者拿到任务后卡死 &#x2F; 僵死，一直不手动返回 ACK，MQ 会不会被这个任务挂住？</li>
+<li>原消费者只是处理速度慢，在 MQ 将任务重发给另一个消费者后，原消费者处理完成并返回 ACK，这种情况如何处理？</li>
+<li>同一任务被消费者 A 和 B 同时处理，会不会导致下游重复执行，产生意外结果？</li>
+<li>涉及扣款、转账等幂等性敏感的数据库操作时，如何避免重复执行？</li>
+<li>全局唯一 ID 应该在哪个阶段产生？由谁分配？能否将 ID 生成和分配逻辑迁移到 MQ 内部调度器实现？</li>
+<li>若 ID 生成放在生产者端，每个生产者都要接入 SDK 会很重，有什么降低接入门槛的优化方案？</li>
+<li>了解哪些分布式全局唯一 ID 生成方案？</li>
+<li>大量测试用例同时结束，并发更新 MySQL 中的运行状态，会不会导致 QPS 过高、MySQL 执行失败？</li>
+<li>除了批量化和异步化，还有其他解决方案吗？</li>
+</ol>
+<p>2、MySQL</p>
+<ol>
+<li>MySQL 执行一条 update 语句的完整内部步骤是什么？</li>
+<li>MySQL 主从复制为什么采用拉模式而不是推模式？</li>
+<li>从机拉取 binlog 需要一直轮询吗？会不会产生性能问题？</li>
+<li>既然可以通过长连接通知从机有新 binlog，为什么不直接用这个长连接把 binlog 内容推送给从机？</li>
+<li>从设计角度，你认为主从复制最终应该采用推模式还是拉模式？你会怎么样的设计？</li>
+</ol>
+<p>3、ClickHouse</p>
+<ol>
+<li>ClickHouse 存储数据量极大，如何快速检索出指定数据或指定时间段的数据？</li>
+<li>有没有了解过 ClickHouse 底层的索引机制？</li>
+</ol>
+<p>4、C++ 基础</p>
+<ol>
+<li>指针和引用的概念及核心区别是什么？</li>
+<li>函数参数传指针和传引用，两种函数签名的设计意图有什么区别？</li>
+<li>析构函数可以定义成虚函数吗？为什么？</li>
+</ol>
+<p>5、操作系统</p>
+<ol>
+<li>多进程和多线程分别适用于什么业务场景？</li>
+<li>进程间通信有哪些常见方式？其中哪种通信方式速度最快？</li>
+</ol>
+<p>6、高性能网络 IO</p>
+<ol>
+<li>有没有用 epoll 等多路 IO 复用技术写过 TCP Server 之类的练手项目？</li>
+<li>异步 IO（AIO）为什么能实现高并发和高效率？除了异步化还有哪些核心特点？</li>
+<li>零拷贝技术的核心原理是什么？</li>
+</ol>
+<p>7、AI Agent和大模型安全</p>
+<ol>
+<li>日常主要使用哪个 IDE 结合 AI 工具写代码？</li>
+<li>Agent 目前有哪几种主流架构？（如 ReAct 模式等）</li>
+<li>你在携程做的 Agent 项目采用了哪种架构？</li>
+<li>大模型输入输出存在哪些安全问题？了解 Prompt 注入攻击吗？</li>
+<li>Prompt 注入有哪些常见的绕过方式？</li>
+</ol>
+<p>3、三道题目</p>
+<ol>
+<li><p>两个单向链表是否相交</p>
+</li>
+<li><p>重写string operator&#x3D;</p>
+</li>
+<li><p>计算所需船的最小数量，数组people记录每个人的体重，第!个人的体重为people[i]，每艘船可以承载的最大重量为limit。每艘船最多可同时载两人，但条件是这些人重量之和最多为limit。返回载到每一个人所需的最小船数。</p>
+<blockquote>
+<p>在写完之后也针对性问了一些问题，</p>
+<p>1、单向链表是否相交的循环会不会陷入死循环是吗？</p>
+<p>2、C++ 中数组 delete为什么不需要指定长度？你会在选择在什么样的位置记录这个数组的长度？如果你在头部记录长度的话，会不会说有这种情况啊？就是内存写越越界了，然后写把这个内数组头部的信息写乱了，会不会遇到这种情况？假设你来设计这个内存管理，你会采取什么样的措施啊？</p>
+<p>3、 while 循环的条件里面是需要包括等号吗？</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="WXG三面"><a href="#WXG三面" class="headerlink" title="WXG三面"></a>WXG三面</h2><p>30分钟（晚上九点半开始的，一直问的携程广告的内容）</p>
+<ol>
+<li>怎么评价搜推效果？什么是效果指标？</li>
+<li>如何保证搜推系统中召回结果的相关性？ 召回是推荐的基础，如果相关性控制不好，会导致推荐结果杂乱，严重影响用户体验。系统是如何解决推出来的东西足够相关这个问题的？</li>
+<li>系统是如何理解 Query 意图的？ 是直接通过 Query 词去猜语义？还是基于 Query 补全后的结果去猜？还是基于搜索 Query 之后的点击行为来推算？</li>
+<li>在搜推一体（推荐中台）项目中，你实际参与和负责的具体工作是什么？</li>
+<li>在解决诸如“广告 CPT 覆盖率不足”等问题时，是不是任何问题都可以通过简单的加召回、加排序量来解决？</li>
+<li>作为负责召回层后台的开发同学，如果抛开具体的 bug 排查，从长线来看，你如何对线上的召回能力做长期管控，以确保你提供的通用召回能力是有足够价值的？</li>
+<li>除你有没有主动观察过线上的指标？ 你会去评估自己做的事情的影响面吗？有没有关注到哪些比较有意思的指标或变化？</li>
+<li>详细描述一下“搜后跳出率”这个指标的具体含义和统计口径是什么？ 你们线上实际的跳出率是多少？</li>
+</ol>
+<h2 id="WXG-HR面"><a href="#WXG-HR面" class="headerlink" title="WXG HR面"></a>WXG HR面</h2><ol>
+<li>自我介绍</li>
+<li>本科 + 硕士是网络空间安全专业，为什么最终坚定选择<strong>后端开发</strong>作为职业方向？</li>
+<li>你学过前端、网安，为什么不选前端？放弃网络安全的核心原因是什么？</li>
+<li>有没有接触过算法 &#x2F; 搜广推？当初为什么没走算法方向？</li>
+<li>如果后续有机会，会不会转算法？还是坚持后端为主？更倾向哪类 AI 相关岗位？</li>
+<li>介绍一下你的个人博客，搭建契机、开始时间、主要内容是什么？</li>
+<li>博客更偏向技术分享还是个人日记？有没有哪篇内容深度最高、反馈最好？热门帖子是什么内容？为什么热度高、同学反馈怎么样？</li>
+<li>考研为什么选择xxxx？选择的考量是什么？</li>
+<li>考研整体发挥怎么样？是意料之内还是超出预期？考研期间投入精力、复试准备情况、最终排名如何？</li>
+<li>整个求学阶段里，考研是不是你压力最大的时刻？还有没有比考研压力更大的阶段？</li>
+<li>找暑期实习过程压力大吗？投递周期、面试挂岗主要原因是什么？</li>
+<li>多场终面挂掉，面试官给到的核心反馈是什么？</li>
+<li>之前实习导师对你的沟通、综合能力有什么评价？</li>
+<li>意识到自己沟通逻辑问题后，你做了哪些<strong>刻意训练和提升方法</strong>？</li>
+<li>从技术、性格、综合能力维度，自我评价<strong>满意的优点</strong>和<strong>不满意的短板</strong>分别是什么？</li>
+<li>面试之前有没有意识到自己沟通表达、抓重点的问题？面试受挫后有哪些反思？</li>
+<li>你性格信守承诺，是不是别人找帮忙都会全盘接受？你区分帮与不帮别人请求的<strong>标准和边界</strong>是什么？怎么评估事情难度、时间、自身能力？</li>
+<li>分享一段你职业生涯里<strong>最有成就感、困难最大、收获最多</strong>的经历？</li>
+<li>日常学习、科研、工作、生活中怎么使用 AI？AI 对你的占比有多高？</li>
+<li>实习中团队是否用 AI 辅助开发、理解业务、写代码？实际使用流程是怎样的？</li>
+<li>你觉得这个岗位、团队和你的职业规划是否匹配？</li>
+<li>这个岗位和团队对你最大的吸引点是什么？</li>
+<li>是否接受 base 广州长期发展？</li>
+<li>家里对你去互联网、去广州工作是什么态度？是否沟通过长期定居发展？</li>
+<li>父母从小到大对你性格、价值观最大的影响是什么？</li>
+<li>目前手上还有百度大模型相关 Offer，怎么在微信和百度之间做选择？</li>
+<li>怎么看待互联网工作强度、内卷节奏？自己是否能承受转正前的工作强度？</li>
+</ol>
 
                 
               
