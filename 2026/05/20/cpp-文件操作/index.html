@@ -1,0 +1,1048 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放 通过文本可以将数据持久化 C++对文件操作需要包含头文件 &lt;fstream&gt; 文件类型分为两种：1、文本文件：文件以文本的ASCII码形式存储在计算机2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂 操作文件的三大类：1、ofstream  写  output2、ifstream   读   in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cpp-文件操作">
+<meta property="og:url" content="https://yb0os1.github.io/2026/05/20/cpp-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放 通过文本可以将数据持久化 C++对文件操作需要包含头文件 &lt;fstream&gt; 文件类型分为两种：1、文本文件：文件以文本的ASCII码形式存储在计算机2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂 操作文件的三大类：1、ofstream  写  output2、ifstream   读   in">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar4.png">
+<meta property="article:published_time" content="2026-05-19T18:27:12.000Z">
+<meta property="article:modified_time" content="2026-05-19T18:32:49.128Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="cpp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar4.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>cpp-文件操作 - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="cpp-文件操作"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-05-20 02:27" pubdate>
+          2026年5月20日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">cpp-文件操作</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <p>程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放</p>
+<p>通过<strong>文本可以将数据持久化</strong></p>
+<p>C++对文件操作需要包含头文件<code> &lt;fstream&gt;</code></p>
+<p>文件类型分为两种：<br>1、文本文件：文件以文本的ASCII码形式存储在计算机<br>2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂</p>
+<p>操作文件的三大类：<br>1、ofstream  写  output<br>2、ifstream   读   input<br>3、fstream   读写</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c77aa132155220a428aad57948152e07.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h1 id="文本文件"><a href="#文本文件" class="headerlink" title="文本文件"></a>文本文件</h1><h2 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h2><p>步骤</p>
+<ol>
+<li>包含头文件 <code>&lt;fstream&gt;</code></li>
+<li>创建流对象   <code>ofstream ofs;</code></li>
+<li>打开文件  <code>ofs.open(&quot;文件路径&quot;,打开方式);</code></li>
+<li>写数据  <code>ofs&lt;&lt;&quot;写入数据&quot;;</code></li>
+<li>关闭文件  <code>ofs.close();</code></li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fstream&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">//    std::ofstream outfile(&quot;../data.txt&quot;);</span><br>    <span class="hljs-comment">//或者</span><br>    std::ofstream outfile;<br>    outfile.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../data.txt&quot;</span>,std::ios::out);<br>    <span class="hljs-comment">//实际开发要判断 is_open 打开文件是否成功</span><br>    <span class="hljs-type">int</span> data = <span class="hljs-number">42</span>;<br>    outfile &lt;&lt; <span class="hljs-string">&quot;Hello World!&quot;</span> &lt;&lt; std::endl;<br>    outfile &lt;&lt; data &lt;&lt; std::endl;<br>    outfile.<span class="hljs-built_in">close</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e7ad6cf69c7d1d46864ad88588fadba5.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>注意</strong>：文件打开方式可以配合使用，利用<code>|</code>操作符</p>
+<pre><code class="hljs">例如： 用二进制方式写文件  `ios::binary | ios::out`
+</code></pre>
+<h2 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h2><p>步骤</p>
+<ol>
+<li>包含头文件 <code>&lt;fstream&gt;</code></li>
+<li>创建流对象   <code>ifstream ifs;</code></li>
+<li>打开文件并判断文件是否打开成功  <code>ifs.open(&quot;文件路径&quot;,打开方式);</code></li>
+<li>读数据  四种方式读取</li>
+<li>关闭文件  <code>ifs.close();</code></li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp">  std::ifstream ifs;<br>    ifs.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../data.txt&quot;</span>,std::ios::in);<br><br>    <span class="hljs-comment">//是否打开成功</span><br>    <span class="hljs-keyword">if</span> (ifs.<span class="hljs-built_in">is_open</span>())&#123;<br>        <span class="hljs-comment">//读数据</span><br>        <span class="hljs-comment">//第一种</span><br><span class="hljs-comment">//        char buf[1024]=&#123;0&#125;;</span><br><span class="hljs-comment">//        while (ifs&gt;&gt;buf)&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;buf&lt;&lt;std::endl;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        <span class="hljs-comment">//第二种</span><br><span class="hljs-comment">//        char buf[1024] = &#123;0&#125;;</span><br><span class="hljs-comment">//        while (ifs.getline(buf,sizeof(buf)))&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;buf&lt;&lt;std::endl;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        <span class="hljs-comment">//第三种</span><br><span class="hljs-comment">//        std::string buf;</span><br><span class="hljs-comment">//        //第一个是文件流，第二个是存储的字符串</span><br><span class="hljs-comment">//        while (std::getline(ifs,buf))&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;buf&lt;&lt;std::endl;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        <span class="hljs-comment">//第四种  不推荐 是一个字符一个字符的读入</span><br><span class="hljs-comment">//        char c;</span><br><span class="hljs-comment">//        while ((c=ifs.get())!= EOF)&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;c;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        ifs.<span class="hljs-built_in">close</span>();<br>    &#125; <span class="hljs-keyword">else</span>&#123;<br>        std::cout&lt;&lt;<span class="hljs-string">&quot;open fail&quot;</span>&lt;&lt;std::endl;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="二进制文件"><a href="#二进制文件" class="headerlink" title="二进制文件"></a>二进制文件</h1><p>以二进制的方式对文件进行读写操作<br>打开方式要是 ios::binary</p>
+<h2 id="写文件-1"><a href="#写文件-1" class="headerlink" title="写文件"></a>写文件</h2><p>二进制方式写文件主要利用流对象调用成员函数write</p>
+<p>函数原型：<code>ostream &amp;write(const char *buffer,int len)</code></p>
+<p>参数解释：字符指针buffer指向内存中一段存储空间，len是读写的字节数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::ofstream ofs;<br>ofs.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../person.txt&quot;</span>,std::ios::out|std::ios::binary);<br><br>Person p = &#123;<span class="hljs-string">&quot;duyun&quot;</span>,<span class="hljs-number">20</span>&#125;;<br><span class="hljs-comment">//强制类型转化      长度</span><br>ofs.<span class="hljs-built_in">write</span>((<span class="hljs-type">const</span> <span class="hljs-type">char</span>*)&amp;p, <span class="hljs-built_in">sizeof</span>(Person));<br><br>ofs.<span class="hljs-built_in">close</span>();<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="读文件-1"><a href="#读文件-1" class="headerlink" title="读文件"></a>读文件</h2><p>进制方式读文件主要利用流对象调用成员函数read</p>
+<p>函数原型:：<code>istream&amp; read(char *buffer,int len)</code>;</p>
+<p>参数解释：字符指针buffer指向内存中一段存储空间。len是读写的字节数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::ifstream ifs;<br>ifs.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../person.txt&quot;</span>,std::ios::in|std::ios::binary);<br>Person p;<br><span class="hljs-keyword">if</span> (ifs.<span class="hljs-built_in">is_open</span>())&#123;<br>    ifs.<span class="hljs-built_in">read</span>((<span class="hljs-type">char</span> *)&amp;p, <span class="hljs-built_in">sizeof</span>(Person));<br>    std::cout&lt;&lt;p.name&lt;&lt;p.age&lt;&lt;std::endl;<br>    ifs.<span class="hljs-built_in">close</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="文件位置指针"><a href="#文件位置指针" class="headerlink" title="文件位置指针"></a>文件位置指针</h1><p>对文件进行读&#x2F;写操作时，文件的位置指针指向当前文件读&#x2F;写的位置。<br>不管用哪个类操作文件，文件的位置指针只有一个</p>
+<h2 id="获取文件位置指针"><a href="#获取文件位置指针" class="headerlink" title="获取文件位置指针"></a>获取文件位置指针</h2><p><code>ofstream</code>：<code>tellp()</code>  </p>
+<p><code>ifstream</code>：<code>tellg()</code> </p>
+<p><code>fstream</code>：有两个函数，但是获取的文件位置指针地址是一样的</p>
+<h2 id="移动文件位置指针"><a href="#移动文件位置指针" class="headerlink" title="移动文件位置指针"></a>移动文件位置指针</h2><p><code>ofstream</code> 类的函数是 <code>seekp()</code>;<br><code>ifstream</code> 类的函数是 <code>seekg()</code>;<br>fstream 类两个都有，效果相同<br><img src="https://i-blog.csdnimg.cn/blog_migrate/2424a3d9282a3de0c67062de444a93c0.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/blog_migrate/6eea3c6636ad4f9815ceee3bbf42e493.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h1 id="缓冲区和流状态"><a href="#缓冲区和流状态" class="headerlink" title="缓冲区和流状态"></a>缓冲区和流状态</h1><h2 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h2><p>缓冲区可以减少磁盘读写的次数，提高读写的效率</p>
+<p>在C++中，每打开一个文件系统就会分配一个缓冲区。<strong>不同的流，缓冲区是独立的</strong></p>
+<p>程序员只关心<strong>输出缓冲区</strong>就可以<br>（输出、输入是针对程序而言的）</p>
+<p>在缺省模式下，输出缓冲区中的数据满了才把数据写入磁盘，但是缺省模式不一定满足业务，可以进行<strong>操作输出缓冲区</strong></p>
+<ul>
+<li><code>flush()</code>：刷新缓冲区，直接写入磁盘</li>
+<li><code>endl</code>：换行，并且刷新缓冲区</li>
+<li><code>unitbuf</code>：设置输出流，在每次操作之后自动刷新缓冲区 <code>ofs&lt;&lt;unitbuf</code></li>
+<li><code>nounitbuf</code>：设置输出流，让输出流回到缺省模式<code>ofs&lt;&lt;nounitbuf</code><br><img src="https://i-blog.csdnimg.cn/blog_migrate/358ccc481321f4bc88a230ea10d25908.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></li>
+</ul>
+<h2 id="流状态"><a href="#流状态" class="headerlink" title="流状态"></a>流状态</h2><p>流状态有三个：eofbit、badbit、failbit  取值为1&#x2F;0</p>
+<p><strong>当三个流状态全为0，表示一切顺利，good成员函数返回true</strong></p>
+<p> 1）eofbit<br>当输入流操作到达文件末尾时，将设置eofbit为1</p>
+<p>eof()检查流eofbit</p>
+<p>2）badbit<br>无法诊断的失败破坏流时，将设置 badbit。<br>(例如:对输入流进行写入;磁盘没有剩余空间)<br>bad()成员函数检查流是否设置了 badbit</p>
+<p>3）failbit<br>当输入流操作未能读取预期的字符时，将设置failbit(非致命错误，可挽回，一般是软件错误，例想读取一个整数，但内容是一个字符串;文件到了未尾)I&#x2F;0 失败也可能设置 failbit<br>fail()成员函数检查流是否设置了 failbit</p>
+
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/cpp/" class="category-chain-item">cpp</a>
+  
+  
+    <span>></span>
+    
+  <a href="/cpp/basics/" class="category-chain-item">basics</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/cpp/" class="print-no-link">#cpp</a>
+      
+    </div>
+  
+</div>
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>cpp-文件操作</div>
+      <div>https://yb0os1.github.io/2026/05/20/cpp-文件操作/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年5月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/05/20/cpp-STL/" title="cpp-STL">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">cpp-STL</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/05/20/cpp-%E6%A8%A1%E6%9D%BF/" title="cpp-模板">
+                        <span class="hidden-mobile">cpp-模板</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+      // 🔥 精准偏移（无冲突，不卡顿）
+      scrollSmoothOffset : -20
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
