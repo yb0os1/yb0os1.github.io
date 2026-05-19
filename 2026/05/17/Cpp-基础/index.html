@@ -21,14 +21,14 @@
   
     <meta name="description" content="语言基础C&#x2F;C++基础 命名空间定义namespace是单独的作用域 两者不会相互干涉 1234567891011121314151617181920namespace 名字&#123;&#x2F;&#x2F;变量 函数 等等&#125;eg：namespace nameA &#123;	int num;	void func() &#123;		cout &lt;&lt; &quot;nameA&quot;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cpp-基础">
-<meta property="og:url" content="https://yb0os1.github.io/2026/05/17/Cpp-%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="cpp-基础">
+<meta property="og:url" content="https://yb0os1.github.io/2026/05/17/cpp-%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="yb0os1">
 <meta property="og:description" content="语言基础C&#x2F;C++基础 命名空间定义namespace是单独的作用域 两者不会相互干涉 1234567891011121314151617181920namespace 名字&#123;&#x2F;&#x2F;变量 函数 等等&#125;eg：namespace nameA &#123;	int num;	void func() &#123;		cout &lt;&lt; &quot;nameA&quot;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar35.png">
 <meta property="article:published_time" content="2026-05-17T05:35:36.000Z">
-<meta property="article:modified_time" content="2026-05-18T06:07:14.454Z">
+<meta property="article:modified_time" content="2026-05-19T02:55:37.935Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="cpp">
 <meta name="twitter:card" content="summary_large_image">
@@ -38,7 +38,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Cpp-基础 - yb0os1</title>
+  <title>cpp-基础 - yb0os1</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -479,7 +479,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Cpp-基础"></span>
+            <span id="subtitle" data-typed-text="cpp-基础"></span>
           
         </div>
 
@@ -563,7 +563,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Cpp-基础</h1>
+            <h1 id="seo-header">cpp-基础</h1>
             
             
             <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
@@ -708,7 +708,6 @@
 <h2 id="修饰函数返回值"><a href="#修饰函数返回值" class="headerlink" title="修饰函数返回值"></a>修饰函数返回值</h2><p>用的不多，含义和const修饰指针和普通变量的含义基本相同</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//返回值为基本变量</span><br><span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">int</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-type">int</span> x = <span class="hljs-number">100</span>;<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br><br><span class="hljs-comment">//返回值是对象</span><br><span class="hljs-function"><span class="hljs-type">const</span> Y <span class="hljs-title">funY</span><span class="hljs-params">()</span></span>&#123;<br>    Y y;<br>    <span class="hljs-keyword">return</span> y;<br>&#125;<br><br><span class="hljs-comment">//返回值为指针类型</span><br><span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span> *<span class="hljs-title">func4</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-comment">//之所以用const修饰 是希望调用函数的用户不能够修改这个函数体内在堆上申请的空间中的内容</span><br>    <span class="hljs-comment">//返回栈上的地址是无意义的，栈空间在函数调用后会被系统自动回收的</span><br>    <span class="hljs-type">char</span> *p = <span class="hljs-keyword">new</span> <span class="hljs-type">char</span> [<span class="hljs-number">10</span>];<br>    <span class="hljs-built_in">strcpy</span>(p,<span class="hljs-string">&quot;hello&quot;</span>);<br>    <span class="hljs-keyword">return</span> p;<br>&#125;<br><br><span class="hljs-comment">//返回值为对象的引用</span><br><span class="hljs-function"><span class="hljs-type">const</span> Y &amp;<span class="hljs-title">fun5</span><span class="hljs-params">(Y &amp;t)</span></span>&#123;<br>    <span class="hljs-keyword">return</span> t;<br>&#125;<br><br><br>    <span class="hljs-comment">//返回值为基本变量时 使用const修饰无作用</span><br>    <span class="hljs-type">int</span> x = <span class="hljs-built_in">fun</span>(); <span class="hljs-comment">// a=b 即int=const int 不能通过a将b的值修改，所以即使b为const也无作用</span><br>    <span class="hljs-comment">//等价 const int x = fun();</span><br>    std::cout&lt;&lt;x&lt;&lt;std::endl;<br><br>    <span class="hljs-comment">//返回值是对象  使用const修饰无作用  不会通过左值修改右值</span><br>    Y y = <span class="hljs-built_in">funY</span>();<br>    <span class="hljs-comment">//等价 const Y y = funY();</span><br><br>    <span class="hljs-comment">//返回值是指针类型 必须使用 const char * 来接受</span><br>    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *p = <span class="hljs-built_in">func4</span>(); <span class="hljs-comment">//char*=const char*是错误的</span><br><br>    <span class="hljs-comment">//返回值是引用</span><br>    Y yy= <span class="hljs-built_in">fun5</span>(y);<br>    <span class="hljs-comment">//等价 const Y yy= fun5(y);</span><br><br>    <span class="hljs-type">const</span> Y &amp;i = <span class="hljs-built_in">fun5</span>(y); <span class="hljs-comment">// 必须加const</span><br><br></code></pre></td></tr></table></figure>
 
-
                 
               
             </div>
@@ -760,8 +759,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Cpp-基础</div>
-      <div>https://yb0os1.github.io/2026/05/17/Cpp-基础/</div>
+      <div>cpp-基础</div>
+      <div>https://yb0os1.github.io/2026/05/17/cpp-基础/</div>
     </div>
     <div class="license-meta">
       
@@ -803,6 +802,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2026/05/19/cpp-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1/" title="cpp-类和对象">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">cpp-类和对象</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
