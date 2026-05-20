@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放 通过文本可以将数据持久化 C++对文件操作需要包含头文件 &lt;fstream&gt; 文件类型分为两种：1、文本文件：文件以文本的ASCII码形式存储在计算机2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂 操作文件的三大类：1、ofstream  写  output2、ifstream   读   in">
+    <meta name="description" content="程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放 通过文本可以将数据持久化 C++对文件操作需要包含头文件 &lt;fstream&gt; 文件类型分为两种： 1、文本文件：文件以文本的ASCII码形式存储在计算机 2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂 操作文件的三大类： 1、ofstream  写  output 2、ifstream   读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cpp-文件操作">
 <meta property="og:url" content="https://yb0os1.github.io/2026/05/20/cpp-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放 通过文本可以将数据持久化 C++对文件操作需要包含头文件 &lt;fstream&gt; 文件类型分为两种：1、文本文件：文件以文本的ASCII码形式存储在计算机2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂 操作文件的三大类：1、ofstream  写  output2、ifstream   读   in">
+<meta property="og:description" content="程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放 通过文本可以将数据持久化 C++对文件操作需要包含头文件 &lt;fstream&gt; 文件类型分为两种： 1、文本文件：文件以文本的ASCII码形式存储在计算机 2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂 操作文件的三大类： 1、ofstream  写  output 2、ifstream   读">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar4.png">
 <meta property="article:published_time" content="2026-05-19T18:27:12.000Z">
-<meta property="article:modified_time" content="2026-05-19T18:32:49.128Z">
+<meta property="article:modified_time" content="2026-05-20T04:31:57.509Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="cpp">
 <meta name="twitter:card" content="summary_large_image">
@@ -573,10 +573,17 @@
                 <p>程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放</p>
 <p>通过<strong>文本可以将数据持久化</strong></p>
 <p>C++对文件操作需要包含头文件<code> &lt;fstream&gt;</code></p>
-<p>文件类型分为两种：<br>1、文本文件：文件以文本的ASCII码形式存储在计算机<br>2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂</p>
-<p>操作文件的三大类：<br>1、ofstream  写  output<br>2、ifstream   读   input<br>3、fstream   读写</p>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c77aa132155220a428aad57948152e07.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
-<h1 id="文本文件"><a href="#文本文件" class="headerlink" title="文本文件"></a>文本文件</h1><h2 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h2><p>步骤</p>
+<p>文件类型分为两种：<br>
+1、文本文件：文件以文本的ASCII码形式存储在计算机<br>
+2、二进制文件：文件以文本的二进制形式存储在计算机中，用户一般不能直接读懂</p>
+<p>操作文件的三大类：<br>
+1、ofstream  写  output<br>
+2、ifstream   读   input<br>
+3、fstream   读写</p>
+<p><img src="../../../../img/article_img/image-20260520123028149.png" srcset="/img/loading.gif" lazyload alt="文件操作"></p>
+<h1>文本文件</h1>
+<h2 id="写文件">写文件</h2>
+<p>步骤</p>
 <ol>
 <li>包含头文件 <code>&lt;fstream&gt;</code></li>
 <li>创建流对象   <code>ofstream ofs;</code></li>
@@ -585,11 +592,12 @@
 <li>关闭文件  <code>ofs.close();</code></li>
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fstream&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">//    std::ofstream outfile(&quot;../data.txt&quot;);</span><br>    <span class="hljs-comment">//或者</span><br>    std::ofstream outfile;<br>    outfile.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../data.txt&quot;</span>,std::ios::out);<br>    <span class="hljs-comment">//实际开发要判断 is_open 打开文件是否成功</span><br>    <span class="hljs-type">int</span> data = <span class="hljs-number">42</span>;<br>    outfile &lt;&lt; <span class="hljs-string">&quot;Hello World!&quot;</span> &lt;&lt; std::endl;<br>    outfile &lt;&lt; data &lt;&lt; std::endl;<br>    outfile.<span class="hljs-built_in">close</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e7ad6cf69c7d1d46864ad88588fadba5.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>注意</strong>：文件打开方式可以配合使用，利用<code>|</code>操作符</p>
+<p><img src="../../../../img/article_img/image-20260520123045873.png" srcset="/img/loading.gif" lazyload alt="文件操作符"><br>
+<strong>注意</strong>：文件打开方式可以配合使用，利用<code>|</code>操作符</p>
 <pre><code class="hljs">例如： 用二进制方式写文件  `ios::binary | ios::out`
 </code></pre>
-<h2 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h2><p>步骤</p>
+<h2 id="读文件">读文件</h2>
+<p>步骤</p>
 <ol>
 <li>包含头文件 <code>&lt;fstream&gt;</code></li>
 <li>创建流对象   <code>ifstream ifs;</code></li>
@@ -598,40 +606,58 @@
 <li>关闭文件  <code>ifs.close();</code></li>
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp">  std::ifstream ifs;<br>    ifs.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../data.txt&quot;</span>,std::ios::in);<br><br>    <span class="hljs-comment">//是否打开成功</span><br>    <span class="hljs-keyword">if</span> (ifs.<span class="hljs-built_in">is_open</span>())&#123;<br>        <span class="hljs-comment">//读数据</span><br>        <span class="hljs-comment">//第一种</span><br><span class="hljs-comment">//        char buf[1024]=&#123;0&#125;;</span><br><span class="hljs-comment">//        while (ifs&gt;&gt;buf)&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;buf&lt;&lt;std::endl;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        <span class="hljs-comment">//第二种</span><br><span class="hljs-comment">//        char buf[1024] = &#123;0&#125;;</span><br><span class="hljs-comment">//        while (ifs.getline(buf,sizeof(buf)))&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;buf&lt;&lt;std::endl;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        <span class="hljs-comment">//第三种</span><br><span class="hljs-comment">//        std::string buf;</span><br><span class="hljs-comment">//        //第一个是文件流，第二个是存储的字符串</span><br><span class="hljs-comment">//        while (std::getline(ifs,buf))&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;buf&lt;&lt;std::endl;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        <span class="hljs-comment">//第四种  不推荐 是一个字符一个字符的读入</span><br><span class="hljs-comment">//        char c;</span><br><span class="hljs-comment">//        while ((c=ifs.get())!= EOF)&#123;</span><br><span class="hljs-comment">//            std::cout&lt;&lt;c;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        ifs.<span class="hljs-built_in">close</span>();<br>    &#125; <span class="hljs-keyword">else</span>&#123;<br>        std::cout&lt;&lt;<span class="hljs-string">&quot;open fail&quot;</span>&lt;&lt;std::endl;<br>    &#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="二进制文件"><a href="#二进制文件" class="headerlink" title="二进制文件"></a>二进制文件</h1><p>以二进制的方式对文件进行读写操作<br>打开方式要是 ios::binary</p>
-<h2 id="写文件-1"><a href="#写文件-1" class="headerlink" title="写文件"></a>写文件</h2><p>二进制方式写文件主要利用流对象调用成员函数write</p>
+<h1>二进制文件</h1>
+<p>以二进制的方式对文件进行读写操作<br>
+打开方式要是 ios::binary</p>
+<h2 id="写文件-2">写文件</h2>
+<p>二进制方式写文件主要利用流对象调用成员函数write</p>
 <p>函数原型：<code>ostream &amp;write(const char *buffer,int len)</code></p>
 <p>参数解释：字符指针buffer指向内存中一段存储空间，len是读写的字节数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::ofstream ofs;<br>ofs.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../person.txt&quot;</span>,std::ios::out|std::ios::binary);<br><br>Person p = &#123;<span class="hljs-string">&quot;duyun&quot;</span>,<span class="hljs-number">20</span>&#125;;<br><span class="hljs-comment">//强制类型转化      长度</span><br>ofs.<span class="hljs-built_in">write</span>((<span class="hljs-type">const</span> <span class="hljs-type">char</span>*)&amp;p, <span class="hljs-built_in">sizeof</span>(Person));<br><br>ofs.<span class="hljs-built_in">close</span>();<br></code></pre></td></tr></table></figure>
-
-
-<h2 id="读文件-1"><a href="#读文件-1" class="headerlink" title="读文件"></a>读文件</h2><p>进制方式读文件主要利用流对象调用成员函数read</p>
+<h2 id="读文件-2">读文件</h2>
+<p>进制方式读文件主要利用流对象调用成员函数read</p>
 <p>函数原型:：<code>istream&amp; read(char *buffer,int len)</code>;</p>
 <p>参数解释：字符指针buffer指向内存中一段存储空间。len是读写的字节数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::ifstream ifs;<br>ifs.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;../person.txt&quot;</span>,std::ios::in|std::ios::binary);<br>Person p;<br><span class="hljs-keyword">if</span> (ifs.<span class="hljs-built_in">is_open</span>())&#123;<br>    ifs.<span class="hljs-built_in">read</span>((<span class="hljs-type">char</span> *)&amp;p, <span class="hljs-built_in">sizeof</span>(Person));<br>    std::cout&lt;&lt;p.name&lt;&lt;p.age&lt;&lt;std::endl;<br>    ifs.<span class="hljs-built_in">close</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="文件位置指针"><a href="#文件位置指针" class="headerlink" title="文件位置指针"></a>文件位置指针</h1><p>对文件进行读&#x2F;写操作时，文件的位置指针指向当前文件读&#x2F;写的位置。<br>不管用哪个类操作文件，文件的位置指针只有一个</p>
-<h2 id="获取文件位置指针"><a href="#获取文件位置指针" class="headerlink" title="获取文件位置指针"></a>获取文件位置指针</h2><p><code>ofstream</code>：<code>tellp()</code>  </p>
-<p><code>ifstream</code>：<code>tellg()</code> </p>
+<h1>文件位置指针</h1>
+<p>对文件进行读/写操作时，文件的位置指针指向当前文件读/写的位置。<br>
+不管用哪个类操作文件，文件的位置指针只有一个</p>
+<h2 id="获取文件位置指针">获取文件位置指针</h2>
+<p><code>ofstream</code>：<code>tellp()</code></p>
+<p><code>ifstream</code>：<code>tellg()</code></p>
 <p><code>fstream</code>：有两个函数，但是获取的文件位置指针地址是一样的</p>
-<h2 id="移动文件位置指针"><a href="#移动文件位置指针" class="headerlink" title="移动文件位置指针"></a>移动文件位置指针</h2><p><code>ofstream</code> 类的函数是 <code>seekp()</code>;<br><code>ifstream</code> 类的函数是 <code>seekg()</code>;<br>fstream 类两个都有，效果相同<br><img src="https://i-blog.csdnimg.cn/blog_migrate/2424a3d9282a3de0c67062de444a93c0.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/blog_migrate/6eea3c6636ad4f9815ceee3bbf42e493.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
-<h1 id="缓冲区和流状态"><a href="#缓冲区和流状态" class="headerlink" title="缓冲区和流状态"></a>缓冲区和流状态</h1><h2 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h2><p>缓冲区可以减少磁盘读写的次数，提高读写的效率</p>
+<h2 id="移动文件位置指针">移动文件位置指针</h2>
+<p><code>ofstream</code> 类的函数是 <code>seekp()</code>;<br>
+<code>ifstream</code> 类的函数是 <code>seekg()</code>;<br>
+fstream 类两个都有，效果相同<br>
+<img src="../../../../img/article_img/image-20260520123113095.png" srcset="/img/loading.gif" lazyload alt="文件指针移动函数"></p>
+<h1>缓冲区和流状态</h1>
+<h2 id="缓冲区">缓冲区</h2>
+<p>缓冲区可以减少磁盘读写的次数，提高读写的效率</p>
 <p>在C++中，每打开一个文件系统就会分配一个缓冲区。<strong>不同的流，缓冲区是独立的</strong></p>
-<p>程序员只关心<strong>输出缓冲区</strong>就可以<br>（输出、输入是针对程序而言的）</p>
+<p>程序员只关心<strong>输出缓冲区</strong>就可以<br>
+（输出、输入是针对程序而言的）</p>
 <p>在缺省模式下，输出缓冲区中的数据满了才把数据写入磁盘，但是缺省模式不一定满足业务，可以进行<strong>操作输出缓冲区</strong></p>
 <ul>
 <li><code>flush()</code>：刷新缓冲区，直接写入磁盘</li>
 <li><code>endl</code>：换行，并且刷新缓冲区</li>
 <li><code>unitbuf</code>：设置输出流，在每次操作之后自动刷新缓冲区 <code>ofs&lt;&lt;unitbuf</code></li>
-<li><code>nounitbuf</code>：设置输出流，让输出流回到缺省模式<code>ofs&lt;&lt;nounitbuf</code><br><img src="https://i-blog.csdnimg.cn/blog_migrate/358ccc481321f4bc88a230ea10d25908.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></li>
+<li><code>nounitbuf</code>：设置输出流，让输出流回到缺省模式<code>ofs&lt;&lt;nounitbuf</code><br>
+<img src="../../../../img/article_img/image-20260520123128350.png" srcset="/img/loading.gif" lazyload alt="缓冲区"></li>
 </ul>
-<h2 id="流状态"><a href="#流状态" class="headerlink" title="流状态"></a>流状态</h2><p>流状态有三个：eofbit、badbit、failbit  取值为1&#x2F;0</p>
+<h2 id="流状态">流状态</h2>
+<p>流状态有三个：eofbit、badbit、failbit  取值为1/0</p>
 <p><strong>当三个流状态全为0，表示一切顺利，good成员函数返回true</strong></p>
-<p> 1）eofbit<br>当输入流操作到达文件末尾时，将设置eofbit为1</p>
+<p>1）eofbit<br>
+当输入流操作到达文件末尾时，将设置eofbit为1</p>
 <p>eof()检查流eofbit</p>
-<p>2）badbit<br>无法诊断的失败破坏流时，将设置 badbit。<br>(例如:对输入流进行写入;磁盘没有剩余空间)<br>bad()成员函数检查流是否设置了 badbit</p>
-<p>3）failbit<br>当输入流操作未能读取预期的字符时，将设置failbit(非致命错误，可挽回，一般是软件错误，例想读取一个整数，但内容是一个字符串;文件到了未尾)I&#x2F;0 失败也可能设置 failbit<br>fail()成员函数检查流是否设置了 failbit</p>
+<p>2）badbit<br>
+无法诊断的失败破坏流时，将设置 badbit。<br>
+(例如:对输入流进行写入;磁盘没有剩余空间)<br>
+bad()成员函数检查流是否设置了 badbit</p>
+<p>3）failbit<br>
+当输入流操作未能读取预期的字符时，将设置failbit(非致命错误，可挽回，一般是软件错误，例想读取一个整数，但内容是一个字符串;文件到了未尾)I/0 失败也可能设置 failbit<br>
+fail()成员函数检查流是否设置了 failbit</p>
 
                 
               
