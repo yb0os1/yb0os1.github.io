@@ -1,0 +1,1149 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="腾讯推荐策略运营 Agent 面试口述稿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="腾讯实习面试整理">
+<meta property="og:url" content="https://yb0os1.github.io/2026/09/16/%E8%85%BE%E8%AE%AF%E5%AE%9E%E4%B9%A0%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="腾讯推荐策略运营 Agent 面试口述稿">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-09-16T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-17T05:33:45.522Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="实习">
+<meta property="article:tag" content="腾讯">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>腾讯实习面试整理 - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="腾讯实习面试整理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-16 10:00" pubdate>
+          2026年9月16日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          14k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          113 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">腾讯实习面试整理</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <h1 id="腾讯实习项目面试口述稿"><a href="#腾讯实习项目面试口述稿" class="headerlink" title="腾讯实习项目面试口述稿"></a>腾讯实习项目面试口述稿</h1><blockquote>
+<p>这份文档按真实面试对话整理。正文中的“候选人”部分可以直接练习口述，不需要在面试时把所有内容一次讲完。第一轮先说主回答，面试官追问后再展开对应内容。</p>
+</blockquote>
+<h2 id="一、请你介绍一下在腾讯实习做的项目"><a href="#一、请你介绍一下在腾讯实习做的项目" class="headerlink" title="一、请你介绍一下在腾讯实习做的项目"></a>一、请你介绍一下在腾讯实习做的项目</h2><h3 id="面试官：介绍一下你在腾讯实习期间做的项目"><a href="#面试官：介绍一下你在腾讯实习期间做的项目" class="headerlink" title="面试官：介绍一下你在腾讯实习期间做的项目"></a>面试官：介绍一下你在腾讯实习期间做的项目</h3><p><strong>候选人：</strong></p>
+<p>我是在腾讯微信事业群开放平台部实习，岗位是 C++ 后端，所在团队主要负责公众号推荐后台。我们的业务覆盖公众号内容从作者发文到用户消费的推荐链路，包括内容风控、推荐池管理、召回后的过滤干预、精排下发，以及助推、加热等商业化流量产品。</p>
+<p>我实习期间最核心的项目，是一个推荐策略运营自动化 Agent。这个项目服务于公众号推荐策略运营系统。简单来说，一篇公众号文章能不能进入推荐池、进入哪个推荐池，不是由一段固定代码直接决定的，而是由大量标签、策略表达式和 YAML 配置共同决定的。比如一篇文章可能因为封面二维码、外部导流、有害内容审核结论或者账号红线被过滤，也可能因为满足某个垂类内容条件而进入对应子池。</p>
+<p>这套策略系统经过多年迭代以后，推荐池、策略和标签的规模都比较大。原来的运营方式有四个明显问题。第一个问题是重复劳动多，同一个需求可能要修改很多条策略；第二个问题是影响面不透明，一个标签可能同时被推荐池、助推、打散或者折叠等能力引用，人工翻配置很容易漏；第三个问题是历史知识没有真正沉淀，过去的迭代通常只留下需求单和最终配置，但是为什么这样改、踩过什么坑、哪些边界不能动，很多都留在个人记忆里；第四个问题是线上出现异常后，开发需要跨监控、日志、配置和归因系统手工拼线索，单篇内容的归因平均可能需要半小时。</p>
+<p>所以我们希望用 Agent 把“需求理解、配置修改、校验、测试、上线、归因和经验沉淀”这条链路串起来。但我一开始就没有把它设计成一个可以直接改线上配置的聊天机器人，因为推荐策略一旦改错，可能造成该拦的内容没有拦住，或者正常内容被大面积误伤，影响的是实际推荐流量。我的设计思路是让大模型负责理解、生成和编排，把确定性校验、权限控制和最终上线决定交给工具和人。</p>
+<p>整个流程可以概括成七步。第一步，主 Agent 先把用户需求结构化，明确目标是什么、影响哪些内容池、涉及哪些标签、预期效果是什么；第二步，它通过 MCP 工具拉取当前线上配置、标签定义和历史经验，只有拿到证据以后才允许生成修改方案，信息不足时必须反问；第三步，人工确认方案后，主 Agent 才修改 Beta 配置；第四步，校验 Agent 做 AST、YAML 结构、标签引用、血缘关系和作用域检查；第五步，Case 测试 Agent 生成正向和反向 Case，并真正拉起策略引擎验证；第六步，Review Agent 根据配置 Diff、校验报告和测试结果，预审影响面、风险和回滚方案；第七步，上线仍然由人确认，上线后再做效果观察、问题归因和经验归档。</p>
+<p>架构上一共是 6 个 Agent，也就是 1 个主 Agent 加 5 个单职责子 Agent。主 Agent 负责需求澄清、流程调度、状态维护和结果汇总；5 个子 Agent 分别负责静态校验、动态 Case 测试、风险 Review、Spec 同步和归档门禁。子 Agent 之间不直接通信，所有结果都回到主 Agent，形成星型拓扑。这样做的原因是早期单 Agent 同时承担所有职责时，上下文里会混入大量不相关知识，而且同一个 Agent 写完配置后再审核自己，容易受自我一致性影响，真正的问题反而不容易被发现。</p>
+<p>为了让长任务可以恢复，我把任务状态从模型上下文中外置出来。<code>runtime.json</code> 保存当前处于哪个阶段、执行到哪一步、写锁和心跳等机器可读状态；<code>handoff.md</code> 保存这次变更的目标、已经完成的工作、关键决策、失败原因和待办事项。即使会话压缩或者主 Agent 重启，新会话也可以读取这两个文件，从断点继续执行。</p>
+<p>项目效果方面，单篇内容的归因从原来大约 30 分钟缩短到 5 分钟以内，批量策略修改从原来的半天到两天，缩短到大约两小时。这里我会主动说明，这些数字是典型 Case 的工序耗时对比，不是严格的线上 A&#x2F;B 实验，而且效率提升中工具化的贡献很大，不能全部归功于大模型。对我来说，这个项目最大的收获也不是简单调用了一个模型，而是理解了 Agent 真正落地需要状态机、上下文工程、确定性校验、权限门禁和可观测性共同配合。</p>
+<h3 id="面试官：这个项目里你个人主要负责什么？"><a href="#面试官：这个项目里你个人主要负责什么？" class="headerlink" title="面试官：这个项目里你个人主要负责什么？"></a>面试官：这个项目里你个人主要负责什么？</h3><p><strong>候选人：</strong></p>
+<p>我主要参与了这套 Agent 工作流的设计和落地，自己投入比较多的部分有三点吧。第一块是主 Agent 和子 Agent 的职责拆分、调度流程以及跨会话状态管理；第二块是上下文管理，包括知识分层、按角色加载、短期记忆和长期记忆；第三块是校验和安全门禁，把模型生成的配置放到 AST、结构、血缘、Case 和现网抽样这些确定性检查后面；第四块是 Agent Trace 和失败回放，用来定位模型为什么选错规则或者在哪一步丢了状态。</p>
+<p>推荐策略系统本身已有一定基础，包括 YAML 配置、策略表达式和部分内部工具。我做的并不是从零重新开发整套推荐系统，而是在现有配置体系和工具能力上，把原来分散、依赖人工串联的流程组织成一个可恢复、可审计的 Agent 工作流。面试时我会把现有能力、团队协作部分和我负责的工作分开说明，不会把所有东西都包装成自己独立完成。</p>
+<h3 id="面试官：推荐策略运营系统具体是什么？能举一个例子吗？"><a href="#面试官：推荐策略运营系统具体是什么？能举一个例子吗？" class="headerlink" title="面试官：推荐策略运营系统具体是什么？能举一个例子吗？"></a>面试官：推荐策略运营系统具体是什么？能举一个例子吗？</h3><p><strong>候选人：</strong></p>
+<p>这套系统本质上是公众号推荐链路上的配置化准入和过滤中枢，可以分成表达式、策略和内容池三层。</p>
+<p>最底层是表达式，也就是对业务标签的布尔判断，例如文章是否包含外部导流、封面是否存在二维码、是否命中有害信息审核结论。中间是策略层，把这些表达式组合成不同的准入逻辑，比如 <code>filter</code> 表示命中就过滤，<code>pass</code> 表示必须满足条件才能通过，<code>any_pass</code> 表示满足任意一条即可准入。最上层是内容池层，每条业务线会有自己的主池和子池，子池可以继承主池的通用策略，再声明少量差异化规则。</p>
+<p>比如小说内容本身就可能包含悬疑、冲突和较强情绪，如果完全沿用普通文章的账号红线，可能会误伤正常小说。所以小说池可以继承文章主池的大部分安全规则，但是把普通文章红线替换成小说专用红线，同时增加小说适宜性模型判断。这个例子能体现为什么系统需要主池、子池和继承机制，也能体现一次看似简单的标签修改，实际上可能影响多个内容池和上下游能力，所以需要血缘分析和自动化校验。</p>
+<h3 id="面试官：为什么要用-Agent，普通的工作流系统不行吗？"><a href="#面试官：为什么要用-Agent，普通的工作流系统不行吗？" class="headerlink" title="面试官：为什么要用 Agent，普通的工作流系统不行吗？"></a>面试官：为什么要用 Agent，普通的工作流系统不行吗？</h3><p><strong>候选人：</strong></p>
+<p>如果需求输入完全结构化、每一步都是固定分支，那么传统工作流当然更稳定，也更适合。但我们的输入往往是自然语言需求，例如“小说池最近误伤比较多，需要调整账号红线，但不能影响普通文章和助推场景”。这里面需要先理解业务意图，再判断影响范围、查找当前配置和历史 Case，过程中还可能因为证据不足向人追问。这部分不是简单的固定流程可以完全覆盖的。</p>
+<p>所以我把系统分成两部分。需要理解、生成和解释的地方交给 Agent，例如需求结构化、方案生成、历史经验召回和报告汇总；有确定答案、能通过程序验证的部分交给传统工程能力，例如 AST 解析、字段校验、引用存在性、Case 执行、写锁和发布权限。换句话说，Agent 不是替代工作流，而是运行在工作流之中，负责处理不确定部分，确定部分仍然由状态机和工具控制。</p>
+<h2 id="二、短期记忆和长期记忆是怎么做的"><a href="#二、短期记忆和长期记忆是怎么做的" class="headerlink" title="二、短期记忆和长期记忆是怎么做的"></a>二、短期记忆和长期记忆是怎么做的</h2><h3 id="面试官：你刚才提到记忆系统，短期记忆和长期记忆分别是怎么做的？"><a href="#面试官：你刚才提到记忆系统，短期记忆和长期记忆分别是怎么做的？" class="headerlink" title="面试官：你刚才提到记忆系统，短期记忆和长期记忆分别是怎么做的？"></a>面试官：你刚才提到记忆系统，短期记忆和长期记忆分别是怎么做的？</h3><p><strong>候选人：</strong></p>
+<p>我先说一下两者的边界。短期记忆解决的是“当前这次变更进行到哪里、为什么这么做、接下来还要做什么”，它的生命周期通常和当前任务一致；长期记忆解决的是“以后遇到类似问题时，系统应该知道哪些规则、经验和历史决策”，它需要跨任务和跨会话复用。如果把两者混在一起，一方面当前任务状态会污染长期知识，另一方面长期知识也会把当前上下文越堆越大。</p>
+<p>短期记忆我用了两个核心载体，一个是 <code>runtime.json</code>，另一个是 <code>handoff.md</code>。<code>runtime.json</code> 保存机器可读的控制状态，例如当前处于 <code>propose</code>、<code>apply</code>、<code>verify</code>、<code>review</code> 还是 <code>archive</code> 阶段，阶段内执行到了哪一步，已经获取了哪些配置证据，当前写锁由谁持有，以及长任务的心跳时间。主 Agent 每次准备调度下一步时都会先读取它，所以流程推进不是完全依赖模型从聊天记录里回忆，而是根据显式状态机决定。</p>
+<p><code>handoff.md</code> 保存的是人和模型都能读懂的认知状态。它会记录这次变更的目标和范围、修改过哪些池和标签、关键决策及其证据、已经完成的校验、遇到过什么错误、错误如何修复、现在还剩哪些事项，以及哪些地方需要人工确认。可以把 <code>runtime.json</code> 理解成程序状态，把 <code>handoff.md</code> 理解成交接文档。两者分开以后，机器调度和人类审计都比较清晰。</p>
+<p>这样设计主要是为了解决长会话压缩和跨 Session 续接的问题。普通上下文压缩由模型自己决定哪些内容保留，它可能把“已经改过哪些池”“写锁现在在谁手上”这类关键状态一起压掉。我的做法是在达到压缩阈值之前，先强制把关键状态更新到 <code>runtime.json</code> 和 <code>handoff.md</code>，确认落盘成功后再压缩。如果压缩后上下文仍然太大，就直接开启一个新 Session，新会话读取交接文档和运行时状态，从上一个一致点继续执行。</p>
+<p>长期记忆则采用知识通道和记忆通道隔离的设计。知识通道保存相对稳定、权威的内容，比如 DSL 语法、字段定义、命名规范、内容池的业务含义、Review 标准和上线规则。这部分一般由人维护，通过 PR 或审核后进入，Agent 主要负责读取，不能直接修改。记忆通道保存任务过程中产生的经验，例如某次误拦截的原因、某个配置为什么不能删除、人工纠正过的偏好，以及某类问题应该怎样验证和回滚。这部分允许 Agent 生成候选，但必须按照“场景、错误、修复、根因”的模板结构化，并经过 Review 后才能正式沉淀。</p>
+<p>之所以要把知识和记忆分开，是为了避免一次性 Case 污染权威规则。比如一次需求因为特殊运营活动临时放宽某个阈值，这只能是一条任务经验，不能被 Agent 自动写成永久规范。Agent 没有自我立法权，它可以把同类经验聚类并提出升级建议，但是否升级为硬规则必须由人确认。反过来，如果一条经验被同类问题重复触发三次以上，我们会认为它可能不是偶发问题，而是规则性漏洞，Agent 会建议把它升级到知识通道；如果一条硬规则连续三个月没有被触发，也会被标记为降级候选，由人判断是否已经过时。</p>
+<p>在检索侧，我构建了 BM25 稀疏召回与 pgvector 稠密向量召回的双路混合检索。Elasticsearch BM25 主要处理业务 ID、标签名、表达式名和配置路径等标识符及关键词查询，pgvector 主要召回措辞不同但语义相近的历史经验。两路并行召回 Top-K 后使用 RRF 做排名融合，从而同时兼顾词法匹配和自然语言语义召回，最后只把与当前 Agent 角色和任务阶段相关的结果加载到上下文。</p>
+<p>所以这套记忆系统的重点不是“把所有对话都保存下来”，而是从治理和检索两个方面管理长期经验：治理侧通过知识通道和记忆通道隔离权威规则与动态经验，检索侧通过 BM25 和 pgvector 的双路混合检索实现按需召回，并为不同内容设置不同的生命周期、写权限和审核方式。</p>
+<h3 id="面试官：为什么短期状态要放文件，而不是-Redis-或数据库？"><a href="#面试官：为什么短期状态要放文件，而不是-Redis-或数据库？" class="headerlink" title="面试官：为什么短期状态要放文件，而不是 Redis 或数据库？"></a>面试官：为什么短期状态要放文件，而不是 Redis 或数据库？</h3><p><strong>候选人：</strong></p>
+<p>这个选择和当前场景的规模有关。我们的策略变更是低频、分钟级的研发操作，一次完整任务本身就可能运行十几分钟，文件读写带来的毫秒到秒级开销不是主要矛盾。相比之下，文件有三个直接优势：第一，它可以跨进程和跨 Session 存活；第二，它天然人可读，出现问题时可以直接检查和 Diff；第三，它可以和 Git 版本结合，支持审计和回退。</p>
+<p>我们也考虑过文件作为事实源、Redis 作为缓存的方案，但当前没有必要落地。因为加缓存以后会引入文件和 Redis 双写一致性问题，可能出现文件写成功但缓存失败，或者缓存里保留旧状态。对于一个强调状态可靠和可审计的系统，为了很小的读取性能收益引入新的不一致风险，投入产出比并不高。如果后续并发任务和部署实例明显增多，再把状态迁移到有副本的远程存储或者分布式 KV 会更合理。</p>
+<h3 id="面试官：写文件写到一半进程挂了怎么办？"><a href="#面试官：写文件写到一半进程挂了怎么办？" class="headerlink" title="面试官：写文件写到一半进程挂了怎么办？"></a>面试官：写文件写到一半进程挂了怎么办？</h3><p><strong>候选人：</strong></p>
+<p>状态文件使用原子写，而不是直接覆盖目标文件。具体做法是先写临时文件，刷新到磁盘后，再在同一文件系统内通过原子 <code>rename</code> 替换正式文件。这样进程无论在哪个时刻挂掉，正式文件要么还是上一个完整版本，要么已经是新的完整版本，不会读到只写了一半的 JSON。</p>
+<p>如果挂在临时文件写入阶段，最多丢失当前这一步的状态更新，恢复后从上一个一致点重新执行。因为校验、Case 生成和 Spec 扫描等步骤本身都设计成幂等操作，重复执行不会造成副作用。真正会写配置的操作集中在主 Agent，并且有写锁保护。</p>
+<h2 id="三、长期记忆混合检索怎么做，为什么同时写-pgvector-和-ES"><a href="#三、长期记忆混合检索怎么做，为什么同时写-pgvector-和-ES" class="headerlink" title="三、长期记忆混合检索怎么做，为什么同时写 pgvector 和 ES"></a>三、长期记忆混合检索怎么做，为什么同时写 pgvector 和 ES</h2><h3 id="面试官：长期记忆的混合检索具体是怎么做的？"><a href="#面试官：长期记忆的混合检索具体是怎么做的？" class="headerlink" title="面试官：长期记忆的混合检索具体是怎么做的？"></a>面试官：长期记忆的混合检索具体是怎么做的？</h3><p><strong>候选人：</strong></p>
+<p>长期记忆在治理上分为知识通道和记忆通道，而在查询上采用的是混合检索，也就是 Hybrid Search。两者不是同一个维度：知识和记忆双通道解决的是内容由谁写、怎样审核；混合检索解决的是已经审核过的文档应该怎样被召回。</p>
+<p>混合检索包含两路召回。第一路是基于 Elasticsearch BM25 的词法召回，也可以叫稀疏召回，主要依赖关键词和词项匹配，适合查询业务 ID、标签名、表达式名、配置路径和错误码。例如用户问 <code>business_1000007</code> 对应哪个内容池，或者某个具体标签被哪些策略引用，这类查询包含明确标识符，BM25 通道通常更可靠。</p>
+<p>第二路是基于 Embedding 和 pgvector 的稠密向量召回，也就是语义召回。它适合处理用户和历史文档措辞不一致的情况，比如用户问“之前有没有因为改公共标签导致其他场景一起受影响的案例”，历史记忆里写的可能是“修改共享表达式造成助推和折叠血缘漂移”。两段文字没有太多相同关键词，但是语义上是同一类问题，向量召回更容易找到。</p>
+<p>查询到来以后，我们先分析里面是否包含明显的 ID、标签名和路径等词法特征，同时对自然语言部分做必要的 Query Rewrite。之后 ES 的 BM25 稀疏召回和 pgvector 的稠密向量召回并行执行，各自返回 Top-K。召回结果先做业务域、权限、版本和有效期过滤，再通过 RRF 做排名融合。如果同一篇文档同时被两路召回，我们会额外提高它的优先级，因为这通常意味着它既有词法关联，也有语义关联。融合以后还可以进行一次 Rerank，最后只把和当前 Agent 角色、当前流程阶段有关的少量结果加载到上下文，而不是把整个知识库塞进去。</p>
+<h3 id="面试官：为什么不用一个数据库，非要同时写-pgvector-和-Elasticsearch？"><a href="#面试官：为什么不用一个数据库，非要同时写-pgvector-和-Elasticsearch？" class="headerlink" title="面试官：为什么不用一个数据库，非要同时写 pgvector 和 Elasticsearch？"></a>面试官：为什么不用一个数据库，非要同时写 pgvector 和 Elasticsearch？</h3><p><strong>候选人：</strong></p>
+<p>因为两者解决的问题不同。pgvector 的优势是向量可以和 PostgreSQL 里的结构化元数据放在一起，查询时可以先用 <code>business_domain</code>、版本、权限或者文档类型做过滤，再在过滤后的集合里做向量近邻搜索。我们的数据规模是万级 Chunk，这个规模使用 pgvector 的 HNSW 索引已经足够，而且 PG 本身就是现有技术栈，不需要为了万级数据再维护一套更重的分布式向量数据库。</p>
+<p>Elasticsearch 的优势是成熟的倒排索引和全文检索能力。对标签名、业务 ID、错误码和配置路径这类文本，BM25 的效果通常比向量更稳定。特别是很多业务 ID 只差一两个数字，在语义向量空间里没有明显含义，单纯依赖 Embedding 反而容易把相似 ID 混在一起。</p>
+<p>所以同时写两套索引不是为了重复存储，而是让每个引擎负责自己擅长的召回方式。更重要的是，Git 中的知识文件和记忆文件才是唯一事实源，pgvector 和 ES 都只是派生索引。索引如果损坏或者出现不一致，可以从 Git 重新构建，因此我们不需要在两个索引之间做强一致事务，只要保证最终一致并能够重建就可以。</p>
+<h3 id="面试官：为什么选择-pgvector，而不是专门的向量数据库？"><a href="#面试官：为什么选择-pgvector，而不是专门的向量数据库？" class="headerlink" title="面试官：为什么选择 pgvector，而不是专门的向量数据库？"></a>面试官：为什么选择 pgvector，而不是专门的向量数据库？</h3><p><strong>候选人：</strong></p>
+<p>主要考虑规模、混合查询和运维成本。第一，我们当前是万级 Chunk，不是亿级向量和超高并发场景，pgvector 的 HNSW 已经能够满足检索延迟和召回需求。如果直接引入专门的分布式向量服务，会增加部署、监控和数据同步成本。</p>
+<p>第二，向量召回之前经常需要先做业务元数据过滤，例如只查公众号小说业务、只查当前生效版本、只查某个权限范围内的知识。使用 pgvector 可以在一条 SQL 中完成结构化过滤和向量排序，工程上比较简单。</p>
+<p>第三，PG 是现有基础设施，增加 extension 的维护成本小。这个选择不是说 pgvector 永远优于专门向量库，而是当前规模下它的投入产出比更合适。如果未来数据增长到千万甚至亿级，或者需要更高吞吐、多租户隔离和分布式扩缩容，再迁移到专门向量服务会更合理。</p>
+<h3 id="面试官：两路结果的分数不一样，怎么融合？"><a href="#面试官：两路结果的分数不一样，怎么融合？" class="headerlink" title="面试官：两路结果的分数不一样，怎么融合？"></a>面试官：两路结果的分数不一样，怎么融合？</h3><p><strong>候选人：</strong></p>
+<p>我没有直接把 BM25 分数和余弦相似度做加权相加，因为两种分数的量纲和分布不同。余弦相似度通常在一个比较固定的区间内，而 BM25 没有统一上界，直接相加没有明确意义。即使先做归一化，归一化结果也会受到当前候选集合和极值影响。</p>
+<p>所以我们采用 RRF，也就是倒数排名融合。它不看原始分数，只看一篇文档在每路召回中的排名，然后计算各路 <code>1 / (k + rank)</code> 的和，<code>k</code> 可以使用 60 这个常见经验值。这样第一路排得靠前和第二路排得靠前的结果都能贡献分数，而一篇文档如果两路都靠前，融合后自然会排到前面。我们还会对双路同时命中的结果做轻量业务强化，但不会让这个规则覆盖权限、版本或者有效期过滤。</p>
+<h3 id="面试官：长期记忆是怎么写进-pgvector-和-ES-的？"><a href="#面试官：长期记忆是怎么写进-pgvector-和-ES-的？" class="headerlink" title="面试官：长期记忆是怎么写进 pgvector 和 ES 的？"></a>面试官：长期记忆是怎么写进 pgvector 和 ES 的？</h3><p><strong>候选人：</strong></p>
+<p>写入链路是 Git 事件驱动的异步 Pipeline。Agent 在任务完成后先生成经验候选，内容按照“场景、错误、修复、根因”结构化，经过人工 Review 后合入 Git。Git Commit 事件进入消息队列，Worker 消费后依次完成文档解析、语义切分、Embedding 计算，然后把向量和元数据写入 pgvector，把文本和结构化字段写入 ES。</p>
+<p>这条链路做成异步，是因为解析、切分和 Embedding 都可能是秒级操作，没有必要阻塞前台任务归档。为了防止消息重复和重复计算，我们做了三层幂等：事件级使用 <code>event_id</code> 去重，文档级使用 <code>doc_id + commit_sha</code> 判断同一版本是否已经处理，Chunk 级使用 <code>content_hash</code> 判断内容是否真的发生变化。如果处理失败，事件进入死信队列，不阻塞其他文档；同时会定期从 Git 做全量重建兜底。</p>
+<h3 id="面试官：如果更换-Embedding-模型怎么办？"><a href="#面试官：如果更换-Embedding-模型怎么办？" class="headerlink" title="面试官：如果更换 Embedding 模型怎么办？"></a>面试官：如果更换 Embedding 模型怎么办？</h3><p><strong>候选人：</strong></p>
+<p>Embedding 和普通代码版本不同。代码切换以后旧数据通常还能继续使用，但是更换 Embedding 模型意味着向量空间整体变化。用新模型生成的 Query 向量去搜索旧模型生成的文档向量，余弦相似度已经没有可靠意义，而且这种问题比较隐蔽，因为系统仍然可以返回结果，只是结果质量会突然下降。</p>
+<p>所以模型切换要采用四阶段灰度。第一阶段对新写入的 Chunk 同时生成新旧两套向量；第二阶段在后台对存量文档全量重建新向量；第三阶段切换检索流量，对新旧召回结果做对比和观察，出现问题可以快速切回旧列；第四阶段确认稳定以后再清理旧向量。这样不会在切换时出现一半新空间、一半旧空间的混用。</p>
+<h2 id="四、上下文管理是怎么做的"><a href="#四、上下文管理是怎么做的" class="headerlink" title="四、上下文管理是怎么做的"></a>四、上下文管理是怎么做的</h2><h3 id="面试官：你的上下文管理具体是怎么做的？"><a href="#面试官：你的上下文管理具体是怎么做的？" class="headerlink" title="面试官：你的上下文管理具体是怎么做的？"></a>面试官：你的上下文管理具体是怎么做的？</h3><p><strong>候选人：</strong></p>
+<p>我的核心判断是，上下文管理不能只理解成“窗口满了做一次摘要”，它实际上要同时解决信噪比和状态可靠性两个问题。早期单 Agent 方案出现过两种退化。第一种是正确规则明明在上下文里，但模型选择了另一个业务场景的规则，这说明不是模型完全不知道，而是无关知识太多、信噪比下降；第二种是长任务经过压缩以后，模型忘了已经修改过哪些池、下一步还要做什么，这属于关键状态被挤出了上下文。</p>
+<p>针对信噪比问题，我把知识分成七层。第一层是顶级宪法，只保存系统角色、全局流程、硬约束以及知识地图，每次会话常驻；第二层是流程组件，例如各阶段 SOP、Skill 和命令，在进入对应阶段时加载；第三层是技术框架知识，包括 YAML、DSL、AST 和工具使用，主要给修改配置和校验相关 Agent；第四层是业务知识，包括内容池含义、标签语义和上下游关系；第五层是作业规范，包括 Review 标准、质量要求和上线规则；第六层是历史经验和踩坑记录，只在相似问题出现时检索；第七层是已完成变更和回滚材料，只有追溯时才读取。</p>
+<p>七层是知识治理上的分类，实际加载动作可以归纳成三种。所有 Agent 都必须遵守、而且变化比较慢的内容常驻；只与某个角色相关的内容按角色注入，例如校验 Agent 加载 AST 和字段规则，Review Agent 加载风险判断标准；规模大但低频使用的历史经验按需检索。这样同一个子 Agent 只看到完成当前职责所需的知识，不需要每次都加载所有业务和所有流程。</p>
+<p>针对状态可靠性问题，我不把关键状态只留在会话上下文中，而是通过 <code>runtime.json</code> 和 <code>handoff.md</code> 外置。上下文占用升高时，先清理已经完成且不会影响后续决策的工具输出，再把历史过程压缩成结论、证据和未决事项。压缩之前必须先更新状态文件。如果压缩后仍然接近窗口上限，说明当前任务本身已经太重，就开启新 Session，从状态文件继续，而不是在旧会话里反复压缩。</p>
+<p>所以这套上下文工程可以概括为一句话：知识按角色和阶段加载，历史经验按需召回，任务状态不依赖模型记忆，窗口不够时先落盘再重启。上下文可以被压缩甚至被丢弃，但是任务状态和决策依据不能丢。</p>
+<h3 id="面试官：你怎么确定退化是上下文导致的，而不是模型能力不够？"><a href="#面试官：你怎么确定退化是上下文导致的，而不是模型能力不够？" class="headerlink" title="面试官：你怎么确定退化是上下文导致的，而不是模型能力不够？"></a>面试官：你怎么确定退化是上下文导致的，而不是模型能力不够？</h3><p><strong>候选人：</strong></p>
+<p>主要依据现象分布和 Trace 回放。简单需求很少出现问题，复杂需求或者多轮反复修改的长会话更容易出现。如果纯粹是模型不具备这项能力，错误不应该和会话长度、轮数以及知识加载量有这么强的相关性。</p>
+<p>更直接的证据来自 Trace。我们回放失败任务时看到过两类情况。一类是模型已经读取了正确规则，但是最后选择了另一条不相关的规则，说明正确答案并不是不存在，而是被大量噪声干扰；另一类是某次压缩之前，对话中明确记录了已经修改的池子和剩余步骤，压缩以后这些信息不在上下文里了，模型随后重复修改或者漏掉步骤。这两类现象分别指向信噪比和状态丢失，所以才有后续的知识分层、角色隔离和状态落盘。</p>
+<h3 id="面试官：为什么不用更大的-1M-上下文？"><a href="#面试官：为什么不用更大的-1M-上下文？" class="headerlink" title="面试官：为什么不用更大的 1M 上下文？"></a>面试官：为什么不用更大的 1M 上下文？</h3><p><strong>候选人：</strong></p>
+<p>更大的上下文可以缓解容量不足，但不能自动解决信噪比问题。一个窗口能装下所有知识，不代表模型能稳定从大量不相关内容中选择正确规则。相反，如果因为窗口大就把所有业务知识、历史记录和工具输出全部塞进去，关键内容仍然可能埋在中间，而且推理延迟和成本也会增加。</p>
+<p>对我们的场景来说，绝大多数简单和中等需求通过 128K 窗口、按角色加载和状态外置已经能够覆盖。真正复杂的跨业务长任务，本身就应该拆分子任务或者换新会话接力，而不是依靠更大的窗口把整个生命周期一直背在模型上下文里。因此我的选择是把上下文做干净，而不是把窗口尽量装满。</p>
+<h2 id="五、主-Agent-和子-Agent-是怎么设计和通信的"><a href="#五、主-Agent-和子-Agent-是怎么设计和通信的" class="headerlink" title="五、主 Agent 和子 Agent 是怎么设计和通信的"></a>五、主 Agent 和子 Agent 是怎么设计和通信的</h2><h3 id="面试官：为什么要拆成主-Agent-和子-Agent？"><a href="#面试官：为什么要拆成主-Agent-和子-Agent？" class="headerlink" title="面试官：为什么要拆成主 Agent 和子 Agent？"></a>面试官：为什么要拆成主 Agent 和子 Agent？</h3><p><strong>候选人：</strong></p>
+<p>最开始我们尝试过单 Agent，让它从需求理解一直做到配置修改、校验、测试和归档。这个方案实现简单，但是随着任务复杂度上升，出现了三个问题。</p>
+<p>第一个问题是上下文污染。单 Agent 需要同时理解 DSL 语法、YAML 结构、业务标签、内容池关系、校验规则、Review 标准和归档规范，所有知识只能一起加载。模型虽然可能读过正确规则，但在大量不相关信息中容易选错。</p>
+<p>第二个问题是改审不隔离。同一个会话刚生成完配置，再让它检查自己生成的内容，模型会有比较强的自我一致倾向，更容易为原来的答案寻找理由，而不是站在独立视角发现问题。这个问题和传统研发中不能让同一段逻辑既当运动员又当裁判比较相似。</p>
+<p>第三个问题是故障影响范围大。单 Agent 中任何一个长步骤失败，都可能导致整个任务重新开始；而且测试工具可能运行几分钟甚至更久，会话越长，状态丢失风险越高。</p>
+<p>因此我把架构拆成两层，总共 6 个 Agent：1 个主 Agent 和 5 个子 Agent。主 Agent 是唯一协调者，负责理解需求、维护状态机、决定下一步调谁、汇总结果以及和人交互；5 个子 Agent 按单一职责拆分，分别负责静态校验、动态 Case 测试、风险 Review、Spec 同步和归档门禁。这样每个子 Agent 都有明确的输入和输出，可以加载更小、更相关的上下文，也可以单独测试和迭代。</p>
+<h3 id="面试官：为什么是一个主-Agent，而不是几个平级-Agent-自己协商？"><a href="#面试官：为什么是一个主-Agent，而不是几个平级-Agent-自己协商？" class="headerlink" title="面试官：为什么是一个主 Agent，而不是几个平级 Agent 自己协商？"></a>面试官：为什么是一个主 Agent，而不是几个平级 Agent 自己协商？</h3><p><strong>候选人：</strong></p>
+<p>因为多个平级 Agent 会把协调问题变成一个小型分布式系统。谁先执行、谁等待谁、失败后由谁重试、共享状态由谁修改，都需要额外协议。如果每个 Agent 都能直接调用其他 Agent，调用关系会逐渐变成网状结构，一次配置变更到底经过了哪些路径会很难审计。</p>
+<p>所以我们采用星型拓扑。主 Agent 是唯一调度者，子 Agent 之间不直接通信，所有任务和结果都经过主 Agent。这样状态可以收口在一个地方，调用链清晰，也不需要为几个低频研发任务引入复杂的分布式共识机制。主 Agent 虽然是计算上的单点，但它不保存唯一状态，状态都已经外置，所以实例挂掉以后可以重新创建并接管。</p>
+<h3 id="面试官：主-Agent-和子-Agent-具体怎么通信？"><a href="#面试官：主-Agent-和子-Agent-具体怎么通信？" class="headerlink" title="面试官：主 Agent 和子 Agent 具体怎么通信？"></a>面试官：主 Agent 和子 Agent 具体怎么通信？</h3><p><strong>候选人：</strong></p>
+<p>它们不依赖共享内存，而是通过结构化任务、外置状态和结构化结果通信。</p>
+<p>主 Agent 调度子 Agent 时，会把当前变更标识、所处阶段、输入配置或者 Diff 的位置、需要检查的范围、期望输出格式以及任务超时信息组织成一个任务描述。子 Agent 只读取完成自己职责所需的输入，不会继承主 Agent 的全部会话历史。例如校验 Agent 只需要 Beta 配置、方案声明的修改范围和校验规则，不需要看到前面大量需求讨论。</p>
+<p>子 Agent 完成后会返回结构化结果，至少说明任务是通过、失败还是被阻塞，发现了哪些问题，每个问题对应什么证据，风险级别是什么，以及建议主 Agent 重试、停止还是交给人工判断。主 Agent 收到结果后，把流程状态写回 <code>runtime.json</code>，把需要跨会话保留的结论写入 <code>handoff.md</code>，然后根据状态机决定下一步。</p>
+<p>这种方式的好处是通信内容可以持久化、可以 Diff、也可以回放。即使子 Agent 会话已经结束，主 Agent 仍然可以根据结果文件恢复过程；同时主 Agent 不需要把子 Agent 的所有中间工具输出重新塞入自己的上下文，只保留结论和证据引用。</p>
+<h3 id="面试官：你说总共-6-个-Agent，分别做什么？为什么这样拆？"><a href="#面试官：你说总共-6-个-Agent，分别做什么？为什么这样拆？" class="headerlink" title="面试官：你说总共 6 个 Agent，分别做什么？为什么这样拆？"></a>面试官：你说总共 6 个 Agent，分别做什么？为什么这样拆？</h3><p><strong>候选人：</strong></p>
+<p>总共是 6 个 Agent，其中 1 个是主 Agent，另外 5 个是子 Agent。主 Agent 负责需求澄清、方案生成、流程调度、状态维护、结果汇总和人工交互。第一个子 Agent 是校验 Agent，负责 AST、YAML 结构、字段类型、枚举、标签引用、血缘关系和修改作用域等静态检查。第二个是 Case 测试 Agent，负责根据需求和配置变化生成正反向 Case，拉起真实策略引擎验证，还可以对现网数据进行抽样。第三个是 Review Agent，它不做语法检查，而是从业务角度判断影响面、灰度方案、风险和回滚是否合理。第四个是 Spec 同步 Agent，负责检查实际配置变化是否已经同步到规范文档，避免文档和真实系统长期漂移。第五个是归档门禁 Agent，负责检查校验报告、测试结果、观察记录和待办是否完整，并调用确定性脚本决定能否归档。</p>
+<p>拆分依据不是功能越多越好，而是看两个职责合并后会不会需要两套不相关知识，或者出现自己修改、自己审核的问题。静态校验和动态测试需要的工具和知识不同，所以分开；校验和 Review 一个偏客观规则，一个偏业务判断，也应该隔离。相反，如果两个操作上下文相同、结果强相关，就没有必要为了多 Agent 而强行拆分，否则只会增加调度成本。</p>
+<h3 id="面试官：哪些子-Agent-可以并行？主-Agent-怎么判断？"><a href="#面试官：哪些子-Agent-可以并行？主-Agent-怎么判断？" class="headerlink" title="面试官：哪些子 Agent 可以并行？主 Agent 怎么判断？"></a>面试官：哪些子 Agent 可以并行？主 Agent 怎么判断？</h3><p><strong>候选人：</strong></p>
+<p>阶段之间存在硬依赖，例如没有完成需求澄清就不能改配置，没有生成 Beta 配置就不能校验和测试，没有校验和 Review 结果就不能申请上线，所以这些步骤必须串行。</p>
+<p>当 Beta 配置已经确定以后，部分任务可以并行。例如校验 Agent 可以做 AST、引用和血缘分析，Case 测试 Agent 可以同时准备并执行测试，Review Agent 也可以先阅读配置 Diff 和方案。它们的输入都来自同一个已冻结的 Beta 版本，互相不修改配置，因此可以并发。主 Agent 不是临时凭语言模型感觉判断并发，而是根据状态机里声明的依赖关系和输入版本决定：输入版本一致、任务之间没有写冲突、前置条件都满足，才允许并行。</p>
+<h3 id="面试官：主-Agent-或子-Agent-挂了怎么恢复？"><a href="#面试官：主-Agent-或子-Agent-挂了怎么恢复？" class="headerlink" title="面试官：主 Agent 或子 Agent 挂了怎么恢复？"></a>面试官：主 Agent 或子 Agent 挂了怎么恢复？</h3><p><strong>候选人：</strong></p>
+<p>恢复依赖两件事：状态外置和操作幂等。</p>
+<p>如果主 Agent 挂了，新 Session 会先找到当前活动变更，再读取 <code>runtime.json</code> 确认当前阶段和步骤，读取 <code>handoff.md</code> 恢复目标、关键决策和待办，然后检查写锁和长任务心跳。因为主 Agent 本身不保存唯一状态，所以它挂掉只会让流程暂停，不会让任务数据丢失。</p>
+<p>如果子 Agent 挂了，长步骤会停止更新心跳。我们的长任务大约每 30 秒更新一次心跳，主 Agent 如果连续 5 分钟没有收到更新，就认为任务可能卡死，先记录异常，再重新调度或者交给人工判断。校验、测试、扫描这类操作设计成幂等的，可以安全重跑。</p>
+<p>配置写入是少数有副作用的操作，所以只允许主 Agent 执行，并通过以变更为粒度的写锁保护。锁记录持有者、获取时间和 TTL。正常结束主动释放，异常退出后由 TTL 防止锁永远占用。重新接管时还会核对配置版本，避免旧任务在恢复后覆盖新结果。</p>
+<h2 id="六、Agent-怎么保证不会把错误配置上线"><a href="#六、Agent-怎么保证不会把错误配置上线" class="headerlink" title="六、Agent 怎么保证不会把错误配置上线"></a>六、Agent 怎么保证不会把错误配置上线</h2><h3 id="面试官：大模型会幻觉，你怎么保证它不会把错误配置上线？"><a href="#面试官：大模型会幻觉，你怎么保证它不会把错误配置上线？" class="headerlink" title="面试官：大模型会幻觉，你怎么保证它不会把错误配置上线？"></a>面试官：大模型会幻觉，你怎么保证它不会把错误配置上线？</h3><p><strong>候选人：</strong></p>
+<p>我不会说能够完全消灭幻觉，因为生成模型本身就是概率系统。我的目标是从三个层面降低风险：先降低错误产生的概率，再用确定性检查拦住错误，最后从权限上保证即使前面漏掉，模型也不能自己完成线上发布。</p>
+<p>第一层是证据约束。主 Agent 在没有读取当前线上配置、字段定义和影响范围之前不能直接生成方案，信息不足时必须向人追问。检索到历史知识以后，也会回到 Git 中读取完整章节，避免只根据孤立 Chunk 做决定。</p>
+<p>第二层是六重校验。第一重是 AST 语法校验，确认表达式可以被解析；第二重是框架结构校验，检查 YAML 层级、必填字段、类型、枚举和标签引用；第三重是 Case 测试，拉起策略引擎验证正向内容应该通过、反向内容应该被拦；第四重是血缘影响分析，确认一个标签被哪些内容池和其他能力引用；第五重是作用域校验，对比实际修改范围和方案声明范围，防止改错池子；第六重是现网抽样，检查真实数据分布下的拦截比例、池子量级和边界行为。</p>
+<p>第三层是权限门禁。Agent 只能修改 Beta 配置，线上发布接口不直接暴露给模型。进入下一阶段需要满足 Phase Gate：Prompt 中先声明前置条件，执行 Skill 时必须调用与模型无关的 checker，最终提交或归档时 Git Hook 再检查一次。真正上线仍然需要人工确认。因此模型可以生成错误候选，但错误候选要穿过多层确定性校验和人工授权，才可能接触线上。</p>
+<h3 id="面试官：为什么需要六重校验，语法检查还不够吗？"><a href="#面试官：为什么需要六重校验，语法检查还不够吗？" class="headerlink" title="面试官：为什么需要六重校验，语法检查还不够吗？"></a>面试官：为什么需要六重校验，语法检查还不够吗？</h3><p><strong>候选人：</strong></p>
+<p>语法检查只能发现“写得不合法”，发现不了“写得合法但是业务意思错了”。例如一个表达式语法完全正确，但是把普通文章红线错误地应用到小说池，AST 不会报错，只有 Case 测试才能看到正常小说被误拦。</p>
+<p>另外还有“局部正确、全局错误”的情况。某个标签在当前内容池修改后效果正确，但是它同时被助推或者折叠场景引用，其他业务可能一起受到影响。这类问题需要血缘分析才能发现。现网抽样则解决测试 Case 和真实数据分布不一致的问题。因此六层不是简单重复检查，而是从语法、结构、局部行为、全局影响、修改范围和真实数据六个不同角度逐层收敛风险。</p>
+<h3 id="面试官：Agent-校验失败后会自动修复吗？会不会死循环？"><a href="#面试官：Agent-校验失败后会自动修复吗？会不会死循环？" class="headerlink" title="面试官：Agent 校验失败后会自动修复吗？会不会死循环？"></a>面试官：Agent 校验失败后会自动修复吗？会不会死循环？</h3><p><strong>候选人：</strong></p>
+<p>可以自动修复一部分错误，但边界比较严格。首先自动重试最多三次，超过次数直接停止并交给人，不允许无限循环。其次只允许自动修复有确定验证标准的问题，例如语法错误、YAML 结构错误、引用不存在或者明确的 Case 断言失败。对于业务语义、血缘影响和策略取舍这类没有唯一答案的问题，Agent 不能擅自反复调整，必须让人判断。</p>
+<p>另外，每次自动修复前都需要记录上一次为什么失败、准备修改什么、依据是什么，修复后重新执行对应校验。这样可以避免模型只是不断换一种写法碰运气，也方便后续通过 Trace 回放整个自修复过程。</p>
+<h2 id="七、Agent-Trace-和可观测性怎么做"><a href="#七、Agent-Trace-和可观测性怎么做" class="headerlink" title="七、Agent Trace 和可观测性怎么做"></a>七、Agent Trace 和可观测性怎么做</h2><h3 id="面试官：你说做了-Agent-Trace，它和普通日志有什么区别？"><a href="#面试官：你说做了-Agent-Trace，它和普通日志有什么区别？" class="headerlink" title="面试官：你说做了 Agent Trace，它和普通日志有什么区别？"></a>面试官：你说做了 Agent Trace，它和普通日志有什么区别？</h3><p><strong>候选人：</strong></p>
+<p>普通服务日志通常重点记录调用了哪个接口、是否成功、耗时多少。但是 Agent 的问题很多时候不是工具调用失败，而是它为什么决定调用这个工具，或者为什么在多个规则中选择了错误的那一个。只记录结果，无法还原决策过程。</p>
+<p>所以 Trace 分成三层。第一层是对话历史，记录用户输入和 Agent 输出；第二层是工具调用日志，记录每次工具或者 MCP 调用的调用方、入参、出参、耗时和返回码；第三层是关键决策 checkpoint，记录这个决策点看到了哪些证据、做出了什么判断、下一步为什么这样选择。</p>
+<p>三层信息组合以后，可以按照“当时看到了什么、如何判断、调用了什么、得到了什么结果”回放一次任务。比如早期单 Agent 退化时，我们就是通过回放发现模型其实读取过正确规则，但是被无关业务规则干扰，最后选错了；另一些任务则是在上下文压缩后丢失了已经修改的池子信息。普通日志只能看到最后调用成功，Trace 才能定位错误发生在决策链的哪一步。</p>
+<h3 id="面试官：记录模型思考过程会不会有安全和存储问题？"><a href="#面试官：记录模型思考过程会不会有安全和存储问题？" class="headerlink" title="面试官：记录模型思考过程会不会有安全和存储问题？"></a>面试官：记录模型思考过程会不会有安全和存储问题？</h3><p><strong>候选人：</strong></p>
+<p>实际落地时不会无边界保存所有内部推理文本，而是记录可审计的决策摘要和证据引用。例如“因为线上配置显示标签 A 同时被三个内容池引用，所以进入血缘检查”，重点是保存可验证依据和动作原因，而不是保存无限长度的自由推理。</p>
+<p>同时 Trace 需要做权限控制、敏感字段脱敏和保存周期管理。配置内容属于内部数据，只能保存在内网；工具返回中的用户信息或者敏感字段需要脱敏；过期的详细 Trace 可以归档或者清理，只保留关键审计结果。这样在可定位问题和控制数据风险之间取得平衡。</p>
+<h2 id="八、项目难点、结果和复盘怎么回答"><a href="#八、项目难点、结果和复盘怎么回答" class="headerlink" title="八、项目难点、结果和复盘怎么回答"></a>八、项目难点、结果和复盘怎么回答</h2><h3 id="面试官：这个项目最大的技术难点是什么？"><a href="#面试官：这个项目最大的技术难点是什么？" class="headerlink" title="面试官：这个项目最大的技术难点是什么？"></a>面试官：这个项目最大的技术难点是什么？</h3><p><strong>候选人：</strong></p>
+<p>我认为最大的难点不是把模型接进来，而是怎样让一个概率系统安全地参与高风险配置变更。</p>
+<p>如果只看 Demo，模型读需求、生成一段 YAML 并不难。真正落地以后，需求可能跨多个内容池，一个标签可能被多个能力复用，任务可能持续几十轮，会话可能压缩，子 Agent 也可能失败。与此同时，配置一旦错误上线，影响的不是一次回答质量，而是真实推荐流量。因此整个系统不能依赖“模型大多数时候答对”，而要做到即使模型某一步答错，也能够被后续机制发现、阻断和恢复。</p>
+<p>我解决这个问题的主线是把不确定和确定部分分开。需求理解、方案生成和历史经验召回交给模型；流程推进交给显式状态机；语法、结构、引用和 Case 结果交给确定性工具；高风险语义判断和上线权限交给人；任务恢复依赖外置状态；错误定位依赖 Trace。这样系统的可靠性不再只取决于单次模型输出，而是由整条工程链路共同保证。</p>
+<h3 id="面试官：你觉得项目中做得最好的一点是什么？"><a href="#面试官：你觉得项目中做得最好的一点是什么？" class="headerlink" title="面试官：你觉得项目中做得最好的一点是什么？"></a>面试官：你觉得项目中做得最好的一点是什么？</h3><p><strong>候选人：</strong></p>
+<p>我觉得做得最好的是没有把它停留在一个“能调用工具的聊天机器人”，而是把任务状态、上下文、校验、权限和知识沉淀做成了闭环。</p>
+<p>很多 Agent 项目只能完成一次性的生成任务，会话结束以后状态和经验都丢了；或者虽然能修改文件，但没有可靠校验和发布边界。我们这套方案里，任务中断以后可以根据状态文件恢复，模型生成的配置必须通过确定性检查，人工纠错会进入长期记忆，同类经验重复出现以后还能提议升级成规则。也就是说，它不仅完成当前任务，还能解释为什么这样做、失败后怎样恢复，以及怎样减少以后重复犯错。</p>
+<h3 id="面试官：你觉得项目还有哪些不足？"><a href="#面试官：你觉得项目还有哪些不足？" class="headerlink" title="面试官：你觉得项目还有哪些不足？"></a>面试官：你觉得项目还有哪些不足？</h3><p><strong>候选人：</strong></p>
+<p>第一个不足是评估体系还不够完整。当前主要通过六重确定性校验、人工 Review 和典型 Case 工序耗时来判断效果，但是还没有覆盖足够全面的离线 Eval 数据集。因此我可以比较有把握地说明流程效率和安全门禁，但是不能把模型理解和决策质量包装成一个非常精确的百分比。</p>
+<p>第二个不足是长期记忆治理仍然需要较多人工参与。Agent 可以整理经验、聚类相似问题并提出升级建议，但是哪些经验能够成为权威规则，仍然需要业务人员 Review。这是有意保留的安全边界，但也意味着知识库质量依赖持续维护。</p>
+<p>第三个不足是当前状态管理更适合低频、单机或者小规模任务。使用文件和 Git 能获得可读、可恢复和可审计的优势，但是如果未来同时运行大量变更任务，文件锁、调度和远程接管会遇到扩展性问题。后续可以把状态机迁移到有副本的数据库或者分布式 KV，把任务调度放到统一工作流平台，同时保留 Git 作为知识和配置事实源。</p>
+<h3 id="面试官：项目效率提升-80-到-90-是怎么得到的？"><a href="#面试官：项目效率提升-80-到-90-是怎么得到的？" class="headerlink" title="面试官：项目效率提升 80% 到 90% 是怎么得到的？"></a>面试官：项目效率提升 80% 到 90% 是怎么得到的？</h3><p><strong>候选人：</strong></p>
+<p>这个数字来自典型 Case 的人工工序计时，不是严格的线上 A&#x2F;B 实验，我会先把口径说清楚。</p>
+<p>以单篇内容归因为例，原来需要分别查询几份运营和推荐链路上报，再按时间戳把它们拼成内容的入池、出池生命周期；之后还要调用实时归因接口，人工阅读表达式，最后查询标签血缘，确认是哪个标签在哪条策略、哪个子池产生了拦截。真正耗时的不是单次查询，而是跨系统对齐和人工解释，典型 Case 大约需要 30 分钟。</p>
+<p>自动化以后，历史归因、实时归因和血缘查询通过只读工具并行执行，返回统一结构，Agent 负责汇总和解释，人主要做最终 Review，典型 Case 可以压缩到 5 分钟左右。这里工具化减少了大部分跨系统操作，Agent 编排减少了人工组织和解释成本，所以我不会把全部提升都归功于模型。</p>
+<p>批量配置原来可能需要半天到两天，自动化后大约两小时，但这个区间和需求复杂度有关。简单批量替换的提升可能没有 90%，复杂跨池需求的提升会更明显。因此更严谨的说法是，我们显著缩短了典型任务的工序时间，具体收益需要结合任务类型统计，而不是只强调一个绝对百分比。</p>
+<h3 id="面试官：如果重新做一次，你会优先改什么？"><a href="#面试官：如果重新做一次，你会优先改什么？" class="headerlink" title="面试官：如果重新做一次，你会优先改什么？"></a>面试官：如果重新做一次，你会优先改什么？</h3><p><strong>候选人：</strong></p>
+<p>如果重新做一次，我会更早建立 Eval 数据集。项目早期我们优先解决了流程可用性和上线安全，但后面复盘发现，没有系统化 Eval，就很难量化比较 Prompt、知识加载策略和模型版本的变化到底让质量提高还是下降。</p>
+<p>我会从历史变更中抽取一批覆盖不同业务、不同复杂度和不同失败类型的样本，为每个样本标注需求理解结果、正确影响范围、预期配置 Diff、必要 Case 和风险点。之后每次修改 Prompt、切换模型或者调整上下文加载策略，都离线跑这批数据，分别统计需求结构化准确率、标签和内容池召回率、配置通过率、错误拦截率以及人工修改量。这样项目就能从“主要依赖线上 Case 和人工感受”进一步演进成可持续回归的工程系统。</p>
+<h3 id="面试官：你和导师在方案上有没有分歧？"><a href="#面试官：你和导师在方案上有没有分歧？" class="headerlink" title="面试官：你和导师在方案上有没有分歧？"></a>面试官：你和导师在方案上有没有分歧？</h3><p><strong>候选人：</strong></p>
+<p>项目早期一个比较典型的讨论是，是否应该尽快让 Agent 覆盖完整链路，还是先只做需求分析和配置建议。我的想法相对偏工程化，希望尽早把修改、校验和归档串起来，因为只有进入真实流程才能暴露状态和上下文问题；导师更关注线上风险，担心能力铺得太快以后校验和权限跟不上。</p>
+<p>最后我们没有简单选择其中一边，而是把能力和权限拆开。Agent 可以逐步覆盖需求分析、Beta 配置修改、校验和报告生成，但是线上发布权限不开放；每增加一个自动化阶段，都要先补对应的确定性校验和回滚方式。这个讨论让我意识到，推进 AI 项目不能只看能力边界，还要同步设计责任边界。能做什么和允许做什么是两件事。</p>
+<h2 id="九、最后收束项目时怎么说"><a href="#九、最后收束项目时怎么说" class="headerlink" title="九、最后收束项目时怎么说"></a>九、最后收束项目时怎么说</h2><h3 id="面试官：用一句话总结一下这个项目给你的收获"><a href="#面试官：用一句话总结一下这个项目给你的收获" class="headerlink" title="面试官：用一句话总结一下这个项目给你的收获"></a>面试官：用一句话总结一下这个项目给你的收获</h3><p><strong>候选人：</strong></p>
+<p>这个项目让我认识到，Agent 落地的核心不是让模型无所不能，而是明确模型负责哪些不确定任务，再用状态机、上下文工程、确定性校验、权限门禁、人工 Review 和 Trace，把这种不确定性限制在可恢复、可验证和可审计的范围内。</p>
+<h3 id="面试官：如果让我继续追问，你认为这几个模块之间是什么关系？"><a href="#面试官：如果让我继续追问，你认为这几个模块之间是什么关系？" class="headerlink" title="面试官：如果让我继续追问，你认为这几个模块之间是什么关系？"></a>面试官：如果让我继续追问，你认为这几个模块之间是什么关系？</h3><p><strong>候选人：</strong></p>
+<p>我会把它们看成一条完整链路。主 Agent 和子 Agent 解决职责隔离和任务编排；上下文管理保证每个角色只看到当前需要的信息；短期记忆保证任务跑得久或者会话重启以后状态不丢；长期记忆让历史经验能够跨任务复用；ES BM25 和 pgvector 组成混合检索，同时覆盖词法召回和语义召回；六重校验和 Phase Gate 保证模型的错误候选不能直接进入线上；Trace 则负责在系统仍然出现错误时还原原因，并把人工纠错重新沉淀回长期记忆。它们不是几项独立技术，而是围绕 Agent 的可靠执行形成一个闭环。</p>
+
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/practice/" class="category-chain-item">practice</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RAG/" class="print-no-link">#RAG</a>
+      
+        <a href="/tags/%E5%AE%9E%E4%B9%A0/" class="print-no-link">#实习</a>
+      
+        <a href="/tags/%E8%85%BE%E8%AE%AF/" class="print-no-link">#腾讯</a>
+      
+        <a href="/tags/Agent/" class="print-no-link">#Agent</a>
+      
+        <a href="/tags/C/" class="print-no-link">#C++</a>
+      
+    </div>
+  
+</div>
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>腾讯实习面试整理</div>
+      <div>https://yb0os1.github.io/2026/09/16/腾讯实习面试整理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/16/%E5%AE%9E%E4%B9%A0-%E8%85%BE%E8%AE%AF/" title="实习-腾讯">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">实习-腾讯</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/14/svrkit%E6%9E%B6%E6%9E%84/" title="rpc-svrkit架构">
+                        <span class="hidden-mobile">rpc-svrkit架构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+      // 🔥 精准偏移（无冲突，不卡顿）
+      scrollSmoothOffset : -20
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

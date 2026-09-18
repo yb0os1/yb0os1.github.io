@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar22.png">
 <meta property="article:published_time" content="2026-04-10T08:31:38.000Z">
-<meta property="article:modified_time" content="2026-05-11T06:38:42.855Z">
+<meta property="article:modified_time" content="2026-08-28T05:00:22.000Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="agent">
@@ -307,6 +307,15 @@
                         
                           
                             
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
                               <a class="dropdown-item" href="/database/ClickHouse/"
                                 target="_self">
                                 
@@ -369,6 +378,15 @@
                                 target="_self">
                                 
                                   <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
                               </a>
                               
                     </div>
@@ -504,7 +522,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          7.8k 字
+          9.5k 字
         
       </span>
     
@@ -516,7 +534,7 @@
         
         
           <!-- compatible with older versions-->
-          65 分钟
+          80 分钟
         
       </span>
     
@@ -927,6 +945,70 @@
 <li>模糊检索更偏字符串层面，适合拼写纠错、短词匹配、近似文本匹配，但对同义表达、改写、跨表述检索能力弱。</li>
 </ul>
 <p>RAG 的目标通常不是找长得像的文本，而是找意思相关的文本，所以向量检索更适合做主召回。</p>
+<h1 id="ReAct"><a href="#ReAct" class="headerlink" title="ReAct"></a>ReAct</h1><h2 id="ReAct缺点"><a href="#ReAct缺点" class="headerlink" title="ReAct缺点"></a>ReAct缺点</h2><p>问：ReAct 这么经典，为什么大厂生产环境不直接用裸 ReAct？</p>
+<p>裸 ReAct 在 Demo 里很惊艳，但是线上会有5个问题：</p>
+<p><strong>1、上下文越滚越长。</strong> ReAct 每一圈都把新的 Thought、Action、Observation 拼回上下文。一个工具返回 2000 行日志，原封不动塞进去；跑 30 步，上下文直接撑爆窗口。结果是 Token 成本指数上涨，而且模型注意力被稀释——关键指令淹没在一堆 Observation 里，越跑越蠢。这个现象在 <a target="_blank" rel="noopener" href="https://notes.kamacoder.com/interview/llm/agent_drift_hallucination_interview.html">Agent 漂移与幻觉怎么解</a> 里叫”注意力稀释”。</p>
+<p><strong>2、状态全靠上下文记。</strong> 裸 ReAct 没有独立的状态存储，”我已经做到哪一步了、拿到过什么结果”全靠模型从上下文里自己读。上下文一截断，状态就丢了，模型可能重复执行已经做过的步骤，甚至忘了原始目标——这就是任务漂移的源头。</p>
+<p><strong>3、死循环。</strong> 工具反复失败时，模型会一遍遍用相同参数重试同一个工具，卡死在那。裸 ReAct 自己跳不出来，因为它”看不见”自己在重复。</p>
+<p><strong>4、终止判断不可靠。</strong> 循环什么时候停？裸 ReAct 全交给模型——模型说”Final Answer”就停。但模型可能没做完就宣布完成（偷懒），也可能做完了还在反复确认（停不下来）。把收敛判断完全托付给概率模型，本身就不工程。</p>
+<p><strong>5、不可观测。</strong> 出了问题，你只有一坨混在一起的对话文本。哪一步调了什么工具、花了多少 Token、为什么走偏，全得人肉从文本里扒。生产环境根本没法排查。</p>
+<p>因此问题不在模型，在循环。模型负责”想”,但”循环怎么转、转几圈、每圈喂什么、什么时候停、转的过程能不能看见”——这些全是循环这个控制结构的事，模型管不了</p>
+<h1 id="Loop-Engineering"><a href="#Loop-Engineering" class="headerlink" title="Loop Engineering"></a>Loop Engineering</h1><h2 id="概念-3"><a href="#概念-3" class="headerlink" title="概念"></a>概念</h2><p><strong>Loop Engineering 就是把 Agent 的循环本身当作一个需要设计、控制和观测的工程系统，而不是一段顺手写出来的 while。</strong></p>
+<p>工程重心转移到了循环这个控制结构上：</p>
+<ul>
+<li>每一圈往模型喂什么上下文（不是无脑全拼，要选、要压、要截）</li>
+<li>状态独立存哪、怎么在圈与圈之间传递</li>
+<li>这一圈花了多少 Token、还剩多少预算、超了怎么办</li>
+<li>这一圈模型能用哪些工具（工具集可以动态变）</li>
+<li>凭什么判断该停了（不全信模型说的”我做完了”）</li>
+<li>整圈过程怎么记录下来供回放和排查</li>
+</ul>
+<h2 id="循环做什么"><a href="#循环做什么" class="headerlink" title="循环做什么"></a>循环做什么</h2><p>问：你说 Agent 在循环，那它到底在循环什么？</p>
+<p>表面上循环的是思考-行动-观察，但工程上真正在每一圈流动和变化的，是五类变量。Loop Engineering 就是分别治理这五个。</p>
+<p>1、上下文内容，循环中要选、压、截</p>
+<p>每一圈喂给模型的上下文都在变。ReAct 是无脑往后拼，Loop Engineering 是主动管理：</p>
+<ul>
+<li>选：这一圈模型真正需要哪些历史信息？不相关的工具结果别全带上。</li>
+<li>压：长的 Observation 先摘要再入上下文，2000 行日志压成 3 行结论。</li>
+<li>截：超过阈值时，把早期的对话压缩成一段摘要（Auto-Compact），给关键状态留出空间。</li>
+</ul>
+<p>上下文往循环里喂什么、怎么喂，是 Context Engineering 的范畴，详见 <a target="_blank" rel="noopener" href="https://notes.kamacoder.com/interview/llm/claude_code_context_window_interview.html">Claude Code 上下文窗口面试详解</a>。<br><strong>上下文是循环里第一个会失控的变量，不管它，Token 和注意力一起崩。</strong></p>
+<p>2、状态与记忆，循环里要独立存、要传递</p>
+<p>裸 ReAct 的状态藏在上下文文本里，截断就丢。Loop Engineering 把状态从上下文里拎出来，独立维护：</p>
+<ul>
+<li>当前进度（已完成哪些子任务、待办哪些）</li>
+<li>已经拿到的关键结果（结构化存储，而不是混在对话里）</li>
+<li>原始目标（单独钉住，每圈提醒模型，防止漂移）</li>
+</ul>
+<p>这样即使上下文被压缩，状态依然完整。<br>记忆系统的设计见 <a target="_blank" rel="noopener" href="https://notes.kamacoder.com/interview/llm/agent_interview.html">Agent 大厂面试题汇总</a> 的记忆部分</p>
+<p>3、预算，循环里要计数、要设上限</p>
+<p>这是裸 ReAct 完全没有、而生产环境必须有的东西。每一圈都要问：</p>
+<ul>
+<li>已经转了几步？（步数预算，通常 15-50 步封顶）</li>
+<li>累计花了多少 Token &#x2F; 多少钱？（成本预算）</li>
+<li>跑了多久？（时间预算）</li>
+</ul>
+<p>任何一个预算触顶，循环就该优雅退出——基于已有信息给个答案，而不是无限烧下去。</p>
+<p><strong>把预算当成循环的一等公民，是 Loop Engineering 和裸 ReAct 最直观的区别。</strong> 面试时这点一定要主动提，体现你有成本意识，相关的成本治理见 <a target="_blank" rel="noopener" href="https://notes.kamacoder.com/interview/llm/multi_agent_harness_interview.html">Multi-Agent Harness 面试详解</a></p>
+<p>4、可用工具集， 循环里可以动态变</p>
+<p>裸 ReAct 通常把所有工具一股脑塞给模型。但工具一多（几十上百个），模型选工具就开始出错、甚至调用不存在的工具。Loop Engineering 让<strong>工具集随循环阶段动态收放</strong>：</p>
+<ul>
+<li>规划阶段只给”检索类”工具，执行阶段才放开”写入类”工具</li>
+<li>根据当前子任务，只暴露相关的工具子集</li>
+<li>危险工具（删除、转账）加二次确认或权限门</li>
+</ul>
+<p>工具集是循环里一个常被忽略、但很影响稳定性的变量。工具怎么治理详见 <a target="_blank" rel="noopener" href="https://notes.kamacoder.com/interview/llm/multi_agent_harness_interview.html">Multi-Agent Harness 面试详解</a></p>
+<p>5、终止与收敛判断，循环里最难、不能全信模型</p>
+<p>循环什么时候停，是 Loop Engineering 里最硬的一块。不能像裸 ReAct 那样”模型说 Final Answer 就停”，要多重信号：</p>
+<ul>
+<li>结构化完成信号：让模型输出明确的 <code>done: true</code> 字段，而不是靠解析自然语言</li>
+<li>外部校验：模型说做完了，用规则或另一个检查再验一遍（任务目标真达成了吗）</li>
+<li>兜底闸：预算触顶、重复动作检测、超时——这几道是硬退出，不给模型商量的余地</li>
+</ul>
+<p>死循环防控（最大步数、重复动作检测、超时）的代码示例，<a target="_blank" rel="noopener" href="https://notes.kamacoder.com/interview/llm/agent_interview.html">Agent 大厂面试题汇总</a> 里给过，这里强调的是更上一层：<strong>收敛判断要”模型信号 + 外部校验 + 硬兜底”三层叠加，不能单点依赖模型。</strong></p>
+<p><strong>循环的不是一段文本，是一个由上下文、状态、预算、工具、终止条件构成的、不断演化的系统状态。</strong> Loop Engineering 就是让这个系统状态可控地收敛到目标，而不是放任它发散。</p>
+<h2 id="ReAct和Loop对比"><a href="#ReAct和Loop对比" class="headerlink" title="ReAct和Loop对比"></a>ReAct和Loop对比</h2><p>![[Pasted image 20260828130006.png]]</p>
+<p><strong>Loop Engineering 不是要取代 ReAct，而是把 ReAct 这个内核，包进一套工程治理里。</strong> 最里面那圈”想-做-看”还在，只是外面多了五道治理。就像裸 SQL 和带连接池、超时、重试、监控的数据库访问层的区别——内核没变，但能不能上生产，差的就是外面这套。</p>
 
                 
               

@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar23.png">
 <meta property="article:published_time" content="2026-03-21T16:05:16.000Z">
-<meta property="article:modified_time" content="2026-04-22T08:01:16.811Z">
+<meta property="article:modified_time" content="2026-09-04T08:18:26.000Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="JUC">
 <meta property="article:tag" content="java">
@@ -307,6 +307,15 @@
                         
                           
                             
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
                               <a class="dropdown-item" href="/database/ClickHouse/"
                                 target="_self">
                                 
@@ -369,6 +378,15 @@
                                 target="_self">
                                 
                                   <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
                               </a>
                               
                     </div>
@@ -504,7 +522,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.2k 字
+          4.5k 字
         
       </span>
     
@@ -516,7 +534,7 @@
         
         
           <!-- compatible with older versions-->
-          27 分钟
+          38 分钟
         
       </span>
     
@@ -723,8 +741,15 @@
 <li>阻塞处理方面，平台线程 IO 阻塞时内核线程被挂起，浪费资源；虚拟线程 IO 阻塞时 JVM 卸载它，载体线程继续执行其他任务，CPU 利用率高</li>
 <li>数量上限方面，平台线程单机最多上千个，再多 OOM；虚拟线程单机轻松百万级</li>
 </ol>
-<h2 id="虚拟线程原理"><a href="#虚拟线程原理" class="headerlink" title="虚拟线程原理"></a>虚拟线程原理</h2><p>实现虚拟线程的核心组件主要是ExecutorService执行器+Continuation续体，执行器：默认是ForkJoinPool，默认线程数量等于运行计算机上的处理器数量（核数），续体：可挂起和可恢复的Runnable，可以分段执行的Runnable</p>
+<h2 id="虚拟线程原理"><a href="#虚拟线程原理" class="headerlink" title="虚拟线程原理"></a>虚拟线程原理</h2><p>实现虚拟线程的核心组件有三个：ExecutorService执行器+Continuation续体+Poller，执行器：默认是ForkJoinPool，默认线程数量等于运行计算机上的处理器数量（核数），续体：可挂起和可恢复的Runnable，可以分段执行的Runnable，Poller：独占一个 epoll 实例（Linux）、专门感知 IO 就绪的独立线程。读 poller 和写 poller 分开、每类可以有多个，fd 按 hash 分流，避免所有 fd 挤在一个 epoll 上成为瓶颈。这个组件常被忽略，但没有它，”能挂起”就变不成”能自动恢复”。</p>
 <p>当（IO等待&#x2F;互斥资源等待释放的时候）执行到阻塞点的时候，会把当前调用栈保存为 continuation 并从载体线程卸载，载体线程继续去跑其他虚拟线程，当阻塞条件满足（比如 IO 返回）时，调度器会把 continuation 恢复并继续执行，这使得 JVM 能用少量载体线程支撑非常多的并发任务，从而在 IO 密集场景下显著提升并发能力并降低线程栈内存占用。</p>
+<p><strong>– 详细：</strong></p>
+<p>当（IO 等待 &#x2F; 互斥资源等待释放的时候）执行到阻塞点的时候，会先把「fd → 当前虚拟线程」的映射记给 Poller、把 fd 注册进它的 epoll，然后把当前调用栈保存为 continuation 并从载体线程卸载，载体线程继续去跑其他虚拟线程。</p>
+<p>当阻塞条件满足（比如 IO 返回）时，是 Poller 线程从 <code>epoll_wait</code> 返回、反查出对应的虚拟线程、调用 <code>LockSupport.unpark()</code>。之后由某个载体线程（可能不是原来那个，因为栈在堆上、任何载体线程都能接手）把 continuation 恢复并继续执行——恢复后并不是直接拿到数据，而是回到 read 循环里重新调一次 read，因为 epoll 是就绪通知（Reactor）而不是完成通知（Proactor），内核只说”现在有数据了”，数据还得自己读。</p>
+<blockquote>
+<p>注意 Poller 自己绝不执行业务代码（那会堵住 epoll 循环），它只是把虚拟线程重新提交给调度器<br>调度器本身完全不感知 IO，它是被 unpark「喂」任务的被动角色。 </p>
+</blockquote>
+<p><strong>虚拟线程执行 read 这类 IO 操作时，载体线程是如何感知到 IO 完成、从而唤醒虚拟线程继续执行的？也就是虚拟线程的调度器如何感知 IO 就绪并切回执行？</strong></p>
 <h2 id="虚拟线程的坑"><a href="#虚拟线程的坑" class="headerlink" title="虚拟线程的坑"></a>虚拟线程的坑</h2><ol>
 <li>不适合 CPU 密集型任务，CPU 密集时虚拟线程和平台线程都占 CPU，没有优势，反而调度开销可能更大</li>
 <li>pinning问题：synchronized同步关键字和本地方法，虚拟线程被固定pinned在某个平台线程无法被挂起（卸载），导致并发效率下降</li>
@@ -733,8 +758,26 @@
 <p>为什么导致pinning问题？</p>
 <p><code>synchronized</code>会导致 Pinning，是因为它是基于 Monitor 锁实现的，JVM 无法安全地卸载持有 Monitor 锁的虚拟线程，怕锁状态混乱，所以只能 Pin 住直到锁释放。</p>
 <p><code>native</code>方法会导致 Pinning，是因为 JVM 无法控制本地代码的执行，本地代码可能持有本地资源、修改载体线程状态，卸载的话会出问题，所以也必须 Pin 住。</p>
-<p>使用虚拟线程的时候要注意自己以及引用的别人的包里面都要检查，不能使用到上面的</p>
+<p>同步文件 IO——<code>FileInputStream</code> 底下是真阻塞的系统调用（Linux 上普通文件的 <code>O_NONBLOCK</code> 对 read 基本无效），没法非阻塞化所以没法 yield。JDK 的缓解是 ForkJoinPool 的 compensation 机制，临时多开一个载体线程补位，但这已经背离初衷。<br>使用虚拟线程的时候要注意自己以及引用的别人的包里面都要检查，不能使用到上面的</p>
 </blockquote>
+<h2 id="java虚拟线程、C-协程和svrkit协程"><a href="#java虚拟线程、C-协程和svrkit协程" class="headerlink" title="java虚拟线程、C++协程和svrkit协程"></a>java虚拟线程、C++协程和svrkit协程</h2><p>Java虚拟线程：见前面虚拟线程原理</p>
+<p><strong>C++20协程</strong>：核心原理是 编译器的 CPS 变换（续体传递）+ 无栈状态机。</p>
+<ul>
+<li>编译器看到 <code>co_await</code>，会把这个函数做一次变换：把”挂起点之后的代码”打包成一个可以稍后调用的续体（continuation），并把函数重写成一个状态机——每个 <code>co_await</code> 是一个状态，用一个整数记录”执行到第几状态”。</li>
+<li>无栈的原理：它不保存 CPU 栈，而是把需要跨挂起点存活的局部变量提升（promote）到堆上的协程帧里，恢复时按状态编号跳转。所以它不需要独立栈，内存只是一个帧对象的大小。</li>
+</ul>
+<p>只存必要的帧、不分配独立栈，所以内存开销最小；但代价是必须显式 <code>co_await</code> 标挂起点、要改代码，而且只给了语言机制、调度器要自己配。</p>
+<p><strong>svrkit协程</strong>：libco，核心原理是 用户态上下文切换（ucontext&#x2F;汇编）+ 系统调用 Hook + 事件驱动</p>
+<ul>
+<li>有栈切换的原理：每个协程分配独立栈，切换时用 <code>swapcontext</code> 或手写汇编保存当前协程的 CPU 寄存器（含栈指针 SP、程序计数器 PC）到它的上下文、再载入目标协程的上下文——这整个过程在用户态完成、不进内核，所以切换极快。因为保存了完整栈和 SP，能在任意函数深处挂起</li>
+</ul>
+<p>原理就是怎么切、栈怎么管、怎么调度、怎么让同步代码变异步。</p>
+<ul>
+<li>第一块，用户态上下文切换。 每个协程分配一块独立的栈，切换时用纯手写汇编 <code>coctx_swap</code>，把当前协程的 14 个寄存器保存到它的上下文里、再载入目标协程的——其中最关键的是恢复栈指针 rsp，栈指针一换就等于换了整个执行现场，最后一条 <code>ret</code> 从新栈上弹出返回地址，跳到目标协程上次让出的位置。整个过程纯用户态、不进内核，所以只要 10 到 50 纳秒。</li>
+<li>第二块，栈管理。 默认是 mmap 分配 128K 的栈，前后各加一个 PROT_NONE 的 guard page，栈溢出会立刻 SIGSEGV 当场崩掉，而不是静默踩坏隔壁协程的内存——后者是最难查的一类 bug。还有共享栈模式，多个协程轮流用一块栈、切换时 memcpy，省内存但有拷贝开销。</li>
+<li>第三块，调度。 每个 worker 里跑一个 <code>co_eventloop</code>：epoll_wait 拿就绪的 IO 事件、时间轮拿到期的超时事件，两者并进同一个 active 列表，然后逐个 resume 对应的协程。所以 RPC 超时和 IO 就绪走的是同一条唤醒路径。调度是 N:1 协作式，只在协程主动让出时切换，没有抢占。</li>
+<li>第四块，系统调用 hook。 libco 用 <code>dlsym</code> 拿到 libc 里真正的 read、write 地址，然后定义同名函数把它覆盖掉。被 hook 的函数先判断当前在不在协程里——不在就直接调原始调用、行为不变；在协程里就把 fd 注册到 epoll 然后让出，就绪后被事件循环唤醒，再调一次原始调用完成。</li>
+</ul>
 
                 
               

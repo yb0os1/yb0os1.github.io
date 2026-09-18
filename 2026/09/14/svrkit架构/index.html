@@ -1,0 +1,1282 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="Svrkit介绍微信后台的核心 C++ RPC 服务框架，WXG 技术架构部几乎所有后台服务都基于它开发。 它解决的是”业务只写业务逻辑”的问题。早期开发者要自己处理：协议解析、配置读取、日志、测试工具、服务发现、负载均衡、超时重试、限流熔断。Svrkit 把这些基础能力下移到框架，开发流程简化为三步：定义 proto → 生成框架代码 → 填充业务逻辑。 核心设计是网络层和业务层彻底分离：IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rpc-svrkit架构">
+<meta property="og:url" content="https://yb0os1.github.io/2026/09/14/svrkit%E6%9E%B6%E6%9E%84/index.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="Svrkit介绍微信后台的核心 C++ RPC 服务框架，WXG 技术架构部几乎所有后台服务都基于它开发。 它解决的是”业务只写业务逻辑”的问题。早期开发者要自己处理：协议解析、配置读取、日志、测试工具、服务发现、负载均衡、超时重试、限流熔断。Svrkit 把这些基础能力下移到框架，开发流程简化为三步：定义 proto → 生成框架代码 → 填充业务逻辑。 核心设计是网络层和业务层彻底分离：IO">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar36.png">
+<meta property="article:published_time" content="2026-09-14T08:45:31.000Z">
+<meta property="article:modified_time" content="2026-09-14T10:55:22.749Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="rpc">
+<meta property="article:tag" content="分布式架构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar36.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>rpc-svrkit架构 - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="rpc-svrkit架构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-14 16:45" pubdate>
+          2026年9月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          92 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">rpc-svrkit架构</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <h1 id="Svrkit介绍"><a href="#Svrkit介绍" class="headerlink" title="Svrkit介绍"></a>Svrkit介绍</h1><p>微信后台的核心 C++ RPC 服务框架，WXG 技术架构部几乎所有后台服务都基于它开发。</p>
+<p>它解决的是”业务只写业务逻辑”的问题。早期开发者要自己处理：协议解析、配置读取、日志、测试工具、服务发现、负载均衡、超时重试、限流熔断。Svrkit 把这些基础能力下移到框架，开发流程简化为三步：定义 proto → 生成框架代码 → 填充业务逻辑。</p>
+<p>核心设计是<strong>网络层和业务层彻底分离</strong>：IO 线程用 epoll 收发包，Worker 是独立进程跑业务，中间用共享内存队列零拷贝传数据、socketpair 传就绪信号；业务逻辑跑在 <strong>libco 协程</strong>里，同步写法就能拿到高并发。</p>
+<p>框架把服务治理全包了——路由发现、超时重试、过载保护、限流，业务只需要写 proto 接口和 serviceimpl，<strong>一个 proto 文件生成 client、server、测试工具全套</strong>。</p>
+<p>核心理念”<strong>一个 proto 文件生成一切</strong>“：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-class">.proto</span> 文件<br>    ├── skproto2struct   → <span class="hljs-selector-class">.pb</span><span class="hljs-selector-class">.cc</span> + <span class="hljs-selector-class">.pb</span><span class="hljs-selector-class">.h</span>        （Protobuf 消息结构体）<br>    ├── skproto2service  → dispatcher + service   （服务端 Dispatcher 和 Service 基类）<br>    ├── skproto2client   → cliproto + baseclient  （客户端协议和调用封装）<br>    └── skproto2test     → test suite             （测试工具框架）<br></code></pre></td></tr></table></figure>
+
+<p>要点：<code>skgenerated/</code> 下是自动生成代码<strong>不要手改</strong>；唯一需要手写的源文件是 <code>.proto</code>，核心业务代码写在 <code>&lt;module&gt;serviceimpl_pb.cpp</code>。</p>
+<h1 id="调用过程"><a href="#调用过程" class="headerlink" title="调用过程"></a>调用过程</h1><h2 id="一次完整的-RPC-调用过程"><a href="#一次完整的-RPC-调用过程" class="headerlink" title="一次完整的 RPC 调用过程"></a>一次完整的 RPC 调用过程</h2><p>Svrkit 的核心设计是<strong>网络层和业务层彻底分离</strong>，中间用共享内存队列传数据、socketpair 传信号。整条链路分四步。</p>
+<p><strong>第一步，建连接。</strong> accept 线程进行监听，拿到FD，代表这条 TCP 连接的文件描述符，<strong>轮转</strong>分给某个 IO 线程。IO 线程为它创建一个会话对象，记录 FD、一个<strong>全局唯一的会话 ID</strong>和收包缓冲区，把这条连接注册到自己的 epoll 里。</p>
+<blockquote>
+<p>accept 单独一个线程，是因为建连接很轻量，且不能让业务卡死影响新连接接入<br>epoll  Linux 的 <strong>IO 多路复用</strong>机制：让<strong>一个线程同时盯住上万条连接</strong>，哪条来数据了内核就告诉你，不用一条条去问。<strong>三个调用：</strong><code>epoll_create</code> 建实例 → <code>epoll_ctl</code> 把连接加进去（这就是”注册”）→ <code>epoll_wait</code> 等事件。<strong>关键优势</strong>：开销只和活跃连接数有关，与总连接数无关。10 万条连接里只有 50 条有数据，就只返回这 50 条。</p>
+</blockquote>
+<p><strong>第二步，收包并投递。</strong> IO 线程 epoll 等到可读事件，把数据读出来追加到该连接的缓冲区，然后调 <code>ValidatePkg</code> 判断是半包还是整包——半包就留着继续等，收满一个完整包才处理。拿到完整请求后，把请求体加上会话 ID 等元数据打包，写进共享内存队列 InQueue，再往 socketpair 写一个字节通知 worker。</p>
+<blockquote>
+<p>数据走共享内存是为了零拷贝，省掉管道那种用户态到内核态的两次拷贝；但共享内存本身不产生可读事件、挂不到 epoll 上，所以额外用 socketpair 传信号。数据要快，信号要能被 epoll 等到。</p>
+</blockquote>
+<p><strong>第三步，worker 执行业务。</strong> worker 是独立进程，启动时已预创建一批协程。它一边等 socketpair 通知、一边轮询 InQueue，取到请求后使用空闲协程切进去执行。业务代码是同步写法，但执行到网络等待点会自动让出 CPU，调度器立刻切到别的协程处理下个请求，所以一个 worker 能同时在处理几十上百个请求。算完后把响应连同<strong>原样带回来的会话 ID</strong> 写进 OutQueue，再通知 IO 线程。</p>
+<p><strong>第四步，回包。</strong>  IO 线程被唤醒后从 OutQueue 取出响应。从响应中的会话 ID 去会话表里反查出会话对象，从中取到这条连接当前的文件描述符，再把数据写出去。如果查不到，说明这条连接在业务处理期间已经断开、会话对象已被销毁，那就直接丢弃这个响应。</p>
+<p>餐厅类比（面试很好用）：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>类比</th>
+<th>代码实体</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Accept 线程</td>
+<td>迎宾</td>
+<td><code>AcceptThrRun</code></td>
+<td>建连接，拿 FD 入 AcceptQueue</td>
+</tr>
+<tr>
+<td>Accept Queue</td>
+<td>等位区</td>
+<td>libevent <code>event_msgqueue</code></td>
+<td>连接排队</td>
+</tr>
+<tr>
+<td>IO 线程</td>
+<td>服务员</td>
+<td><code>MainThrRun</code>（每线程一个 event_base）</td>
+<td>读请求写 InQueue、从 OutQueue 取回包发客户端</td>
+</tr>
+<tr>
+<td>InQueue &#x2F; OutQueue</td>
+<td>订单夹 &#x2F; 出餐口</td>
+<td><code>SKShmQueue</code>（共享内存环形队列）</td>
+<td>跨进程传数据</td>
+</tr>
+<tr>
+<td>通知</td>
+<td>敲铃</td>
+<td><code>SKNotify</code>（socketpair 写 1 字节 ‘z’）</td>
+<td>传”就绪”信号</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>厨师</td>
+<td><code>SKCoWorkerMP_Child::ChildRun</code></td>
+<td>执行业务逻辑</td>
+</tr>
+</tbody></table>
+<h2 id="为什么回包不直接用-FD而是会话ID？"><a href="#为什么回包不直接用-FD而是会话ID？" class="headerlink" title="为什么回包不直接用 FD而是会话ID？"></a>为什么回包不直接用 FD而是会话ID？</h2><p>worker 是独立进程，不持有 FD；回包时连接可能已断开并被新连接复用同一 FD，靠会话id才能确认会话没关。注意这里不能直接按 FD 发，必须用会话 ID 去会话表里查。因为 FD 会被复用——A 断开后它的 FD 7 被释放，B 连进来可能又拿到 7，只认 FD 就会把 A 的数据发给 B，造成串包。</p>
+<h2 id="共享内存-socketpair-一起用"><a href="#共享内存-socketpair-一起用" class="headerlink" title="共享内存 + socketpair 一起用"></a>共享内存 + socketpair 一起用</h2><p>共享内存传数据，是为了零拷贝。 如果数据走管道或 socket，要经过用户态到内核态再到用户态的两次拷贝和两次系统调用；共享内存是两个进程直接读写同一块内存，零拷贝。IO 线程和 worker 之间过的是全量请求流量，这个差距是量级的。</p>
+<p>共享内存有一个缺陷。 它就是一块内存，不产生任何可读事件，挂不到 epoll 上等待。如果只用共享内存，worker 只能忙轮询着扫内存，CPU 全耗在空转上。</p>
+<p>所以补 socketpair 传信号——写完数据往里塞一个字节，socketpair 的可读事件能被 epoll 感知，worker 被唤醒后去共享内存取数据。一个字节把这个缺陷全补上了，代价约等于零。</p>
+<p>数据要快，走共享内存；信号要能被 epoll 等到，走 socketpair。</p>
+<p>追问：<strong>为什么不使用条件变量&#x2F;信号&#x2F;eventfd？</strong></p>
+<blockquote>
+<p>条件变量：跨进程要先建立在共享内存上（pthread 的进程共享属性），配置复杂，而且同样挂不上 epoll<br>信号（signal）：不能排队、会合并，两次写只触发一次处理——丢通知；信号处理函数里能干的事也严重受限<br>eventfd：确实可以（写 1 触发可读），和 socketpair 在这个角色上等价，svrkit 选 socketpair 是历史与全双工特性的考虑——说到这个层面就够了，再往下别编</p>
+</blockquote>
+<h2 id="Accept-Queue-InQueue-OnQueue-满了"><a href="#Accept-Queue-InQueue-OnQueue-满了" class="headerlink" title="Accept Queue&#x2F;InQueue&#x2F;OnQueue 满了"></a>Accept Queue&#x2F;InQueue&#x2F;OnQueue 满了</h2><p>核心原则是“在还来得及的时候尽早拒绝，在来不及的时候认损失”</p>
+<p>AcceptQueue 和 InQueue 满，走主动快速失败——连接刚建立或请求还没进业务，直接回失败甚至关连接，客户端拿到明确错误立刻换机重试。过载时可拒绝也不能排队，排队只会让延迟越滚越大、最后全部超时，那就是雪崩；快速失败才是把过载挡在业务之前。</p>
+<blockquote>
+<p>InQueue 还有个细节：worker 取包时看排队时长，超过 500ms 就丢弃——因为客户端大概率已经超时不等了，处理了也白发</p>
+</blockquote>
+<p>OutQueue 满就丢响应，只记日志，客户端超时。因为业务已经算完，没得回滚。但这个极少发生——IO 线程发包是微秒级、worker 算业务是毫秒级，瓶颈永远在 worker，InQueue 必然先满，轮不到 OutQueue。</p>
+<p>追问：<strong>“假失败响应”是什么？</strong></p>
+<blockquote>
+<p>MakeFakeResp：不经过业务逻辑，框架直接构造一个失败包回去——客户端拿到明确的失败码，而不是干等超时</p>
+</blockquote>
+<h2 id="进程间通信为什么选共享内存？"><a href="#进程间通信为什么选共享内存？" class="headerlink" title="进程间通信为什么选共享内存？"></a>进程间通信为什么选共享内存？</h2><p> svrkit 里 IO 线程（网络进程）和 worker（独立进程）之间传请求，选的是<strong>共享内存环形队列 + socketpair 通知</strong>的组合。拆开说为什么是这两个：</p>
+<p> <strong>数据走共享内存，为了零拷贝</strong>。如果用管道或 socket，数据要走”用户态 → 内核态 → 用户态”，<strong>两次拷贝加两次系统调用</strong>；共享内存是两个进程直接读写同一块物理内存，<strong>零拷贝</strong>——对每个请求都要过的主干道，这个差距是量级的。</p>
+<p><strong>信号走 socketpair，因为共享内存”不会响”</strong>。共享内存本身不产生可读事件，挂不到 epoll 上等待；而 IO 线程的事件循环需要统一的触发源。socketpair 每次只写一个字节，代价极小，却让”worker 干完活了”这件事变成 epoll 可等的事件。</p>
+<p><strong>数据要快，信号要能被 epoll 等到——各取所长</strong>。<br> 顺带一个运维细节：checkmaster 机制——网络进程每 10 秒检查 worker 组 master，发现任何一个丢了就 <code>kill(0, SIGKILL)</code> <strong>自杀整个进程组</strong>，交给外部守护重启。宁可整机快速重启、名字服务切走流量，也不留一个半死不活的进程处理必失败的请求。</p>
+<h2 id="零拷贝技术"><a href="#零拷贝技术" class="headerlink" title="零拷贝技术"></a>零拷贝技术</h2><p><strong>内核提供的主要是三个：sendfile、splice、mmap。</strong></p>
+<p><strong>sendfile</strong>：文件到 socket 的专用通道，数据从页缓存直接进 socket 缓冲，全程不出内核；网卡支持 SG-DMA 的话连这一次 CPU 拷贝都省掉，只传“地址+长度”的描述符。nginx 发静态文件、Kafka 把日志段发给消费者就是它。<strong>局限是只能文件到 socket，方向单向，而且数据不经过用户态</strong>——用户代码根本摸不到数据。</p>
+<p><strong>splice</strong>：比 sendfile 灵活一点，通过管道把任意两个 fd 在内核里衔接起来，数据在内核缓冲间移动。但同样是“内核内摆渡”，<strong>数据不落地用户态</strong>。</p>
+<p><strong>mmap</strong>：把文件映射进用户地址空间，省掉“页缓存 → 用户缓冲”的一次拷贝。数据倒是进用户态了，但每次传输还是要走系统调用进内核。</p>
+<p><strong>然后是共享内存</strong>：两个进程把同一块物理内存映射进各自地址空间，之后读写就是<strong>普通内存访问——零拷贝、零系统调用</strong>。</p>
+<h2 id="svrkit零拷贝使用共享内存"><a href="#svrkit零拷贝使用共享内存" class="headerlink" title="svrkit零拷贝使用共享内存"></a>svrkit零拷贝使用共享内存</h2><p>① 两端都是用户态进程，且都要处理数据本体。 IO 线程要组装请求包，worker 要解析并执行业务——数据两端都要被代码摸到。而 sendfile&#x2F;splice 是“内核内摆渡”，数据不进用户态，第一个特征就不满足，直接排除。</p>
+<p>② 双向高频。 请求走 InQueue、响应走 OutQueue，一来一回都是全量流量。共享内存映射一次、终身使用，每次传输连系统调用都不用；mmap 方案每次还得进内核。</p>
+<p>③ 要在内存上构建数据结构。 传的不是裸字节流，是“请求体+元数据”的结构化消息——共享内存上可以直接建环形队列、管理读写指针、控制边界；其他方案都没有“在通道上自由建结构”的能力。</p>
+<p>一句话：sendfile&#x2F;splice 解决的是“转发”的零拷贝——数据借道内核就走；svrkit 要的是“协作”的零拷贝——两个进程共同操作一块数据，那只能是共享内存。</p>
+<p>共享内存的代价：<strong>没有同步原语</strong>——所以 svrkit 要自己配 socketpair 传信号、用环形队列+原子指针做无锁队列；<strong>生命周期管理</strong>——进程崩了内存还在（内核不回收，要显式删除或靠引用计数）；<strong>安全性</strong>——任何持有映射的进程都能写，一块写坏全完，所以只适合自己信任的进程组之间用。</p>
+<h1 id="序列化协议"><a href="#序列化协议" class="headerlink" title="序列化协议"></a>序列化协议</h1><p>svrkit 用 <strong>Protobuf 做序列化，上面再包一层自研的 TLV Pickle 协议封装</strong>。</p>
+<p>分两层说。</p>
+<p><strong>内层 Protobuf</strong> 负责”数据怎么表示”：二进制编码，体积比 JSON 小很多，编解码不需要解析文本所以快得多；而且 proto 文件本身就是接口契约，强类型。</p>
+<p><strong>外层 TLV Pickle</strong> 负责”请求怎么路由”：它在 Protobuf 之上加了 <strong>Magic（模块号）和 CmdID（接口号）</strong>。Magic 建模块时在 poseidon 申请、全服务共用；CmdID 每个 rpc 方法一个、从 1 递增——两者拼起来构成”服务名 + cmdid”的<strong>全局唯一标识</strong>，服务端 dispatcher 靠它把请求路由到正确的处理函数。</p>
+<p> <strong>不用 JSON 的三个理由</strong>：一是体积和编解码速度；二是强类型契约，编译期就能发现字段错误；三是<strong>向后兼容</strong>——protobuf 的字段编号机制允许只加可选字段不改老字段，服务端升级后老客户端照常工作。</p>
+<p> 由此也带来 svrkit 的硬约束，这些是”协议即契约”的直接体现：<strong>cmdid 上线后不能改；字段编号、字段类型、服务名、方法名都禁止改；只能加新的可选字段或标 deprecated，不能删字段</strong>。</p>
+<h1 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h1><h2 id="网络模型怎么样"><a href="#网络模型怎么样" class="headerlink" title="网络模型怎么样"></a>网络模型怎么样</h2><p>svrkit 是<strong>主从 Reactor 多线程模型</strong>，<strong>主 Reactor 是 accept 线程</strong>，只负责建连接、拿 FD，然后轮转分给从 Reactor；<strong>从 Reactor 是 N 个 IO 线程，每个线程一个独立的 epoll</strong>，负责已建连接的读写。</p>
+<p>在标准模型上 svrkit 做了两个改造： </p>
+<ul>
+<li>一是计算做了进程级分离——业务 handler 不在同进程的线程池里跑，而是独立的 Worker 进程，靠共享内存队列传数据、socketpair 传信号。业务代码 coredump 只挂自己的 worker，master 秒级拉起，网络层完全不受影响。 </li>
+<li>二是 handler 协程化——Worker 里跑的是 libco 协程池，hook 系统调用，业务同步写法拿到异步性能。</li>
+<li>工程上：<strong>连接和 IO 线程绑定</strong>——一条连接从头到尾只归一个线程管，收包缓冲区、半包状态都只被它访问，<strong>天然无锁</strong>；也不会有多个线程抢同一事件的惊群。</li>
+</ul>
+<p>追问：<strong>epoll了解吗？</strong></p>
+<blockquote>
+<p>epoll 是 Linux 的 <strong>IO 多路复用</strong>机制，解决的问题是：<strong>一个线程同时监听海量连接，哪条就绪了内核只通知哪条</strong>。</p>
+<p>三个系统调用：<strong>epoll_create</strong> 建实例（它自己也是个 fd）；<strong>epoll_ctl</strong> 把要监听的连接增删改进去，只注册一次；<strong>epoll_wait</strong> 阻塞等待，<strong>返回的就绪列表</strong>。</p>
+<p>它比 select&#x2F;poll 快在两点：<strong>一是 fd 全部维护在内核的红黑树里</strong>——select&#x2F;poll 每次调用都要把整个 fd 集合从用户态拷进内核、返回后还要 O(n) 遍历找哪个就绪，epoll 的 ctl 只注册一次；<strong>二是事件到达靠回调</strong>——数据到了，内核通过回调把对应项挂进就绪链表，epoll_wait 只拷贝这个链表出来，<strong>开销从 O(总连接数) 降到 O(就绪数)</strong>。10 万条连接只有 50 条有数据，就只处理这 50 条。</p>
+<p>还有两种触发模式：<strong>LT 水平触发</strong>——只要缓冲区还有数据没读完就一直通知，编程简单不怕漏读；<strong>ET 边缘触发</strong>——状态变化只通知一次，必须循环读到 EAGAIN，省通知开销但容易踩漏读的坑，而且 ET 必须配非阻塞 fd。svrkit默认是 LT。</p>
+</blockquote>
+<p>追问：<strong>为什么每个线程一个独立 epoll？共享一个不行吗？</strong></p>
+<blockquote>
+<p>共享一个 epoll 有两个问题：一是<strong>惊群</strong>——一个事件来了把多个阻塞在 epoll_wait 的线程全唤醒，只有一个能干活，其余白醒；二是连接的收包缓冲区会被多个线程碰，得加锁——而缓冲区是<strong>每个包都要碰的热点数据</strong>，锁代价太高。独立 epoll + 连接绑定线程，两个问题一起消掉。</p>
+</blockquote>
+<p>追问：<strong>惊群具体是什么？</strong></p>
+<blockquote>
+<p>多个线程&#x2F;进程在等同一个 fd 上的事件，事件到达时内核把所有等待者都唤醒，但只有第一个能 accept&#x2F;读数据，其他全白跑一趟——唤醒的开销全是浪费。经典场景是多进程 listen 同一个端口。</p>
+</blockquote>
+<p><strong>“epoll 和 select&#x2F;poll 的区别？”</strong>（操作系统通用题，备着）</p>
+<blockquote>
+<p>select 三点不足：fd 数量硬上限（1024）、每次调用要全量传 fd 集合、返回后要遍历找就绪的；poll 去掉数量限制但遍历还在。<strong>epoll 把 fd 维护在内核的红黑树里（epoll_ctl 增删），事件到达时回调挂进就绪链表，epoll_wait 只返回就绪的那批</strong>——开销从 O(总fd数) 降到 O(就绪数)。这正是它能扛海量连接的根本。</p>
+</blockquote>
+<p>模型：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs less">                          <span class="hljs-selector-tag">Client</span> × <span class="hljs-number">10000</span><br>     ┌────┬────┬────┬────┬────┬────┬────┬───┐<br>     ▼    ▼    ▼    ▼    ▼    ▼    ▼    ▼<br>┌──────────────────────────────────────────────────────┐<br>│                 网络进程（前厅）                        │<br>│                                                       │<br>│   <span class="hljs-selector-tag">Accept</span> 线程 ×<span class="hljs-number">1</span>（迎宾）：<span class="hljs-selector-tag">accept</span>() 拿 <span class="hljs-selector-tag">FD</span>，轮转分配      │<br>│        ▼                                              │<br>│   <span class="hljs-selector-tag">AcceptQueue</span>（等位区）                                │<br>│        ▼                                              │<br>│   <span class="hljs-selector-tag">IO</span> 线程 ×<span class="hljs-selector-tag">IOThreadNum</span>（服务员，每个独立 <span class="hljs-selector-tag">epoll</span>）         │<br>│   ┌──────────────┐ ┌──────────────┐ ┌─────────────┐   │<br>│   │   <span class="hljs-selector-tag">epoll</span> <span class="hljs-selector-id">#1</span>   │ │   <span class="hljs-selector-tag">epoll</span> <span class="hljs-selector-id">#2</span>   │ │   <span class="hljs-selector-tag">epoll</span> <span class="hljs-selector-id">#N</span>  │   │<br>│   │  连接 <span class="hljs-selector-tag">A</span> <span class="hljs-selector-tag">D</span> <span class="hljs-selector-tag">G</span>… │ │  连接 <span class="hljs-selector-tag">B</span> <span class="hljs-selector-tag">E</span> <span class="hljs-selector-tag">H</span>… │ │  连接 <span class="hljs-selector-tag">C</span> <span class="hljs-selector-tag">F</span>…   │   │<br>│   └──────────────┘ └──────────────┘ └─────────────┘   │<br>└──────────┬───────────────────────────▲▲───────────────┘<br>           │①收满整包,写请求            ││④按会话<span class="hljs-selector-tag">ID</span>找回连接,<br>           ▼                            ││ 发响应给客户端<br>     <span class="hljs-selector-tag">InQueue</span> ◄──共享内存,零拷贝           ││<br>           │                            ││<br>           │②<span class="hljs-selector-tag">socketpair</span>敲铃(<span class="hljs-number">1</span>字节)       ││<br>           ▼                            ││<br>┌──────────────────────────────────────┼┼──────────────┐<br>│            <span class="hljs-selector-tag">Worker</span> 进程 ×<span class="hljs-selector-tag">StartProcs</span>（后厨）           ││<br>│  ┌─────────────────────────────┐     ││<br>│  │ <span class="hljs-selector-tag">Worker</span> <span class="hljs-selector-id">#1</span>  协程○○○ ×<span class="hljs-selector-tag">RoutineCnt</span>│    ││<br>│  ├─────────────────────────────┤     ││<br>│  │ <span class="hljs-selector-tag">Worker</span> <span class="hljs-selector-id">#2</span>  协程○○○           │     ││<br>│  ├─────────────────────────────┤     ││<br>│  │ <span class="hljs-selector-tag">Worker</span> <span class="hljs-selector-id">#N</span>  协程○○○           │     ││<br>│  └─────────────────────────────┘     ││<br>│    ③业务算完 → 写<span class="hljs-selector-tag">OutQueue</span> ────────────►► + 敲铃       │<br>│  （<span class="hljs-selector-tag">worker-group</span> <span class="hljs-selector-tag">master</span>：谁崩了自动重启一个）             │<br>└───────────────────────────────────────────────────────┘<br><br></code></pre></td></tr></table></figure>
+<h2 id="怎么抗住高并发"><a href="#怎么抗住高并发" class="headerlink" title="怎么抗住高并发"></a>怎么抗住高并发</h2><p>Svrkit 抗高并发是<strong>四层手段叠出来的</strong>。</p>
+<p><strong>第一层，IO 线程用 epoll。</strong> epoll 的开销<strong>只和活跃连接数相关，与总连接数无关</strong>：10 万条连接里只有 50 条有数据，就只返回这 50 条。<strong>每个 IO 线程一个独立 epoll、连接与线程绑定</strong>——缓冲区只被一个线程碰，<strong>天然无锁</strong>；也不会有多线程抢同一事件的惊群。</p>
+<p><strong>第二层，业务用协程。</strong> Worker 里 RoutineCnt 个协程共享线程，业务写的是同步调用，但 libco <strong>hook 了系统调用</strong>：走到网络等待点协程自动让出，切去处理别的请求，回包再切回。本质是<strong>把等待时间重叠了</strong>——请求的大头耗时是等网络而不是算 CPU，等的时候 CPU 让给别人。这就是“同步写法、异步性能”，一个 worker 同时挂上百个在途请求。</p>
+<p><strong>第三层，总并发 &#x3D; IOThreadNum × worker进程 × RoutineCnt</strong>，三个参数相乘（比如 3×30×100&#x3D;9000），容量不够加配置、加机器。Worker 是独立进程，一个崩了 master 秒级拉起——<strong>只损失它手上的几个请求</strong>，高并发之下依然不雪崩。</p>
+<p><strong>第四层，过载保护。</strong> AcceptQueue 满关连接、InQueue 满回假失败包、<strong>排队超 500ms 直接丢弃</strong>。原则是<strong>宁可拒绝也不排队</strong>——排队会让延迟滚雪球、最后全部超时；快速失败让客户端立刻换机，保住已经接入的流量。</p>
+<p>追问：<strong>三个参数分别怎么调？</strong></p>
+<blockquote>
+<p><code>IoThreadNum</code> 建议<strong>核数的四分之一、最少 3</strong>——IO 线程很轻，不用多；<code>StartProcs</code> 在 svrkit 模式下是<strong>每个 IO 线程</strong>的 worker 数（注意和 summer 不同，summer 里是全局总数，同配置下 svrkit 的 worker 是 summer 的 IOThreadNum 倍——迁移最容易踩的坑）；<code>RoutineCnt</code> 加大要<strong>算内存</strong>——每协程默认 128K 栈，一个 worker 开 100 个协程就是约 13M，乘以 worker 数、进程数，栈内存是乘法关系。</p>
+</blockquote>
+<p>追问：<strong>Worker 崩了影响多大？</strong></p>
+<blockquote>
+<p>只丢<strong>它手上正在处理的几个请求</strong>——别的 worker 不受影响，网络层更不受影响。worker-group master 自动拉起新进程补位，coredump 自动上报。这就是当初做“计算进程级分离”的收益：崩溃半径被切到单个进程。</p>
+</blockquote>
+<p>追问：<strong>为什么用协程不用线程？</strong></p>
+<blockquote>
+<p>三个数：<strong>切换开销</strong>——协程是用户态纯汇编切寄存器，纳秒级，线程要陷入内核，微秒级；<strong>内存</strong>——协程栈 128K，线程栈默认 8M，一个数量级的差距；<strong>调度</strong>——协程是协作式，只在明确的等待点让出，没有抢占的锁竞争问题。所以在“一个请求一个并发单元”的 IO 密集场景里，协程能开到线程的百倍数量。</p>
+</blockquote>
+<h2 id="同步调用还是异步调用？"><a href="#同步调用还是异步调用？" class="headerlink" title="同步调用还是异步调用？"></a>同步调用还是异步调用？</h2><p> 表面上是同步的——<code>int ret = client()</code> 一行调用、一行拿结果，业务写起来就像本地函数。<strong>底层靠协程做到异步性能</strong>：这行调用执行时，当前协程在网络等待点自动 yield，worker 里的其他协程继续跑；回包后协程被唤醒接着执行。</p>
+<p> ① <strong>并发的本质是 IO 等待重叠，不是多核并行</strong>。一次请求里并发调多个下游（用 <code>BatchTaskRun</code> 或 Xwi 的任务池），是多个子调用的等待时间重叠了，CPU 上同一时刻还是跑一个协程。想要多核得靠多进程&#x2F;多线程。</p>
+<p> ② <strong>svrkit 没有真正的 fire-and-forget</strong>。起了协程任务但不读返回值，<strong>照样阻塞到全部完成</strong>——等待发生在调用语句本身，跟后面用不用返回值无关。历史上的 wqueue 异步方案想做这个效果，<strong>已废弃不能用</strong>。能控制的只是”结果回来后要不要处理错误码”。</p>
+<p> 单请求内并发多子调用用 <code>BatchTaskRun</code>：每个子任务一个协程，IO 等待重叠。它用的是<strong>独立的私有协程池</strong>（RoutineCnt × MaxBatchCnt），和接请求的 worker 协程池物理隔离——所以加再多任务也挤占不了正常请求的协程；真正的风险是把并发度参数 num 调太大，挤占的是<strong>同模块其他也在用 BatchTask 的业务</strong>。</p>
+<h1 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h1><h2 id="同IDC、跨IDC路由发现-服务发现"><a href="#同IDC、跨IDC路由发现-服务发现" class="headerlink" title="同IDC、跨IDC路由发现&#x2F;服务发现"></a>同IDC、跨IDC路由发现&#x2F;服务发现</h2><p>svrkit 的服务发现不是每次调用去查注册中心，而是读本地的路由配置文件。注册中心只负责把文件同步到每台机器上。</p>
+<p>1、<strong>文件怎么来的：</strong></p>
+<p>微信自研了一套名字服务叫 RouteSvr，svrkit 里内置了一个上报进程，把本机的服务信息报给 RouteSvr，RouteSvr 写进 ZooKeeper；然后每台机器上都装了一个 ZkAgent，定时从本 IDC 的 ZkAgentProxy 主动拉取，把路由落成本地文件。</p>
+<blockquote>
+<p> <strong>pull 不是 push</strong>，而且 agent 只找<strong>本 IDC</strong> 的 proxy 拉——跨城的压力就被隔开</p>
+</blockquote>
+<p>2、<strong>客户端怎么找到对应文件</strong></p>
+<p>核心的机制是IDC路径扩展，生成的生成的 client 代码里写的是<strong>不带 IDC 的标准路径</strong>（<code>/etc/client/mmxxx_cli.conf</code>），调用时框架拿它按顺序探四层，哪层先命中就用哪层。</p>
+<ul>
+<li><strong>查 <code>global/meta.conf</code>。</strong> 负责只在一个 IDC 部署的模块，这种模块的路由文件直接放在 global 目录下，光看路径不知道它属于哪个 IDC，要靠 meta.conf 查看该模块的归属。<strong>这套已废弃。</strong></li>
+<li><strong>查 <code>global/halfmeta.conf</code>。</strong> 负责只在某几个 IDC 部署的情况，<strong>按主调 IDC 分段</strong>：<code>[camel] xxx=shanghai</code>、<code>[hk] xxx=shenzhen</code>——西北的主调去读上海目录，香港的主调去读深圳目录</li>
+<li><strong>看本机 IDC 目录。</strong> 本机是哪个 IDC 从 <code>sysmeta.conf</code> 读。对应最常见的“每个 IDC 都部署了，各访问各的”</li>
+<li>兜底看标准路径本身。 还没有就直接返回加载失败。</li>
+<li>注：前三层都是探测<code>etc/route/</code> 体系下的位置，而第四层是回到 <code>etc/client/</code> 下的原始路径看文件本身在不在</li>
+</ul>
+<p><strong>同IDC路由和跨IDC路由</strong></p>
+<p>框架都从最终读取的文件路径里取出目标模块的 IDC，和本机 IDC 一比：</p>
+<ul>
+<li>一致 → 同 IDC：一般是第三层命中，读本机目录，直连 + 模块默认超时</li>
+<li>不一致 → 跨 IDC：一般是第二层被 halfmeta 指走，读别人的目录，走 IdcAgent 代理 + 换跨 IDC 超时（代理做了链路优化和长连接复用，比裸连跨城更快更稳）</li>
+</ul>
+<p><strong>同IDC还有就近园区的优化</strong></p>
+<p>同 IDC 内不同园区也有耗时差异（同园区省约 10ms）。开启 <code>UseNearByZone=1</code> 后，不同园区的 client 看到的机器权重表不一样：同园区先消化，吃不下的按比例溢出。不过这个是只有第一次 RPC 走就近，重试退回一致性哈希均匀打散——重试说明近处已出问题，不该再往近处挤。</p>
+<p>一个 IDC 内部有多个物理园区（zone），走同园区省时点。机制就是不同园区的 client，看到的权重表不一样传统路由下所有 client 看到的机器权重是一样的，流量均匀打散；就近园区则让每个园区的 client 算出一张只属于自己的权重表，逻辑是“同园区先消化，吃不下的按比例溢出”。</p>
+<p>追问：<strong>为什么使用IDCAgent代理？</strong></p>
+<blockquote>
+<p>跨城链路的物理现实是：RTT 大、丢包率高、连接建立慢。如果每个业务进程都自己直连远端 IDC 的机器，会发生：</p>
+<ol>
+<li>跨城连接数爆炸——每个进程对每台远端机器都要建连接，几百个进程 × 几十台机器，城间链路被海量连接占满</li>
+<li>每次建连都慢——TCP 三次握手要吃一个完整的跨城 RTT，断了重连又是</li>
+<li>难做链路优化——散落的直连，没法统一调度线路</li>
+</ol>
+</blockquote>
+<p>所以使用了IdcAgent代理，它是一个一台部署在每台服务器上的跨城代理进程。</p>
+<blockquote>
+</blockquote>
+<p>业务进程调跨 IDC 的模块时，不自己发跨城连接，而是把请求交给本机的 IdcAgent（本机通信，几乎零开销）；由 IdcAgent 负责和远端 IDC 建立并维护连接，把请求转过去、响应转回来。<br>收益：跨城连接被集中起来长连接复用（N 个业务进程的请求可以共享少量几条跨城连接），建连成本摊薄；而且可以对跨城链路做统一的线路优化和选路。所以实测走代理比裸连跨城更快也更稳。</p>
+<h2 id="为什么使用文件式的服务发现"><a href="#为什么使用文件式的服务发现" class="headerlink" title="为什么使用文件式的服务发现"></a>为什么使用文件式的服务发现</h2><p><strong>优点</strong></p>
+<p>1、规避海量客户端直连 ZK 带来的压力。 如果成千上万个业务进程，每个都创建 ZK 客户端、注册 watcher，ZK 集群连接数会爆炸；服务上下线，watcher 事件广播风暴，ZKCPU、网络扛不住。 现在只有每台机器上 1 个 Agent 连 ZK，一台机器不管跑几十个上百个业务，就一份 ZK 连接，极大降低注册中心压力。</p>
+<p>2、业务进程完全不依赖 ZK 可用性。 哪怕 ZK 集群挂掉、网络分区：Agent 不会立刻坏掉，本地磁盘已经有路由快照文件。业务 RPC 直接读本地文件，RPC 调用完全不受注册中心故障影响。 传统模式：业务进程自己做 ZK 客户端，ZK 断连，watcher 失效，部分场景会拿不到服务列表，业务风险高。</p>
+<p>3、降低故障的影响面，所有数据都是落在本地的，他可能有些数据坏了的话，他不会影影响面不会那么大。就如果你是全部访问远程的话，远程服务里面如果那个数据可能有问题的话，就所有人都拉到一个错的数据</p>
+<p>4、性能收益：RPC 路径上没有任何远程网络 IO。 每次 RPC 做服务发现，就是读本地磁盘文件（内存缓存，实际很少真正磁盘 IO），没有网络往返，延迟极低。</p>
+<p><strong>缺点</strong></p>
+<p>1）数据不是实时，是最终一致性。 Agent 定时拉取，路由变更，要经过 MQ → ZK 代理 → Agent 拉取 → 落盘文件 → 业务框架加载文件，存在延迟窗口。服务刚上线，别的机器不能立刻看见实例，要等同步。 传统 ZK‑watcher 是推送，变更毫秒级感知；这套是准实时。适合内部业务，不能容忍延迟的场景就不适合。</p>
+<p>2）存在本地文件脏数据风险。 Agent 进程 crash，机器重启，要保证路由文件可以正常更新；如果 Agent 挂了不再更新，本地文件是旧的，会访问已经下线的实例。 所以业务层 RPC 必须要有连接健康检查、故障剔除，不能完全信任本地路由文件。</p>
+<p>3）版本、哈希校验。 Agent 落盘文件带上版本号 + md5；业务 RPC 框架加载文件，对比哈希，只有文件内容真正发生变化才重新加载路由，避免频繁刷新负载均衡组件。</p>
+<p>4）区分：和普通本地缓存不一样 Dubbo&#x2F;brpc 也会把注册中心结果缓存本地文件，但客户端本身依然要维持 ZK 长连接订阅。 微信这套是：业务进程完全没有 ZK 客户端，全部交给机器级 Agent 代理，业务只读磁盘文件。</p>
+<h2 id="上海的机器A挂了要使用使用深圳的机器B，svrkit怎么路由"><a href="#上海的机器A挂了要使用使用深圳的机器B，svrkit怎么路由" class="headerlink" title="上海的机器A挂了要使用使用深圳的机器B，svrkit怎么路由"></a>上海的机器A挂了要使用使用深圳的机器B，svrkit怎么路由</h2><p>这里要分两个层次看——<strong>单机故障和 IDC 级故障，svrkit 的处理完全不同</strong>。单机挂了是在本 IDC 内解决的，不会跨城；跨 IDC 在微信后台是<strong>静态的部署选择</strong>，不是故障自动切换。</p>
+<p><strong>第一层，单机故障（A 挂了）</strong>：</p>
+<blockquote>
+<p>走的是<strong>同 IDC 内的换机重试加屏蔽</strong>。客户端调用遇到系统失败——连接失败、收发包失败、被快速拒绝这几类——框架会自动换一台机重试，默认 3 次；连接阶段还有独立的重试次数。候选机器来自客户端配置里的 Server 列表，<strong>全都是本 IDC 的机器</strong>。</p>
+<p>光重试还不够，否则每次都要先踩一遍死机。所以还有<strong>屏蔽机制</strong>：失败次数在一个周期内累计到阈值，这台机就被屏蔽掉，后续请求不再选它，过一段时间再试探性放量。屏蔽有两级，一级是线程内计数，一级是跨进程的漏桶熔断，后者默认开启。</p>
+<p>所以真实表现是：前几个请求打到 A 失败但重试成功，用户无感；很快 A 被摘掉，流量全部走本 IDC 其他机器。全程不会去深圳。</p>
+</blockquote>
+<p>**第二层，IDC 级故障：</p>
+<blockquote>
+<p>至于整个 IDC 挂掉，那已经超出 svrkit 客户端的能力范围了，属于运维侧的路由变更和接入层流量调度。我知道的是路由变更工具支持按园区、IDC 粒度灰度摘流量，跨 IDC 的指向配在 halfmeta 里可以改；另外 idcagent 有个 <code>UseRawTcp</code> 开关，出灾时可以让全网绕开代理直连。再往下的完整出灾预案我没有实际参与过</p>
+</blockquote>
+<blockquote>
+<p><strong>那什么时候才会用深圳的机器？</strong><br>只有当这个模块本来就规划成”深圳部署、上海跨过去访问”的时候。而且出发点不是容灾，是成本——某些模块调用量集中在一个 IDC，其他 IDC 调用很少，每个 IDC 都部署一套不划算，就让调用少的 IDC 跨过去访问。这是规划好的常态路由。</p>
+<p>实现上，微信的路由是<strong>按 IDC 分目录的文件</strong>，比如 <code>route/shanghai/xxx_route.conf</code>、<code>route/shenzhen/xxx_route.conf</code>。框架完成一次调用要知道两件事：本机在哪个 IDC，从 <code>sysmeta.conf</code> 里读；目标模块在哪个 IDC，解析路由文件路径得到。<strong>一旦发现两者不一致，默认走 IdcAgent 代理过去</strong>，因为代理比裸连跨 IDC 更快更稳定。</p>
+<p>具体哪个 IDC 跨到哪个 IDC，配在 <code>halfmeta.conf</code> 里，比如配西北的主调去访问上海部署的模块。<strong>关键是：没配跨 IDC 的 IDC，访问这个模块就是直接失败，不会自动兜底到别的 IDC。</strong></p>
+</blockquote>
+<p><strong>“为什么不做成自动跨城容灾”</strong>，可以答：跨城延迟比同城高一个量级，自动切过去可能把一个局部故障变成全局雪崩（本来只是几台机的问题，结果整个 IDC 的流量涌向另一个 IDC 把它压垮）；而且跨城要考虑数据一致性和带宽成本。所以微信的选择是<strong>同城内自愈，跨城靠人工&#x2F;预案决策</strong>。</p>
+<h1 id="连接生命周期管理"><a href="#连接生命周期管理" class="headerlink" title="连接生命周期管理"></a>连接生命周期管理</h1><h2 id="长连接还是短连接？"><a href="#长连接还是短连接？" class="headerlink" title="长连接还是短连接？"></a>长连接还是短连接？</h2><p><strong>长连接为主，空闲 30 秒回收。</strong></p>
+<p>为什么长连接：建连是有真实成本的——TCP 三次握手吃一个 RTT，新连接还有慢启动；RPC 是高频调用，每次调用都建连的话，这些开销乘上 QPS 就是灾难。长连接建一次、复用千万次。</p>
+<p>但长连接不能只建不收——<strong>连接是资源</strong>：一条占一个 FD、一份会话对象、一点缓冲内存。所以配<strong>空闲超时 30 秒</strong>：有流量的连接一直活着，30 秒没流量的回收。这解决了“僵尸连接慢慢耗光连接数”的问题。</p>
+<p>连接数还有总量闸门：<code>MaxConnections</code> 默认 102400，<strong>超了直接 close 返回 -208</strong>——这同时是过载保护的第一道门，把过量的连接挡在最外面。再配建连限速（每毫秒最多发起数），防连接风暴。</p>
+<p>客户端这一侧同样长连接复用，由 <strong>connagent&#x2F;idcagent</strong> 连接代理管理；跨 IDC 走 IdcAgent，它把跨城长连接<strong>集中池化</strong>——几百个业务进程共享少量几条跨城连接。建连参数单独配：connect 重试 5 次、建连超时 200ms——比读写超时短得多，因为<strong>建连失败换机很便宜，不值得等</strong>。</p>
+<h2 id="连接怎么管理？"><a href="#连接怎么管理？" class="headerlink" title="连接怎么管理？"></a>连接怎么管理？</h2><p>管理的核心是：<strong>每条连接是一个有状态的会话对象，而且只绑定一个 IO 线程。</strong></p>
+<p>1、<strong>绑定。</strong> accept 线程拿到 FD 后<strong>轮转</strong>分给某个 IO 线程，IO 线程创建<strong>会话对象</strong>——FD、<strong>全局唯一的会话 ID</strong>、收包缓冲区、状态——注册进自己的 epoll。从此这条连接的读写<strong>只归这个线程</strong>，缓冲区天然无锁。</p>
+<p>2、<strong>使用。</strong> 两个方向的细节：收方向，TCP 是字节流没有消息边界，IO 线程把数据追加进该连接的缓冲区、<strong>攒满一个完整包</strong>才投给业务——半包状态记在会话对象里，跨多次读事件存在。发方向，响应写进内核发送缓冲区；<strong>写不完不丢弃</strong>（响应是算完的结果），挂可写事件等下次接着发。</p>
+<p>3、<strong>解绑。</strong> 客户端断、服务端关、或空闲超时——断开时把<strong>会话对象从会话表里删除</strong>。为什么删除这么关键：内核分配 FD 用最小可用整数原则，<strong>这条连接的 FD 释放后，下一条新连接很可能拿到同一个 FD</strong>。所以全程认会话 ID 不认 FD——worker 回包带着会话 ID 来查表，查不到就是连接已断，响应丢弃，绝不误发。</p>
+<p>注：<strong>连接断开不撤销在途请求</strong>。请求只要进了 InQueue，worker 照样算完——只是响应按会话 ID 查不到、无处投递而已。<strong>处理和连接是解耦的</strong>，客户端靠超时加换机重试兜底。</p>
+<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><h2 id="svrkit负载均衡"><a href="#svrkit负载均衡" class="headerlink" title="svrkit负载均衡"></a>svrkit负载均衡</h2><p> svrkit 的答案比较特别：<strong>负载均衡策略是多元化的，按业务的数据特性选</strong>。</p>
+<p> 机制上，<code>_cli.conf</code> 的 Server 列表每台机器带 <strong>Scale 权重</strong>，支持加权轮询这类基础能力；在此之上有<strong>一致性哈希</strong>（ConsistenHash &#x2F; UseHrwHash）和<strong>按号段路由</strong>等——有状态、数据分片的业务用一致性哈希让同一个 uin 稳定落到同一台机器，无状态的用轮询打散。</p>
+<p> 进阶的还有<strong>就近园区路由</strong>：同一个 IDC 内不同物理园区也有耗时差异（实测同园区省 10ms 左右），它的思路是<strong>不同园区的 client 看到的权重表不一样</strong>——同园区先消化，吃不下的按比例溢出。比如我园区主调只有 10% 流量、同园区下游有 14% 机器，那在我眼里其他园区机器权重直接是 0。而且<strong>只有第一次 RPC 走就近，重试退回一致性哈希均匀打散</strong>——重试说明近处出问题了，不该再往近处挤。</p>
+<h2 id="一致性哈希算法对比优劣"><a href="#一致性哈希算法对比优劣" class="headerlink" title="一致性哈希算法对比优劣"></a>一致性哈希算法对比优劣</h2><p>一致性哈希要同时满足四个性质：平衡性（key 均匀分布）、单调性（加节点后 key 要么留原地要么去新节点，不能乱迁）、稳定性（扩缩容时迁移量尽量少）、性能（计算快）。所有算法都是在这四者间取舍。</p>
+<p>1、<strong>哈希环</strong></p>
+<p>把节点按权重 hash 成大量虚拟节点，撒到 2^32 的环上；key 也 hash 到环上，顺时针找最近的一个虚拟节点，虚拟节点反查真实节点。</p>
+<p>优点：单调性好；虚拟节点够多时平衡和稳定都不错；实现简单、可观察性强——应用最广（memcache、redis 客户端、dubbo、nginx、envoy）。</p>
+<p>缺点：内存大——虚拟节点数 &#x3D; 权重 × 节点数，全存着；虚拟节点少时平衡性差——100 个节点标准差 10%，1000 个才降到 3.2%。查找 O(log vn)。</p>
+<p>2、<strong>跳变哈希</strong></p>
+<p>原理很数学：节点数从 n 变 n+1 时，恰好 <strong>n&#x2F;(n+1) 的 key 不动、1&#x2F;(n+1) 跳到新节点</strong>——用随机数模拟跳变，返回最后一次跳变的位置。只要求“节点按 0..n-1 编号”。</p>
+<p>优点：<strong>平衡性碾压一切</strong>——标准差 0.000000764%；<strong>零虚拟节点、内存几乎为零</strong>；计算 O(ln n) 比哈希环还快。guava 标准库、<strong>微信后台的 cachesvr</strong> 都在用。</p>
+<p>缺点：<strong>缩容单调性差</strong>——缩容时 1&#x2F;n 的 key 会乱跳（扩容才单调）；<strong>不好支持权重</strong>（依赖有序编号）；节点挂了不能自动摘除，要自己做容错（副本或 doubleHash）。</p>
+<p>3、<strong>maglev，查找最快</strong></p>
+<p>两张表：每个节点一张<strong>排列表</strong>（它想占哪些槽），再按固定规则填一张<strong>查找表</strong>（比如 65536 个槽，每个槽指向一个节点）。查的时候 hash 取模槽位，O(1)。</p>
+<p>优点：<strong>查找 O(1) 最快</strong>；内存固定（就一张 65536 的表）；平衡性比 ketama 好（方差 6~7%）。</p>
+<p>缺点：<strong>建表有开销</strong>——平均 O(MlogM)，最坏 O(M²)；<strong>稳定性是短板——缩容后迁移的 key 是 ketama 的两倍</strong>。envoy 和 Google 内部网关在用；<strong>微信北极星的就近路由实现就是 maglev</strong>（排列表 65537，hash 用 Murmur3_64）。</p>
+<p>4、<strong>HRW，最高随机权重</strong></p>
+<p>最朴素的思路：对每个 key 独立算 <code>h(key, node_j)</code>，<strong>谁大选谁</strong>。</p>
+<p>优点：不需要环和虚拟节点，存储省；平衡性、单调性和 ketama 相当。</p>
+<p>缺点：<strong>每次 O(n)</strong>——key 要和所有节点都算一遍，节点多了就慢；<strong>业界用得少</strong>。</p>
+<p>![[Pasted image 20260903145922.png]]</p>
+<h1 id="超时、熔断、降级、限流"><a href="#超时、熔断、降级、限流" class="headerlink" title="超时、熔断、降级、限流"></a>超时、熔断、降级、限流</h1><h2 id="超时怎么设？"><a href="#超时怎么设？" class="headerlink" title="超时怎么设？"></a>超时怎么设？</h2><p><strong>由主调方在自己的 route.conf 里配，不是被调方声明</strong>——被调方不知道主调的 SLA。三个参数：建连超时 200ms、建连重试 5 次、读写超时按接口配。</p>
+<p><strong>值怎么定</strong>：没有公式，靠压测和线上观测耗时分布（重点看 P99），经验设为平均耗时的数倍。<strong>两条红线</strong>：① 下游接口超时必须<strong>小于</strong>上游给自己的超时，否则“下游还在算、上游已判失败重试”，连锁放大；② 超时低于该接口 <strong>P99 的 1.2 倍</strong>即判异常——频繁误杀长尾请求。</p>
+<p>另外跨 IDC 有专门的超时配置——判定跨城后自动切换，因为 RTT 完全不同量级。</p>
+<h2 id="EMA-动态超时"><a href="#EMA-动态超时" class="headerlink" title="EMA 动态超时"></a>EMA 动态超时</h2><p>静态超时两难：设大了，下游故障时上游陪等；设小了，误杀长尾。<strong>EMA 用滑动平均盯下游耗时，动态收缩</strong>：正常态用上限值保长尾成功率；下游平均耗时升高（异常态）自动收紧到下限，及时止损。平滑系数控制灵敏度。</p>
+<p><strong>但收紧会放大重试量</strong>——超时变短→更多失败→自动重试→流量放大，所以官方要求 EMA 配合<strong>重试 quota</strong> 一起开。这就引出核心认知：<strong>超时从来不是独立参数，它在一条因果链上</strong>。</p>
+<p> <strong>EMA 动态超时</strong>：配置一个上限和下限，正常时用大超时保长尾成功率；下游平均耗时升高（异常态）时自动收紧到下限，避免拖垮上游。但注意收紧会让重试量上升，要同时开重试 quota。</p>
+<p>EMA 具体怎么算？ → 平滑系数 <code>SockTimeoutEmaN</code>，越小越灵敏</p>
+<h2 id="失败了怎么办？重试和幂等怎么做？"><a href="#失败了怎么办？重试和幂等怎么做？" class="headerlink" title="失败了怎么办？重试和幂等怎么做？"></a>失败了怎么办？重试和幂等怎么做？</h2><p>先分类再谈策略。<strong>失败分两类：系统失败和业务失败</strong>。</p>
+<p><strong>系统失败</strong>——连接失败 -201、收包失败 -202、发包失败 -203、被快速拒绝 -206、超连接上限 -208——这类失败的特征是”<strong>换台机器大概率就好了</strong>“，所以由框架<strong>自动换机重试，默认 3 次</strong>（<code>MMClientCallRetryCount</code>）；connect 阶段还有独立的 5 次重试。业务代码拿到非 0 直接向上返回，<strong>不用自己写重试</strong>。</p>
+<p><strong>业务失败</strong>——业务逻辑自己返回的错误，比如余额不足——<strong>绝对不重试</strong>。重试业务失败等于重复执行，余额扣两次就是事故。这个区分是重试设计的核心。<strong>RPC 是尽力而为，不保证不丢</strong>。队列满、进程崩、重启都可能丢在途请求；校验和只防数据损坏、不防丢。所以丢了靠<strong>调用方超时重试 + 业务幂等</strong>兜底；真要”绝对不丢”（比如支付异步通知），应该用 wqueue 这种可靠消息队列，<strong>不要拿 RPC 当 MQ 使</strong>。</p>
+<p> 幂等的实现是业务的责任：常见做法是带唯一 ID，处理前查重。</p>
+<ul>
+<li>重试会不会打爆下游？ → 3 次上限 + 换机（不重复打同一台）+ FastReject 时 client 缓存拒绝信息少发请求</li>
+<li>屏蔽机制呢？ → 重试只是止血，还有屏蔽防止反复踩死机：线程级 FailCount&#x3D;4，跨进程漏桶 NewFailCount&#x3D;50，满了摘机、过周期再试探（</li>
+</ul>
+<h2 id="熔断、限流、降级分别怎么做？"><a href="#熔断、限流、降级分别怎么做？" class="headerlink" title="熔断、限流、降级分别怎么做？"></a>熔断、限流、降级分别怎么做？</h2><p> <strong>屏蔽，对应熔断</strong>：分两级。<br> 线程级——一个周期（60 秒）内失败满 4 次（<code>FailCount</code>），本线程屏蔽这台机器；<br> 跨进程级——单线程视角样本太少、误熔断概率高，所以有<strong>跨进程漏桶</strong>（<code>NewFailCount=50</code>，<code>UseMMTrafficMgr</code> 默认开启）——把整个进程所有线程的失败汇进一个漏桶，攒满 50 次（NewFailCount）就屏蔽</p>
+<p> 屏蔽是带恢复的：过周期再试探性放量，机器活了就回来。</p>
+<p>追问：<strong>为什么用漏桶不用固定阈值？</strong></p>
+<blockquote>
+<p>固定阈值的问题：流量高峰期正常的失败基数也大，容易<strong>误熔断健康的机器</strong>，把容量雪上加霜。漏桶按<strong>速率</strong>平滑统计——单位时间漏掉多少、留下多少是恒定的，短时突发失败灌不满桶，只有<strong>持续性失败</strong>（真挂了）才触发。本质是把“失败了多少次”换成“失败的速率异常了没有”。</p>
+</blockquote>
+<p> <strong>限流，是主动控制</strong>：不在 svrkit 框架内建，走<strong>北极星限流平台</strong>，可精确到 cmdid 维度。阈值要压测定：取压测极限的七八折留安全余量。</p>
+<p> <strong>过载保护 降级</strong>：① <strong>FastReject</strong>：入队前检查，队列平均等待超 20ms 或 <strong>CPU 超 90%</strong> 直接拒绝，返回 -206——<strong>不做无意义的排队</strong>； ② <strong>假失败响应</strong>：InQueue 满时框架直接构造一个失败包回去，客户端拿到明确错误而不是干等超时； ③ <strong>排队超时丢弃</strong>：排队超 500ms 的请求直接丢——客户端早就超时了，算完也白发。</p>
+<p>核心就是：<strong>宁可拒绝也不排队</strong>——过载时排队会让延迟滚雪球、最后全部超时，快速失败才保得住已接入的流量。</p>
+<p>联动：缩短超时 → 更多请求被判失败 → 系统失败自动换机重试 3 次 → <strong>流量放大最高 3 倍</strong> → 更多机器被压到 FastReject 阈值 → 拒绝的请求又触发重试 → 失败计数快速累积 → <strong>误熔断健康机器</strong> → 剩余机器承接全部流量 → 更快过载——<strong>恶性循环</strong>。</p>
+<p>所以三个实践约束：EMA 动态超时要配重试 quota；重试次数要和下游容量挂钩；屏蔽阈值（漏桶）要扛得住重试放大的失败基数。</p>
+
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/distributed/" class="category-chain-item">distributed</a>
+  
+  
+    <span>></span>
+    
+  <a href="/distributed/rpc/" class="category-chain-item">rpc</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84/" class="print-no-link">#分布式架构</a>
+      
+        <a href="/tags/rpc/" class="print-no-link">#rpc</a>
+      
+    </div>
+  
+</div>
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>rpc-svrkit架构</div>
+      <div>https://yb0os1.github.io/2026/09/14/svrkit架构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/16/%E8%85%BE%E8%AE%AF%E5%AE%9E%E4%B9%A0%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/" title="腾讯实习面试整理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">腾讯实习面试整理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/14/WQueue/" title="wqueue">
+                        <span class="hidden-mobile">wqueue</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+      // 🔥 精准偏移（无冲突，不卡顿）
+      scrollSmoothOffset : -20
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

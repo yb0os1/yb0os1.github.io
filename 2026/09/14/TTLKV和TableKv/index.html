@@ -1,0 +1,1362 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="TTLKV（Time-To-Live Key-Value）的定位是：支持 TTL 过期时间的强一致 KV 存储服务，但基于 Paxos 协议实现多副本强一致。 它是否”内存”取决于部署模式，并非天生只能是内存数据库：    部署模式 说明 是否内存    SSD 部署 标准模式，写落盘，读可能读盘 否（盘为主）   落盘全内存 内存保存全量数据，写落盘，读不读盘 ✅ 是（数据在内存）   非落盘全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TTLkv 和 TableKv">
+<meta property="og:url" content="https://yb0os1.github.io/2026/09/14/TTLKV%E5%92%8CTableKv/index.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="TTLKV（Time-To-Live Key-Value）的定位是：支持 TTL 过期时间的强一致 KV 存储服务，但基于 Paxos 协议实现多副本强一致。 它是否”内存”取决于部署模式，并非天生只能是内存数据库：    部署模式 说明 是否内存    SSD 部署 标准模式，写落盘，读可能读盘 否（盘为主）   落盘全内存 内存保存全量数据，写落盘，读不读盘 ✅ 是（数据在内存）   非落盘全">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar29.png">
+<meta property="article:published_time" content="2026-09-14T08:25:31.000Z">
+<meta property="article:modified_time" content="2026-09-14T10:55:13.073Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="kv">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar29.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>TTLkv 和 TableKv - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TTLkv 和 TableKv"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-14 16:25" pubdate>
+          2026年9月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          9.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          83 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">TTLkv 和 TableKv</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <p>TTLKV（Time-To-Live Key-Value）的定位是：支持 TTL 过期时间的强一致 KV 存储服务，但基于 Paxos 协议实现多副本强一致。</p>
+<p>它是否”内存”取决于部署模式，并非天生只能是内存数据库：</p>
+<table>
+<thead>
+<tr>
+<th>部署模式</th>
+<th>说明</th>
+<th>是否内存</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SSD 部署</strong></td>
+<td>标准模式，写落盘，读可能读盘</td>
+<td>否（盘为主）</td>
+</tr>
+<tr>
+<td><strong>落盘全内存</strong></td>
+<td>内存保存全量数据，写落盘，读不读盘</td>
+<td>✅ 是（数据在内存）</td>
+</tr>
+<tr>
+<td><strong>非落盘全内存</strong></td>
+<td>数据在 tmpfs 上</td>
+<td>✅ 是（极致性能）</td>
+</tr>
+</tbody></table>
+<p>TableKV一种基于持久化存储引擎（LevelDB &#x2F; LSM-Tree）的分布式强一致 KV 存储服务，对外提供类似 MySQL 二维表的操作接口。</p>
+<ul>
+<li>存储引擎：TableKV（table kvsvr）以 LevelDB 为底层存储引擎。LevelDB 是 Google 开源的持久化 KV 系统，采用 LSM-Tree（Log Structured Merge Tree） 结构，数据落盘，并非内存存储。</li>
+<li>一致性：在 LevelDB 之上实现了 Paxos 协议，保证分布式环境下的多副本强一致。</li>
+<li>数据模型：提供类似 MySQL 的二维表接口（<code>Select / Insert / Update / Delete</code>），支持二级索引、唯一索引，每张子表有主键。底层仍是简单 KV，复杂查询依赖索引回表。</li>
+</ul>
+<p>![[Pasted image 20260902203738.png]]</p>
+<h1 id="TTLKV"><a href="#TTLKV" class="headerlink" title="TTLKV"></a>TTLKV</h1><h2 id="TTLKV-是什么"><a href="#TTLKV-是什么" class="headerlink" title="TTLKV 是什么"></a>TTLKV 是什么</h2><p> TTLKV 是一个强一致、高性能的分布式键值存储系统，用 Paxos 协议保证一致性，底层存储引擎是 leveldb&#x2F;rocksdb（LSM-tree，<strong>落盘</strong>的），支持按 TTL 过期淘汰。</p>
+<p><strong>适用</strong>：需要过期淘汰的强一致 KV 读写；可全内存部署也可非全内存部署；<strong>key 最大长度 1000</strong>。</p>
+<p>**不适用：</p>
+<ul>
+<li>大量 key 的定时批量更新、最终一致 → 用 <strong>featurekv</strong></li>
+<li>离线场景下的大量写入 + 顺序扫描 → 用 <strong>wbt</strong></li>
+</ul>
+<h2 id="ttlkv、redis、mysql的区别"><a href="#ttlkv、redis、mysql的区别" class="headerlink" title="ttlkv、redis、mysql的区别"></a>ttlkv、redis、mysql的区别</h2><p>总揽的说下：</p>
+<ul>
+<li>Redis 是内存数据库——数据在内存、异步持久化，追求的是极低延迟（微秒级）。定位是缓存和轻量数据结构服务。</li>
+<li>MySQL 是关系型数据库——B+树索引、SQL、多表 join、完整的 ACID 事务。定位是需要复杂查询和强事务的业务主存储。</li>
+<li>TTLKV 是分布式强一致 KV 存储——底层是 LSM-tree 落盘、一致性是 Paxos 多数派。</li>
+</ul>
+<p>下面同个几个维度进行对比：</p>
+<p><strong>1、数据存在哪</strong></p>
+<p>Redis 在内存——所以快，但受内存容量约束，成本按内存算；持久化是 RDB 快照 + AOF 日志，是异步的补充手段，不是主存储路径。</p>
+<p>MySQL 在磁盘（InnoDB Buffer Pool 做缓存），B+树结构，数据落盘是主路径。</p>
+<p>TTLKV 在磁盘（leveldb&#x2F;rocksdb，LSM-tree），但可以全内存部署——数据放 tmpfs、不落盘。所以它容量弹性比 Redis 好：需要极限性能就全内存部署，需要大容量就落盘。</p>
+<p><strong>2、一致性</strong></p>
+<p><strong>Redis 主从是异步复制</strong>——主写完立刻返回，还没同步到从。<strong>主挂了、从提升为主，最后一段写入就丢了</strong>。Cluster 模式的分片之间也没有多数派共识。所以 Redis 的定位注定是”可以丢一点”的场景。</p>
+<p><strong>MySQL 单机是强一致的</strong>（redo log + WAL + fsync），但<strong>主从复制默认也是异步的</strong>——半同步复制能改善，但要真正不丢就得上 MGR 或者外部一致性方案。<strong>单机强一致、集群层面要额外做。</strong></p>
+<p><strong>TTLKV 是 Paxos 多数派落盘</strong>（可切 Raft）——<strong>写成功即多数派已持久化，就是不丢</strong>。这对支付、账号这类场景是硬需求。而且读侧还是分级的：强一致读要去多数派确认，最终一致读（skip_paxos）直接读本机、性能更高。</p>
+<p><strong>3、查询能力</strong></p>
+<p><strong>MySQL 最强</strong>：SQL、多表 join、聚合、子查询、任意维度的二级索引、优化器自动选执行计划。想怎么查就怎么查。</p>
+<p><strong>Redis 最弱</strong>：只能按 key 访问，没有二级索引、不能按 value 条件查。想按其他维度查只能业务自己维护反向索引。</p>
+<p><strong>TTLKV 也是按 key 访问</strong>，同样没有二级索引——但比 Redis 多了一些：原生 <strong>Protobuf 读写</strong>（可以操作 PB 的嵌套字段）、<strong>JSON 节点查询修改</strong>、<strong>TimeSeries 按时间粒度聚合</strong>。</p>
+<p><strong>4、事务能力</strong></p>
+<p><strong>MySQL 完整 ACID</strong>——多表、多行、可回滚、有四种隔离级别、MVCC。</p>
+<p><strong>Redis 的”事务”很弱</strong>：MULTI&#x2F;EXEC 只保证命令<strong>打包顺序执行不被打断</strong>，<strong>不支持回滚</strong>——中间某条命令失败，前面的照样生效。真要原子逻辑得写 Lua 脚本。</p>
+<p><strong>TTLKV 是”单 key 原子”</strong>，加上一个特殊能力：<strong>多 key 分布式事务</strong>。另外它把高频的事务型业务模型直接做成了原生接口——比如 <strong>balancekv</strong>（余额修改 + 流水记录强一致事务），这个用 Redis 就得自己拿事务加 Lua 拼。</p>
+<h2 id="怎么做分布式"><a href="#怎么做分布式" class="headerlink" title="怎么做分布式"></a>怎么做分布式</h2><p>怎么分片、怎么路由和副本</p>
+<p><strong>分片：按 key 哈希分到 PG（Partition Group）。</strong> 每个 PG 是一个<strong>独立的一致性组</strong>，组内多副本分布在不同机器、不同园区。<strong>不同 key 的写落在不同的 Paxos 组里，完全并行互不干扰</strong>。能横向扩写吞吐的根本，和整个集群一个共识组的设计相比并行度差一个量级。</p>
+<p><strong>路由：由 proxyserver 集中管理。</strong> client 拿到一个 key，先哈希定位到 PG，再从 proxyserver 那里拿到这个 PG 的副本分布，直接访问对应机器。机器故障时 <strong>proxyserver 自动屏蔽故障机、切换路由</strong>，client 完全感知不到。</p>
+<p><strong>副本：DB 三副本 + Paxos 五副本</strong>。园区上一般是<strong>六园区部署</strong>，容忍双园区故障。</p>
+<p><strong>扩缩容靠调度系统</strong>：副本可以跨机器迁移（拷数据 + 切路由），紧急扩容时可以让 Paxos 副本和 DB 副本同时转移。整个过程对业务透明。</p>
+<p>追问：<strong>为什么不用一致性哈希环，让客户端自己算？</strong></p>
+<blockquote>
+<p>PG 模型下路由是 proxyserver 集中管理的，扩缩容变成”调度系统迁移副本 + 更新路由”，比客户端哈希环灵活得多——比如可以<strong>按热点动态给单个 key 加代理副本</strong>（REQUEST_PROXY），客户端哈希环做不到这种细粒度调度。</p>
+</blockquote>
+<h2 id="怎么实现分布式一致性-强一致性怎么保证"><a href="#怎么实现分布式一致性-强一致性怎么保证" class="headerlink" title="怎么实现分布式一致性&#x2F;强一致性怎么保证"></a>怎么实现分布式一致性&#x2F;强一致性怎么保证</h2><p><strong>写路径靠 Paxos 多数派落盘</strong>，内部组件叫 <strong>certain</strong>，新架构可选 Raft。</p>
+<p>核心抽象是 Entity 和 Entry：对 ttlkv 来说一个 key 就是一个 Entity——也就是一个独立的一致性单元；一次写操作是一个 Entry，走一轮 Paxos 达成多数派。存储上分两层：协议日志是 PLog，数据落 DB（leveldb&#x2F;rocksdb）。流程是先过 Paxos 达成一致写 PLog，再异步应用到 DB——PLog 是 WAL 性质的，DB 落后了就靠 PLog 追齐。</p>
+<p><strong>读侧的一致性是分级的</strong></p>
+<ul>
+<li><strong>强一致读</strong>：要去多数派确认数据是不是最新的；</li>
+<li><strong>最终一致读</strong>：直接读本机 DB ，靠写入时的实时同步（毫秒级）+ 每 60 秒全量对齐兜底，默认保证和强一致读的差距不超过 10 秒（可配）</li>
+<li></li>
+</ul>
+<p><strong>协议还能切 Raft</strong>：性能提升 30~40%，但代价是<strong>单机故障时会出现短暂的最终失败</strong>（强 Leader 切主期间不可写），所以只推荐给对可用率要求没那么极致的模块。这个取舍能说明”新协议不一定更好”。</p>
+<p>追问：<strong>最终一致读有什么风险</strong>？</p>
+<p><strong>极端情况下落后不是 10 秒而是几小时</strong>。因为它依赖实时同步，如果某台机器硬盘满了、或者过载导致同步卡住，这台机器可能落后几小时甚至一天，读到的就是很旧的数据。<strong>如果 <code>FinalConsistencyLagThreshold</code> 配得太短、或者业务请求量太少，会退化成强一致读</strong>——每次读还是要去多数派确认。</p>
+<h2 id="高并发下单key问题如何解决"><a href="#高并发下单key问题如何解决" class="headerlink" title="高并发下单key问题如何解决"></a>高并发下单key问题如何解决</h2><p>单 key 问题要分读热和写热，两者的天花板完全不同</p>
+<p>先说读热</p>
+<p>第一层是服务端请求合并。 ttlkv 单机会把同一个 key 的并发请求合并成一次处理——一万个请求打同一个 key，底层只查一次 DB。配置项就是 <code>MergeReadReq</code><br>第二层是加副本扩读。 只读副本可以部署多个，client 随机访问不同副本；只读副本还能换用 hashdb 引擎——纯哈希结构没有 LSM 的层次，点读更快<br>第三层是自动伸缩副本。 ttlkv 会持续检测单 key 的读 QPS，超过阈值自动加副本，QPS 降下来持续一段时间后自动减副本，完全不用人工干预。<br>第四层是 REQUEST_PROXY 请求代理副本，对付极端热点。思路是在 client 和真正的 ACCEPTOR 之间插一层代理，代理把大量打同一个 key 的请求合并后再转发，从而保护后端。</p>
+<p>写热，这个是物理上躲不掉的。 因为一个 key 就是一个 Entity、也就是一个一致性单元，同一个 key 的写会被 Paxos 串行化——所以单 key 写吞吐有天花板，加副本、加机器都没用。</p>
+<p>拆 key（比如计数分成 N 个桶分别累加、读的时候聚合，把一个热 key 变成 N 个温 key）；走 UDF——用 Calc 接口把计算下推到 server 端，网络上只传增量；或者业务侧攒批，前端聚合一段时间再写一次。</p>
+<h2 id="value-存多大性能会急剧下降？"><a href="#value-存多大性能会急剧下降？" class="headerlink" title="value 存多大性能会急剧下降？"></a>value 存多大性能会急剧下降？</h2><p><strong>16KB 左右是存储引擎层的分离线。</strong> leveldb 的 big-value 分离阈值一般配在 <strong>16399 字节，也就是约 16K</strong>，超过就旁路存储、不参与正常的 compaction。有需要还可以降到 8K 甚至更小。</p>
+<p><strong>32KB 是应用层 objstore 的默认分离阈值。</strong> 超过 32KB 的 value 自动写到 objstore 模块，ttlkv 里只留一个索引，读的时候 client 自动回源拼装。适用范围是 <strong>20KB 到 100MB</strong> 的写多读少场景。</p>
+<p><strong>4MB 是单 value 的建议上限</strong>，超了直接写入失败。</p>
+<p><strong>为什么大 value 会急剧劣化，三个原因：</strong> ① <strong>写放大</strong>——LSM-tree 的 compaction 要反复搬运数据，value 越大搬的字节数越多，一次写实际产生的磁盘 IO 是数倍； ② <strong>缓存被挤占</strong>——大 value 吃掉 block cache 和内存，把别的 key 的命中率一起拖累； ③ <strong>Paxos 协议开销</strong>——value 要跟着协议日志在多个副本间同步，网络和落盘成本都按 value 大小线性放大。</p>
+<h2 id="支持哪些数据结构？"><a href="#支持哪些数据结构？" class="headerlink" title="支持哪些数据结构？"></a>支持哪些数据结构？</h2><p> <strong>基础组</strong>：string（支持 CAS 和多版本）、hash（字段级增删改查）、list、set、hyperloglog（基数估计）、json（可查询修改节点）、Protobuf（原生 PB 对象读写）。</p>
+<p> <strong>计数统计组</strong>：int 接口（原子增减 Incr）、TimeSeries（按秒&#x2F;分&#x2F;时粒度聚合）、seqsvr&#x2F;idmaker（单调递增序列号、分布式唯一 ID）。</p>
+<p> <strong>业务模型组</strong>：balancekv 余额+流水强一致事务、quotakv 单维&#x2F;多维限额、ratelimitkv 分布式限流、分布式并发锁。</p>
+<p> <strong>架构组</strong>：cachekv 回源缓存、objstore 大 value 存储、HyperStore 高性能架构。</p>
+<h2 id="副本怎么部署？容灾能力怎么样？"><a href="#副本怎么部署？容灾能力怎么样？" class="headerlink" title="副本怎么部署？容灾能力怎么样？"></a>副本怎么部署？容灾能力怎么样？</h2><p> TTLKV 的部署形态是 <strong>DB 三副本 + Paxos 五副本</strong>，这个分离本身就是个设计点：<strong>Paxos 五副本用于投票</strong>，多数派 3&#x2F;5 能容忍双机同时故障仍可写入；<strong>数据只存三副本</strong>省 40% 存储成本。可降级到三副本（调度操作）。</p>
+<p> 容灾矩阵按副本数：<strong>2 副本容忍单机&#x2F;单园区故障，3 副本容忍双机&#x2F;双园区故障</strong>。副本跨园区分布，所以”双园区故障”也覆盖了。</p>
+<p>副本类型还有三种特殊形态，各有用途：<br><strong>只读副本</strong>——不参与写，专吃读流量，可用不同存储引擎（leveldb 或 hashdb）；<br><strong>filter 副本</strong>——按前缀只存部分数据，把大集群的 BatchGet 聚集到一台机器上，解请求放大（实测 CPU 从 6000 降到 4100，线上案例平均 batch 从 4.1 涨到 108）；<br><strong>HotBackup 热备副本</strong>——专门做流水导出（CDC）和跨城同步，不扛线上流量。</p>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>为什么 Paxos 五副本数据三副本不会不一致？</em> → PLog 五副本保证共识，DB 三副本是共识结果的落地，落后了靠 PLog CatchUp</li>
+<li><em>REQUEST_PROXY？</em> → 热点 key 的代理副本，本地无 DB、调度秒级完成（主题库 Q60 详述）</li>
+</ul>
+<h2 id="Q6-读性能怎么扩展？"><a href="#Q6-读性能怎么扩展？" class="headerlink" title="Q6 读性能怎么扩展？"></a>Q6 读性能怎么扩展？</h2><p><strong>面试官想考什么</strong>：读路径的分层设计能力——这题最能体现 TTLKV 区别于”加从库”的思路。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>读扩展有三级，按侵入性从小到大。</p>
+<p><strong>第一级：最终一致读（skip paxos）</strong>。正常读要过 Paxos 校验数据最新性；开启 skip_paxos 后直接读本机 DB，<strong>不过协议</strong>。适合缓存类场景——默认保证与强一致读的差距不超过 10 秒（可配），数据更新靠写入实时同步（毫秒级）+ 每 60 秒一轮全量对齐兜底。性能收益明显：单 key 读 230W qps 提到 265W（+15%），批量读 +39%。<strong>风险要主动说</strong>：极端情况（某台机器硬盘满、过载）同步卡住，这台机器可能落后几小时甚至一天，读到的就是旧数据——所以不能无脑全开。</p>
+<p><strong>第二级：只读副本</strong>。DB 三副本扛不住读就加只读副本，一个 kv 可以部署多个；可以用 <strong>hashdb 引擎</strong>（纯哈希无 LSM 层次结构，点读更快）；client 还支持优先访问只读副本做读写分离。</p>
+<p><strong>第三级：filter 副本</strong>。针对 BatchGet 请求放大——大集群里一次 BatchGet 会均摊到很多台机器。filter 副本按前缀把数据聚集到一台机器，请求就集中了。</p>
+<p>还有配套的<strong>轻量读</strong>容易被忽略：它优化的是<strong>一致性协议判断的 CPU 开销</strong>而不是延迟——开启后用多副本随机读降低冲突。有个硬性搭配：<strong>跨城只读副本必须配轻量读，否则 Paxos 冲突会很严重</strong>。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>skip_paxos 怎么用？</em> → 代码 <code>client.SetSkipPaxos(true)</code>（注意不是线程安全的，不能多线程共用 client）+ client 配置打开才生效</li>
+<li><em>一致性级别能按 key 配吗？</em> → 能，<code>FinalConsistencyModeByKey/P ByPrefix</code>，比如 <code>mmtest_1:1,mmtest_2:2</code></li>
+</ul>
+<h2 id="过期淘汰怎么实现"><a href="#过期淘汰怎么实现" class="headerlink" title="过期淘汰怎么实现"></a>过期淘汰怎么实现</h2><p> 接口层面：Set 时带 lifetime 参数（秒），0 表示永不过期。有个坑要记：第一次设了过期时间，第二次 Set 不带 lifetime，会沿用上一次的过期时间，不是改成永不过期——想改永不过期要走 BatchSet 的 <code>set_new_life_time</code> 参数。</p>
+<p> 实现层面走的是 LSM-tree 的 compact（压缩） 时丢弃：过期数据不立刻删，leveldb&#x2F;rocksdb 做 compaction 时发现已过期就直接不写入新层，等于”随压缩顺带清理”。平时写入触发部分 compact，每天凌晨 1 点全量 compact 一轮</p>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>Get 一个已过期但没 compact 的 key？</em> → 返回 not found，过期判断在读取时也生效，compact 只是物理清理</li>
+<li><em>过期时间和版本能共存吗？</em> → SetLifeTime 接口单独改过期时间，支持 version 校验</li>
+</ul>
+<h2 id="底层存储引擎为什么用-LSM-tree？"><a href="#底层存储引擎为什么用-LSM-tree？" class="headerlink" title="底层存储引擎为什么用 LSM-tree？"></a>底层存储引擎为什么用 LSM-tree？</h2><p><strong>面试官想考什么</strong>：LSM vs B+树这个经典问题，能不能结合自己的存储讲。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>底层是 <strong>leveldb&#x2F;rocksdb，LSM-tree 架构</strong>。选它的核心原因是<strong>写友好</strong>：写入只追加到内存 memtable + 顺序写 WAL 和 SSTable，没有 B+树那种原地更新的随机写。而 KV 负载——尤其 TTLKV 有大量带 TTL 的中短生命周期数据——写入量远大于更新量，LSM 的 compact 顺带就把过期数据清了，特别契合。</p>
+<p>代价是<strong>读放大</strong>（要查多层）和 compact 的写放大，工程上用 BloomFilter、block cache、分层 compaction 来压。</p>
+<p>两个具体演进：一是 <strong>rocksdb 替换 leveldb</strong>，读写 QPS 均有约 20% 提升（读用了 <strong>io_uring</strong>）；二是 rocksdb 的一些特性被 TTLKV 直接吃掉——<strong>Merge 操作</strong>实现 Read-Modify-Write，计数器 Incr 不用先 Get 再 Set，<strong>特别适合 SetPB 的部分更新</strong>，不用每次读写完整 PB；<strong>BlobDB</strong>（WiscKey 思路）做大小 value 分离，正是 objstore 的理论基础；<strong>Column Families</strong> 共享 WAL 支持跨 CF 原子写。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>hashdb 是什么？</em> → 只读副本可用的另一种引擎，纯哈希结构无层次，点查更快</li>
+<li><em>四种架构怎么选？</em> → HyperStore 极限吞吐但不支持 CAS（写 2000W key&#x2F;s）；Table4 范围路由可扫描；Aurora 租约强一致可运行时热切；ObjStore 大 value</li>
+</ul>
+<h2 id="Q10-大-value-和热点-key-分别怎么处理？"><a href="#Q10-大-value-和热点-key-分别怎么处理？" class="headerlink" title="Q10 大 value 和热点 key 分别怎么处理？"></a>Q10 大 value 和热点 key 分别怎么处理？</h2><p><strong>面试官想考什么</strong>：两个经典 KV 问题的工程解法。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p><strong>大 value 走 objstore 自动分离</strong>。client 配置 <code>value_size_thresh=32768</code>（超 32KB 的 value）加灰度比例 <code>save_ratio</code>，大 value 自动写到 objstore 模块，ttlkv 里只留索引；读的时候 <code>read_use_objstore</code> 自动取回。还支持按前缀控制（prefixs &#x2F; black_prefixs，与比例是”与”的关系）。适合 20KB~100MB、写多读少的场景，100KB value 单机写吞吐 2W key&#x2F;s。有个部署坑：<strong>objstore 的 cli 路径必须带 idc 且和 ttlkv client 同 idc</strong>。</p>
+<p><strong>热点 key 分读热和写热</strong>。读热用三级火箭（只读副本&#x2F;filter 副本&#x2F;REQUEST_PROXY）；<strong>写热是硬上限</strong>——单 key 写被 Paxos 串行化，这个物理上躲不掉，只能拆 key（分桶计数再聚合）或走 UDF（Calc 接口把计算下推到 server 端，网络只传增量）。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>UDF 接口？</em> → <code>Calc(udf_id, ...)</code> 把逻辑推到存储端执行，read_only_udf 只读安全</li>
+<li><em>多版本历史读？</em> → <code>iVersionToKeep</code> 保留最近 N 版（上限 1000），<code>GetHistoryVersion</code> 读指定版本；坑：compact 后旧版本可能拿不到，Delete 不清历史版本</li>
+</ul>
+<h2 id="Q11-CAS-和分布式锁怎么做？"><a href="#Q11-CAS-和分布式锁怎么做？" class="headerlink" title="Q11 CAS 和分布式锁怎么做？"></a>Q11 CAS 和分布式锁怎么做？</h2><p><strong>面试官想考什么</strong>：并发控制的两个标准武器在 TTLKV 上的形态。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p><strong>CAS 靠 version 机制</strong>，语义有三个精细点：<br>① Set 传 version，服务端<strong>只允许写入相等的 version</strong>，成功后 version+1，不匹配返回 -110202；<br>② <strong>第一次写传 NULL 不比较、多个并发都成功</strong>；传 0 则比较版本、<strong>只有一个成功</strong>——这就是”只初始化一次”的标准做法；<br>③ 失败时也能拿到最新版本号（new_version 出参），方便读-改-写重试循环。<br>注意 <strong>HyperStore 架构不支持 CAS</strong>（只支持覆盖写）——选架构时的一致性能力差异。</p>
+<p><strong>分布式锁是原生能力</strong>（基于 hash 结构），支持 tryLock、续期、释放。对比自己用 Redis SETNX 拼：TTLKV 的锁带强一致语义，主从切换不会丢锁。另外还有”基于 Hash 能力实现分布式并发限流”的封装。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>CAS 的 ABA 问题？</em> → version 单调递增不复用，天然防 ABA（version 只会增加）</li>
+<li><em>锁的可用性？</em> → Paxos 强一致，多数派存活即可用，无 Redis 红锁的多数实例问题</li>
+</ul>
+<h2 id="Q12-性能和容量怎么评估？"><a href="#Q12-性能和容量怎么评估？" class="headerlink" title="Q12 性能和容量怎么评估？"></a>Q12 性能和容量怎么评估？</h2><p><strong>面试官想考什么</strong>：上线前的容量规划意识。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p><strong>容量公式</strong>：<code>key_num × (40 + avg_key_size + avg_value_size) × 3 × 1.1</code>——每个 key 约 40 字节元数据开销，×3 是三副本，×1.1 是冗余水位。</p>
+<p><strong>性能基准</strong>（要记得数量级和条件）：</p>
+<ul>
+<li>落盘全内存、value 128B：单机<strong>写 4.7w&#x2F;s、读 15w&#x2F;s</strong></li>
+<li>不落盘全内存（tmpfs）：单机<strong>写 5w&#x2F;s、读 20w&#x2F;s</strong>——注意不落盘只是省了刷盘开销，Paxos 网络往返还在</li>
+<li>读写 1:1、value 1600B、一组 6 台：不落盘 22.2w&#x2F;s</li>
+<li>读写比例对吞吐影响极大，评估必须按<strong>自己的真实读写比</strong>折算</li>
+</ul>
+<p><strong>降延迟开关的收益</strong>：skip_paxos 单 key 读 +15%、批量读 +39%；Raft 比 Paxos +30~40%。</p>
+<p><strong>四个架构的天花板</strong>：HyperStore 写 2000W key&#x2F;s（不支持 CAS）、Table4 RangeGet 7383W key&#x2F;s、Aurora 写 75W、ObjStore 大 value 2W&#x2F;s——选型时先看自己要不要 CAS、要不要扫描，再谈吞吐。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>key 有长度限制吗？</em> → 最大 1000 字节</li>
+<li><em>怎么压测？</em> → 有专门性能测试文档和工具，上线前联系 kv_helper</li>
+</ul>
+<h1 id="TableKV"><a href="#TableKV" class="headerlink" title="TableKV"></a>TableKV</h1><h2 id="TableKV-是什么？"><a href="#TableKV-是什么？" class="headerlink" title="TableKV 是什么？"></a>TableKV 是什么？</h2><p> TableKV 是一个<strong>分布式表格存储</strong>，提供类似 MySQL 的二维表操作——Select &#x2F; Insert &#x2F; Delete &#x2F; Update，支持<strong>二级索引和唯一索引</strong>，底层是 leveldb（LSM-tree，落盘的）。</p>
+<p>最贴切的对标是<strong>分库分表的 MySQL</strong>：它把”分库分表 + 主从复制 + 索引维护”这些 MySQL 生态里要中间件拼装的东西做成了原生能力，并且用 Paxos 替代了异步复制。</p>
+<p>三层概念对齐 MySQL：<strong>tableid ≈ 表结构定义；uin ≈ 物理分表</strong>（不同 uin 数据完全隔离，说的”单表并发””单 key 并发”都指 uin）；<strong>主键 ≈ 分表内每行的 key</strong>（分自增&#x2F;非自增）。</p>
+<h2 id="Q1-和-MySQL-比，TableKV-强在哪、弱在哪？"><a href="#Q1-和-MySQL-比，TableKV-强在哪、弱在哪？" class="headerlink" title="Q1 和 MySQL 比，TableKV 强在哪、弱在哪？"></a>Q1 和 MySQL 比，TableKV 强在哪、弱在哪？</h2><p><strong>面试官想考什么</strong>：技术选型的两边都能说——只会吹自研好说明没想清楚。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p><strong>强在四点</strong>：<br>① <strong>一致性</strong>。MySQL 主从异步复制、主从切换可能丢数据；TableKV 写走 Paxos 多数派，<strong>写成功即三副本一致</strong>。<br>② <strong>水平扩展内建</strong>。按 uin 天然分片，扩容是调度系统自动迁副本，不用业务层搞分库分表中间件。<br>③ <strong>索引与数据同事务</strong>。索引和记录在同一个 WriteBatch 写入，不存在”索引和数据不一致”的窗口。<br>④ <strong>运维体系</strong>。表结构变更、索引变更走需求系统自助流程，监控上报都是平台级。</p>
+<p><strong>弱在四点（主动说出来反而加分）</strong>：<br>① <strong>没有 SQL 的完整性</strong>——不支持 join、复杂子查询有限（新 SQL 引擎在补，但仍是 PostgreSQL 子集）；<br>② <strong>ACID 范围是单表</strong>（table_id + uin），<strong>跨表事务要专门的多表事务方案</strong>，不像 MySQL 单库内随便跨表；<br>③ <strong>单次查询限制 20M 或 2 万行</strong>，没有 MySQL 那种大结果集游标；<br>④ <strong>单条记录上限 10MB</strong>、单次写入总 20M——它是 OLTP 形态，不是分析型存储。</p>
+<p>一句话总结：<strong>MySQL 是功能全的单机关系模型加周边拼分布式；TableKV 是原生分布式但砍掉了关系模型的边角</strong>。OLTP 高并发点查场景它赢，复杂分析场景别用它。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>那要 join 怎么办？</em> → 业务层聚合；或 Sqlsvr 跨表跨组件查询（新能力，计算下推）</li>
+<li><em>和 HBase 之类比？</em> → HBase 是宽表稀疏模型无二级索引；TableKV 有完整二级索引和类 SQL 接口</li>
+</ul>
+<h2 id="Q2-一行数据的写入路径是怎样的？"><a href="#Q2-一行数据的写入路径是怎样的？" class="headerlink" title="Q2 一行数据的写入路径是怎样的？"></a>Q2 一行数据的写入路径是怎样的？</h2><p><strong>面试官想考什么</strong>：写路径 + 路由 + 副本协议一条龙，分布式存储的核心链路。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>前提是<strong>相同 uin 的请求——包括不同 tableid——会路由到同一组机器</strong>（一组 6~60 台）里的三台 A&#x2F;B&#x2F;C，<strong>分布在不同园区</strong>。这叫 uin 亲和，是整个设计的根基。</p>
+<p><strong>写路径四步</strong>：<br>① client 根据 uin 定位到这一组，动态路由由 <strong>proxyserver</strong> 管理，机器故障自动屏蔽切路由；<br>② 写请求<strong>优先访问 A 机</strong>（主副本）；<br>③ A 机把这次写（<strong>记录 + 索引项打包在同一个 WriteBatch</strong>）通过 <strong>Paxos 写入三台</strong>，多数派成功即返回；<br>④ 落盘 leveldb。</p>
+<p><strong>读路径不同</strong>：<strong>随机访问 A&#x2F;B&#x2F;C 三台</strong>中的任意一台——因为三副本数据一致，随便读哪台都行，天然打散读流量。如果某条数据读成热点了，<strong>自动增加只读副本</strong>把请求分到更多机器。</p>
+<p><strong>副本数是 5+3</strong>：<strong>Paxos 协议五副本</strong>（多数派 3&#x2F;5，容忍双机故障仍可写）、<strong>数据存储三副本</strong>——投票方多份数据少存，一致性和成本兼得。</p>
+<p>ACID 就落在这里：<strong>单表（table_id+uin）内保证 ACID</strong>，靠的是”Paxos 原子提交 + 记录索引同 WriteBatch”。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>为什么写必须走 A 机？</em> → 同一 uin 的写要串行化保证顺序一致性，固定主副本是最简单的串行点</li>
+<li><em>A 机挂了？</em> → proxyserver 屏蔽并重新选主，Paxos 多数派（还有 B&#x2F;C&#x2F;D&#x2F;E）继续工作，不丢数据</li>
+<li><em>跨城怎么办？</em> → Infinity 跨城读写最终一致方案，自增主键表要配 ReplicationIndexID 判断记录唯一</li>
+</ul>
+<h2 id="Q3-索引在底层是怎么实现的？（对比-B-树必考）"><a href="#Q3-索引在底层是怎么实现的？（对比-B-树必考）" class="headerlink" title="Q3 索引在底层是怎么实现的？（对比 B+树必考）"></a>Q3 索引在底层是怎么实现的？（对比 B+树必考）</h2><p><strong>面试官想考什么</strong>：这是 TableKV 最核心的原理题——<strong>索引不是 B+树，是 LSM 里多存一行 key</strong>。答出这个，说明真理解了”索引即数据”的 LSM 哲学。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>和 MySQL 完全不同：<strong>MySQL 索引是独立的 B+树结构；TableKV 的索引就是 leveldb 里额外存的一行 key</strong>——索引即数据。</p>
+<p>拿例子说。表有主键 F1，定义了索引 <code>Index3=4 5</code>（F4、F5 两列）。那么每条记录在 leveldb 里存<strong>不止一行</strong>：</p>
+<ul>
+<li><strong>数据行</strong>：key &#x3D; <code>{uin, tableid, 0, F1的值}</code>，value &#x3D; <strong>完整的记录数据</strong></li>
+<li><strong>索引行</strong>：key &#x3D; <code>{uin, tableid, 3, F4的值, F5的值, F1的值}</code>，<strong>value 为空</strong></li>
+</ul>
+<p>三个设计点：<br>① <strong>索引行末尾拼上主键</strong>——保证索引 key 唯一（不同记录的 F4F5 可能相同，拼了主键就不撞）；<br>② <strong>数据行和所有索引行在同一个 WriteBatch 原子写入</strong>——这就是索引和数据永不不一致的实现；<br>③ <strong>索引行的排列天然按索引列有序</strong>——因为 leveldb 的 key 全局有序，等值&#x2F;范围查询就是<strong>前缀定位 + 顺序扫描</strong>，没有树查找；要拿完整记录就是从索引行里取出主键再 MultiGet 一次（相当于回表，但叫 MultiGet）。</p>
+<p><strong>代价</strong>：每条记录每加一个索引就多写一行 key，写放大直接乘上去——所以索引不是越多越好。一个 <code>Index3=4 5</code> 的开销约 <strong>28 字节 + F5 长度</strong>。</p>
+<p><strong>一个类型陷阱</strong>：字符串列（V 类型）在索引 key 里的编码是”长度+内容”，<strong>不构成字典序</strong>，所以 V 类型索引只能做<strong>等值匹配</strong>，做不了范围查询（新架构的 LexicalIndex 在补这个）。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>为什么 leveldb 能这样玩？</em> → LSM 的 key 全局有序 + 范围扫描原生支持，索引行只是”精心设计的 key 编码”</li>
+<li><em>B 类型字段？</em> → 二进制不能用于建索引</li>
+<li><em>唯一索引怎么实现？</em> → UniqueIndex 编码进 key 前缀，插入时同 key 冲突即违反唯一性</li>
+</ul>
+<h2 id="Q4-为什么用-LSM-tree-不用-B-树？（结合自己的存储）"><a href="#Q4-为什么用-LSM-tree-不用-B-树？（结合自己的存储）" class="headerlink" title="Q4 为什么用 LSM-tree 不用 B+树？（结合自己的存储）"></a>Q4 为什么用 LSM-tree 不用 B+树？（结合自己的存储）</h2><p><strong>面试官想考什么</strong>：经典对比题，但结合 TableKV 场景答才有区分度。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>B+树就地更新、读稳定，但<strong>写入是随机 IO</strong>（更新中间层的页）；LSM 把写变成<strong>纯追加</strong>——memtable 加顺序写 SSTable，写吞吐高一个量级。</p>
+<p>TableKV 的负载画像决定了 LSM 更合适：<br>① <strong>写多读少或写读均衡的 OLTP</strong>——点查为主，LSM 的读放大（多层查找）靠 BloomFilter 压得住；<br>② <strong>索引行让写放大的大头在 LSM 里反而更顺</strong>——B+树方案下索引是独立树，写 N 个索引就是 N 次随机更新；LSM 方案下是 N 行顺序追加；<br>③ <strong>过期数据零成本清理</strong>——TableKV 支持 ExpireDays &#x2F; 接口级 expire，<strong>compact 时直接丢弃过期数据</strong>，B+树要单独删行。</p>
+<p>工程细节上 TableKV 走 leveldb，TTLKV 新架构在换 rocksdb（读写 +20%，读用 io_uring）。<strong>每天凌晨 1 点一次全量 compact</strong>——把读放大和过期清理都收敛到低峰期处理。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>LSM 的读放大怎么压？</em> → BloomFilter 判层、block cache、compact 合并</li>
+<li><em>compact 对线上影响？</em> → 平时写入触发增量 compact，全量固定在凌晨 1 点，避开高峰</li>
+</ul>
+<h2 id="Q5-索引怎么选择？为什么有时候不走索引？（对比-MySQL-优化器）"><a href="#Q5-索引怎么选择？为什么有时候不走索引？（对比-MySQL-优化器）" class="headerlink" title="Q5 索引怎么选择？为什么有时候不走索引？（对比 MySQL 优化器）"></a>Q5 索引怎么选择？为什么有时候不走索引？（对比 MySQL 优化器）</h2><p><strong>面试官想考什么</strong>：等价于 MySQL 的”explain 和索引失效”，但 TableKV 的规则有自己特色。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>六条规则，前三条和 MySQL 神似，后三条是 TableKV 特色。</p>
+<p><strong>① 条件顺序无关</strong>：查询条件会自动按索引顺序重排——<code>F1=a and F2&gt;b</code> 和 <code>F2&gt;b and F1=a</code> 完全等价，不用像写 MySQL 那样注意 and 的顺序。</p>
+<p><strong>② 最左前缀匹配</strong>：复合索引 <code>2 3 4</code>，条件必须从 F2 开始连续匹配才能用；被隔断的列终止匹配。</p>
+<p><strong>③ 等值放前面</strong>：建索引时等值查询的列放左边，一开始就能过滤掉大部分数据。</p>
+<p><strong>④ 多索引按”选择性”竞争</strong>：同时有 <code>Index1=3</code> 和 <code>Index2=2 4</code> 时，比较两个索引命中后的扫描范围比例，<strong>选范围小的</strong>——和 MySQL 优化器选区分度高的索引同理。</p>
+<p><strong>⑤ ⭐ 33% 退化规则（最有特色）</strong>：如果最优索引也要扫超过 33% 的数据，<strong>优化器直接放弃索引，改走主键顺序全表扫</strong>。逻辑是：走索引 &#x3D; 扫索引行 + 拿主键 <strong>MultiGet 随机读</strong>完整记录；全表扫 &#x3D; 纯顺序读。<strong>顺序读性能远高于随机读</strong>，扫三分之一以上时随机读的代价就反超了。这个 1&#x2F;3 就是顺序读和随机读的成本平衡点。</p>
+<p><strong>⑥ 命中第一个范围条件后，后面的列只能过滤不能缩小范围</strong>——因为索引 key 在第一个范围列之后就不再有序了。</p>
+<p>验证用 <strong>ExplainMsg</strong> 打印实际选中的索引——被问”你怎么确认走没走索引”，这就是标准答案。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>怎么知道索引建多了拖累写？</em> → 每索引一行 key 的写放大；监控里有索引维护的上报</li>
+<li><em>线上踩坑案例？</em> → 有专门的风险工单指引：select 实际读盘超结果集 10 倍、大量无效读盘、limit 过大触发查询限制——都是索引设计不当的现网案例</li>
+<li><em>use index &#x2F; ignore index？</em> → 新 SQL 引擎支持（语法借鉴 MySQL），但注意都只是<strong>裁剪候选数组</strong>而非强制指定，完全不匹配会退化全表扫</li>
+</ul>
+<h2 id="Q6-同样是-limit-100，为什么有的查询快有的慢？（order-by-优化）"><a href="#Q6-同样是-limit-100，为什么有的查询快有的慢？（order-by-优化）" class="headerlink" title="Q6 同样是 limit 100，为什么有的查询快有的慢？（order by 优化）"></a>Q6 同样是 limit 100，为什么有的查询快有的慢？（order by 优化）</h2><p><strong>面试官想考什么</strong>：这是 TableKV 最精妙的一道题，考”<strong>索引序是否天然满足 order by</strong>“。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>本质一句话：<strong>如果索引 key 的排列顺序天然就是你要的 order by 顺序，limit 才真正省事；否则 limit 不减少任何扫描量</strong>。</p>
+<p>索引 <code>Index2=2 3 4</code>，key 排列是 F2、F3、F4 的字典序。对比三种查询：</p>
+<p><strong>快</strong>：<code>where F2=x and F3=y order by F4 limit 100</code>。F2F3 等值定位后，剩下的排列<strong>天然按 F4 有序</strong>——直接取前 100 个索引行、MultiGet 100 条，完事。limit 真省了。</p>
+<p><strong>慢</strong>：<code>where F2=x and F3=y order by F6 limit 100</code>。F6 不在索引里——必须扫出<strong>所有</strong>满足条件的行、全部 MultiGet 出来、内存排序、再取前 100。满足条件的有 10 万条就得查 10 万条，<strong>limit 形同虚设</strong>。</p>
+<p><strong>慢（更隐蔽）</strong>：<code>where F2=x and F3&gt;=y1 and F3&lt;=y2 order by F4 limit 100</code>。F3 是范围条件，此时索引行的排列是<strong>按 F3 有序而不是 F4</strong>——还是得全扫出来按 F4 重排。</p>
+<p>从这推出建索引的指导原则：<strong>复合索引顺序 &#x3D; 等值列 → order by 列（第一个范围列）→ 其他范围列</strong>。如果范围列和排序列不是同一个，”提前 limit”和”范围缩小”就不可兼得，要做取舍——比如把排序列放范围列前面（<code>Index3=2 4 3</code>），能提前 limit 了，但范围条件就只能扫出来过滤，<strong>可能扫一万条凑不齐 100 条直接返回失败</strong>。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>这和 MySQL 有什么不同？</em> → MySQL 索引序同理，但 MySQL 有 filesort 和优化器提示兜底；TableKV 是纯索引序规则，规划错了就是慢</li>
+<li><em>分页翻深页？</em> → 单次限制 2 万行&#x2F;20M，深翻页用”记住上次位置”的游标式查询，别用 offset</li>
+</ul>
+<h2 id="Q7-事务支持到什么程度？"><a href="#Q7-事务支持到什么程度？" class="headerlink" title="Q7 事务支持到什么程度？"></a>Q7 事务支持到什么程度？</h2><p><strong>面试官想考什么</strong>：ACID 的边界——说”支持事务”太模糊，说清”哪里支持哪里不支持”才是真懂。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>分三层，边界必须说精确。</p>
+<p><strong>第一层，单表内天然 ACID</strong>——“单表”的定义是 <strong>table_id + uin</strong>。单次批量写多行、或一次写同时改记录和索引（必然），都在<strong>同一个 WriteBatch、同一次 Paxos 提交</strong>里，原子且一致。隔离性来自单 uin 的写串行化（都走同一主副本）；持久性来自多数派落盘。</p>
+<p><strong>第二层，多表事务</strong>——跨 table_id 或跨 uin 就超出单 WriteBatch 能力了，要走<strong>专门的 Tablekv 多表事务方案</strong>（有专门文档）。需要时要评估，不是白送的。</p>
+<p><strong>第三层，跨组件事务</strong>——TableKV 之外再混别的存储，没有分布式事务，业务自己用消息队列做最终一致。</p>
+<p>对比 MySQL：MySQL 单库内跨表事务白送（undolog+锁），TableKV 的便利边界收窄到了单表。<strong>代价换来的</strong>是：单表内的 ACID 是 Paxos 级别的强一致，主从切换不丢；MySQL 半同步复制也做不到这个强度。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>单 uin 的并发写会怎样？</em> → 串行排队，有单 key（uin）并发上限——高并发写同一个 uin 是反模式</li>
+<li><em>自增主键和唯一索引的约束？</em> → 自增主键表做跨城同步时要指定 ReplicationIndexID（一个不可变的唯一索引）作为记录身份</li>
+</ul>
+<h2 id="Q8-并发控制怎么做？CAS-的坑"><a href="#Q8-并发控制怎么做？CAS-的坑" class="headerlink" title="Q8 并发控制怎么做？CAS 的坑"></a>Q8 并发控制怎么做？CAS 的坑</h2><p><strong>面试官想考什么</strong>：乐观并发在无锁分布式存储上的实现细节 + 精确的踩坑经验。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p><strong>接口自带的是 uin 维度的版本号</strong>：Insert&#x2F;Update 可带 version，冲突返回 <strong>6000</strong>。注意这是 <strong>uin 粒度</strong>的——同一个 uin 的任何并发写都容易撞 6000，粒度太粗。</p>
+<p><strong>业务要行级 CAS，自己加一列版本号</strong>，经典模式：</p>
+<p><code>update set x=1, version=y+1 where 主键=k and version=y</code></p>
+<p>对应到 API：<code>clsRecordUpdate.SetUint64(field_version, y+1)</code> 加 <code>clsFilterSet.AddRuleUint64(field_version, NEqual, y)</code>。</p>
+<p><strong>⭐ 最大的坑（能说出来就是实战经验）</strong>：Update 的 filter 条件<strong>不命中时函数返回 0，不返回失败</strong>！version 已被别人改成 y+1 的话，这次 Update 静默地一行没改。<strong>必须检查 <code>result_list-&gt;GetSuccessCount() &gt; 0</code></strong> 才知道 CAS 到底成没成。多少人在这上面翻车——看起来 CAS 成功了，实际什么都没写进去。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>为什么 filter 不命中不报错？</em> → Update 语义是”改所有满足条件的行”，0 行满足也是合法结果</li>
+<li><em>悲观锁有吗？</em> → 没有 MySQL 那种行锁；单 uin 写天然串行可当粗粒度悲观锁用</li>
+</ul>
+<h2 id="Q9-过期数据怎么删的？"><a href="#Q9-过期数据怎么删的？" class="headerlink" title="Q9 过期数据怎么删的？"></a>Q9 过期数据怎么删的？</h2><p><strong>面试官想考什么</strong>：和 MySQL 删行对比，考 LSM 的 lazy delete 理解。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>两种配置：<strong>表级</strong>——tabledef 里 <code>[SDBCONF_表名] ExpireDays=1</code>；<strong>接口级</strong>——Insert&#x2F;Update 传 <code>iExpireTime</code>（相对秒数），优先级高于表级。</p>
+<p><strong>一个坑</strong>：Insert 时指定了过期时间、Update 时<strong>没带</strong>，这条记录就<strong>回退到表级配置</strong>；表级也是 0 的话就<strong>变成永不过期</strong>了——本来想续期的，结果变成永久，方向完全反了。</p>
+<p><strong>删除机制是 LSM 特色的 lazy delete</strong>：过期那一刻什么都不发生，读取时判断过期返回 not found（逻辑删除）；物理清理靠 <strong>compact 时直接丢弃</strong>——写入触发增量 compact，<strong>每天凌晨 1 点全量 compact</strong>。对比 MySQL 的 DELETE 是即时删除事务+binlog，TTL 场景下 TableKV 这套的清理成本约等于零。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>过期前能查到吗？</em> → 能，接口能拿到剩余时间，业务可感知临近过期</li>
+<li><em>大量同时过期？</em> → 清理压力在 compact 侧、分散在平时，不会像 MySQL 那样瞬间大量删行</li>
+</ul>
+<h2 id="Q10-容量和并发有什么限制？（背数字）"><a href="#Q10-容量和并发有什么限制？（背数字）" class="headerlink" title="Q10 容量和并发有什么限制？（背数字）"></a>Q10 容量和并发有什么限制？（背数字）</h2><p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>五个数字：<br>① <strong>单条记录 ≤ 10MB</strong>；单次写入多记录总 ≤ 20M——它是 OLTP 不是大对象存储；<br>② <strong>单次查询遍历 ≤ 20M 或 2 万行</strong>（20M 指所有字段总和；遍历索引则算索引字段）——防大结果集拖垮；<br>③ 单 uin 记录数<strong>无限制</strong>，总量受磁盘（TS80A 1.5T &#x2F; IT5 3.5T）；<br>④ <strong>单 key（uin）并发有限制</strong>——同 uin 写串行，高并发写同一 uin 是反模式；<br>⑤ 字符串字段不能含 <code>\0</code>（会被截断），V 类型不能做范围索引。</p>
+<p>排查套路：返回 <strong>-1&#x2F;-2</strong> 先查两件事——测试环境配置是否更新、是否<strong>加载了多个 tabledef</strong> 文件。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>超过了怎么办？</em> → 大记录拆字段&#x2F;拆表；大结果集改游标分页多次拉</li>
+<li><em>tabledef 是什么？</em> → 表结构定义文件（字段&#x2F;类型&#x2F;索引），全局配置；结构上线后<strong>不能改</strong>，只能加字段&#x2F;索引——测试环境也是改了就换新 tableid</li>
+</ul>
+<h2 id="Q11-扩容怎么扩？和分库分表比好在哪？"><a href="#Q11-扩容怎么扩？和分库分表比好在哪？" class="headerlink" title="Q11 扩容怎么扩？和分库分表比好在哪？"></a>Q11 扩容怎么扩？和分库分表比好在哪？</h2><p><strong>面试官想考什么</strong>：水平扩展的运维形态——“原生分布式 vs 中间件拼装”的差别。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>MySQL 分库分表的扩容是<strong>业务侧的痛</strong>：加机器要迁移数据、改分片路由、双写切流，中间件和业务都参与。</p>
+<p>TableKV 的扩容是<strong>存储系统内部的调度</strong>：<br>① 单园区扩容——调低该园区（sect）权重，调度系统优先把 Paxos 副本迁出去，副本转移顺序可选（紧急时 Paxos 和 DB 同时迁）；<br>② <strong>部署新机扩容</strong>——新机器加入集群，调度把 PG 副本均衡过去，client 路由由 proxyserver 自动更新，<strong>业务完全无感</strong>；<br>③ 有 PG 标签机制防止副本迁到非预期的园区&#x2F;sect（跨城模块、全局索引模块要按标签走）。</p>
+<p>也有加速手段：副本粒度规划拷贝任务、”流量快速转移”——一个目的端副本拷完就把流量切过去、”首任务优先”——保证每个 PG 尽快有一个副本先完成。</p>
+<p>一句话：<strong>分库分表把分布式的复杂度给了业务，TableKV 把它收回到存储层</strong>——代价是业务要接受它的接口和限制。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>全局索引？</em> → 跨 uin 的索引独立成 PG；部署后建议从 Paxos 切 Raft 提性能（+30~40%），切之前要把 leader 转移好再重启</li>
+<li><em>大模块拆分？</em> → 按 tableid&#x2F;prefix 迁到全新集群，走”存量复制→双写→切流”流程，以周为单位</li>
+</ul>
+<h2 id="Q12-用代码调用长什么样？（证明真用过）"><a href="#Q12-用代码调用长什么样？（证明真用过）" class="headerlink" title="Q12 用代码调用长什么样？（证明真用过）"></a>Q12 用代码调用长什么样？（证明真用过）</h2><p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>核心四个数据结构，关系像写 SQL：</p>
+<p><strong>clsFilterList 是 where</strong>——里面放多个 clsFilterSet（Set 内条件是 AND，Set 之间是 OR）；传 NULL 就是对该 uin 全表操作。<br><strong>clsRecordList 是要写的行集合</strong>——每个 clsRecord 一行，AddUint64&#x2F;AddString 按字段类型填。<br><strong>clsResultList 是结果</strong>——按主键类型取 <code>GetKeyUInt32Map/GetKeyUInt64Map</code>，<strong>map 的 key 是写入对应的自增主键</strong>；<code>GetSuccessCount()</code> 判成功数。</p>
+<p>有个语法糖 <code>clsFilter</code>，可以链式写：</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">clsFilter <span class="hljs-title">filter</span><span class="hljs-params">(table_id)</span></span>;<br>filter.<span class="hljs-built_in">where</span>(<span class="hljs-number">2</span>, NEqual, <span class="hljs-number">2222ULL</span>)(<span class="hljs-number">3</span>, NEqual, <span class="hljs-number">33333</span>);   <span class="hljs-comment">// AND</span><br>filter.<span class="hljs-built_in">where</span>(<span class="hljs-number">2</span>, NEqual, <span class="hljs-number">2222ULL</span>).<span class="hljs-built_in">OR</span>(<span class="hljs-number">3</span>, NEqual, <span class="hljs-number">33333</span>); <span class="hljs-comment">// OR</span><br>client.<span class="hljs-built_in">Select</span>(uin, table_id, filter.<span class="hljs-built_in">filter</span>(), <span class="hljs-literal">nullptr</span>, &amp;rl, &amp;total, &amp;hit);<br><span class="hljs-function">std::unique_ptr&lt;clsRecordList&gt; <span class="hljs-title">auto_free</span><span class="hljs-params">(rl)</span></span>;   <span class="hljs-comment">// 返回的指针必须自动释放</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>两个实操细节：<strong>返回的指针要用 unique_ptr 接住自动释放</strong>（不然泄漏）；调试用 <code>ToString()</code> 打印表达式核对，打日志用 <code>ReportString()</code>——它<strong>只打印表达式结构不带具体值</strong>，避免敏感数据进日志。</p>
+<p>表结构（tabledef）的字段类型：X 是 uint64、L 是 uint32、V 是字符串（不能含 \0）、B 是二进制（不能建索引）。上线前在需求系统建表，<strong>结构上线后不能改</strong>，只能加字段和索引。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>新 SQL 引擎？</em> → Wengine，PostgreSQL 子集语法 + 向量化执行（DataChunk）+ CBO 优化；<code>SqlQuery</code> 接口支持 prepare 占位符、能直接查出业务自定义的 proto message（proto 字段名与 tabledef alias 一致）</li>
+<li><em>多值索引？</em> → <code>pb_list(f3,&#39;$.5.1&#39;)</code> 把序列化进 B 字段的 repeated 字段建成多值索引，配 <code>pb_list_contains</code> 查询；<strong>不支持 packed 的 repeated</strong>（proto3 默认 packed，会丢类型信息）</li>
+</ul>
+<h2 id="收尾：一句话总纲"><a href="#收尾：一句话总纲" class="headerlink" title="收尾：一句话总纲"></a>收尾：一句话总纲</h2><blockquote>
+<p><strong>对标分库分表的 MySQL</strong>：tableid 是表、<strong>uin 是物理分表</strong>；<strong>同 uin 亲和一组机器，写走 A 机 Paxos 三写、读随机三台、热点自动加只读副本、Paxos 五副本数据三副本</strong>。底层 leveldb，<strong>索引就是多存一行 key（索引列拼接+主键，value 空），与记录同 WriteBatch</strong>。索引六规则：<strong>最左前缀、等值在前、选择性竞争、33% 退化全表扫、范围条件后只能过滤</strong>；<strong>order by 列必须紧跟等值条件落进索引，limit 才真省</strong>。ACID 到单表（tableid+uin）；CAS 要自己加版本列，且 <strong>Update 不命中 filter 返回 0、必须查 GetSuccessCount</strong>；过期靠 <strong>compact 顺带丢弃</strong>（凌晨 1 点全量）。</p>
+</blockquote>
+
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/database/" class="category-chain-item">database</a>
+  
+  
+    <span>></span>
+    
+  <a href="/database/kv/" class="category-chain-item">kv</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+      
+        <a href="/tags/kv/" class="print-no-link">#kv</a>
+      
+    </div>
+  
+</div>
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TTLkv 和 TableKv</div>
+      <div>https://yb0os1.github.io/2026/09/14/TTLKV和TableKv/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/14/WQueue/" title="wqueue">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">wqueue</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/06/%E7%A7%8B%E6%8B%9B%E8%AE%B0%E5%BD%95/" title="27届-秋招记录">
+                        <span class="hidden-mobile">27届-秋招记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+      // 🔥 精准偏移（无冲突，不卡顿）
+      scrollSmoothOffset : -20
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

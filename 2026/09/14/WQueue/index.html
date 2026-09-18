@@ -1,0 +1,1259 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="WQueue 面试题 · 面试口述专用 配套主题库《WXG面试-中间件题库（svrkit-ttlkv-tablekv-mq-wqueue）.md》WQueue 章（Q74~Q79）使用。本册视角：面试官按”Kafka &#x2F; 消息队列”通用知识提问时，把标准答案落到 WQ 的具体实现上。   开场定位：WQ 是什么？（必背） WQ 是 WXG 基于 WFS 分布式文件系统构建的分布式消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wqueue">
+<meta property="og:url" content="https://yb0os1.github.io/2026/09/14/WQueue/index.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="WQueue 面试题 · 面试口述专用 配套主题库《WXG面试-中间件题库（svrkit-ttlkv-tablekv-mq-wqueue）.md》WQueue 章（Q74~Q79）使用。本册视角：面试官按”Kafka &#x2F; 消息队列”通用知识提问时，把标准答案落到 WQ 的具体实现上。   开场定位：WQ 是什么？（必背） WQ 是 WXG 基于 WFS 分布式文件系统构建的分布式消息队列">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/img/avatar30.png">
+<meta property="article:published_time" content="2026-09-14T08:25:31.000Z">
+<meta property="article:modified_time" content="2026-09-14T10:55:00.709Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="queue">
+<meta property="article:tag" content="wq">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/img/avatar30.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>wqueue - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="wqueue"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-14 16:25" pubdate>
+          2026年9月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          4.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <!-- 左侧空白栏（原目录位置清空） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <!-- 中间文章内容（保持不变） -->
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">wqueue</h1>
+            
+            
+            <!-- 统一包裹内容，确保解密后样式+目录能识别 -->
+            <div class="markdown-body" id="post-content">
+              
+                
+                <h1 id="WQueue-面试题-·-面试口述专用"><a href="#WQueue-面试题-·-面试口述专用" class="headerlink" title="WQueue 面试题 · 面试口述专用"></a>WQueue 面试题 · 面试口述专用</h1><blockquote>
+<p>配套主题库《WXG面试-中间件题库（svrkit-ttlkv-tablekv-mq-wqueue）.md》WQueue 章（Q74~Q79）使用。<br>本册视角：<strong>面试官按”Kafka &#x2F; 消息队列”通用知识提问时，把标准答案落到 WQ 的具体实现上</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="开场定位：WQ-是什么？（必背）"><a href="#开场定位：WQ-是什么？（必背）" class="headerlink" title="开场定位：WQ 是什么？（必背）"></a>开场定位：WQ 是什么？（必背）</h2><blockquote>
+<p>WQ 是 WXG 基于 <strong>WFS 分布式文件系统</strong>构建的分布式消息队列，官方文档明确说”概念与 Kafka 类似，可以对照理解”。</p>
+<p>最精确的一句话概括：<strong>WQ &#x3D; Kafka 概念层 1:1 复刻 + 存储&#x2F;协调层腾讯化</strong>——把 Kafka 自管的两大件”外包”出去了：<strong>存储外包给 WFS</strong>（3 副本容灾由 WFS 保证，broker 无状态），<strong>协调外包给 Chubby</strong>（元数据和分布式锁，替代 ZooKeeper&#x2F;KRaft）。</p>
+<p>介绍 WQ 的最佳顺序：先说 Kafka 的概念都通用（Topic&#x2F;Partition&#x2F;ConsumerGroup&#x2F;Rebalance&#x2F;offset），再讲两处外包带来的连锁差异——这是它和 Kafka 拉开差距的全部来源。</p>
+</blockquote>
+<h3 id="概念映射表（先背熟，是所有题的地基）"><a href="#概念映射表（先背熟，是所有题的地基）" class="headerlink" title="概念映射表（先背熟，是所有题的地基）"></a>概念映射表（先背熟，是所有题的地基）</h3><table>
+<thead>
+<tr>
+<th>Kafka</th>
+<th>WQ</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Broker</td>
+<td><strong>queuesvr（入队）+ broker（出队）</strong></td>
+<td>两者都<strong>无状态</strong>，数据托管 WFS</td>
+</tr>
+<tr>
+<td>Controller + GroupCoordinator</td>
+<td><strong>WqScheduler</strong></td>
+<td>分区调度 + 消费组协调</td>
+</tr>
+<tr>
+<td>ZooKeeper &#x2F; KRaft</td>
+<td><strong>Chubby</strong></td>
+<td>元数据 + 分布式锁</td>
+</tr>
+<tr>
+<td>Topic &#x2F; Partition</td>
+<td>完全相同</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ConsumerGroup + member</td>
+<td>完全相同</td>
+<td>心跳、路由</td>
+</tr>
+<tr>
+<td>分区分配（Range&#x2F;Sticky）</td>
+<td><strong>一致性哈希</strong></td>
+<td>缩容迁移最小</td>
+</tr>
+<tr>
+<td><code>__consumer_offsets</code> topic</td>
+<td>Chubby 目录 <code>offset/</code></td>
+<td>按数据所在 IDC 分开记</td>
+</tr>
+<tr>
+<td>副本 + ISR</td>
+<td><strong>WFS 3 副本</strong></td>
+<td>存储组件托管，无 ISR 概念</td>
+</tr>
+<tr>
+<td>事务消息</td>
+<td>PublishTxMsg + <strong>反查</strong></td>
+<td>两阶段 + 反查兜底</td>
+</tr>
+<tr>
+<td>幂等生产者</td>
+<td>入队去重（unique_id）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>延迟消息</td>
+<td>PublishDelayMsgAt&#x2F;After</td>
+<td><strong>≤30 天</strong></td>
+</tr>
+<tr>
+<td>—（Kafka 无）</td>
+<td><strong>推模式（默认）</strong></td>
+<td>consumeragent 回调业务 RPC</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Q1-消息队列是干什么的？你为什么需要-WQ？"><a href="#Q1-消息队列是干什么的？你为什么需要-WQ？" class="headerlink" title="Q1 消息队列是干什么的？你为什么需要 WQ？"></a>Q1 消息队列是干什么的？你为什么需要 WQ？</h2><p><strong>面试官想考什么</strong>：先考通识——MQ 的三大价值，看你是不是”为了用而用”。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>消息队列的价值三个：<strong>解耦</strong>（上游不用知道谁消费）、<strong>削峰</strong>（流量洪峰先进队列，消费者按自己的节奏处理）、<strong>异步</strong>（不需要同步等结果的活儿扔进队列）。</p>
+<p>但要用 WQ 这种分布式 MQ 而不是本地队列，是因为它再补两个能力：<strong>不丢</strong>（多副本持久化，机器坏了消息还在）和<strong>水平扩展</strong>（消费者加机器就能提吞吐）。</p>
+<p>举个微信后台的典型链路：处罚系统判罚后要发通知、写流水、更新画像——这些下游不需要同步等结果，一条消息进 WQ，各消费者各自订阅；判罚主流程的耗时不受下游影响。</p>
+<p>选型上的分界线：<strong>模块内异步、要求毫秒级低延迟</strong>用本地 MQ（单机共享内存+binlog，~3ms）；<strong>跨模块解耦、跨 IDC、海量积压、要求可靠</strong>才上 WQ——代价是固定多一跳网络，延迟 ~135ms。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>为什么 WQ 延迟 135ms 这么高？</em> → 消息要写 WFS（跨网络+落盘）才算入队成功，比本地 binlog 多了网络往返和副本同步（→ Q4 展开）</li>
+<li><em>本地 MQ 和 WQ 怎么选？</em> → 演进叙事：先本地 MQ 做模块内异步，需要跨业务&#x2F;跨 IDC&#x2F;海量积压再切 WQ——“两代 MQ 的取舍都有实战认知”</li>
+</ul>
+<h2 id="Q2-WQ-的整体架构是什么样的？"><a href="#Q2-WQ-的整体架构是什么样的？" class="headerlink" title="Q2 WQ 的整体架构是什么样的？"></a>Q2 WQ 的整体架构是什么样的？</h2><p><strong>面试官想考什么</strong>：组件划分和职责，看你能不能把 WQ 讲成”几个角色各司其职”。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>四个角色，拿 Kafka 对照着讲最清楚：</p>
+<p><strong>queuesvr（入队服务）+ broker（出队服务）</strong>——对应 Kafka 的 Broker，但拆成了入队和出队两个模块，而且<strong>两者都是无状态的</strong>：不落本地盘，数据全部写 WFS，自己只做”写文件&#x2F;读文件 + 索引 + 清理”。无状态是整个架构最关键的词——<strong>扩缩容和故障恢复不用搬数据，重新挂上 WFS 就能干活</strong>。</p>
+<p><strong>WqScheduler</strong>——对应 Kafka 的 Controller 加 GroupCoordinator，做分区调度和消费组协调（rebalance 的发起和收敛）。</p>
+<p><strong>Chubby</strong>——对应 ZooKeeper&#x2F;KRaft，存元数据和分布式锁。消费组的全部状态（成员、offset、分区持有关系）都在 Chubby 的目录结构里。</p>
+<p><strong>WFS</strong>——不在 Kafka 里对应任何角色，因为 Kafka 的存储在 broker 本地；WQ 把存储整个外包给 WFS 分布式文件系统，3 副本和容灾由 WFS 保证。</p>
+<p>底层链路：生产者 → queuesvr → <strong>批量写 WFS</strong>（组提交：攒一批或超阈值才真正写）→ 消费者经 broker 从 WFS 读。配套还有 file_cleaner（定期清理过期 WFS 文件，对应 Kafka 的 retention）和 file_indexer（日志索引）。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>入队出队为什么拆两个模块？</em> → 无状态后职责单一化，入队和出队可以独立扩容</li>
+<li><em>组提交是什么？</em> → 攒一批消息（数量或大小阈值）合并成一次 WFS 写，摊薄网络和落盘开销</li>
+</ul>
+<h2 id="Q3-消息怎么发不丢？（生产者视角）"><a href="#Q3-消息怎么发不丢？（生产者视角）" class="headerlink" title="Q3 消息怎么发不丢？（生产者视角）"></a>Q3 消息怎么发不丢？（生产者视角）</h2><p><strong>面试官想考什么</strong>：Kafka 面试必考的”消息不丢三段论”（生产者 acks &#x2F; broker 刷盘 &#x2F; 消费者提交）第一段，看你能不能映射到 WQ。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>Kafka 里生产者不丢靠 <code>acks=all</code> 加重试；WQ 的对应实现：</p>
+<p><strong>入队成功 &#x3D; 消息写入 WFS 完成</strong>。WFS 本身 3 副本，queuesvr 收到消息后批量写 WFS，写成功才向生产者返回成功——所以生产者拿到成功回执时，消息已经落在 3 副本的分布式文件系统里了，<strong>queuesvr 本身崩了也不丢</strong>，因为它本地根本没存数据。</p>
+<p><strong>发送侧的重试和去重</strong>：生产者重试可能造成重复，WQ 支持<strong>入队去重（unique_id）</strong>——对应 Kafka 的幂等生产者。业务给每条消息带唯一 ID，服务端识别到重复就直接返回上次的成功结果。</p>
+<p>边界要说诚实：<strong>不丢的是”已经确认入队”的消息</strong>。生产者发出后、拿到确认前如果崩了，这条消息处于未知状态——这是所有 MQ 的通病，解法要么事务消息，要么业务侧”本地消息表 + 对账补发”。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>和 Kafka acks&#x3D;all 的区别？</em> → Kafka 是 broker 本地多副本 ISR 确认；WQ 是 WFS 写入确认（副本逻辑在 WFS 内部，对 broker 透明）</li>
+<li><em>重试导致的重复怎么办？</em> → unique_id 服务端去重 + <strong>消费端幂等</strong>（at-least-once 语义下重复不可避免）</li>
+</ul>
+<h2 id="Q4-为什么说”把副本同步外包给-WFS”是最本质的架构分叉？"><a href="#Q4-为什么说”把副本同步外包给-WFS”是最本质的架构分叉？" class="headerlink" title="Q4 为什么说”把副本同步外包给 WFS”是最本质的架构分叉？"></a>Q4 为什么说”把副本同步外包给 WFS”是最本质的架构分叉？</h2><p><strong>面试官想考什么</strong>：这是 WQ 面试里最有深度的一题，答出”三个连锁反应”就能和背 Kafka 的人拉开差距。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>Kafka 的 broker 是<strong>有状态</strong>的：分区日志存本地磁盘，副本同步、ISR 维护、leader 选举全是 broker 自己管——换来通用性和极致吞吐。</p>
+<p>WQ 反过来：<strong>数据写 WFS，副本和容灾由 WFS 保证；queuesvr&#x2F;broker 无状态，只做读写转发</strong>。代码里就是拿到 WFS 路径和 group，按 partition 目录批量写。</p>
+<p>这个分叉带来<strong>三个连锁反应</strong>：</p>
+<p>① <strong>扩缩容&#x2F;故障恢复极简</strong>。Kafka 扩容要迁分区数据、切 leader 副本；WQ 的 broker 没有数据，<strong>挂了换一台重挂 WFS 即可</strong>，扩容同理。</p>
+<p>② <strong>跨 IDC 容灾天然内建</strong>。offset 在 Chubby 里<strong>按数据所在的 IDC 分开记</strong>（<code>offset/$topic/$idc/$partition</code>），天然支持”上海的消费者读深圳的队列”——<strong>Kafka 要做这个得靠 MirrorMaker 搭同步链路</strong>，WQ 是原生能力。</p>
+<p>③ <strong>代价是固定多一跳网络</strong>。所有写入都要过 WFS 这一层，<strong>WQ 延迟 ~135ms，远高于本地 MQ 的 ~3ms</strong>——这就是”外包”的价钱。</p>
+<p>总结成一句面试话术：<strong>“Kafka 把存储、副本、协调都自己做，换来通用性和吞吐；WQ 把存储副本外包给 WFS、协调外包给 Chubby，换来无状态 broker 和内部多 IDC 生态深度集成，代价是固定多一跳网络延迟。”</strong></p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>ISR 是什么？</em> → Kafka 的 In-Sync Replicas，跟得上 leader 的副本集合，acks&#x3D;all 只等 ISR 确认；WQ 没有这个概念，因为副本逻辑在 WFS 里</li>
+<li><em>为什么本地 MQ 只有 3ms？</em> → 数据在共享内存+本地 binlog，零网络开销</li>
+</ul>
+<h2 id="Q5-消费是推还是拉？"><a href="#Q5-消费是推还是拉？" class="headerlink" title="Q5 消费是推还是拉？"></a>Q5 消费是推还是拉？</h2><p><strong>面试官想考什么</strong>：Kafka 只有拉模式，WQ 默认推模式——这是最显眼的”腾讯特色”，也最能体现你真的了解 WQ 而不是背 Kafka。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>Kafka 是纯<strong>拉模式</strong>：消费者自己 poll，手动 commit offset。好处是消费者按自己能力拉、天然背压；坏处是空轮询浪费、延迟取决于 poll 间隔。</p>
+<p>WQ 默认是<strong>推模式</strong>，而且形态很特别：有个 <strong>consumeragent</strong> 组件，它的 IO worker 从 WFS 拉数据、handle worker <strong>直接回调业务的 svrkit RPC 接口</strong>。也就是说——<strong>业务不用写任何消费循环代码，只需要实现一个 RPC 接口</strong>，消息来了框架直接调你。</p>
+<p>这个设计是腾讯内部生态的产物：<strong>业务本来就是 svrkit 模块，消费代理直接复用现有模块，零额外部署</strong>。对比 Kafka 消费者要独立进程、独立部署、自己管重平衡，WQ 把这些全收走了。</p>
+<p>语义也清晰：<strong>消费成功 &#x3D; RPC 返回 0</strong>；非 0 自动进重试；<strong>调用超时 &#x3D; 代理感知后换同 group 的其他机器重试</strong>——这个”换机重试”是推模式对业务故障的容错优势，单机消费卡死不会堵住整条队列。</p>
+<p>也有拉模式兜底：业务自己起 <code>wqconsumer</code> 二进制主动拉，接近 Kafka 原生消费者的用法。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>推模式不会压垮消费者吗？</em> → 失败进重试 + 换机，速率由 group 和分区分配约束</li>
+<li><em>消费位 offset 谁提交？</em> → agent 侧管理，业务无感知（对比 Kafka 手动 commit）</li>
+</ul>
+<h2 id="Q6-Rebalance-怎么做的？（route-vs-owner-是核心考点）"><a href="#Q6-Rebalance-怎么做的？（route-vs-owner-是核心考点）" class="headerlink" title="Q6 Rebalance 怎么做的？（route vs owner 是核心考点）"></a>Q6 Rebalance 怎么做的？（route vs owner 是核心考点）</h2><p><strong>面试官想考什么</strong>：rebalance 是 Kafka 面试的重头戏（触发条件、过程、危害）。WQ 的实现有一套自己的”两个状态”模型，是这册里最值得背细节的题。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>先看元数据放哪：Kafka 新版把消费组状态放 KRaft（旧版放 ZooKeeper）；WQ 放 <strong>Chubby</strong>，每个 group 一个目录，底下四个子目录：</p>
+<ul>
+<li><code>members/</code> —— 活跃消费者 IP，内容是最近心跳时间</li>
+<li><code>offset/</code> —— 消费偏移，按 <code>$topic/$idc/$partition</code> 分文件</li>
+<li><code>owner/</code> —— <strong>每个分区当前被谁持有</strong>（实际状态）</li>
+<li><code>route/</code> —— <strong>每个版本的分区分配结果</strong>（期望状态），<code>$version/$ip → (idc, topic, partition)</code></li>
+</ul>
+<p><strong>核心模型就一句话：route 是”系统的最终状态”（期望分配），owner 是”系统的当前状态”（实际持有）。</strong></p>
+<p>Rebalance 的过程：触发时 scheduler 生成<strong>新版本</strong>的 route 并更新 version；此时 owner 和 route 不一致——<strong>通过心跳把分区”收回&#x2F;下发”</strong>，owner 逐步收敛到 route。这就是 Kafka”期望分配 vs 实际分配”的文件版实现：不是一次性切换，而是靠心跳逐个对齐。</p>
+<p><strong>触发条件</strong>和 Kafka 完全一致：组成员扩缩容、机器&#x2F;进程故障、心跳超时。rebalance 任务分<strong>事件触发</strong>和<strong>定期 Normal</strong>两种，失败进延迟重试队列。</p>
+<p><strong>分区分配算法</strong>是 WQ 的差异点：用<strong>一致性哈希</strong>而不是 Kafka 的 Range&#x2F;RoundRobin&#x2F;Sticky——好处是<strong>缩容时迁移的分区最少</strong>（一致性哈希的单调性）。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>rebalance 有什么危害？</em> → 期间分区不可消费、可能重复消费（offset 未提交部分重放）——Kafka 通用知识，WQ 同理</li>
+<li><em>怎么避免频繁 rebalance？</em> → 心跳超时别配太敏感、consumer 处理逻辑别阻塞心跳</li>
+<li><em>为什么用文件不用内存状态？</em> → Chubby 天然持久化+带锁，scheduler 挂了状态还在</li>
+</ul>
+<h2 id="Q7-消息会重复吗？消费端怎么保证幂等？"><a href="#Q7-消息会重复吗？消费端怎么保证幂等？" class="headerlink" title="Q7 消息会重复吗？消费端怎么保证幂等？"></a>Q7 消息会重复吗？消费端怎么保证幂等？</h2><p><strong>面试官想考什么</strong>：投递语义（at-least-once &#x2F; exactly-once）——所有 MQ 面试标配。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>先定性：<strong>WQ 是 at-least-once</strong>（至少一次），重复不可避免。来源三个：生产者重试（网络抖动重发）、消费失败重试（同一条多次投递）、rebalance（offset 没提交的部分会重放）。</p>
+<p><strong>生产端去重</strong>：入队带 <strong>unique_id</strong>，服务端识别重复直接返回——把”生产者重试导致的重复”这一类掐掉。</p>
+<p><strong>消费端幂等是业务责任</strong>，常见做法：消息带唯一业务 ID，处理前查去重表；或以”状态机推进”设计——只有合法状态迁移才生效，重复消息自然被拒绝（比如”已处罚”状态再来一条处罚消息直接忽略）。</p>
+<p>要不要 exactly-once？实践中<strong>不建议追求</strong>——Kafka 的 exactly-once 靠事务+两阶段提交，代价大且局限在单集群内；业界主流就是 at-least-once + 消费端幂等，把精力放在把幂等做对。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>Kafka 怎么做 exactly-once？</em> → 事务协调器 + 幂等生产者（PID+序列号）+ read_committed 隔离级别，仅限同集群内 stream 处理</li>
+<li><em>去重表本身怎么扛量？</em> → 带 TTL（消息本身有生命周期，过期前的重复窗口有限）</li>
+</ul>
+<h2 id="Q8-事务消息怎么支持？"><a href="#Q8-事务消息怎么支持？" class="headerlink" title="Q8 事务消息怎么支持？"></a>Q8 事务消息怎么支持？</h2><p><strong>面试官想考什么</strong>：分布式事务里”本地事务 + 发消息”的原子性——RocketMQ&#x2F;Kafka 都有事务消息，WQ 的特色是<strong>反查</strong>。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>场景：业务要”先写数据库，成功后发消息”——两步之间如果崩了，要么消息没发出去（下游永远不知道），要么发了但数据没写（下游拿到假消息）。</p>
+<p>WQ 的事务消息三接口：<strong>PublishTxMsg 发半消息 → 业务执行本地事务 → CommitTxMsg 提交 &#x2F; RollBackTxMsg 回滚</strong>。半消息对消费者不可见，提交后才投递。</p>
+<p><strong>WQ 的特色是”反查”兜底</strong>：如果业务发了半消息之后<strong>既没有 commit 也没有 rollback</strong>（比如崩了），WQ 会<strong>按事务 ID 反查业务方</strong>——业务实现一个反查接口，告诉 WQ”这个事务到底成没成”，WQ 据此自动提交或回滚。</p>
+<p>对比：RocketMQ 也有事务回查；Kafka 的事务是另一回事（多分区的原子写入，服务于 stream 处理），不是”本地事务+发消息”这个语义。</p>
+<p>更简单的替代：<strong>本地消息表</strong>——业务把”要发的消息”和业务数据写同一个本地事务，后台任务扫表补发。笨但可靠，配合 WQ 的 unique_id 去重防重复补发。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>半消息存哪？</em> → 同样在 WFS，只是标记了未提交状态</li>
+<li><em>反查不到业务（业务也挂了）？</em> → 重试 + 超时兜底（回滚），细节按具体配置</li>
+</ul>
+<h2 id="Q9-顺序性怎么保证？"><a href="#Q9-顺序性怎么保证？" class="headerlink" title="Q9 顺序性怎么保证？"></a>Q9 顺序性怎么保证？</h2><p><strong>面试官想考什么</strong>：分区有序 vs 全局有序——MQ 的经典题。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>和 Kafka 同一套答案：<strong>分区内有序，跨分区无序</strong>。</p>
+<p>生产者把需要有序的消息发到<strong>同一个 partition</strong>（按业务 key 哈希，比如同一个 uin 的消息固定路由到一个分区），单个分区内按写入顺序存储、按顺序投递。</p>
+<p>消费端维持顺序的前提：<strong>同一分区同一时刻只被一个消费者持有</strong>——这正是 owner 目录和 rebalance 机制保证的：一个分区在同一版本 route 里只会分给一个 member。</p>
+<p><strong>全局有序</strong>要么单分区（牺牲吞吐），要么业务层按 key 串行。一般业务只需要”同一个用户&#x2F;同一个订单有序”，分区有序就够。</p>
+<p>补充一个对照：本地 MQ 的做法是 <strong>per-uin 串行</strong>——同 uin 的任务排进等待队列，前一个完成才放下一个，不同 uin 并行。这是顺序和吞吐的经典折中，两代 MQ 殊途同归。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>rebalance 期间顺序会破吗？</em> → 会短暂重复消费（at-least-once），但顺序不乱（offset 递增重放）</li>
+<li><em>热点 key 全挤一个分区怎么办？</em> → 分区级热点，业务侧拆 key 或接受该分区吞吐上限</li>
+</ul>
+<h2 id="Q10-延迟消息怎么实现？"><a href="#Q10-延迟消息怎么实现？" class="headerlink" title="Q10 延迟消息怎么实现？"></a>Q10 延迟消息怎么实现？</h2><p><strong>面试官想考什么</strong>：延时&#x2F;定时投递，实际业务高频需求（超时关单、重试退避）。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>WQ 原生支持：<strong>PublishDelayMsgAt</strong>（指定时刻投递）&#x2F; <strong>PublishDelayMsgAfter</strong>（延迟多久投递），<strong>上限 30 天</strong>。</p>
+<p>实现思路（通用）：延迟消息先进<strong>按到期时间组织的延迟结构</strong>，到点才转入真实 topic 分区投递。本地 MQ 的实现更经典——<strong>按 next_dispatch_time 排序的最小堆，堆顶 O(1) 拿最早到期任务，后台线程精确睡到下个到期点</strong>，新任务入队用条件变量唤醒，毫秒级精度且 CPU 几乎为零。</p>
+<p>对比 Kafka：原生<strong>不支持</strong>延迟消息，要靠两个 topic 倒手（发到延迟 topic、定时器搬到目标 topic）或外部定时器触发——WQ 这个是原生能力，省了业务搭定时搬运的活。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>为什么上限 30 天？</em> → 延迟消息占存储且到期前不可清理，超长延迟用”定时任务触发发送”更合理</li>
+<li><em>到期精度？</em> → 秒级（本地 MQ 毫秒级）</li>
+</ul>
+<h2 id="Q11-积压了怎么办？"><a href="#Q11-积压了怎么办？" class="headerlink" title="Q11 积压了怎么办？"></a>Q11 积压了怎么办？</h2><p><strong>面试官想考什么</strong>：线上应急能力 + 容量规划意识——实践题，考你是不是只会背概念。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p>先定位<strong>积压的原因</strong>，三种对症下药：</p>
+<p><strong>消费者处理慢</strong>（最常见）：加消费者实例。但注意分区数是并发上限——<strong>消费者数超过分区数就是浪费</strong>，分区不够先扩分区。WQ 的推模式下加机器就是加 group member，rebalance 自动分走分区。</p>
+<p><strong>突发流量</strong>：看能不能丢弃——评估消息有没有过期语义（过期消息 file_cleaner 会清理）；不可丢的批次类消息看能否降级（比如写离线库慢慢消化）。</p>
+<p><strong>消费者故障&#x2F;卡死</strong>：推模式的优势在这——<strong>调用超时后 agent 自动换同 group 其他机器重试</strong>，单机故障不会堵住整条队列；确认是代码 bug 就先修再放量。</p>
+<p><strong>容量规划</strong>（事前）：按峰值入队速率 × 平均消费耗时算需要的消费者数，再按分区数取整上限；积压水位要<strong>设监控告警</strong>，别等用户投诉才发现。</p>
+<p>WQ 相比 Kafka 的一个积压优势：<strong>broker 无状态、存储在 WFS 弹性扩</strong>——积压本身不会压垮 broker（Kafka 积压占本地盘，盘满 broker 挂）。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>Kafka 积压的坑？</em> → 盘满、page cache 失效读走盘、消费 lag 监控</li>
+<li><em>怎么估算能追平？</em> → 追平速率 &#x3D; 消费吞吐 - 入队吞吐，积压量 ÷ 差值 &#x3D; 追平时间</li>
+</ul>
+<h2 id="Q12-消息怎么存、怎么清理？（retention-对比）"><a href="#Q12-消息怎么存、怎么清理？（retention-对比）" class="headerlink" title="Q12 消息怎么存、怎么清理？（retention 对比）"></a>Q12 消息怎么存、怎么清理？（retention 对比）</h2><p><strong>面试官想考什么</strong>：存储模型和生命周期管理。</p>
+<p><strong>口述答案</strong>：</p>
+<blockquote>
+<p><strong>存储</strong>：按 partition 目录组织在 WFS 上，写入是追加写（组提交攒批）——WFS 追加写性能好，这是吞吐的根基。对应 Kafka 的分区日志段（segment）。</p>
+<p><strong>索引</strong>：file_indexer 维护消息位置索引，消费者按 offset 定位读取——对应 Kafka 的 .index&#x2F;.timeindex 文件。</p>
+<p><strong>清理</strong>：file_cleaner 定期清理过期的 WFS 文件——对应 Kafka 的 retention（默认按时间&#x2F;大小阈值删旧 segment）。区别是 WQ 清理的是 WFS 上的文件对象，Kafka 删的是本地日志段。</p>
+<p><strong>消费位</strong>：offset 记在 <strong>Chubby</strong>（<code>offset/$topic/$idc/$partition</code>），不在消息文件里——对应 Kafka 旧版存 ZooKeeper、新版存 <code>__consumer_offsets</code> 内部 topic。<strong>WQ 按 IDC 分开记</strong>又和跨城能力勾连：换一个 IDC 的消费者接着读，offset 体系天然支持。</p>
+</blockquote>
+<p><strong>追问储备</strong>：</p>
+<ul>
+<li><em>Kafka 零拷贝？</em> → sendfile 从页缓存直发 socket；WQ 读要过 WFS 网络，没有本地页缓存这层优化——这是 135ms 延迟的又一来源</li>
+<li><em>文件多大切一个？</em> → WFS 对象粒度由集群配置定（Kafka segment 默认 1G）</li>
+</ul>
+
+                
+              
+            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/distributed/" class="category-chain-item">distributed</a>
+  
+  
+    <span>></span>
+    
+  <a href="/distributed/queue/" class="category-chain-item">queue</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/queue/" class="print-no-link">#queue</a>
+      
+        <a href="/tags/wq/" class="print-no-link">#wq</a>
+      
+    </div>
+  
+</div>
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>wqueue</div>
+      <div>https://yb0os1.github.io/2026/09/14/WQueue/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yb0os1</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/14/svrkit%E6%9E%B6%E6%9E%84/" title="rpc-svrkit架构">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">rpc-svrkit架构</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/14/TTLKV%E5%92%8CTableKv/" title="TTLkv 和 TableKv">
+                        <span class="hidden-mobile">TTLkv 和 TableKv</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧目录容器：加密时隐藏，解密后显示（核心修改：目录移到这里） -->
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+  </aside>
+
+
+      <div id="toc-container" style="display: block; position: sticky; top: 2rem; max-height: calc(100vh - 4rem); overflow-y: auto; padding: 1rem;">
+        <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+      // 🔥 精准偏移（无冲突，不卡顿）
+      scrollSmoothOffset : -20
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
