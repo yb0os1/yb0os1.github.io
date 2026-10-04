@@ -19,16 +19,16 @@
   <meta name="author" content="yb0os1">
   <meta name="keywords" content="yb0os1">
   
-    <meta name="description" content="Paxos介绍Paxos 解决的是：在一个会宕机、会丢包、消息会乱序延迟的异步网络里，让一组节点对”某个值是什么”达成不可推翻的一致。 安全性绝不妥协，活性尽力而为。 安全性是指只会选定一个值、且永远不会翻转；活性是指最终能选出来。为什么不能两全——FLP 定理已经证明了，异步网络下不存在同时满足安全性和活性的确定性共识算法。 步骤两阶段流程，角色有三个：Proposer 提案、Acceptor">
+    <meta name="description" content="Paxos 介绍 Paxos 解决的是：在一个会宕机、会丢包、消息会乱序延迟的异步网络里，让一组节点对&quot;某个值是什么&quot;达成不可推翻的一致。 安全性绝不妥协，活性尽力而为。 安全性是指只会选定一个值、且永远不会翻转；活性是指最终能选出来。为什么不能两全——FLP 定理已经证明了，异步网络下不存在同时满足安全性和活性的确定性共识算法。 步骤 两阶段流程，角色有三个：Proposer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式-一致性协议">
 <meta property="og:url" content="https://yb0os1.github.io/2026/04/03/%E5%88%86%E5%B8%83%E5%BC%8F-%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="yb0os1">
-<meta property="og:description" content="Paxos介绍Paxos 解决的是：在一个会宕机、会丢包、消息会乱序延迟的异步网络里，让一组节点对”某个值是什么”达成不可推翻的一致。 安全性绝不妥协，活性尽力而为。 安全性是指只会选定一个值、且永远不会翻转；活性是指最终能选出来。为什么不能两全——FLP 定理已经证明了，异步网络下不存在同时满足安全性和活性的确定性共识算法。 步骤两阶段流程，角色有三个：Proposer 提案、Acceptor">
+<meta property="og:description" content="Paxos 介绍 Paxos 解决的是：在一个会宕机、会丢包、消息会乱序延迟的异步网络里，让一组节点对&quot;某个值是什么&quot;达成不可推翻的一致。 安全性绝不妥协，活性尽力而为。 安全性是指只会选定一个值、且永远不会翻转；活性是指最终能选出来。为什么不能两全——FLP 定理已经证明了，异步网络下不存在同时满足安全性和活性的确定性共识算法。 步骤 两阶段流程，角色有三个：Proposer">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yb0os1.github.io/img/avatar28.png">
 <meta property="article:published_time" content="2026-04-03T08:37:12.000Z">
-<meta property="article:modified_time" content="2026-09-03T07:21:30.000Z">
+<meta property="article:modified_time" content="2026-10-04T05:03:20.657Z">
 <meta property="article:author" content="yb0os1">
 <meta property="article:tag" content="一致性协议">
 <meta property="article:tag" content="分布式">
@@ -589,47 +589,65 @@
             <div class="markdown-body" id="post-content">
               
                 
-                <h1 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Paxos 解决的是：<strong>在一个会宕机、会丢包、消息会乱序延迟的异步网络里，让一组节点对”某个值是什么”达成不可推翻的一致。</strong></p>
+                <h1>Paxos</h1>
+<h2 id="介绍">介绍</h2>
+<p>Paxos 解决的是：<strong>在一个会宕机、会丢包、消息会乱序延迟的异步网络里，让一组节点对&quot;某个值是什么&quot;达成不可推翻的一致。</strong></p>
 <p><strong>安全性绝不妥协，活性尽力而为。</strong> 安全性是指只会选定一个值、且永远不会翻转；活性是指最终能选出来。为什么不能两全——<strong>FLP 定理</strong>已经证明了，异步网络下不存在同时满足安全性和活性的确定性共识算法。</p>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>两阶段流程，角色有三个：Proposer 提案、Acceptor 投票、Learner 学习结果，决定权在 Acceptor 手里。每个提案带一个全局唯一递增的编号</p>
-<p>1、准备。Proposer 拿着编号 n 去问所有 Acceptor。Acceptor 如果没见过更大的编号，就做出一个承诺——“我从此不再接受编号小于 n 的提案”，同时把自己已经接受过的值带回来。<br>2、接受。Proposer 收到多数派的承诺后，才能发起真正的提案；多数派接受，这个值就被选定了。</p>
-<p>这里”多数派”是关键概念：N 个节点里的一半加一。它的数学价值是——任意两个多数派必然有交集。这个交集就是整个算法正确性的地基。</p>
+<h2 id="步骤">步骤</h2>
+<p>两阶段流程，角色有三个：Proposer 提案、Acceptor 投票、Learner 学习结果，决定权在 Acceptor 手里。每个提案带一个全局唯一递增的编号</p>
+<p>1、准备。Proposer 拿着编号 n 去问所有 Acceptor。Acceptor 如果没见过更大的编号，就做出一个承诺——“我从此不再接受编号小于 n 的提案”，同时把自己已经接受过的值带回来。<br>
+2、接受。Proposer 收到多数派的承诺后，才能发起真正的提案；多数派接受，这个值就被选定了。</p>
+<p>这里&quot;多数派&quot;是关键概念：N 个节点里的一半加一。它的数学价值是——任意两个多数派必然有交集。这个交集就是整个算法正确性的地基。</p>
 <p><strong>为什么必须两阶段？</strong></p>
 <p>假设只有一阶段、Proposer 直接发 Accept：Proposer A 提议 x，被节点 1、2 接受，构成多数派，x 选定了；同时 Proposer B 提议 y，被节点 2、3 接受，也是多数派，y 也选定了。两个不同的值都被选定，安全性直接崩。</p>
 <p>所以 Phase 1 干的是两件事：</p>
 <p>一是抢占——用编号建立排他性，把旧的 Proposer 挡在门外。 二是学习——把已经存在的决定捞出来。这条更关键：因为任意两个多数派必有交集，如果之前真有值被选定过，新 Proposer 的这个多数派里至少有一个节点见过它，一定会带回来。</p>
-<p>Proposer 一旦从承诺里看到任何已被接受的值，就必须放弃自己的值，改去提议那个值。**换句话说，**Paxos 里的”提案人”本质上是”决议的传播者”，不是”决议的决定者”。 这保证了一旦某个值被选定，后续所有轮次只会重复选定这同一个值，永不翻转。</p>
-<h1 id="Raft"><a href="#Raft" class="headerlink" title="Raft"></a>Raft</h1><h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2><p>Raft 是一种为了管理日志复制的共识算法，其核心目标是易理解性，在 Raft 出现之前，Paxos 算法一直是共识领域的标准，但 Paxos 难懂<br>它通过将复杂的共识问题分解为领导者选举和日志复制两个独立的子问题，确保在分布式环境下，即便部分节点故障，整个集群仍能达成一致</p>
+<p>Proposer 一旦从承诺里看到任何已被接受的值，就必须放弃自己的值，改去提议那个值。**换句话说，**Paxos 里的&quot;提案人&quot;本质上是&quot;决议的传播者&quot;，不是&quot;决议的决定者&quot;。 这保证了一旦某个值被选定，后续所有轮次只会重复选定这同一个值，永不翻转。</p>
+<h1>Raft</h1>
+<h2 id="介绍-2">介绍</h2>
+<p>Raft 是一种为了管理日志复制的共识算法，其核心目标是易理解性，在 Raft 出现之前，Paxos 算法一直是共识领域的标准，但 Paxos 难懂<br>
+它通过将复杂的共识问题分解为领导者选举和日志复制两个独立的子问题，确保在分布式环境下，即便部分节点故障，整个集群仍能达成一致</p>
 <p>Raft运行过程中，节点有三个状态：</p>
 <ol>
-<li><p>leader（领导者）：处理所有客户端请求，负责日志的复制和管理</p>
+<li>
+<p>leader（领导者）：处理所有客户端请求，负责日志的复制和管理</p>
 </li>
-<li><p>follower（跟随者）：被动接收 Leader 的心跳和日志复制请求。如果长时间没收到心跳，会转变为 Candidate</p>
+<li>
+<p>follower（跟随者）：被动接收 Leader 的心跳和日志复制请求。如果长时间没收到心跳，会转变为 Candidate</p>
 </li>
-<li><p>Candidate（候选者）：试图竞选成为 Leader 的中间状态</p>
+<li>
+<p>Candidate（候选者）：试图竞选成为 Leader 的中间状态</p>
 </li>
 </ol>
-<h2 id="领导者选举"><a href="#领导者选举" class="headerlink" title="领导者选举"></a>领导者选举</h2><ul>
+<h2 id="领导者选举">领导者选举</h2>
+<ul>
 <li>采用心跳机制进行选举</li>
 <li>集群开始或 Leader 挂掉时，Follower 变成 Candidate 并发起选举（如果 Follower 在一个选举超时时间内没收到心跳，它就认为集群没有 Leader转换为 Candidate 并向其他节点发起投票请求）</li>
-<li>通过随机超时时间和大多数原则 (超过半数  $N&#x2F;2 + 1$) 选出新 Leader</li>
+<li>通过随机超时时间和大多数原则 (超过半数  $N/2 + 1$) 选出新 Leader</li>
 <li>选举超时时间是<strong>随机</strong>的（通常在 150ms-300ms 之间），这降低了多个节点同时发起选举导致“票数瓜分”的概率</li>
 </ul>
-<h2 id="日志复制"><a href="#日志复制" class="headerlink" title="日志复制"></a>日志复制</h2><ul>
+<h2 id="日志复制">日志复制</h2>
+<ul>
 <li>所有的写请求都由 Leader 处理。</li>
 <li>Leader 先将日志追加到自己日志中，然后并行发送给 Follower</li>
 <li>当leader收到超过半数节点响应成功后，认为该日志已提交，将其应用到本地状态机，并通知客户端</li>
 <li>Leader 在后续的心跳中告诉 Follower 哪些日志已提交，Follower 随后也将这些日志应用到本地</li>
 </ul>
-<h2 id="安全性保证"><a href="#安全性保证" class="headerlink" title="安全性保证"></a>安全性保证</h2><ul>
+<h2 id="安全性保证">安全性保证</h2>
+<ul>
 <li>选举限制：只有包含了所有已提交日志的节点，才有可能赢得选举。通过比较日志的索引和任期号，确保 Candidate 的日志至少和 Follower 一样“新”</li>
 <li>日志匹配原则：如果两个日志条目拥有相同的索引和任期号，那么它们存储的指令必然相同，且之前的所有日志也完全一致</li>
 <li>Leader 完备性：一旦某个日志条目在某个任期内被提交，那么这个条目必将出现在所有更高任期的 Leader 的日志中</li>
 </ul>
-<h2 id="出现脑裂Raft怎么处理？"><a href="#出现脑裂Raft怎么处理？" class="headerlink" title="出现脑裂Raft怎么处理？"></a>出现脑裂Raft怎么处理？</h2><p>如果发生网络分区，可能会出现两个 Leader。但根据 Raft 的多数派原则，只有能联系到超过半数节点的那个分区才能成功提交日志。人数不够的分区虽然可能有 Leader，但它无法获得 $N&#x2F;2+1$ 的确认，因此请求会失败。当网络恢复后，任期号小的 Leader 会发现有更高任期的存在，自动降级为 Follower，并同步最新的日志。</p>
-<h2 id="Raft-选举中，如果多个-Candidate-同时发起选举导致平票怎么办？"><a href="#Raft-选举中，如果多个-Candidate-同时发起选举导致平票怎么办？" class="headerlink" title="Raft 选举中，如果多个 Candidate 同时发起选举导致平票怎么办？"></a>Raft 选举中，如果多个 Candidate 同时发起选举导致平票怎么办？</h2><p>Raft 引入了随机选举超时时间。每个节点等待选举的时间是不一样的（例如 150-300ms）。这样大概率会有一个节点先超时并率先发出投票请求，从而打破平票僵局。如果真的平票了，大家会增加任期号进入下一轮重新随机等待</p>
-<h2 id="Raft-是强一致性还是最终一致性？"><a href="#Raft-是强一致性还是最终一致性？" class="headerlink" title="Raft 是强一致性还是最终一致性？"></a>Raft 是强一致性还是最终一致性？</h2><p>Raft 提供的是强一致性（线性一致性）。因为它要求客户端的所有读写都通过 Leader 进行，且 Leader 必须等到大多数节点确认后才返回成功。这意味着一旦一个值被提交，后续任何读取操作都能拿到这个最新的值</p>
-<h1 id="ZAB"><a href="#ZAB" class="headerlink" title="ZAB"></a>ZAB</h1><h1 id="分布式一致性怎么保障"><a href="#分布式一致性怎么保障" class="headerlink" title="分布式一致性怎么保障"></a>分布式一致性怎么保障</h1><ol>
+<h2 id="出现脑裂Raft怎么处理？">出现脑裂Raft怎么处理？</h2>
+<p>如果发生网络分区，可能会出现两个 Leader。但根据 Raft 的多数派原则，只有能联系到超过半数节点的那个分区才能成功提交日志。人数不够的分区虽然可能有 Leader，但它无法获得 $N/2+1$ 的确认，因此请求会失败。当网络恢复后，任期号小的 Leader 会发现有更高任期的存在，自动降级为 Follower，并同步最新的日志。</p>
+<h2 id="Raft-选举中，如果多个-Candidate-同时发起选举导致平票怎么办？">Raft 选举中，如果多个 Candidate 同时发起选举导致平票怎么办？</h2>
+<p>Raft 引入了随机选举超时时间。每个节点等待选举的时间是不一样的（例如 150-300ms）。这样大概率会有一个节点先超时并率先发出投票请求，从而打破平票僵局。如果真的平票了，大家会增加任期号进入下一轮重新随机等待</p>
+<h2 id="Raft-是强一致性还是最终一致性？">Raft 是强一致性还是最终一致性？</h2>
+<p>Raft 提供的是强一致性（线性一致性）。因为它要求客户端的所有读写都通过 Leader 进行，且 Leader 必须等到大多数节点确认后才返回成功。这意味着一旦一个值被提交，后续任何读取操作都能拿到这个最新的值</p>
+<h1>ZAB</h1>
+<h1>分布式一致性怎么保障</h1>
+<ol>
 <li>共识协议保证集群节点一致</li>
 <li>分布式事务保证跨服务业务一致</li>
 <li>幂等+分布式避免并发错误</li>
@@ -697,9 +715,6 @@
     %% 应用样式
     class Layer1,Layer2,Layer3,Layer4 layerFill;
 </code></pre>
-
-
-
 <pre><code class=" mermaid">flowchart LR
     %% 样式定义
     classDef device fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;
@@ -736,9 +751,6 @@
 
     class Layer1,Layer2,Layer3 net;
 </code></pre>
-
-
-
 <pre><code class=" mermaid">sequenceDiagram
     autonumber
     participant T as 终端设备 (智能电表)
@@ -776,7 +788,6 @@
     G--&gt;&gt;T: 拒绝连接 (本地拦截，无需上报主站)
     end
 </code></pre>
-
 <pre><code class=" mermaid">graph TD
     %% 样式
     classDef ext fill:#eceff1,stroke:#607d8b,stroke-width:2px;
@@ -822,7 +833,6 @@
     MQ -.- N1
     Redis -.- N2
 </code></pre>
-
 
                 
               

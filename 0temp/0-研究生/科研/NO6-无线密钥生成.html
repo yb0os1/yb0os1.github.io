@@ -1,0 +1,797 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="基于低信息泄露协商算法的无线信道密钥生成方案 无线通道密钥生成难题  动态环境下的密钥稳定性：  无线环境是动态变化的，如何在频繁变化的信道条件下保持密钥的稳定性和安全性是一个挑战   抗干扰和抗攻击：  无线环境中存在各种干扰和潜在的攻击，如何确保密钥生成过程不受这些因素的影响是一个难题   密钥分发的安全性：  在无线环境中，密钥的分发可能更容易受到攻击，如何确保密钥在分发过程中的安全性是一个">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/0-%E7%A0%94%E7%A9%B6%E7%94%9F/%E7%A7%91%E7%A0%94/NO6-%E6%97%A0%E7%BA%BF%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="基于低信息泄露协商算法的无线信道密钥生成方案 无线通道密钥生成难题  动态环境下的密钥稳定性：  无线环境是动态变化的，如何在频繁变化的信道条件下保持密钥的稳定性和安全性是一个挑战   抗干扰和抗攻击：  无线环境中存在各种干扰和潜在的攻击，如何确保密钥生成过程不受这些因素的影响是一个难题   密钥分发的安全性：  在无线环境中，密钥的分发可能更容易受到攻击，如何确保密钥在分发过程中的安全性是一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119092004700.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119091746192.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119093458663.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119094330478.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119143334436.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119144719414.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119144900076.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.576Z">
+<meta property="article:modified_time" content="2026-03-02T03:01:46.805Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20241119092004700.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>基于低信息泄露协商算法的无线信道密钥生成方案</h1>
+<h2 id="无线通道密钥生成难题">无线通道密钥生成难题</h2>
+<ol>
+<li><strong>动态环境下的密钥稳定性</strong>：
+<ul>
+<li>无线环境是动态变化的，如何在频繁变化的信道条件下保持密钥的稳定性和安全性是一个挑战</li>
+</ul>
+</li>
+<li><strong>抗干扰和抗攻击</strong>：
+<ul>
+<li>无线环境中存在各种干扰和潜在的攻击，如何确保密钥生成过程不受这些因素的影响是一个难题</li>
+</ul>
+</li>
+<li><strong>密钥分发的安全性</strong>：
+<ul>
+<li>在无线环境中，密钥的分发可能更容易受到攻击，如何确保密钥在分发过程中的安全性是一个重要问题</li>
+</ul>
+</li>
+<li><strong>实时性和效率</strong>：
+<ul>
+<li>无线通道密钥生成需要满足实时性要求，同时还要保证生成过程的高效性，这需要在算法设计和实现上进行权衡</li>
+</ul>
+</li>
+</ol>
+<h2 id="系统模型">系统模型</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241119092004700.png" srcset="/img/loading.gif" lazyload alt="image-20241119092004700"></p>
+<p>Alice和Bob是合法通信用户，Eve是窃听者。系统采用时分双工（TDD）方式工作</p>
+<p>Alice 和 Bob 会互相发送导频信号对信道进行探测，将信道特征量化得到初始密钥，经信息协商得到一对对称的密钥,最后进行隐私放大以提高密钥的随机性</p>
+<h2 id="密钥生成示意图">密钥生成示意图</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241119091746192.png" srcset="/img/loading.gif" lazyload alt="image-20241119091746192"></p>
+<h2 id="信道探测和预处理">信道探测和预处理</h2>
+<p>为了获取信道的特征信息</p>
+<ol>
+<li>Alice和Bob互相发送包含PN序列的导频信号</li>
+<li>计算接收信号与PN序列的互相关结果，找到相关峰
+<ul>
+<li>利用 PN 序列相关结果的<strong>对称性</strong>计算采样时刻与最佳  采样时刻之间的延时</li>
+</ul>
+</li>
+<li>利用相关峰及其前后各3个采样点计算重心，得到延时</li>
+<li>对信号进行内插，调整采样时刻，使其处于最佳采样时刻</li>
+</ol>
+<p>通过预处理，可以有效提升信道特征的互易性，从而降低初始密钥的不一致率，为后续的信息协商过程减少信息泄露，提高密钥的安全性</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241119093458663.png" srcset="/img/loading.gif" lazyload alt="image-20241119093458663"></p>
+<h2 id="量化">量化</h2>
+<p>将信道探测得到的连续信道特征转换为离散的比特序列，即初始密钥</p>
+<p>本文介绍了两种带保护间隔的量化方法：单比特量化和基于累积分布函数（CDF）的两比特量化</p>
+<p>单比特量化：将信道特征的采样点分为两个区间，并在两个区间之间设置一个保护间隔，保护间隔内的采样点将被去除</p>
+<p>基于CDF的两比特量化：在数据CDF的25%、50%和75%处设置三个保护间隔，然后通过插值算出保护间隔在数据中的范围</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241119094330478.png" srcset="/img/loading.gif" lazyload alt="image-20241119094330478"></p>
+<h2 id="信息协商">信息协商</h2>
+<p>允许两个合法用户（例如Alice和Bob）在有潜在窃听者（例如Eve）的情况下，协商并生成一个共享的秘密密钥。在论文中，作者专注于解决信息协商过程中的信息泄露问题，并提出了一种改进的Cascade算法，称为低信息泄露Cascade算法</p>
+<h3 id="传统Cascade算法">传统Cascade算法</h3>
+<p>Cascade算法是一种广泛使用的信息协商方法，包括主算法和子算法（BINARY算法）</p>
+<ol>
+<li>在主算法中，Alice将序列分块并计算奇偶校验码，然后发送给Bob。Bob接收到校验码后与自己的结果进行对比</li>
+<li>如果不同则使用子算法纠错。BINARY算法通过二分查找错误比特，直到找到错误的比特位置</li>
+</ol>
+<p><strong>信息泄露问题</strong>：在协商过程中，通过交换校验码会导致信息泄露给窃听者。</p>
+<blockquote>
+<p>在BINARY算法的最后一步，子块大小等于1，意味着校验码就是密钥本身，直接泄露了1比特密钥</p>
+</blockquote>
+<p>论文中分析了Cascade算法中的信息泄露问题，并指出校验码之间的冗余意味着泄露的信息量实际上小于发送的校验码总数</p>
+<h3 id="低信息泄漏的Cascade算法">低信息泄漏的Cascade算法</h3>
+<p><strong>改进BINARY算法</strong></p>
+<ul>
+<li><strong>停止递归</strong>：在序列长为2或3时停止递归，避免直接泄露密钥</li>
+<li><strong>删除不一致比特</strong>：删除不一致比特，减少信息泄露</li>
+</ul>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241119143334436.png" srcset="/img/loading.gif" lazyload alt="image-20241119143334436"></p>
+<p>改进后的 BINARY 算法不会直 接泄露密钥本身</p>
+<p>改进的 BINARY 算法删除了密钥中的一部分，从窃听方的角度来看相当于方程组中的部分未知数需要删除</p>
+<p><strong>块长变化</strong></p>
+<p>块长越小,则块数越多,信息泄露更多;相对地，算法的纠错能力也更强。 轮数越多泄露的信息也更多,但是协商的  成功率也越高</p>
+<p>低信息泄露 Cascade 算法在主算法中加入了块长变化的步骤</p>
+<p>在算法的某一轮开始时将块长增大。 在协商初期使用小块长快速降低比特不一致率(BDR) 后续的步骤中使用大块长减少信息泄露</p>
+<p><strong>分类交织</strong></p>
+<p>删除不一致比特,  这将导致它在每一轮协商中分块的结构不同</p>
+<p>需要将密钥分为两类进行交织，减少信息泄露</p>
+<ol>
+<li>将密钥分为两类：A类（上一轮处于不一致块中被保留的部分）和B类（其余部分）</li>
+<li>B类中先取除尽块长平方的最大长度的一部分进行交织</li>
+<li>B类中剩余的部分和A类一起进行交织</li>
+<li>将两部分组合起来得到新的序列</li>
+</ol>
+<p><strong>长游程问题</strong></p>
+<p>截断游程：截断游程超过4的部分，每部分只保留4个比特，降低游程，提高密钥随机性</p>
+<blockquote>
+<p>长游程问题来源于信道特征。 CIR 信道冲激响应   幅值最大值  虽然有着很好的互易性,但是它不太可能始终保持  着剧烈的抖动,这导致了在初始密钥中出现长连 0、  1 的情况,密钥存在长游程问题。</p>
+</blockquote>
+<h2 id="实验结果">实验结果</h2>
+<p>比特不一致率BDR</p>
+<p><strong>协商成功率</strong></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241119144719414.png" srcset="/img/loading.gif" lazyload alt="image-20241119144719414"></p>
+<ol>
+<li>Cascade 代表传统算法,</li>
+<li>Low leak 代表低信息泄露算法</li>
+<li>Light 代表轻量级算法</li>
+<li>Interleaving 代表使用交织的低信息泄露算法</li>
+</ol>
+<ul>
+<li>低信息泄露算法在较低BDR时与传统算法的成功率相同，在较高BDR的情况下成功率不如传统算法</li>
+<li>轻量级算法对初始密钥BDR的要求非常苛刻，成功率随BDR的提升迅速下降</li>
+</ul>
+<p><strong>平均有效密钥生成速率</strong></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241119144900076.png" srcset="/img/loading.gif" lazyload alt="image-20241119144900076"></p>
+<p>传统算法和低信息泄露算法的有效KGR非常接近，轻量级算法的KGR较低</p>
+<p><strong>信息泄露</strong></p>
+<ul>
+<li>低信息泄露算法的信息泄露比传统算法低，剩余比特更多，安全性更好</li>
+<li>窃听方选择删除疑似病态方程的策略对破解密钥更加有利</li>
+</ul>
+<h2 id="dd">dd</h2>
+<ul>
+<li>窃听者可以选择删除疑似病态方程的策略，从而更有效地破解密钥  如果处理？</li>
+<li>降低比特不一致率，信道特征互易性较差的情况下<strong>BDR</strong>up</li>
+<li>提高协商成功率的同时，信息泄露也会增加</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

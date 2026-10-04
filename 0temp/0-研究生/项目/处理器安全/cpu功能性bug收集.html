@@ -1,0 +1,1006 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="1、Ning, Zhenyu, et al. “Revisiting arm debugging features: Nailgun and its defense.” IEEE Transactions on Dependable and Secure Computing 20.1 (2021): 574-589. 钉枪：针对 ARM 架构调试功能的攻击方式，Nailgun是一种针对ARM架构的">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/0-%E7%A0%94%E7%A9%B6%E7%94%9F/%E9%A1%B9%E7%9B%AE/%E5%A4%84%E7%90%86%E5%99%A8%E5%AE%89%E5%85%A8/cpu%E5%8A%9F%E8%83%BD%E6%80%A7bug%E6%94%B6%E9%9B%86.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="1、Ning, Zhenyu, et al. “Revisiting arm debugging features: Nailgun and its defense.” IEEE Transactions on Dependable and Secure Computing 20.1 (2021): 574-589. 钉枪：针对 ARM 架构调试功能的攻击方式，Nailgun是一种针对ARM架构的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-04T05:02:31.580Z">
+<meta property="article:modified_time" content="2025-06-13T10:53:48.078Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <p>1、Ning, Zhenyu, et al. “Revisiting arm debugging features: Nailgun and its defense.” IEEE Transactions on Dependable and Secure Computing 20.1 (2021): 574-589.</p>
+<p>钉枪：针对 ARM 架构调试功能的攻击方式，Nailgun是一种针对ARM架构的攻击方式，主要利用了ARM处理器的调试功能漏洞，包括非侵入性和侵入性调试功能。攻击者利用非侵入性调试功能中的ETM痕迹流解码，推断出AES加密密钥；利用侵入性调试功能使处理器进入调试状态，修改寄存器值以执行任意代码。其目标是从普通世界EL1权限提权到EL3，访问安全世界中的敏感数据，如存储在TEE中的加密密钥等。Nailgun攻击可能导致密码失效，因为它能够推断出加密密钥或篡改密钥存储，使攻击者可以解密数据或绕过加密保护机制。</p>
+<p>2、AEPIC Leak: Architecturally Leaking Uninitialized Data from the Microarchitecture</p>
+<p>首次揭示了 Intel “Sunny Cove” 微架构中 APIC MMIO 未定义寄存器范围错误返回缓存中“陈旧”数据的设计缺陷，无需任何侧道或外部测量即可稳定泄露整个缓存层级（L2、LLC）中的敏感信息。攻击者仅需通过普通的内存映射 I/O 读操作，即可将缓存中的秘密数据直接导出至通用寄存器。</p>
+<p>3、Whispering Pixels（归类了新型测信道）</p>
+<p>核心在于 GPU 在 shader 启动时未清零寄存器的功能性失误，攻击者只用标准着色器指令读取上一次作业残留数据，无需外部探针或时序采样</p>
+<p>4、Cortex‑A53 PMU 泄露（Erratum A53‑819472</p>
+<p>ARMv8‑A 规范中 PMUSERENR_EL0 错误配置使得 EL0 下可直接读取本应特权访问的性能计数器寄存器。这是寄存器访问权限设计不当，攻击者仅凭普通 <code>MRS</code> 指令即可获取内核性能信息</p>
+<p>5、RISCVuzz / GhostWrite</p>
+<p>通过差分模糊测试（differential fuzzing）发现多家厂商 RISC‑V CPU 在合法指令编码下错将写操作映射到任意物理地址的“GhostWrite”指令解码缺陷，攻击者在用户态发出正常指令即可任意写读物理内存，完全是对ISA/微架构解码逻辑的直接滥用，无需依赖测量或激光故障等外部手段</p>
+<p>攻击者可在用户态任意写入／读取内核物理内存，包括密码哈希表或密钥存储区，直接覆盖或窃取密码数据，使登录认证机制彻底失效</p>
+<p>6、ARM Cortex‑A53 PMU 权限绕过（Erratum 855827）</p>
+<p>PMUSERENR_EL0 寄存器在 EL0（用户态）未被正确禁用时，允许普通 <code>MRS PMCR_EL0</code> 等指令读取本应受限的性能监控计数器值</p>
+<p>通过读取高精度事件计数，攻击者可进行精确的时间统计与模式识别，辅助对加密运算（如 PBKDF2、bcrypt 等）发起暴力或侧信道破解，从而在实践中大幅降低密码强度，并最终失效</p>
+<p>7、Branch Privilege Injection (BPI)</p>
+<p>利用 Intel 现代 CPU 分支预测单元中的“Branch Privilege Injection”缺陷，通过合法分支指令使分支目标错误地指向特权内存，并从中泄露数据</p>
+<p>可直接从内核或其他进程空间泄露包括用户密码哈希、加密密钥、会话令牌等在内的任意敏感数据，使得离线破解或会话劫持变得简单，从根本上破坏密码和认证机制的安全性</p>
+<p>8、CIPHERLEAKS: Breaking Constant-time Cryptography on AMD SEV via the Ciphertext Side Channel</p>
+<p>利用了AMD SEV（包括SEV-ES和SEV-SNP）的两个设计缺陷：一是SEV的内存加密引擎采用XEX模式，使同一明文在相同物理地址处的密文始终相同；二是SEV未阻止特权管理程序读取加密虚拟机内存的密文。攻击者通过监控加密虚拟机保存区域（VMSA）的密文变化，推断虚拟机的执行状态或恢复特定寄存器值。这种攻击可针对AMD EPYC服务器处理器上的SEV、SEV-ES和SEV-SNP功能，能完全破坏OpenSSL中恒定时间密码学的实现，如RSA和ECDSA，导致私钥泄露，引发密码失效。</p>
+<p>9、undeSErVed trust</p>
+<p>利用了 SEV 技术在认证协议中定义不严谨，SEV 在进行虚拟机远程认证时，只对页面内容进行加密和度量，却不关心页面的加载顺序。攻击者可以通过重新排列合法虚拟机的页面内容、插入恶意代码，依然生成相同的度量值，顺利通过认证。攻击者可以伪装成受信任的 VM，从服务端获取加密密钥或敏感数据，导致密码失效或安全通信被窃听。</p>
+<p>导致密码失效：攻击者通过绕过 SEV 的远程认证机制，可以：</p>
+<ol>
+<li>让云服务提供者（CSP）或用户错误地信任一个伪造的 VM；</li>
+<li>在该 VM 内部运行恶意代码来获取原本只有可信环境才能访问的加密密钥、凭据或通信数据；</li>
+<li>例如，攻击者可以建立 TLS 连接或接收 session key，直接窃取敏感密码材料。</li>
+</ol>
+<p>10、Heckler（存疑）</p>
+<p>利用的是处理器对中断管理的微架构设计问题   利用中断控制逻辑缺陷的新型微架构攻击，通过合法但密集的中断，干扰加密虚拟机的执行，最终实现对密码数据的泄露或密钥恢复。</p>
+<p>攻击者可以：</p>
+<ul>
+<li>观察 VM 中加密操作的位置与时机；</li>
+<li>推断加密过程中密钥使用行为；</li>
+<li>配合其他侧信道（如缓存或时间）重构密钥或解密数据。</li>
+</ul>
+<p>在某些构造下，还可以利用中断干扰造成密钥派生流程偏差，进一步破坏密码完整性。</p>
+<p>11、Zhao-Hui Du, Zhiwei Ying, Zhenke Ma, Yufei Mai, Phoebe Wang, Jesse Liu, and Jesse Fang.“Secure Encrypted irtualization is Unsecure.” arXiv preprint arXiv:1712.05090.</p>
+<p>利用了 AMD SEV 在架构设计上的缺陷：即 内存加密不包含完整性保护机制。</p>
+<p>架构规格层面的缺陷，攻击者可以通过合法的内存访问和地址重映射操作（而非侧信道或外部干预）重放加密内存块，进而改变受保护虚拟机的行为。</p>
+<ul>
+<li>可以重放认证成功后的内存快照（如登录状态、session key），从而绕过认证过程。</li>
+<li>可以使虚拟机错误地信任攻击者，等价于密钥泄露或身份伪造。</li>
+</ul>
+<p>12、</p>
+<p>大部分的都i是基于SEV（安全加密虚拟化）架构实现中的漏洞   这个不算功能性bug的吧</p>
+<p>大部分间接导致密码失效的，绕过认证、如果密码存在enclave 、</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>利用什么</th>
+<th>攻击过程简述</th>
+<th>如何导致密码失效</th>
+<th>对应的论文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CopyCat</td>
+<td>利用了CPU指令控制机制的漏洞，通过控制指令序列，注入恶意代码</td>
+<td>攻击者利用指令级别的漏洞获取机密数据。</td>
+<td>如果密码存储在 enclave 中，攻击者可以利用注入的恶意代码读取内存中的密码数据。</td>
+<td>D. Moghimi, J. Van Bulck, N. Heninger et al., “CopyCat: Controlled instruction-level attacks on enclaves,” in USENIX Security, 2020.</td>
+</tr>
+<tr>
+<td>Microscope</td>
+<td>利用了CPU微架构的重放特性</td>
+<td>攻击者通过重放攻击获取指令信息。</td>
+<td>攻击者通过获取的指令信息，重建 enclave 内的控制流，从而可能获取密码。</td>
+<td>D. Skarlatos, M. Yan, B. Gopireddy et al., “Microscope: Enabling microarchitectural replay attacks,” in ISCA, 2019.</td>
+</tr>
+<tr>
+<td>The guard’s dilemma</td>
+<td>利用了CPU的ROP技术漏洞</td>
+<td>重用现有代码片段执行恶意操作。</td>
+<td>重用的代码片段可以操作内存，读取或修改包含密码的区域。</td>
+<td>A. Biondo, M. Conti, L. Davi et al., “The guard’s dilemma: Efficient code-reuse attacks against Intel SGX,” in USENIX Security, 2018.</td>
+</tr>
+<tr>
+<td>Hacking in darkness</td>
+<td>利用了CPU的ROP技术漏洞</td>
+<td>在 enclave 内执行恶意操作。</td>
+<td>攻击者通过 ROP 链访问 enclave 内存，获取存储的密码。</td>
+<td>J. Lee, J. Jang, Y. Jang et al., “Hacking in darkness: Return-oriented programming against secure enclaves,” in USENIX Security, 2017.</td>
+</tr>
+<tr>
+<td>SmashEx</td>
+<td>利用了CPU的异常处理机制漏洞</td>
+<td>通过特定代码片段引发异常，破坏 enclave 安全。</td>
+<td>异常处理机制的漏洞允许攻击者访问 enclave 内存，其中可能包含密码。</td>
+<td>J. Cui, J. Z. Yu, S. Shinde et al., “SmashEx: Smashing SGX enclaves using exceptions,” in ACM CCS, 2021.</td>
+</tr>
+<tr>
+<td>Game of threads</td>
+<td>利用了CPU的线程同步机制漏洞</td>
+<td>进行异步投毒攻击。</td>
+<td>攻击者通过同步漏洞访问其他线程的内存空间，窃取密码。</td>
+<td>J. R. S. Vicarte, B. Schreiber, R. Paccagnella, and C. W. Fletcher, “Game of threads: Enabling asynchronous poisoning attacks,” in ASPLOS, 2020.</td>
+</tr>
+<tr>
+<td>AsyncShock</td>
+<td>利用了CPU的同步机制漏洞</td>
+<td>通过恶意中断获取敏感信息。</td>
+<td>恶意中断可能使攻击者读取 enclave 内存中的密码数据。</td>
+<td>N. Weichbrodt, A. Kurmus, P. Pietzuch, and R. Kapitza, “Breaking TrustZone Memory Isolation,” in ESORICS, 2016.</td>
+</tr>
+<tr>
+<td>SAEV</td>
+<td>利用了CPU寄存器保护机制的漏洞</td>
+<td>攻击者通过未受保护的寄存器泄露虚拟机内存数据。</td>
+<td>寄存器中可能包含指向内存中存储密码的指针，攻击者可以利用这些指针获取密码。</td>
+<td>Felicitas Hetzelt and Robert Buhren, “Security analysis of encrypted virtual machines,” in ACM SIGPLAN Notices, 2017.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ESEV</td>
+<td>利用了CPU的NPT保护机制漏洞</td>
+<td>攻击者通过未受保护的NPT泄露虚拟机内存数据。</td>
+<td>NPT 的漏洞允许攻击者访问加密虚拟机的内存内容，其中可能包含密码。</td>
+<td>Mathias Morbitzer, Manuel Huber, and Julian Horsch, “Extracting Secrets from Encrypted Virtual Machines,” in 9th ACM Conference on Data and Application Security and Privacy, 2019.</td>
+</tr>
+<tr>
+<td>SEVered</td>
+<td>利用了CPU的NPT保护机制漏洞</td>
+<td>攻击者破坏虚拟机内存加密。</td>
+<td>攻击者可以解密虚拟机内存，获取其中存储的密码。</td>
+<td>Mathias Morbitzer, Manuel Huber, Julian Horsch, and Sascha Wessel, “SEVered: Subverting AMD’s Virtual Machine Encryption,” in 11th European Workshop on Systems Security, 2018.</td>
+</tr>
+<tr>
+<td>Security-by-Crash</td>
+<td>利用了CPU的内存隔离机制漏洞</td>
+<td>攻击者利用“安全崩溃”机制的漏洞，破坏内存隔离。</td>
+<td>破坏内存隔离后，攻击者可以访问其他虚拟机的内存空间，窃取密码。</td>
+<td>Mengyuan Li, Yinqian Zhang, and Zhiqiang Lin, “CROSSLINE: Breaking ‘Security-by-Crash’ based Memory Isolation in AMD SEV,” in arXiv preprint arXiv:2008.00146, 2020.</td>
+</tr>
+<tr>
+<td>Severity</td>
+<td>利用了CPU的NPT保护机制漏洞</td>
+<td>攻击者通过注入恶意代码，利用 NPT 的漏洞。</td>
+<td>恶意代码可以在加密虚拟机内执行，读取内存中的密码。</td>
+<td>Mathias Morbitzer, Sergej Proskurin, Martin Radev, Marko Dorfhuber, and Erick Quintanar Salas, “Severity: Code injection attacks against encrypted virtual machines,” in 2021 IEEE Security and Privacy Workshops (SPW), 2021.</td>
+</tr>
+<tr>
+<td>TPAA</td>
+<td>利用了CPU的TLB保护机制漏洞</td>
+<td>攻击者利用 TLB 污染，泄露虚拟机内存信息。</td>
+<td>TLB 污染可能导致攻击者获取内存中存储的密码。</td>
+<td>Mengyuan Li, Yinqian Zhang, Huibo Wang, Kang Li, and Yueqiang Cheng, “TLB Poisoning Attacks on AMD Secure Encrypted Virtualization,” in Annual Computer Security Applications Conference, 2021.</td>
+</tr>
+<tr>
+<td>AMD whitepaper</td>
+<td>利用了CPU的调试寄存器和不受信的 CPUID</td>
+<td>攻击者绕过远程认证，利用调试寄存器和不受信的 CPUID。</td>
+<td>攻击者可以访问虚拟机的内部状态，包括内存中的密码。</td>
+<td>AMD, “AMD SEV-SNP: Strengthening VM Isolation with Integrity Protection and More,” White paper, 2020.</td>
+</tr>
+<tr>
+<td>Insecure until proven updated</td>
+<td>利用了CPU的远程认证和固件漏洞</td>
+<td>攻击者绕过安全检查，利用远程认证和固件的漏洞。</td>
+<td>攻击者可以访问虚拟机的内部数据，包括密码。</td>
+<td>Robert Buhren, Christian Werling, and Jean-Pierre Seifert, “Insecure until proven updated: analyzing AMD SEV’s remote attestation,” in Proceedings of the 2019 ACM SIGSAC Conference on Computer and Communications Security, 2019.</td>
+</tr>
+<tr>
+<td>SEVU</td>
+<td>利用了CPU的弱加密漏洞</td>
+<td>攻击者破解弱加密算法，获取虚拟机的加密数据。</td>
+<td>弱加密使得攻击者可以解密存储密码的数据，导致密码泄露。</td>
+<td>Zhao-Hui Du, Zhiwei Ying, Zhenke Ma, Yufei Mai, Phoebe Wang, Jesse Liu, and Jesse Fang, “Secure Encrypted Virtualization is Unsecure,” arXiv preprint arXiv:1712.05090, 2017.</td>
+</tr>
+<tr>
+<td>SEVurity</td>
+<td>利用了CPU的加密完整性漏洞</td>
+<td>攻击者破坏内存加密完整性，利用弱加密漏洞。</td>
+<td>攻击者可以篡改或读取内存中的密码数据。</td>
+<td>Luca Wilke, Jan Wichelmann, Mathias Morbitzer, and Thomas Eisenbarth, “SEVurity: No Security Without Integrity: Breaking Integrity-Free Memory Encryption with Minimal Assumptions,” in 2020 IEEE Symposium on Security and Privacy (SP), 2020.</td>
+</tr>
+<tr>
+<td>EUIO</td>
+<td>利用了CPU的未受保护的 I/O 操作</td>
+<td>攻击者通过未受保护的 I/O 操作，泄露虚拟机数据。</td>
+<td>I/O 操作可能涉及密码传输，攻击者可以在此过程中窃取密码。</td>
+<td>Mengyuan Li, Yinqian Zhang, Zhiqiang Lin, and Yan Solihin, “Exploiting Unprotected I/O Operations in AMD’s Secure Encrypted Virtualization,” in 28th USENIX Security Symposium, 2019.</td>
+</tr>
+<tr>
+<td>undeSErVed trust</td>
+<td>利用了CPU的远程认证机制漏洞</td>
+<td>攻击者绕过安全检查，利用远程认证机制的漏洞。</td>
+<td>攻击者可以访问其他虚拟机的机密数据，包括密码。</td>
+<td>L. Wilke, J. Wichelmann, F. Sieck, and T. Eisenbarth, “undeSErVed trust: Exploiting Permutation-Agnostic Remote Attestation,” in 2021 IEEE Security and Privacy Workshops (SPW), 2021.</td>
+</tr>
+</tbody>
+</table>
+<p>提权  核心原理</p>
+<p>CopyCat 攻击利用了 Intel SGX 中的指令控制机制漏洞。攻击者通过精心构造的指令序列，将恶意代码注入到 enclave（一个本应安全的执行环境）中。这些恶意代码可以在 enclave 内执行，从而直接访问 enclave 的内部内存空间。如果密码等敏感信息存储在该内存空间中，攻击者就可以直接读取这些密码，导致密码失效。这种攻击直接利用了处理器架构规格中的缺陷，通过合法的指令序列突破了安全隔离边界。</p>
+<p>Microscope 攻击利用了 CPU 微架构中的重放特性。攻击者通过精心构造的指令序列，触发 CPU 的指令重放机制，从而能够观察和分析指令的执行情况。这种攻击可以绕过 SGX 的保护机制，使攻击者能够获取 enclave 中的敏感数据，如密码等。通过这种方式，攻击者可以直接读取或推断出存储在 enclave 中的密码，导致密码失效。该攻击直接利用了 CPU 微架构实现中的特性，突破了安全隔离边界。</p>
+<p>The guard’s dilemma该攻击利用了 Intel SGX 中的 ROP（Return-Oriented Programming）漏洞。攻击者通过重用现有代码片段，在 enclave 内执行任意代码。这种攻击可以直接访问 enclave 的内部内存空间，如果密码等敏感信息存储在该内存空间中，攻击者就可以直接读取这些密码，导致密码失效。这种攻击直接利用了处理器架构规格中的缺陷，通过合法的指令序列突破了安全隔离边界。</p>
+<p>Hacking in darkness该攻击同样利用了 Intel SGX 中的 ROP 漏洞。攻击者通过 ROP 技术在 enclave 内执行恶意操作。这种攻击可以绕过 SGX 的保护机制，使攻击者能够访问 enclave 内存中的敏感数据，如密码等。通过这种方式，攻击者可以直接读取存储在 enclave 中的密码，导致密码失效。该攻击直接利用了处理器架构规格中的缺陷，突破了安全隔离边界。</p>
+<p>SmashEx该攻击利用了 Intel SGX 中的异常处理机制漏洞。攻击者通过触发特定的异常，能够在 enclave 内执行恶意代码。这种攻击可以直接访问 enclave 的内部内存空间，如果密码等敏感信息存储在该内存空间中，攻击者就可以直接读取这些密码，导致密码失效。这种攻击直接利用了处理器架构规格中的缺陷，通过合法的指令序列突破了安全隔离边界。</p>
+<p>Game of threads用了 Intel SGX 中的线程同步漏洞。攻击者通过精心构造的指令序列，利用线程同步机制的漏洞，在 enclave 内执行异步投毒攻击。这种攻击可以绕过 SGX 的保护机制，使攻击者能够访问 enclave 内存中的敏感数据，如密码等。通过这种方式，攻击者可以直接读取存储在 enclave 中的密码，导致密码失效。该攻击直接利用了处理器架构规格中的缺陷，突破了安全隔离边界。</p>
+<p>AsyncShock利用了 Intel SGX 中的同步漏洞。攻击者通过恶意中断，利用同步机制的漏洞，在 enclave 内执行恶意操作。这种攻击可以绕过 SGX 的保护机制，使攻击者能够访问 enclave 内存中的敏感数据，如密码等。通过这种方式，攻击者可以直接读取存储在 enclave 中的密码，导致密码失效。该攻击直接利用了处理器架构规格中的缺陷，突破了安全隔离边界。</p>
+<p>Security analysis of encrypted virtual machines利用了 AMD SEV 中的寄存器保护机制漏洞。攻击者通过未受保护的寄存器，泄露虚拟机内存数据。这种攻击可以直接访问虚拟机的内存空间，如果密码等敏感信息存储在该内存空间中，攻击者就可以直接读取这些密码，导致密码失效。这种攻击直接利用了处理器架构规格中的缺陷，通过合法的指令序列突破了安全隔离边界。</p>
+<p>Extracting Secrets from Encrypted Virtual Machines利用了 AMD SEV 中的 NPT（Nested Page Tables）保护机制漏洞。攻击者通过未受保护的 NPT，泄露虚拟机内存数据。这种攻击可以直接访问虚拟机的内存空间，如果密码等敏感信息存储在该内存空间中，攻击者就可以直接读取这些密码，导致密码失效。这种攻击直接利用了处理器架构规格中的缺陷，通过合法的指令序列突破了安全隔离边界。</p>
+<p><strong>SEVered</strong>（）攻击者通过控制虚拟机的内存映射，利用缺乏完整性保护的漏洞，提取加密虚拟机的内存内容。，攻击者诱导虚拟机访问特定内存区域，并通过操控页表，将这些访问重定向到攻击者可读取的区域，从而逐步提取虚拟机的内存数据。攻击者可以提取包含密码的内存区域，直接获取明文密码。</p>
+<p><strong>SEVerity</strong>（）攻击者利用缺乏内存完整性保护的漏洞，通过I/O通道向加密虚拟机注入恶意代码，并诱导其执行。攻击者将恶意代码注入到虚拟机的内存中，并通过操控虚拟机的执行流程，使其执行这些恶意代码，从而获取虚拟机内的敏感数据。恶意代码可以访问和提取存储在虚拟机内的密码等敏感信息。</p>
+<p><strong>CROSSLINE</strong>：攻击者通过操控地址空间标识符（ASID），使攻击者虚拟机伪装成受害者虚拟机，从而访问其加密内存。攻击者更改其虚拟机的ASID，使其与目标虚拟机相同，进而访问目标虚拟机的加密内存，提取敏感数据。</p>
+<h1>确定</h1>
+<h2 id="undeSErVed-trust">undeSErVed trust</h2>
+<p>L. Wilke, J. Wichelmann, F. Sieck, and T. Eisenbarth, “undeSErVed trust: Exploiting Permutation-Agnostic Remote Attestation,” in 2021 IEEE Security and Privacy Workshops (SPW), May 2021, pp. 456–466.</p>
+<p>利用AMD SEV的<strong>远程认证机制</strong>存在的设计缺陷，通过操控块排列顺序，绕过完整性验证，注入恶意代码。SEV 在进行虚拟机远程认证时，只对页面内容进行加密和度量，却不关心页面的加载顺序。攻击者可以通过重新排列合法虚拟机的页面内容、插入恶意代码，依然生成相同的度量值，顺利通过认证。攻击者可以伪装成受信任的 VM，从服务端获取加密密钥或敏感数据，导致密码失效或安全通信被窃听。</p>
+<ol>
+<li>获取敏感信息：攻击者成功获取虚拟机的加密磁盘映像密钥，从而能够访问虚拟机的所有持久化数据，包括密码、密钥等敏感信息。</li>
+<li>控制虚拟机：通过注入的恶意代码，攻击者可以完全控制虚拟机的操作系统，执行任意操作，如窃取数据、篡改执行流程等。</li>
+</ol>
+<ul>
+<li>恶意代码将磁盘加密密钥（如<code>/etc/crypttab</code>中的密钥）通过未加密的网络通道回传攻击者，导致全盘加密失效</li>
+<li>实验中验证：攻击者可直接读取虚拟机内存中的AES密钥，解密虚拟机磁盘</li>
+</ul>
+<h2 id="Heckler">Heckler</h2>
+<p>B. Schlüter, S. Sridhara, M. Kuhne, A. Bertschi, and S. Shinde, “Heckler: Breaking Confidential VMs with Malicious Interrupts,” Apr. 04, 2024, arXiv: arXiv:2404.03387.</p>
+<p>HECKLER攻击利用未受信任的虚拟机管理程序（Hypervisor）向目标保密虚拟机（CVM）注入恶意非定时器中断。<strong>中断处理逻辑缺陷</strong>。这些中断会导致CVM执行相应的中断处理程序，攻击者可以利用这些处理程序的全局效应操纵CVM的寄存器状态，进而改变数据和控制流，破坏CVM的保密性和完整性</p>
+<p>本质：中断处理时的寄存器状态（如<code>RIP</code>指令指针）未彻底清除旧上下文，导致恶意中断可注入到高权限代码流中。攻击者通过发送大量伪造中断（如NMI），触发特权代码路径（如OpenSSH服务）的异常分支。</p>
+<p><strong>绕过OpenSSH的密码认证</strong>：HECKLER攻击针对的是用户尝试登录OpenSSH服务器时输入的密码。攻击者通过绕过密码认证机制，使得即使输入错误的密码，也能成功登录。</p>
+<ul>
+<li><strong>注入中断</strong>：攻击者利用未受信任的Hypervisor向目标CVM中的OpenSSH服务器注入恶意中断。</li>
+<li><strong>篡改寄存器</strong>：在中断处理过程中，攻击者篡改关键寄存器的值，如将密码验证函数的返回地址改为跳过验证逻辑的地址，或直接修改寄存器中的认证状态标志，使系统误以为密码验证成功。</li>
+<li><strong>绕过认证</strong>：被篡改的寄存器状态导致OpenSSH的密码验证逻辑跳过或失效。即使攻击者输入错误的密码，系统也会认为认证成功，从而允许攻击者登录。</li>
+</ul>
+<h2 id="SEVurity">SEVurity</h2>
+<p>Luca Wilke, Jan Wichelmann, Mathias Morbitzer, and Thomas Eisenbarth. 2020. SEVurity: No Security Without Integrity: Breaking Integrity-Free Memory Encryption with Minimal Assumptions. In 2020 IEEE Symposium on Security and Privacy (SP). IEEE, 1483–1496.</p>
+<p>攻击者可以利用AMD SEV的弱完整性保护机制，篡改加密内存中的数据。<strong>内存加密模块实现缺陷</strong>。由于SEV在早期版本中没有提供足够的内存加密完整性保护，攻击者可以修改加密内存中的数据而不被检测到。</p>
+<p>通过篡改加密内存，攻击者可以绕过SEV的保护机制，访问或篡改虚拟机中的敏感数据。</p>
+<p>攻击者通过篡改物理内存的SPD（Serial Presence Detect）信息，伪造内存区域的可信标签，绕过加密保护。</p>
+<ul>
+<li>直接读取虚拟机内存中的密码管理器数据（如KeePass数据库密钥）。</li>
+<li>提取数据库服务（如PostgreSQL）的连接凭证，导致数据库加密内容泄露。</li>
+</ul>
+<h2 id="Secure-Encrypted-Virtualization-is-Unsecure">Secure Encrypted Virtualization is Unsecure</h2>
+<p>Zhao-Hui Du, Zhiwei Ying, Zhenke Ma, Yufei Mai, Phoebe Wang, Jesse Liu, and Jesse Fang. 2017. Secure Encrypted Virtualization is Unsecure. arXiv preprint arXiv:1712.05090 (2017).</p>
+<p><strong>内存加密完整性缺失</strong></p>
+<p>利用了AMD SEV中的弱加密实现和密钥管理漏洞。SEV使用AES-128-XTS模式进行内存加密，这种加密模式在处理小数据块或重复数据模式时可能存在漏洞。此外，SEV的密钥管理系统也存在不足，攻击者可能能够获取或篡改加密密钥。</p>
+<p>AES-128-XTS模式：</p>
+<ul>
+<li><strong>小数据块加密问题</strong>：AES-128-XTS模式的设计初衷是用于加密大型数据集，如硬盘存储。然而，在加密小数据块时，例如小于128位的数据块，XTS模式可能无法提供足够的安全保障。这是因为XTS模式在处理小数据块时，可能无法有效地防止某些类型的攻击，如统计分析攻击。攻击者可以利用这一点，通过收集和分析多个小数据块的加密结果，推断出原始数据的内容。例如，在虚拟机内存中，某些敏感数据（如密码）可能以小数据块的形式存储，攻击者可以针对这些小数据块进行分析，从而泄露敏感信息。</li>
+<li><strong>重复数据模式</strong>：XTS模式在处理重复数据模式时也可能存在弱点。如果同一数据块在不同的位置被加密，可能会生成相同的密文模式。这意味着，如果虚拟机内存中存在重复的数据块，攻击者可以通过观察密文中的重复模式，推断出原始数据的内容。例如，如果某个特定的密码在内存中多次出现，其加密后的密文可能在多个位置呈现相同的模式，这为攻击者提供了分析和推断密码的依据。</li>
+</ul>
+<p>密钥管理系统的设计缺陷</p>
+<ul>
+<li>用于加密虚拟机内存的密钥可能存储在不安全的位置，或者存储方式不够安全，容易被攻击者访问或篡改。例如，密钥可能存储在虚拟机管理程序（Hypervisor）的内存中，而Hypervisor本身可能存在漏洞，使得攻击者能够读取或篡改密钥。</li>
+<li>SEV的密钥管理系统可能在密钥生成和分发过程中存在漏洞。例如，密钥生成算法可能不够安全，使用了可预测的随机数生成器，或者密钥生成过程中没有充分考虑熵源的强度。这使得攻击者能够预测或恢复密钥。此外，密钥分发过程也可能存在安全隐患，如密钥在传输过程中没有得到充分的保护，容易被截获。</li>
+<li>SEV可能缺乏有效的密钥更新和轮换机制。在实际应用中，密钥需要定期更新以减少泄露的风险。然而，如果SEV没有提供便捷的密钥更新和轮换机制，或者该机制存在漏洞，攻击者可以在密钥泄露后的一段时间内持续利用该密钥进行攻击。</li>
+</ul>
+<p>恢复AES-128-XTS密钥：</p>
+<ul>
+<li>分析密钥生成过程：攻击者通过分析SEV的密钥生成算法，寻找可预测性或模式。例如，如果密钥生成算法使用了低质量的随机数生成器，攻击者可以利用这一点预测密钥。此外，攻击者还可以通过逆向工程等技术，分析密钥生成过程中的中间结果，从而恢复密钥。</li>
+<li>利用密钥传输漏洞：在密钥传输过程中，攻击者可能截获密钥。例如，如果密钥通过不安全的通道传输，如未加密的网络连接，攻击者可以利用中间人攻击等技术截获密钥。</li>
+<li>利用密钥存储漏洞：攻击者通过访问存储密钥的不安全位置，直接读取密钥。例如，如果密钥存储在Hypervisor的内存中，攻击者可以利用Hypervisor的漏洞，如权限提升漏洞，访问该内存区域并读取密钥。</li>
+</ul>
+<p>恢复加密虚拟机内存的AES-128-XTS密钥 -》密后的内存中搜索敏感信息，如密码、密钥、令牌等。这些信息通常存储在特定的内存区域，攻击者可以利用对操作系统和应用程序内存布局的了解来定位这些区域。</p>
+<ul>
+<li>提取Linux虚拟机<code>/etc/shadow</code>中的密码哈希，通过彩虹表破解获得root密码。</li>
+<li>窃取虚拟机内Redis服务的认证令牌，绕过密码验证访问敏感数据。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>漏洞名称</th>
+<th>处理器缺陷类型</th>
+<th>密码失效链路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>undeSErVed trust</strong></td>
+<td>认证协议逻辑错误</td>
+<td>篡改启动代码 → 窃取磁盘加密密钥</td>
+</tr>
+<tr>
+<td><strong>HECKLER</strong></td>
+<td>中断处理权限隔离缺陷</td>
+<td>注入中断 → 绕过密码验证或劫持加密会话</td>
+</tr>
+<tr>
+<td><strong>SEVurity</strong></td>
+<td>内存加密实现错误</td>
+<td>重映射内存 → 直接读取密码数据库明文</td>
+</tr>
+<tr>
+<td><strong>Secure Encrypted…Unsecure</strong></td>
+<td>内存完整性设计缺失</td>
+<td>DMA攻击 → 提取密码哈希或令牌</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Nailgun">Nailgun</h2>
+<p>Ning, Zhenyu, et al. “Revisiting arm debugging features: Nailgun and its defense.” IEEE Transactions on Dependable and Secure Computing 20.1 (2021): 574-589.</p>
+<p>ARM处理器核间<strong>调试接口（如EDR、CTI寄存器）的权限控制逻辑</strong>存在缺陷，允许非特权核心通过调试接口控制其他核心的执行流。</p>
+<p>攻击者通过合法指令序列（如调试寄存器读写）直接突破权限隔离，无需侧信道分析或故障注入设备。</p>
+<p>ARM架构允许低权限模式下的处理器通过调试功能访问高权限处理器的寄存器和状态，而ARM硬件在检查调试权限时，只检查“被调试者”的权限，忽略“调试者”的权限，这是ARM调试架构设计上存在的缺陷，被Nailgun攻击所利用</p>
+<p>ARM CoreSight调试接口（CTI/EDR）默认启用跨核调试功能，非特权核心可暂停其他核心并注入指令。</p>
+<ul>
+<li>攻击者通过调试寄存器写入指令，篡改OpenSSL密钥管理器的内存地址，直接读取RSA私钥。</li>
+<li>实验显示，该漏洞可在5ms内窃取4096位RSA密钥，解密TLS流量。</li>
+</ul>
+<p>攻击：</p>
+<ol>
+<li>绕过安全启动（Secure Boot）
+<ul>
+<li>通过修改UEFI启动代码，禁用KTRR（内核文本只读保护），植入后门以加载未签名内核模块，窃取系统级密码。</li>
+</ul>
+</li>
+<li>虚拟机逃逸（SEV环境）
+<ul>
+<li>在AMD SEV虚拟机中，利用Nailgun攻击宿主机的物理核心，读取其他虚拟机的加密内存（如数据库凭据）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="RISC-V安全机制实现漏洞">RISC-V安全机制实现漏洞</h2>
+<p><strong>原理</strong>：RISC处理器未正确实现物理不可克隆函数（PUF），导致密钥生成熵源可预测。 <strong>密码失效机制</strong>：</p>
+<ul>
+<li>攻击者通过多次重启设备采集PUF输出，利用统计模型推导出AES密钥种子。</li>
+<li>实验中，密钥熵值从128位降至32位，破解时间从数百年缩短至数天。</li>
+</ul>
+<h2 id="英特尔聚合安全管理引擎漏洞（CVE-2019-0090）">英特尔聚合安全管理引擎漏洞（CVE-2019-0090）</h2>
+<p><strong>原理</strong>：英特尔聚合安全管理引擎（CSME）的固件更新机制存在逻辑漏洞，允许攻击者绕过安全启动验证，篡改根密钥生成流程。 <strong>密码失效机制</strong>：</p>
+<ul>
+<li>攻击者通过物理访问或远程注入恶意代码，篡改CSME固件的密钥派生算法（如RSA密钥生成模块），导致根密钥可被逆向推导。</li>
+<li>利用该漏洞可恢复硬盘加密（如BitLocker）的主密钥，直接解密存储数据。实验显示，攻击者可在30分钟内恢复AES-256密钥，成功率超90%。</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="java8  Interface &amp; functional Interface Lambda Stream Optional Date time-api  Interface Lambda Stream Optional 建议使用 Optional 解决 NPE（java.lang.NullPointerException）问题，它就是为 NPE 而生的，其中可以包含空值或非空值 创建 1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/java%E5%9F%BA%E7%A1%80%E5%92%8C%E9%AB%98%E7%BA%A7/java%E6%96%B0%E7%89%B9%E6%80%A7.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="java8  Interface &amp; functional Interface Lambda Stream Optional Date time-api  Interface Lambda Stream Optional 建议使用 Optional 解决 NPE（java.lang.NullPointerException）问题，它就是为 NPE 而生的，其中可以包含空值或非空值 创建 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-04T05:02:31.608Z">
+<meta property="article:modified_time" content="2025-04-11T16:28:29.523Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>java8</h1>
+<ul>
+<li>Interface &amp; functional Interface</li>
+<li>Lambda</li>
+<li>Stream</li>
+<li>Optional</li>
+<li>Date time-api</li>
+</ul>
+<h2 id="Interface">Interface</h2>
+<h2 id="Lambda">Lambda</h2>
+<h2 id="Stream">Stream</h2>
+<h2 id="Optional">Optional</h2>
+<p>建议使用 <code>Optional</code> 解决 NPE（<code>java.lang.NullPointerException</code>）问题，它就是为 NPE 而生的，其中可以包含空值或非空值</p>
+<h2 id="创建">创建</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">ofNullable();  <br>of();  <br><span class="hljs-comment">//两者区别：唯一区别就是当 value 为 null 时，ofNullable 返回的是EMPTY，of 会抛出 NullPointerException 异常。如果需要把 NullPointerException 暴漏出来就用 of，否则就用 ofNullable</span><br></code></pre></td></tr></table></figure>
+<p><code>map</code> 和 <code>flatMap</code> 都是将一个函数应用于集合中的每个元素，但不同的是<code>map</code>返回一个新的集合，<code>flatMap</code>是将每个元素都映射为一个集合，最后再将这个集合展平（二维变一维，一维变string）</p>
+<h2 id="判断value是否为null">判断value是否为null</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/** 判断</span><br><span class="hljs-comment">* value是否为null</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPresent</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> value != <span class="hljs-literal">null</span>;<br>&#125;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* 如果value不为null执行consumer.accept</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">ifPresent</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-built_in">super</span> T&gt; consumer)</span> &#123;<br>   <span class="hljs-keyword">if</span> (value != <span class="hljs-literal">null</span>)<br>    consumer.accept(value);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="获取value">获取value</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* Return the value if present, otherwise invoke &#123;<span class="hljs-doctag">@code</span> other&#125; and return</span><br><span class="hljs-comment">* the result of that invocation.</span><br><span class="hljs-comment">* 如果value != null 返回value，否则返回other的执行结果</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> T <span class="hljs-title function_">orElseGet</span><span class="hljs-params">(Supplier&lt;? extends T&gt; other)</span> &#123;<br>    <span class="hljs-keyword">return</span> value != <span class="hljs-literal">null</span> ? value : other.get();<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* 如果value != null 返回value，否则返回T</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> T <span class="hljs-title function_">orElse</span><span class="hljs-params">(T other)</span> &#123;<br>    <span class="hljs-keyword">return</span> value != <span class="hljs-literal">null</span> ? value : other;<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* 如果value != null 返回value，否则抛出参数返回的异常</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> &lt;X <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Throwable</span>&gt; T <span class="hljs-title function_">orElseThrow</span><span class="hljs-params">(Supplier&lt;? extends X&gt; exceptionSupplier)</span> <span class="hljs-keyword">throws</span> X &#123;<br>        <span class="hljs-keyword">if</span> (value != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> value;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">throw</span> exceptionSupplier.get();<br>        &#125;<br>&#125;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* value为null抛出NoSuchElementException，不为空返回value。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> T <span class="hljs-title function_">get</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-keyword">if</span> (value == <span class="hljs-literal">null</span>) &#123;<br>      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NoSuchElementException</span>(<span class="hljs-string">&quot;No value present&quot;</span>);<br>  &#125;<br>  <span class="hljs-keyword">return</span> value;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="过滤值">过滤值</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* 1. 如果是empty返回empty</span><br><span class="hljs-comment">* 2. predicate.test(value)==true 返回this，否则返回empty</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> Optional&lt;T&gt; <span class="hljs-title function_">filter</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-built_in">super</span> T&gt; predicate)</span> &#123;<br>        Objects.requireNonNull(predicate);<br>        <span class="hljs-keyword">if</span> (!isPresent())<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;<br>        <span class="hljs-keyword">else</span><br>            <span class="hljs-keyword">return</span> predicate.test(value) ? <span class="hljs-built_in">this</span> : empty();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="常用方法">常用方法</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Optional.ofNullable(zoo).map(o -&gt; o.getDog()).map(d -&gt; d.getAge()).filter(v-&gt;v==<span class="hljs-number">1</span>).orElse(<span class="hljs-number">3</span>);<br></code></pre></td></tr></table></figure>
+<h2 id="Date-Time-API">Date-Time API</h2>
+<p>获取指定日期，比如今年的最后一个周日</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">getDayNew</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">today</span> <span class="hljs-operator">=</span> LocalDate.now();<br>    <span class="hljs-comment">//获取当前月第一天：</span><br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">firstDayOfThisMonth</span> <span class="hljs-operator">=</span> today.with(TemporalAdjusters.firstDayOfMonth());<br>    <span class="hljs-comment">// 取本月最后一天</span><br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">lastDayOfThisMonth</span> <span class="hljs-operator">=</span> today.with(TemporalAdjusters.lastDayOfMonth());<br>    <span class="hljs-comment">//取下一天：</span><br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">nextDay</span> <span class="hljs-operator">=</span> lastDayOfThisMonth.plusDays(<span class="hljs-number">1</span>);<br>    <span class="hljs-comment">//当年最后一天</span><br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">lastday</span> <span class="hljs-operator">=</span> today.with(TemporalAdjusters.lastDayOfYear());<br>    <span class="hljs-comment">//2021年最后一个周日，如果用Calendar是不得烦死。</span><br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">lastMondayOf2021</span> <span class="hljs-operator">=</span> LocalDate.parse(<span class="hljs-string">&quot;2021-12-31&quot;</span>).with(TemporalAdjusters.lastInMonth(DayOfWeek.SUNDAY));<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1>java9</h1>
+<h2 id="jshell">jshell</h2>
+<h2 id="模块化">模块化</h2>
+<p>我们可以通过 <code>exports</code> 关键词精准控制哪些类可以对外开放使用，哪些类只能内部使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">module</span> my.<span class="hljs-keyword">module</span> &#123;<br>    <span class="hljs-comment">//exports 公开指定包的所有公共成员</span><br>    <span class="hljs-keyword">exports</span> com.my.<span class="hljs-keyword">package</span>.name;<br>&#125;<br><br><span class="hljs-keyword">module</span> my.<span class="hljs-keyword">module</span> &#123;<br>     <span class="hljs-comment">//exports…to 限制访问的成员范围</span><br>    export com.my.<span class="hljs-keyword">package</span>.name to com.specific.<span class="hljs-keyword">package</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="of快速创建不可变集合">of快速创建不可变集合</h2>
+<p>使用 <code>of()</code> 创建的集合为不可变集合，不能进行添加、删除、替换、 排序等操作，不然会报 <code>java.lang.UnsupportedOperationException</code> 异常。</p>
+<h2 id="String-存储结构优化">String 存储结构优化</h2>
+<p>Java 8 及之前的版本，<code>String</code> 一直是用 <code>char[]</code> 存储。在 Java 9 之后，<code>String</code> 的实现改用 <code>byte[]</code> 数组存储字符串，节省了空间</p>
+<h2 id="接口私有方法">接口私有方法</h2>
+<h2 id="try-with-resources增强">try-with-resources增强</h2>
+<p>在 Java 9 之后，在 <code>try-with-resources</code> 语句中可以使用 effectively-final 变量。</p>
+<blockquote>
+<p><strong>什么是 effectively-final 变量？</strong> 简单来说就是没有被 <code>final</code> 修饰但是值在初始化后从未更改的变量。</p>
+<p>正如下面的代码所演示的那样，即使 <code>writer</code> 变量没有被显示声明为 <code>final</code>，但它在第一次被赋值后就不会改变了，因此，它就是 effectively-final 变量</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">final</span> <span class="hljs-type">Scanner</span> <span class="hljs-variable">scanner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;testRead.txt&quot;</span>));<br><span class="hljs-type">PrintWriter</span> <span class="hljs-variable">writer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PrintWriter</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;testWrite.txt&quot;</span>))<br><span class="hljs-keyword">try</span> (scanner;writer) &#123;<br>    <span class="hljs-comment">// omitted</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="stream和Optional增强">stream和Optional增强</h2>
+<p><code>Stream</code> 中增加了新的方法 <code>ofNullable()</code>、<code>dropWhile()</code>、<code>takeWhile()</code> 以及 <code>iterate()</code> 方法的重载方法</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">ofNullable</span><span class="hljs-params">()</span></span> 方 法允许我们创建一个单元素的 Stream，可以包含一个非空元素，也可以创建一个空 Stream<br><span class="hljs-function"><span class="hljs-title">takeWhile</span><span class="hljs-params">()</span></span> 方法可以从 Stream 中依次获取满足条件的元素，直到不满足条件为止结束获取<br><span class="hljs-function"><span class="hljs-title">dropWhile</span><span class="hljs-params">()</span></span> 方法的效果和 <span class="hljs-built_in">takeWhile</span>() 相反<br><span class="hljs-function"><span class="hljs-title">iterate</span><span class="hljs-params">()</span></span> 方法的新重载方法提供了一个 Predicate 参数 (判断条件)来决定什么时候结束迭代<br></code></pre></td></tr></table></figure>
+<p><code>Optional</code> 类中新增了 <code>ifPresentOrElse()</code>、<code>or()</code> 和 <code>stream()</code> 等方法</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">ifPresentOrElse</span><span class="hljs-params">()</span></span> 方法接受两个参数 Consumer 和 Runnable ，如果 Optional 不为空调用 Consumer 参数，为空则调用 Runnable 参数<br><span class="hljs-function"><span class="hljs-title">or</span><span class="hljs-params">()</span></span> 方法接受一个 Supplier 参数 ，如果 Optional 为空则返回 Supplier 参数指定的 Optional 值<br></code></pre></td></tr></table></figure>
+<h2 id="进程API">进程API</h2>
+<p>Java 9 增加了 <code>java.lang.ProcessHandle</code> 接口来实现对原生进程进行管理，尤其适合于管理长时间运行的进程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 获取当前正在运行的 JVM 的进程</span><br><span class="hljs-type">ProcessHandle</span> <span class="hljs-variable">currentProcess</span> <span class="hljs-operator">=</span> ProcessHandle.current();<br><span class="hljs-comment">// 输出进程的 id</span><br>System.out.println(currentProcess.pid());<br><span class="hljs-comment">// 输出进程的信息</span><br>System.out.println(currentProcess.info());<br></code></pre></td></tr></table></figure>
+<h1>java10</h1>
+<h2 id="局部变量类型推导-var">局部变量类型推导(var)</h2>
+<p>var 关键字只能用于带有构造器的局部变量和 for 循环中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">var</span> count=<span class="hljs-literal">null</span>; <span class="hljs-comment">//❌编译不通过，不能声明为 null</span><br><span class="hljs-type">var</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> () -&gt; Math.random();<span class="hljs-comment">//❌编译不通过,不能声明为 Lambda表达式</span><br><span class="hljs-type">var</span> <span class="hljs-variable">array</span> <span class="hljs-operator">=</span> &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>&#125;;<span class="hljs-comment">//❌编译不通过,不能声明数组</span><br></code></pre></td></tr></table></figure>
+<h1>java17</h1>
+<h2 id="增强的伪随机数生成器">增强的伪随机数生成器</h2>
+<p>JDK 17 之前，我们可以借助 <code>Random</code>、<code>ThreadLocalRandom</code>和<code>SplittableRandom</code>来生成随机数。不过，这 3 个类都各有缺陷，且缺少常见的伪随机算法支持</p>
+<p>伪随机数生成器 （pseudorandom number generator，PRNG，又称为确定性随机位生成器）增加了新的接口类型和实现，使得开发者更容易在应用程序中互换使用各种 PRNG 算法</p>
+<blockquote>
+<p>PENG用来生成接近于绝对随机数序列的数字序列。一般来说，PRNG 会依赖于一个初始值，也称为种子，来生成对应的伪随机数序列。只要种子确定了，PRNG 所生成的随机数就是完全确定的，因此其生成的随机数序列并不是真正随机的</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">RandomGeneratorFactory&lt;RandomGenerator&gt; l128X256MixRandom = RandomGeneratorFactory.of(<span class="hljs-string">&quot;L128X256MixRandom&quot;</span>);<br><span class="hljs-comment">// 使用时间戳作为随机数种子</span><br><span class="hljs-type">RandomGenerator</span> <span class="hljs-variable">randomGenerator</span> <span class="hljs-operator">=</span> l128X256MixRandom.create(System.currentTimeMillis());<br><span class="hljs-comment">// 生成随机数</span><br>randomGenerator.nextInt(<span class="hljs-number">10</span>);<br></code></pre></td></tr></table></figure>
+<h1>java21</h1>
+<h2 id="字符串模板">字符串模板</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> STR.<span class="hljs-string">&quot;Greetings \&#123;name&#125;!&quot;</span>;<br></code></pre></td></tr></table></figure>
+<p>在上面的模板表达式中：</p>
+<ul>
+<li>STR 是模板处理器。</li>
+<li><code>\{name}</code>为表达式，运行时，这些表达式将被相应的变量值替换</li>
+</ul>
+<p>Java 目前支持三种模板处理器：</p>
+<ul>
+<li>STR：自动执行字符串插值，即将模板中的每个嵌入式表达式替换为其值（转换为字符串）。</li>
+<li>FMT：和 STR 类似，但是它还可以接受格式说明符，这些格式说明符出现在嵌入式表达式的左边，用来控制输出的样式。</li>
+<li>RAW：不会像 STR 和 FMT 模板处理器那样自动处理字符串模板，而是返回一个 <code>StringTemplate</code> 对象，这个对象包含了模板中的文本和表达式的信息。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Lokesh&quot;</span>;<br><br><span class="hljs-comment">//STR</span><br><span class="hljs-type">String</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> STR.<span class="hljs-string">&quot;Greetings \&#123;name&#125;.&quot;</span>;<br><br><span class="hljs-comment">//FMT</span><br><span class="hljs-type">String</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> FMT.<span class="hljs-string">&quot;Greetings %-12s\&#123;name&#125;.&quot;</span>;<br><br><span class="hljs-comment">//RAW</span><br><span class="hljs-type">StringTemplate</span> <span class="hljs-variable">st</span> <span class="hljs-operator">=</span> RAW.<span class="hljs-string">&quot;Greetings \&#123;name&#125;.&quot;</span>;<br><span class="hljs-type">String</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> STR.process(st);<br></code></pre></td></tr></table></figure>
+<h2 id="虚拟线程">虚拟线程</h2>
+<p>虚拟线程（Virtual Thread）是 JDK 而不是 OS 实现的轻量级线程(Lightweight Process，LWP），由 JVM 调度。许多虚拟线程共享同一个操作系统线程，虚拟线程的数量可以远大于操作系统线程的数量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 1、通过 Thread.ofVirtual() 创建</span><br><span class="hljs-type">Runnable</span> <span class="hljs-variable">fn</span> <span class="hljs-operator">=</span> () -&gt; &#123;<br>  <span class="hljs-comment">// your code here</span><br>&#125;;<br><br><span class="hljs-type">Thread</span> <span class="hljs-variable">thread</span> <span class="hljs-operator">=</span> Thread.ofVirtual(fn)<br>                      .start();<br><br><span class="hljs-comment">// 2、通过 Thread.startVirtualThread() 、创建</span><br><span class="hljs-type">Thread</span> <span class="hljs-variable">thread</span> <span class="hljs-operator">=</span> Thread.startVirtualThread(() -&gt; &#123;<br>  <span class="hljs-comment">// your code here</span><br>&#125;);<br><br><span class="hljs-comment">// 3、通过 Executors.newVirtualThreadPerTaskExecutor() 创建</span><br><span class="hljs-type">var</span> <span class="hljs-variable">executorService</span> <span class="hljs-operator">=</span> Executors.newVirtualThreadPerTaskExecutor();<br><br>executorService.submit(() -&gt; &#123;<br>  <span class="hljs-comment">// your code here</span><br>&#125;);<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomThread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Runnable</span> &#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>    System.out.println(<span class="hljs-string">&quot;CustomThread run&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//4、通过 ThreadFactory 创建</span><br><span class="hljs-type">CustomThread</span> <span class="hljs-variable">customThread</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CustomThread</span>();<br><span class="hljs-comment">// 获取线程工厂类</span><br><span class="hljs-type">ThreadFactory</span> <span class="hljs-variable">factory</span> <span class="hljs-operator">=</span> Thread.ofVirtual().factory();<br><span class="hljs-comment">// 创建虚拟线程</span><br><span class="hljs-type">Thread</span> <span class="hljs-variable">thread</span> <span class="hljs-operator">=</span> factory.newThread(customThread);<br><span class="hljs-comment">// 启动线程</span><br>thread.start();<br></code></pre></td></tr></table></figure>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

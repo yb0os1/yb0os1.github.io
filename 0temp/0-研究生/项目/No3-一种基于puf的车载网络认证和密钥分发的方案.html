@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="A PUF-based Authentication and Key Distribution Scheme for In-Vehicle Network 主要探讨了车载网络中的安全问题，特别是针对**控制器局域网（**CAN）总线的安全机制 为什么考虑这个问题？ 车载网络的复杂性：现代汽车配备了超过70个电子控制单元（ECU），用于控制刹车、转向、加速等功能。为了实现ECU之间的实时数据共享，车">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/0-%E7%A0%94%E7%A9%B6%E7%94%9F/%E9%A1%B9%E7%9B%AE/No3-%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8Epuf%E7%9A%84%E8%BD%A6%E8%BD%BD%E7%BD%91%E7%BB%9C%E8%AE%A4%E8%AF%81%E5%92%8C%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E7%9A%84%E6%96%B9%E6%A1%88.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="A PUF-based Authentication and Key Distribution Scheme for In-Vehicle Network 主要探讨了车载网络中的安全问题，特别是针对**控制器局域网（**CAN）总线的安全机制 为什么考虑这个问题？ 车载网络的复杂性：现代汽车配备了超过70个电子控制单元（ECU），用于控制刹车、转向、加速等功能。为了实现ECU之间的实时数据共享，车">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241220204608907.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241220205823870.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20241220210055866.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.579Z">
+<meta property="article:modified_time" content="2024-12-24T13:13:36.874Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20241220204608907.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>A PUF-based Authentication and Key Distribution Scheme for In-Vehicle Network</h1>
+<p>主要探讨了车载网络中的安全问题，特别是针对**控制器局域网（**CAN）总线的安全机制</p>
+<h2 id="为什么考虑这个问题？">为什么考虑这个问题？</h2>
+<p>车载网络的复杂性：现代汽车配备了超过70个<strong>电子控制单元</strong>（ECU），用于控制刹车、转向、加速等功能。为了实现ECU之间的实时数据共享，车载网络技术应运而生，其中CAN总线是最广泛使用的协议</p>
+<p>CAN总线的安全性问题：CAN总线在设计时并未考虑安全性，因此容易受到各种攻击，如欺骗攻击、消息篡改等。尽管已有多种安全机制被提出，但仍然存在以下问题：</p>
+<ul>
+<li>密钥管理问题：现有方案依赖于长期密钥，存在密钥泄露的风险</li>
+<li>身份认证问题：现有方案很少考虑ECU实体的身份认证</li>
+<li>通信负载问题：在CAN总线上增加安全机制会导致通信负载增加，影响实时性</li>
+<li>兼容性问题：一些方案需要修改CAN协议栈，导致与现有标准不兼容</li>
+</ul>
+<h2 id="目标？">目标？</h2>
+<p>论文提出了一个轻量级的CAN总线认证和密钥分发方案</p>
+<ul>
+<li>ECU身份认证：确保数据源的合法性。</li>
+<li>数据帧完整性：防止数据在传输过程中被篡改或注入恶意消息。</li>
+<li>数据帧保密性：防止数据在总线上以明文传输，确保数据的机密性。</li>
+<li>抵抗重放攻击：防止攻击者重放之前捕获的数据帧。</li>
+</ul>
+<h2 id="方案设计">方案设计</h2>
+<p>论文提出的方案基于物理不可克隆函数（PUF）技术，主要包括以下三个部分：</p>
+<ol>
+<li><strong>ECU实体认证</strong>：通过PUF技术实现ECU的身份认证。PUF是一种物理电路，输入一个挑战（challenge），输出一个不可预测的响应（response）。PUF的特性使其成为一种独特的、不可复制的“指纹”，能够有效防止密钥泄露
+<ul>
+<li><strong>注册阶段</strong>：在车辆制造过程中，ECU和<strong>网关电子控制单元</strong>（GECU）通过安全通道完成注册，GECU存储每个ECU的挑战-响应对</li>
+<li><strong>认证阶段</strong>：每次车辆启动时，ECU向GECU发送认证请求，GECU通过PUF生成的响应验证ECU的身份</li>
+</ul>
+</li>
+<li><strong>组会话密钥分发</strong>：在ECU认证完成后，GECU为一组ECU分发会话密钥。通过PUF生成的响应和预共享的密钥，GECU计算并分发组会话密钥</li>
+<li><strong>CAN数据帧的加密与认证</strong>：在会话密钥分发完成后，ECU之间可以安全地传输数据帧。每个ECU维护一个内部状态，用于生成消息的加密密文和认证标签（MAC）。发送方使用当前内部状态对消息进行加密，并生成MAC标签，接收方通过验证MAC标签来确保消息的完整性和身份认证</li>
+</ol>
+<p><strong>具体</strong></p>
+<p><strong>ECU实体认证阶段</strong>：在车辆制造过程，ECU和网关电子控制单元（GECU）通过安全通道完成注册，GECU存储每个ECU的挑战-响应对</p>
+<p>注册阶段：<code>ECUi</code>将注册请求和id发送到<code>GECU</code>，<code>GECU</code>向ECU发送一个随机挑战ci，该挑战ci指的是<code>ECUi</code>存储单元的地址，<code>ECUi</code>通过PUF生成响应（ri = PUF（ci）），响应是PUF根据挑战生成的唯一输出，<code>ECUi</code>将生成的想要发送到<code>GECU</code>，GECU存储每个ECU的挑战-响应对&lt;ID, c, r&gt;</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241220204608907.png" srcset="/img/loading.gif" lazyload alt="image-20241220204608907"></p>
+<p>认证阶段：每次车辆启动时，ECU需要向GECU进行身份认证，确保其身份合法</p>
+<p>ECU向GECU发送认证请求，附带其唯一标识符id，GECU随机选择一个挑战ci，并使用对应的ri计算会话密钥Ki，然后生成消息认证码MAC用于验证ECU的身份，将其发送给ECU，ECU通过PUF生成响应（ri），并使用ri和预共享密钥ki计算会话密钥（Ki = response ⊕ ki）。然后，ECU使用会话密钥计算MAC，并与GECU发送的MAC进行比较。如果MAC匹配，则认证成功；否则，认证失败。然后再次计算MAC2，发送给GECU，其验证然后完成认证</p>
+<p><strong>组会话密钥分发</strong>：在ECU身份认证完成后，GECU为一组ECU分发会话密钥，确保ECU之间的安全通信</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241220205823870.png" srcset="/img/loading.gif" lazyload alt="image-20241220205823870"></p>
+<ol>
+<li><strong>ECU发送请求</strong>：每个ECU向GECU发送会话密钥分发请求</li>
+<li><strong>GECU选择挑战并计算响应</strong>：GECU随机选择一个挑战（challenge），并从存储的挑战-响应对中找到对应的响应（response）</li>
+<li><strong>GECU计算组会话密钥</strong>：GECU使用响应和预共享密钥计算组会话密钥（GK）。具体步骤如下：
+<ul>
+<li>计算Ai = Eresponse(Ri || ki)，其中Ri是ECU的请求，ki是预共享密钥</li>
+<li>计算组会话密钥GK = A1 ⊕ A2 ⊕ … ⊕ An，其中n是ECU的数量</li>
+</ul>
+</li>
+<li><strong>GECU分发组会话密钥</strong>：GECU将组会话密钥分发给每个ECU。具体步骤如下：
+<ul>
+<li>计算临时组会话密钥GK’i = GK ⊕ Ai</li>
+<li>计算哈希值hash = H(ID || Ri || challenge || GK’i)</li>
+<li>使用会话密钥Ki加密哈希值和临时组会话密钥，生成密文Ci = EKi(hash || GK’i || challenge)</li>
+<li>将密文Ci和挑战challenge发送给ECU</li>
+</ul>
+</li>
+<li><strong>ECU解密并验证组会话密钥</strong>：ECU接收到密文Ci和挑战challenge后，通过PUF生成响应（response），并使用响应和预共享密钥计算会话密钥（Ki = response ⊕ ki）。然后，ECU解密密文Ci，获取哈希值和临时组会话密钥GK’i。ECU计算哈希值的验证值hash’ = H(ID || Ri || challenge || GK’i)，并与接收到的哈希值进行比较。如果匹配，则组会话密钥分发成功</li>
+</ol>
+<p><strong>CAN数据帧的加密与认证</strong>：在组会话密钥分发完成后，ECU之间可以安全地传输数据帧。每个ECU维护一个内部状态，用于生成消息的加密密文和认证标签（MAC）</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20241220210055866.png" srcset="/img/loading.gif" lazyload alt="image-20241220210055866"></p>
+<p>加密与认证过程：确保数据帧在传输过程中的机密性和完整性</p>
+<ol>
+<li><strong>生成内部状态</strong>：每个ECU维护一个内部状态si，包含计数器i、初始子状态s0和前u个子状态s[i,u]。初始状态s0是随机生成的，且每个ECU的初始状态相同</li>
+<li><strong>加密消息</strong>：发送方ECU使用当前内部状态si对消息mi+1进行异或操作，生成加密密文Ci+1 = si ⊕ mi+1</li>
+<li><strong>生成MAC标签</strong>：发送方ECU使用组会话密钥GK生成消息的MAC标签ti+1 = HGK(ID || si || Ci+1)</li>
+<li><strong>更新内部状态</strong>：发送方ECU更新当前子状态，更新规则为si+1 = H(i || s0 || mi+1)。然后，更新内部状态为si+1 = (i+1, s0, s[i+1,u])</li>
+<li><strong>传输数据帧</strong>：发送方ECU将MAC标签ti+1附加到数据帧中，并将加密密文Ci+1传输到CAN总线上</li>
+</ol>
+<p>接收方验证与解密：接收方ECU验证数据帧的完整性和身份，并解密获取明文消息</p>
+<ol>
+<li><strong>验证MAC标签</strong>：接收方ECU使用当前内部状态si和组会话密钥GK计算MAC标签，并与接收到的MAC标签进行比较。如果匹配，则数据帧的完整性和身份认证成功；否则，数据帧被丢弃</li>
+<li><strong>解密消息</strong>：接收方ECU使用当前内部状态si对加密密文Ci+1进行异或操作，获取明文消息mi+1 = si ⊕ Ci+1</li>
+<li><strong>更新内部状态</strong>：接收方ECU更新当前子状态，更新规则为si+1 = H(i || s0 || mi+1)。然后，更新内部状态为si+1 = (i+1, s0, s[i+1,u])</li>
+</ol>
+<h2 id="性能">性能</h2>
+<ul>
+<li><strong>计算开销</strong>：论文对比了几种现有的基于组的方案，结果显示所提出的方案在计算开销上更低。主要原因是PUF的计算开销较小，且不需要复杂的加密操作</li>
+<li><strong>通信开销</strong>：所提出的方案在密钥分发阶段的通信开销也较低，主要是因为PUF的响应较短，且不需要传输大量的密钥信息</li>
+<li><strong>安全性分析</strong>：论文详细分析了方案的安全性，包括ECU身份认证、数据帧完整性、数据帧保密性以及抵抗重放攻击的能力。与现有方案相比，所提出的方案在安全性上具有明显优势，尤其是在防止密钥泄露和抵抗重放攻击方面</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>这篇论文提出的方案基于<strong>物理不可克隆函数（PUF）技术</strong>，通过ECU身份认证、组会话密钥分发和CAN数据帧的加密与认证，解决了车载网络中CAN总线的安全问题。方案的具体实现包括注册阶段、认证阶段、密钥分发过程和数据帧的加密与认证。PUF技术在方案中发挥了重要作用，具有轻量级计算、无需存储密钥和不可克隆性等优势</p>
+<p>然而，PUF的响应稳定性、密钥管理复杂性和兼容性问题仍然是需要进一步研究和改进的方向</p>
+<p>这段时间我看了关于puf的粗略的基础知识、puf结合生物特征进行认证的一篇论文、还有一篇将puf应用到车载网络中认证和密码分发的论文，后续的时间我打算着重看看puf底层的一些东西，然后看看后量子的一些综述，如果完成这些的话看我自己的情况再来看下一步</p>
+<p>看论文：看中文综述 -》 中文论文 -》英文论文</p>
+<p>puf底层</p>
+<p>后量子：四个技术 主流格</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

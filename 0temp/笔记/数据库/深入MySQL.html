@@ -1,0 +1,1260 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="开发时的技巧 有关MySQL的插入 常见的插入方式 1、insert into ：插入数据库时会检查主键是否存在，存在会报错 2、replace into：替换数据库记录，需要表中有主键或者unique索引。如果数据库已存在的数据，会先删除该数据然后新增；不存在的数据效果和insert into 一样 12345678&lt;insert id&#x3D;&quot;batchInsert&quot; pa">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%B7%B1%E5%85%A5MySQL.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="开发时的技巧 有关MySQL的插入 常见的插入方式 1、insert into ：插入数据库时会检查主键是否存在，存在会报错 2、replace into：替换数据库记录，需要表中有主键或者unique索引。如果数据库已存在的数据，会先删除该数据然后新增；不存在的数据效果和insert into 一样 12345678&lt;insert id&#x3D;&quot;batchInsert&quot; pa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415124335784.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415124724980.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415124916645.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415125216460.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415125623581.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415125655476.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415125746932.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415125906822.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415182921702.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415183056299.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416000640669.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416000708617.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416000930357.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416151700271.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416162956197.png">
+<meta property="og:image" content="d:%5C0temp%5Cimage-20250416163248440.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416163620991.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416164825283.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416164859824.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416165101234.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416165324198.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416165501594.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416172039581.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416172402332.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250421000632348.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250421001100847.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250421003653047.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250421005031768.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250421010301120.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250421010346486.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250421150719296.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422180550070.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422181254188.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422181528994.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422181644909.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422230950466.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422231718265.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422231849408.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422234156963.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422234209810.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422234326263.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422234408865.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422234840563.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422235312638.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422235508798.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422235625910.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422235632338.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422235800796.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250422235841606.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250423093639934.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250423093825306.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250423094739271.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250423095029715.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250423163048466.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425173913099.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425174432323.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425174652377.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425180231961.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425180749226.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425181735025.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425202602241.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425205932572.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425210715823.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425210732839.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212238837.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212358688.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212450408.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212515488.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212549792.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212621701.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212729163.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425212741662.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425213108435.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425214751002.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425214823200.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425221308843.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425221637710.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425221721502.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425222857115.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250425225117762.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426001307720.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426002515851.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426002612964.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426003442393.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426003754545.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426114938460.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426121144447.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426121247006.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426122309707.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426124836855.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426130751852.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250426232826484.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250501183708638.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250501184735772.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502163650778.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502170844744.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502172935486.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502172948107.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502173101273.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502175513132.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502175848923.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502180430304.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502180606594.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502181608250.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502181718386.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250502181950563.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416164715347.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250416172039581.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.619Z">
+<meta property="article:modified_time" content="2025-06-06T01:57:05.382Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20250415124335784.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>开发时的技巧</h1>
+<h2 id="有关MySQL的插入">有关MySQL的插入</h2>
+<p>常见的插入方式</p>
+<p>1、<code>insert into </code>：插入数据库时会检查主键是否存在，存在会报错</p>
+<p>2、<code>replace into</code>：替换数据库记录，需要表中有<strong>主键</strong>或者<strong>unique索引</strong>。如果数据库已存在的数据，会先删除该数据然后新增；不存在的数据效果和insert into 一样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;insert id=<span class="hljs-string">&quot;batchInsert&quot;</span> parameterType=<span class="hljs-string">&quot;list&quot;</span> useGeneratedKeys=<span class="hljs-string">&quot;true&quot;</span> keyProperty=<span class="hljs-string">&quot;id&quot;</span>&gt;<br>    replace into <span class="hljs-title function_">GOVRECEIPTS</span> <span class="hljs-params">(state,orgname,orgaddr,regauth,rcptyear,receipts,crtdate)</span><br>    values<br>    &lt;foreach collection=<span class="hljs-string">&quot;list&quot;</span> item=<span class="hljs-string">&quot;item&quot;</span> index=<span class="hljs-string">&quot;index&quot;</span> separator=<span class="hljs-string">&quot;,&quot;</span>&gt;<br>      (#&#123;item.state&#125;, #&#123;item.orgname&#125;, #&#123;item.orgaddr&#125;, #&#123;item.regauth&#125;,<br>      #&#123;item.rcptyear&#125;, #&#123;item.receipts&#125;, #&#123;item.crtdate&#125;)<br>    &lt;/foreach&gt;<br>  &lt;/insert&gt;<br></code></pre></td></tr></table></figure>
+<p>3、<code>insert ignore</code>：需要表中有<strong>主键</strong>或者<strong>unique索引</strong>。如果数据库中存在相同的数据，则忽略当前数据；不存在的数据效果和insert into 一样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;insert id=<span class="hljs-string">&quot;insertInfoBatch&quot;</span> parameterType=<span class="hljs-string">&quot;java.util.List&quot;</span> useGeneratedKeys=<span class="hljs-string">&quot;true&quot;</span> keyProperty=<span class="hljs-string">&quot;id&quot;</span>&gt;<br>   insert ignore <span class="hljs-title function_">GOVRECEIPTS</span> <span class="hljs-params">(state,orgname,orgaddr,regauth,rcptyear,receipts,crtdate)</span><br>   values<br>   &lt;foreach collection=<span class="hljs-string">&quot;list&quot;</span> item=<span class="hljs-string">&quot;item&quot;</span> index=<span class="hljs-string">&quot;index&quot;</span> separator=<span class="hljs-string">&quot;,&quot;</span>&gt;<br>     (#&#123;item.state&#125;, #&#123;item.orgname&#125;, #&#123;item.orgaddr&#125;, #&#123;item.regauth&#125;,<br>     #&#123;item.rcptyear&#125;, #&#123;item.receipts&#125;, #&#123;item.crtdate&#125;)<br> &lt;/foreach&gt;<br></code></pre></td></tr></table></figure>
+<p>4、<code>on duplicate key update</code> 使用该语法可在插入记录的时候先判断记录是否存在，如果不存在则插入，否则更新，很方便，无需执行两条SQL</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mysql">INSERT INTO table_name (column1, column2, ...)<br>VALUES (value1, value2, ...)<br>ON DUPLICATE KEY UPDATE<br>column1 = value1, column2 = value2, ...;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mysql">INSERT INTO users (id, email)<br>VALUES (1, &#x27;user@example.com&#x27;)<br>ON DUPLICATE KEY UPDATE<br>email = &#x27;user@example.com&#x27;; <br># 如果 id 为 1 的记录已经存在，那么 email 列将被更新为 &#x27;user@example.com&#x27;。如果 id 为 1 的记录不存在，那么将插入一个新的记录。<br></code></pre></td></tr></table></figure>
+<h2 id="创建表自动填充创建更新时间">创建表自动填充创建更新时间</h2>
+<p>在mysql中设置craet_time和update_time默认值并实时更新</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE `exampleTabl` (<br>  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,<br>  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,<br>) ENGINE=InnoDB<br></code></pre></td></tr></table></figure>
+<h1>基础使用</h1>
+<p>在本节最后一个</p>
+<h1>存储引擎</h1>
+<h2 id="体系结构">体系结构</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415124335784.png" srcset="/img/loading.gif" lazyload alt="image-20250415124335784"></p>
+<h2 id="引擎层">引擎层</h2>
+<p>存储引擎，存储数据、建立索引、更新/查询数据等技术的实现方法。存储引擎是基于表的，不是数据库的</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415124724980.png" srcset="/img/loading.gif" lazyload alt="image-20250415124724980"></p>
+<p>InnoDB <img src="D:%5CTypora%5Cimgs%5Cimage-20250415124916645.png" srcset="/img/loading.gif" lazyload alt="image-20250415124916645"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415125216460.png" srcset="/img/loading.gif" lazyload alt="image-20250415125216460"></p>
+<p>MyISAM</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415125623581.png" srcset="/img/loading.gif" lazyload alt="image-20250415125623581"></p>
+<p>Memory</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415125655476.png" srcset="/img/loading.gif" lazyload alt="image-20250415125655476"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415125746932.png" srcset="/img/loading.gif" lazyload alt="image-20250415125746932"></p>
+<h2 id="引擎的选择">引擎的选择</h2>
+<ul>
+<li>绝大部分都是InnoDB</li>
+<li>MyISAS几乎被MongoDB代替</li>
+<li>MEMORY几乎倍Redis代替</li>
+</ul>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415125906822.png" srcset="/img/loading.gif" lazyload alt="image-20250415125906822"></p>
+<h1>索引</h1>
+<h2 id="概述">概述</h2>
+<p>索引 Index，帮助MySQL高效获取数据的有序数据结构</p>
+<p>没有索引情况下sql查询：会进行全表扫描，就算查询到了符合条件的也会继续向下扫描，直至扫描完整个表</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415182921702.png" srcset="/img/loading.gif" lazyload alt="image-20250415182921702"></p>
+<p>优缺点</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250415183056299.png" srcset="/img/loading.gif" lazyload alt="image-20250415183056299"></p>
+<h2 id="索引数据结构">索引数据结构</h2>
+<h3 id="概述-2">概述</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416000640669.png" srcset="/img/loading.gif" lazyload alt="image-20250416000640669"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416000708617.png" srcset="/img/loading.gif" lazyload alt="image-20250416000708617"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416000930357.png" srcset="/img/loading.gif" lazyload alt="image-20250416000930357"></p>
+<h3 id="B-Tree">B Tree</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416151700271.png" srcset="/img/loading.gif" lazyload alt="image-20250416151700271"></p>
+<h3 id="B-TREE">B+ TREE</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416162956197.png" srcset="/img/loading.gif" lazyload alt="image-20250416162956197"></p>
+<p>相对于B Tree的区别：</p>
+<ol>
+<li>所有数据都会出现在叶子节点</li>
+<li>叶子节点形成一个单向链表</li>
+</ol>
+<h3 id="Mysql对于B-Tree的优化">Mysql对于B+Tree的优化</h3>
+<p><img src="D:%5C0temp%5Cimage-20250416163248440.png" srcset="/img/loading.gif" lazyload alt="image-20250416163248440"></p>
+<h3 id="Hash">Hash</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416163620991.png" srcset="/img/loading.gif" lazyload alt="image-20250416163620991"></p>
+<ul>
+<li>Hash索引只能用于等值比较，不可以范围查询</li>
+<li>无法利用索引进行排序</li>
+<li>查询效率高，通常一个查询就可以找到，效率通常高于B+Tree</li>
+</ul>
+<p>在MSQL中，支持hash索引的是Memory引擎，而innoDe中具有自适应hash功能，hash索引是存储引擎根据B+Tree索引在指定条件下自动构建的</p>
+<h2 id="索引分类">索引分类</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416164825283.png" srcset="/img/loading.gif" lazyload alt="image-20250416164825283"></p>
+<p>根据索引形式，又可以分为：</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416164859824.png" srcset="/img/loading.gif" lazyload alt="image-20250416164859824"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416165101234.png" srcset="/img/loading.gif" lazyload alt="image-20250416165101234"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416165324198.png" srcset="/img/loading.gif" lazyload alt="image-20250416165324198"></p>
+<p>回表查询：先根据二级索引获取主键的值，然后再去聚集索引里面根据主键去查询行数据</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416165501594.png" srcset="/img/loading.gif" lazyload alt="image-20250416165501594"></p>
+<p>InnoDB存储几千万数据B+tree可能才3层高</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416172039581.png" srcset="/img/loading.gif" lazyload alt="image-20250416172039581"></p>
+<h2 id="索引语法">索引语法</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416172402332.png" srcset="/img/loading.gif" lazyload alt="image-20250416172402332"></p>
+<h2 id="SQL性能分析">SQL性能分析</h2>
+<h3 id="SQL执行频率">SQL执行频率</h3>
+<p>通过下面的命令可以查看当前/全局数据库的状态信息</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250421000632348.png" srcset="/img/loading.gif" lazyload alt="image-20250421000632348"></p>
+<h3 id="慢查询日志">慢查询日志</h3>
+<p>慢查询日志记录了所有<strong>执行时间超过指定参数</strong>(long_query_time，单位:秒，默认10秒)的所有SQL语句的日志。</p>
+<blockquote>
+<p>Linux下面的</p>
+</blockquote>
+<p>MySOL的慢查询日志默认没有开启，需要在MySOL的配置文件(/etc/my.cnf)中配置如下信息:</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250421001100847.png" srcset="/img/loading.gif" lazyload alt="image-20250421001100847"></p>
+<p>配置完毕之后，通过以下指令重新启动MVSQL服务器进行测试，查看慢日志文件中记录的信息/var/lib/mysql/localhost-slow.log</p>
+<h3 id="Profile详情">Profile详情</h3>
+<p>show profiles 能够在做SOL优化时帮助我们了解时间都耗费到哪里去了。</p>
+<p>通过have_profiling参数，能够看到当前MySQL是否支持  <code>select @@have_profiling</code></p>
+<p>默认profiling是关闭的，可以通过set语句在session/global级别开启profiling:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select @@profiling;<br>set profiling = 1;<br></code></pre></td></tr></table></figure>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250421003653047.png" srcset="/img/loading.gif" lazyload alt="image-20250421003653047"></p>
+<h3 id="explain执行计划">explain执行计划</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250421005031768.png" srcset="/img/loading.gif" lazyload alt="image-20250421005031768"></p>
+<p>const：主键/唯一索引<br>
+ref：非唯一索引<br>
+all：全表扫描</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250421010301120.png" srcset="/img/loading.gif" lazyload alt="image-20250421010301120"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250421010346486.png" srcset="/img/loading.gif" lazyload alt="image-20250421010346486"></p>
+<h2 id="索引使用规则">索引使用规则</h2>
+<h3 id="验证索引提升查询效率">验证索引提升查询效率</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250421150719296.png" srcset="/img/loading.gif" lazyload alt="image-20250421150719296"></p>
+<p>从20s-&gt;0.01s</p>
+<h3 id="最左前缀法则">最左前缀法则</h3>
+<p>如果索引了多列(联合索引)，要遵守最左前缀法则。最左前缀法则指的是查询从索引的最左列开始，并且不跳过索引中的列。<br>
+如果跳跃某一列，<strong>索引将部分失效(后面的字段索引失效)</strong></p>
+<blockquote>
+<p>MySQL 8.0.13 版本引入了索引跳跃扫描（Index Skip Scan，简称 ISS），它可以在某些索引查询场景下提高查询效率。在没有 ISS 之前，不满足最左前缀匹配原则的联合索引查询中会执行全表扫描。而 ISS 允许 MySQL 在某些情况下避免全表扫描，即使查询条件不符合最左前缀。</p>
+</blockquote>
+<p>如果索引是(a,b,c)，我们查询的时候条件是 cba/abc/ab/a 都会走索引，ac则是a走索引，c进行全表扫描</p>
+<p>字段必须存在，和我们where放的位置是没有关系的</p>
+<h3 id="索引失效">索引失效</h3>
+<ol>
+<li>在索引列进行运算操作，索引失效        <code>select * from test where substring(phone,10,2) = '15'</code></li>
+<li>字符串不加引号，索引失效                   <code>select * from test where name = alice</code></li>
+<li>模糊查询，只要头部进行模糊匹配，索引失效 （尾部模糊匹配不会失效）  <code>select * from test where name = '%o'</code></li>
+<li>范围查询，联合索引中，出现范围查询（&gt;,&lt;），<strong>范围查询右侧的索引失效</strong>   注：&gt;= &lt;= 不会导致右侧索引失效</li>
+<li>or连接符 前面条件存在索引，后面不存在，则索引失效   <code>select * from test where name = 'alice' or age = 18</code></li>
+<li>数据分布影响，Mysql评估使用索引比全表更慢，则不走索引（一般情况表内符合条件的少走索引，符合条件超过一般不走索引）</li>
+</ol>
+<h3 id="SQL提示">SQL提示</h3>
+<p>SQL提示就是优化数据库的重要手段，简单的说就是在SQL语句中加入一些人为提示来达到优化的目的</p>
+<blockquote>
+<p>在表名的后面使用 use/ignore/force index   使用/忽略/强制</p>
+</blockquote>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422180550070.png" srcset="/img/loading.gif" lazyload alt="image-20250422180550070"></p>
+<h3 id="覆盖索引">覆盖索引</h3>
+<p>尽量使用覆盖索引（查询使用索引，并且需要返回列，在该索引中已经全部能够找到），减少 <code>select *</code>（select * 极易出现回表查询）</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422181254188.png" srcset="/img/loading.gif" lazyload alt="image-20250422181254188"></p>
+<p>二级索引+主键 包含 我们需要查询的列，如下 不需要回表查询</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422181528994.png" srcset="/img/loading.gif" lazyload alt="image-20250422181528994"></p>
+<p>下面这个就不会覆盖索引，出现了回表查询</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422181644909.png" srcset="/img/loading.gif" lazyload alt="image-20250422181644909"></p>
+<h3 id="前缀索引">前缀索引</h3>
+<p>长字符串/大文本使用，（但是现在好像都是使用es）</p>
+<p>当字段类型为字符串(varchar，text等),时，有时候需要索引很长的字符串，这会让索引变得很大，查询时，浪费大量的磁盘!0，影响查<br>
+询效率。此时可以只将字符串的一部分前缀，建立索引，这样可以大大节约索引空间，从而提高索引效率</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">create index index_name on table_name(column_name(n))  -- n代表前缀索引的长度<br></code></pre></td></tr></table></figure>
+<p>前缀长度：可以根据索引的选择性来决定，而选择性是指不重复的索值（基数）和数据表的记录总数的比值，索引选择性越高则查询效率越高</p>
+<p>唯一索引的选择性是1，这是最好的索引选择性，性能也是最好的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">-- 计算公式<br>select count(distinct substring(column_name,start,end))/count(*) from table_name;<br></code></pre></td></tr></table></figure>
+<p>查询流程：</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422230950466.png" srcset="/img/loading.gif" lazyload alt="image-20250422230950466"></p>
+<p>拿出整行数据后，要对比一下email是否真的相同？相同则采用 否则丢弃；然后再查找lvbu6之后的节点是否为lvbu6</p>
+<h3 id="单列-联合索引">单列&amp;联合索引</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422231718265.png" srcset="/img/loading.gif" lazyload alt="image-20250422231718265"></p>
+<p>多条件联合查询时，MySQL优化器会评估哪个字段的索引效率更高，会选择该索引完成本次查询</p>
+<p>有单列索引干扰，联合索引不会自动生效 需要我们手动指定 use index</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422231849408.png" srcset="/img/loading.gif" lazyload alt="image-20250422231849408"></p>
+<h2 id="索引设计原则">索引设计原则</h2>
+<ol>
+<li>针对数据量较大（超过百万），且查询比较频繁的表 建立索引</li>
+<li>针对于常作为查询条件(where)、排序(orderby)、分组(groupby)操作的字段建立索引 （联合索引）</li>
+<li>尽量选择区分度高的列作为索引，尽量建立唯一索引，区分度越高使用索引效率越高</li>
+<li>如果是字符串类型字段，字符串长度长甚至大文本字段，建立前缀索引</li>
+<li>尽量使用联合索引，减少单列索引，查询时联合索引很多时候可以覆盖索引，节省存储空间，避免回表查询，提高查询效率</li>
+<li>要控制索引的数量，索引并不是多多益善，索引越多，维护索引结构的代价也就越大，会影响增删改的效率</li>
+<li>如果索引列不能存储NULL值，请在创建表时使用NOT NULL约束它。当优化器知道每列是否包含NULL值时，它可以更好地确定哪个索引最有效地用于查询</li>
+</ol>
+<p>被频繁更新的数据应该谨慎建立索引</p>
+<h2 id="SQL优化">SQL优化</h2>
+<h3 id="插入数据">插入数据</h3>
+<ol>
+<li>
+<p>批量插入：但是每次插入也不建议超过1000条</p>
+</li>
+<li>
+<p>手动提交事务</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422234156963.png" srcset="/img/loading.gif" lazyload alt="image-20250422234156963"></p>
+</li>
+<li>
+<p>主键顺序插入</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422234209810.png" srcset="/img/loading.gif" lazyload alt="image-20250422234209810"></p>
+</li>
+<li>
+<p>大批量插入数据：如果一次性需要插入大批量数据，使用insert语句插入性能较低，此时可以使用MySQL数据库提供的load指令进行插入。操作如下:</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422234326263.png" srcset="/img/loading.gif" lazyload alt="image-20250422234326263"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422234408865.png" srcset="/img/loading.gif" lazyload alt="image-20250422234408865"></p>
+</li>
+</ol>
+<h3 id="主键优化">主键优化</h3>
+<p>上一节我们说插入时主键顺序插入效率高于乱序插入，为什么？</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422234840563.png" srcset="/img/loading.gif" lazyload alt="image-20250422234840563"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422235312638.png" srcset="/img/loading.gif" lazyload alt="image-20250422235312638"></p>
+<p><strong>页分裂</strong></p>
+<p>页可以为空，也可以填充一半，也可以填充100%。每个页包含了2-N行数据(如果一行数据多大，会行溢出)，根据主键排列</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422235508798.png" srcset="/img/loading.gif" lazyload alt="image-20250422235508798"></p>
+<p>需要调整 移动，也就是进行页分裂 达到MERGE_THRESHOLD（默认50%）进行分裂</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422235625910.png" srcset="/img/loading.gif" lazyload alt="image-20250422235625910"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422235632338.png" srcset="/img/loading.gif" lazyload alt="image-20250422235632338"></p>
+<p><strong>页合并</strong></p>
+<p>当删除一行记录时，实际上记录并没有被物理删除，只是记录被标记(flaged)为删除并且它的空间变得允许被其他记录声明使用</p>
+<p>当页中删除的记录达到 MERGE_THRESHOLD(默认为页的50%)，InnoDB会开始寻找最靠近的页(前或后)看看是否可以将两个页合并以优化空间使用</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422235800796.png" srcset="/img/loading.gif" lazyload alt="image-20250422235800796"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250422235841606.png" srcset="/img/loading.gif" lazyload alt="image-20250422235841606"></p>
+<p><strong>主键设计原则</strong></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250423093639934.png" srcset="/img/loading.gif" lazyload alt="image-20250423093639934"></p>
+<h3 id="order-by优化">order by优化</h3>
+<p>排序方法有两种：</p>
+<ol>
+<li>using filesort</li>
+<li>using index</li>
+</ol>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250423093825306.png" srcset="/img/loading.gif" lazyload alt="image-20250423093825306"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250423094739271.png" srcset="/img/loading.gif" lazyload alt="image-20250423094739271"></p>
+<blockquote>
+<p>需要是覆盖索引 才不会回表</p>
+</blockquote>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250423095029715.png" srcset="/img/loading.gif" lazyload alt="image-20250423095029715"></p>
+<h3 id="group-by优化">group by优化</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250423163048466.png" srcset="/img/loading.gif" lazyload alt="image-20250423163048466"></p>
+<h3 id="limit优化">limit优化</h3>
+<p>深分页问题：一个常见又非常头疼的问题就是limit 2000000,10，此时需要MySOL排序前2000010 记录，仅仅返回2000000-2000010的记录，其他记录丢弃，查询排序的代价非常大</p>
+<p>优化思路：覆盖索引+子查询</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425173913099.png" srcset="/img/loading.gif" lazyload alt="image-20250425173913099"></p>
+<h3 id="count优化">count优化</h3>
+<ol>
+<li>MyISAM 引擎把一个表的总行数存在了磁盘上，因此执行count(*)的时候会直接返回这个数，效率很高（无where条件）</li>
+<li>InnoDB 引擎就麻烦了，它执行 count(*)的时候，需要把数据一行一行地从引擎里面读出来，然后累积计数</li>
+</ol>
+<p>count(*)=count(1)&gt;count(主键)&gt;count(字段)</p>
+<p>优化思路：自己计数</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425174432323.png" srcset="/img/loading.gif" lazyload alt="image-20250425174432323"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425174652377.png" srcset="/img/loading.gif" lazyload alt="image-20250425174652377"></p>
+<p>count(主键)的执行过程：</p>
+<p>server层维护一个count的变量。server层循环向InnoDB引擎循环读取记录，count+1，全部记录读完退出循环，返回给客户端</p>
+<blockquote>
+<p>server层读取数据有二级索引则使用二级索引，无则选择聚集索引</p>
+<p>相同数据二级索引占用空间小，索引数小，IO成本较低</p>
+</blockquote>
+<p>count(1)的执行过程：</p>
+<p>和主键类似，server层循环向InnoDB引擎循环读取记录，不会读取记录中任何字段，count+1，全部记录读完退出循环，返回给客户端</p>
+<p>count(*)和count(1)一直，<code>*等同于0</code></p>
+<h3 id="update优化">update优化</h3>
+<p>有索引才加行级锁 无索引加表级锁</p>
+<p>更新字段时要根据索引作为条件进行更新</p>
+<p>InnoDB的行锁是针对索引加的锁，不是针对记录加的锁,并且该索引不能失效，否则会从行锁升级为表锁</p>
+<h3 id="总结">总结</h3>
+<p>回顾的时候可以看小节课程</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425180231961.png" srcset="/img/loading.gif" lazyload alt="image-20250425180231961"></p>
+<h2 id="补充">补充</h2>
+<h3 id="索引下推">索引下推</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=115037952&amp;content_type=Article&amp;match_order=1&amp;q=%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8&amp;zhida_source=entity">索引下推</a>（index condition pushdown ）简称<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=115037952&amp;content_type=Article&amp;match_order=1&amp;q=ICP&amp;zhida_source=entity">ICP</a>，在Mysql5.6的版本上推出，用于优化查询。</li>
+<li>在不使用ICP的情况下，在使用非主键索引（又叫普通索引或者二级索引）进行查询时，存储引擎通过索引检索到数据，然后返回给MySQL服务器，服务器然后判断数据是否符合条件 。</li>
+<li>在使用ICP的情况下，如果存在某些被索引的列的判断条件时，MySQL服务器将这一部分判断条件传递给存储引擎，然后由存储引擎通过判断索引是否符合MySQL服务器传递的条件，只有当索引符合条件时才会将数据检索出来返回给MySQL服务器 。</li>
+<li>索引条件下推优化可以减少存储引擎查询基础表的次数，也可以减少MySQL服务器从存储引擎接收数据的次数。</li>
+</ul>
+<h1>视图/存储过程/触发器</h1>
+<h2 id="视图">视图</h2>
+<p><strong>介绍</strong></p>
+<p>视图(View)是一种虚拟存在的表。视图中的数据并不在数据库中实际存在，行和列数据来自定义视图的查询中使用的表，并且是在使用视<br>
+图时动态生成的。<br>
+通俗的讲，视图只保存了查询的SQL逻辑，不保存查询结果。所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上</p>
+<p><strong>视图操作</strong></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425180749226.png" srcset="/img/loading.gif" lazyload alt="image-20250425180749226"></p>
+<p>我们再创建视图的时候设置条件，通过视图插入数据可能会查询不到，所以MySQL提供了视图检查选项</p>
+<p><code>with cascaded/local check option</code>：当使用<code>WITH CHECK OPTION</code>子句创建视图时，MySQL会通过视图检查正在更改的每个行，例如 插入，更新，删除，以使其符合视图的定义。</p>
+<p>MySQL允许基于另一个视图创建视图，它还会检查依赖视图中的规则以保持一致性。</p>
+<p>为了确定检查的范围，mysql提供了两个选项：CASCADED 和 LOCAL，默认值为CASCADED</p>
+<p>CASCADED：加了会检查当前视图，并且还会检查当前视图依赖的所有视图（所有上级 不管上级有没有加）</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425181735025.png" srcset="/img/loading.gif" lazyload alt="image-20250425181735025"></p>
+<p>LOCAL：加了会检查当前视图，并且还会检查当前视图所依赖的上个视图（上个视图没加则不会检查条件）</p>
+<p><strong>视图的更新</strong></p>
+<p>视图可更新：视图的行和基础表中的行<strong>必须一对一</strong>的关系。视图中包含以下任何一项都是不可更新：</p>
+<ul>
+<li>聚合函数或窗口函数sum count max min等</li>
+<li>distinct</li>
+<li>group by</li>
+<li>union 或者 union all</li>
+<li>having</li>
+</ul>
+<p><strong>作用</strong></p>
+<p>简单、安全、数据独立</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425202602241.png" srcset="/img/loading.gif" lazyload alt="image-20250425202602241"></p>
+<h2 id="存储过程">存储过程</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425205932572.png" srcset="/img/loading.gif" lazyload alt="image-20250425205932572"></p>
+<p>特定：封装、服用；可以接收参数，可以返回数据；减少网络交互，提升效率</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425210715823.png" srcset="/img/loading.gif" lazyload alt="image-20250425210715823"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425210732839.png" srcset="/img/loading.gif" lazyload alt="image-20250425210732839"></p>
+<p>注意：在命令行中，执行创建存储过程的SQL时，需要通过关键字 delimiter 指定SQL语句的结束符</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212238837.png" srcset="/img/loading.gif" lazyload alt="image-20250425212238837"></p>
+<p>默认session</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212358688.png" srcset="/img/loading.gif" lazyload alt="image-20250425212358688"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212450408.png" srcset="/img/loading.gif" lazyload alt="image-20250425212450408"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212515488.png" srcset="/img/loading.gif" lazyload alt="image-20250425212515488"><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212549792.png" srcset="/img/loading.gif" lazyload alt="image-20250425212549792"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212621701.png" srcset="/img/loading.gif" lazyload alt="image-20250425212621701"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212729163.png" srcset="/img/loading.gif" lazyload alt="image-20250425212729163"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425212741662.png" srcset="/img/loading.gif" lazyload alt="image-20250425212741662"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425213108435.png" srcset="/img/loading.gif" lazyload alt="image-20250425213108435"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425214751002.png" srcset="/img/loading.gif" lazyload alt="image-20250425214751002"></p>
+<blockquote>
+<p>游标要再普通变量之后声明</p>
+</blockquote>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425214823200.png" srcset="/img/loading.gif" lazyload alt="image-20250425214823200"></p>
+<p>condition_value可以看MySQL官方</p>
+<h2 id="存储函数">存储函数</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425221308843.png" srcset="/img/loading.gif" lazyload alt="image-20250425221308843"></p>
+<h2 id="触发器">触发器</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425221637710.png" srcset="/img/loading.gif" lazyload alt="image-20250425221637710"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425221721502.png" srcset="/img/loading.gif" lazyload alt="image-20250425221721502"></p>
+<h1>锁</h1>
+<h2 id="介绍">介绍</h2>
+<p>锁是计算机协调多个进程或线程并发访问某一资源的机制。在数据库中，除传统的计算资源(CPU、RAM、I/0)的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂</p>
+<h2 id="分类">分类</h2>
+<ol>
+<li>全局锁：锁住数据库所有表</li>
+<li>表级锁：锁住当前的表</li>
+<li>行级锁：锁住当前操作的行</li>
+</ol>
+<h2 id="全局锁">全局锁</h2>
+<p>全局锁就是对整个数据库实例加锁，加锁后整个实例就处于只读状态，后续的DML的写语句，DDL语句，已经更新操作的事务提交语句都将被阻塞</p>
+<p>其典型的使用场景是做<strong>全库的逻辑备份</strong>，对所有的表进行锁定，从而获取一致性视图，保证数据的完整性、一致性</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425222857115.png" srcset="/img/loading.gif" lazyload alt="image-20250425222857115"></p>
+<p>全局锁存在问题：</p>
+<ol>
+<li>如果在主库上备份，那么在备份期间都不能执行更新，业务基本上就得停摆</li>
+<li>如果在从库上备份，那么在备份期间从库不能执行主库同步过来的二进制日志(binlog)，会导致主从延迟</li>
+</ol>
+<blockquote>
+<p>在InnoDB引擎中，我们可以在备份时加上参数 --single-transaction 参数来完成<strong>不加锁的一致性</strong>数据备份</p>
+</blockquote>
+<h2 id="表级锁">表级锁</h2>
+<p>每次操作锁住整个表。锁定粒度大，发生锁冲突概率就高，并发度低</p>
+<p>分为：</p>
+<ol>
+<li>表锁</li>
+<li>元数据锁</li>
+<li>意向锁</li>
+</ol>
+<h3 id="表锁">表锁</h3>
+<ol>
+<li>表共享读锁：可以不同客户端进行读，但是都不可以写（可读不可写，自己报错，其他阻塞）</li>
+<li>表独占写锁：自己可读可写，其他客户端不可读不可写</li>
+<li>读锁不会阻塞其他客户端的读，会阻塞其他客户端的写；写锁即阻塞其他客户端的读又阻塞其他客户端的写</li>
+</ol>
+<p>语法</p>
+<ul>
+<li>加锁：lock tables 表名… read/write</li>
+<li>释放锁：unlock tables / 客户端断开连接</li>
+</ul>
+<h3 id="元数据锁-MDL">元数据锁 MDL</h3>
+<p>MDL加锁过程是系统自动控制，无需显式使用，在访问一张表的时候会自动加上。MDL锁主要作用是维护表元数据的数据一致性，在表<br>
+上有活动事务的时候，不可以对元数据进行写入操作 （表的列 属性）</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250425225117762.png" srcset="/img/loading.gif" lazyload alt="image-20250425225117762"></p>
+<h3 id="意向锁">意向锁</h3>
+<p>为了避免DML在执行时，加的<strong>行锁与表锁的冲突</strong>，在InnoDB中引入了意向锁，使得表锁不用检查每行数据是否加锁，使用意向锁来减<br>
+少表锁的检查</p>
+<ul>
+<li>意向共享锁 IS ：select … lock in share mode添加；与表锁共享锁兼容，与表锁排他锁互斥</li>
+<li>意向排他锁 IX ：insert update delete select … for update 添加；与表锁共享锁、排他锁都互斥
+<ul>
+<li>意向锁之间不会互斥</li>
+</ul>
+</li>
+</ul>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426001307720.png" srcset="/img/loading.gif" lazyload alt="image-20250426001307720"></p>
+<h2 id="行级锁">行级锁</h2>
+<p>行级锁，每次操作锁住对成的行数据。锁定粒度最小，发生锁冲突的概率最低，并发度最高。应用在InnoDB存储引擎中</p>
+<p>InnoDB的数据是基于索引组织的，行锁是通过<strong>对索引</strong>上的索引项加锁来实现的，而不是对记录加的锁。对于行级锁，主要分为以下三类：</p>
+<ol>
+<li>行锁（记录锁），锁定单行记录，防止其他事务对此行进行update和delete。在RC（读已提交）、RR（可重复读）隔离级别下都支持。</li>
+<li>间隙锁，锁定索引记录间隙(不含该记录)，确保索引记录间隙不变，防止其他事务在这个间隙进行insert，产生幻读。在RR隔离级别下都支持</li>
+<li>临键锁，行锁和间隙锁组合，同时锁住数据，并锁住数据前面的间隙Gap。在RR隔离级别下支持</li>
+</ol>
+<h3 id="记录锁">记录锁</h3>
+<ol>
+<li>共享锁S：允许一个事务去读一行，阻止其他事务获得相同数据集的排它锁</li>
+<li>排他锁X：允许获取排他锁的事务更新数据，阻止其他事务获得相同数据集的共享锁和排他锁</li>
+</ol>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426002515851.png" srcset="/img/loading.gif" lazyload alt="image-20250426002515851"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426002612964.png" srcset="/img/loading.gif" lazyload alt="image-20250426002612964"></p>
+<p>在 InnoDB 默认的隔离级别 REPEATABLE-READ 下，行锁默认使用的是 Next-Key Lock。</p>
+<ul>
+<li>如果操作的索引是唯一索引或主键，InnoDB 会对Next-Key Lock进行优化，将其降级为Record Lock，即仅锁住索引本身，而不是范围</li>
+<li>如果不通过索引检索数据，会给表中所有数据加锁，升级为表锁</li>
+</ul>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426003442393.png" srcset="/img/loading.gif" lazyload alt="image-20250426003442393"></p>
+<h3 id="间隙锁-临建锁">间隙锁&amp;临建锁</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426003754545.png" srcset="/img/loading.gif" lazyload alt="image-20250426003754545"></p>
+<p>间隙锁的意义只在于阻止区间被插入，因此是可以共存的。一个事务获取的间隙锁不会阻止另一个事务获取同一个间隙范围的间隙锁，共享(S型)和排他(X型)的间隙锁是没有区别的，他们相互不冲突，且功能相同。</p>
+<h1>InnoDB引擎</h1>
+<h2 id="逻辑存储结构">逻辑存储结构</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426114938460.png" srcset="/img/loading.gif" lazyload alt="image-20250426114938460"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426121144447.png" srcset="/img/loading.gif" lazyload alt="image-20250426121144447"></p>
+<h2 id="架构">架构</h2>
+<p>InnoDB分为内存结构和磁盘结构</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426121247006.png" srcset="/img/loading.gif" lazyload alt="image-20250426121247006"></p>
+<h3 id="内存结构">内存结构</h3>
+<ul>
+<li>Buffer Pool：缓冲池</li>
+<li>Change Buffer：更改缓存区</li>
+<li>Adaptive Hash Index：自适应hash索引</li>
+<li>Log Buffer：日志缓冲区</li>
+</ul>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426122309707.png" srcset="/img/loading.gif" lazyload alt="image-20250426122309707"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426124836855.png" srcset="/img/loading.gif" lazyload alt="image-20250426124836855"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426130751852.png" srcset="/img/loading.gif" lazyload alt="image-20250426130751852"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250426232826484.png" srcset="/img/loading.gif" lazyload alt="image-20250426232826484"></p>
+<h3 id="磁盘结构">磁盘结构</h3>
+<h3 id="后台线程">后台线程</h3>
+<p>将缓冲池的数据合适的时间刷新到磁盘空间</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250501183708638.png" srcset="/img/loading.gif" lazyload alt="image-20250501183708638"></p>
+<h2 id="事务原理">事务原理</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250501184735772.png" srcset="/img/loading.gif" lazyload alt="image-20250501184735772"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502163650778.png" srcset="/img/loading.gif" lazyload alt="image-20250502163650778"></p>
+<ul>
+<li>原子性由undo log保证</li>
+<li>持久性由redo log保证</li>
+<li>隔离性由MVCC/锁保证</li>
+<li>一致性由三者共同保证</li>
+</ul>
+<h3 id="redo-log-重做日志">redo log 重做日志</h3>
+<p>实现事务的持久性</p>
+<p>两部分组成：重做日志缓冲（内存）、重做日志文件（磁盘）</p>
+<p>事务提交之后，将所有修改信息都存在日志文件中，用于在刷新脏页到磁盘发生错误时，进行数据恢复使用</p>
+<ol>
+<li>update或者delete之前会查询缓存池是否有这条数据？没有则需要从磁盘查，然后缓存到缓冲池</li>
+<li>下面就进行update或者delete操作，直接操作缓冲池的数据（缓冲池和磁盘数据不一致，则这片页称为脏页</li>
+<li>对缓冲池的增删改操作就会记录到redolog buffer，事务提交时（之前）将redolog buffer写入到磁盘，如果redolog写入失败也就以为事务失败，就会回滚</li>
+<li>每隔一段时间buffer pool的数据页会写入磁盘，就算写入的时候失败，也可以通过磁盘中redolog进行恢复</li>
+</ol>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502170844744.png" srcset="/img/loading.gif" lazyload alt="image-20250502170844744"></p>
+<p>WAL：在事务提交之前，将事务所做的修改操作记录到redolog buffer中，然后再将数据写入磁盘。在buffer pool写入磁盘之前发生了宕机或者错误，系统可以通过redo log中的记录来恢复数据</p>
+<p>redo log采用追加写入的方式，将redo日志记录追加到文件末尾，而不是随机写这样可以减少磁盘的随机/O操作，提高写入性能</p>
+<p>MYSQL会定期将内存中的数据刷新到磁盘，同时将最新的LSN(Log SequenceNumber)记录到磁盘中，这个LSN可以确保redolog中的操作是按顺序执行的。在恢复数据时，系统会根据LSN来确定从哪个位置开始应用redo log。</p>
+<p>磁盘中的redo log也会被MySQL定期的清理，不是持久的</p>
+<h3 id="undo-log-回滚日志">undo log 回滚日志</h3>
+<p>记录数据被修改之前的信息，保证了原子性</p>
+<p>作用：提供回滚，MVCC</p>
+<p>undolog是逻辑日志，redolog是物理日志</p>
+<p>undo log销毁：undolog在事务执行时产生，事务提交时，并不会立即删除undolog，因为这些日志可能还用于MVCC。</p>
+<p>undo log存储：undolog采用段的方式进行管理和记录，存放在 rollback segment 回滚段中，内部包含1024个undolog<br>
+segment</p>
+<p>undo log在内存保存的</p>
+<h2 id="MVCC原理">MVCC原理</h2>
+<p>多版本并发控制</p>
+<h3 id="基本概念">基本概念</h3>
+<p><strong>当前读</strong>：<img src="D:%5CTypora%5Cimgs%5Cimage-20250502172935486.png" srcset="/img/loading.gif" lazyload alt="image-20250502172935486"></p>
+<p><strong>快照读</strong>：<img src="D:%5CTypora%5Cimgs%5Cimage-20250502172948107.png" srcset="/img/loading.gif" lazyload alt="image-20250502172948107"></p>
+<p>快照读：read view</p>
+<p><strong>MVCC</strong>：<img src="D:%5CTypora%5Cimgs%5Cimage-20250502173101273.png" srcset="/img/loading.gif" lazyload alt="image-20250502173101273"></p>
+<h3 id="三个隐式字段">三个隐式字段</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502175513132.png" srcset="/img/loading.gif" lazyload alt="image-20250502175513132"></p>
+<h3 id="undo-log-回滚日志-2">undo log 回滚日志</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502175848923.png" srcset="/img/loading.gif" lazyload alt="image-20250502175848923"></p>
+<p>undo log版本链：<img src="D:%5CTypora%5Cimgs%5Cimage-20250502180430304.png" srcset="/img/loading.gif" lazyload alt="image-20250502180430304"></p>
+<p>具体返回哪一个版本？设计到read view</p>
+<h3 id="read-view">read view</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502180606594.png" srcset="/img/loading.gif" lazyload alt="image-20250502180606594"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502181608250.png" srcset="/img/loading.gif" lazyload alt="image-20250502181608250"></p>
+<p>trx_id可以认为是修改该记录的事务id</p>
+<h3 id="RC-读已提交-示例分析">RC 读已提交 示例分析</h3>
+<p>每次select（快照读）都会生成read view</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502181718386.png" srcset="/img/loading.gif" lazyload alt="image-20250502181718386"></p>
+<h3 id="RR-可重复读-示例分析">RR 可重复读 示例分析</h3>
+<p>第一次执行快照读生成read view</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250502181950563.png" srcset="/img/loading.gif" lazyload alt="image-20250502181950563"></p>
+<h1>思考</h1>
+<h2 id="为什么InnoDB存储引擎选择使用B-Tree索引结构？">为什么InnoDB存储引擎选择使用B+Tree索引结构？</h2>
+<p>基于下面还可以进行扩展说明</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416164715347.png" srcset="/img/loading.gif" lazyload alt="image-20250416164715347"></p>
+<h2 id="InnoDB主键索引的B-tree高度为多高？">InnoDB主键索引的B+tree高度为多高？</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250416172039581.png" srcset="/img/loading.gif" lazyload alt="image-20250416172039581"></p>
+<h1>有关事务</h1>
+<p><strong>MySQL 默认是隐式提交</strong>，每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 <code>START TRANSACTION</code> 语句时，会关闭隐式提交；当 <code>COMMIT</code> 或 <code>ROLLBACK</code> 语句执行后，事务会自动关闭，重新恢复隐式提交</p>
+<p>通过 <code>set autocommit=0</code> 可以取消自动提交，直到 <code>set autocommit=1</code> 才会提交；<code>autocommit</code> 标记是针对每个连接而不是针对服务器的。</p>
+<p>指令：</p>
+<ul>
+<li><code>START TRANSACTION</code> - 指令用于标记事务的起始点。</li>
+<li><code>SAVEPOINT</code> - 指令用于创建保留点。</li>
+<li><code>ROLLBACK TO</code> - 指令用于回滚到指定的保留点；如果没有设置保留点，则回退到 <code>START TRANSACTION</code> 语句处。</li>
+<li><code>COMMIT</code> - 提交事务。</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

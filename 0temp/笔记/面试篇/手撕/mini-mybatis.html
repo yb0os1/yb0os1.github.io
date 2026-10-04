@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="手撕Mybatis mybatis有下面的功能 12345SqlsessionFactory sqlsessionFactory &#x3D; createSqlsessionFactory();Sqlsession sqlsession &#x3D; sqlsessionFactory.openSession();UserMapper userMapper &#x3D; sqlsession.getMapper(UserMa">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%9D%A2%E8%AF%95%E7%AF%87/%E6%89%8B%E6%92%95/mini-mybatis.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="手撕Mybatis mybatis有下面的功能 12345SqlsessionFactory sqlsessionFactory &#x3D; createSqlsessionFactory();Sqlsession sqlsession &#x3D; sqlsessionFactory.openSession();UserMapper userMapper &#x3D; sqlsession.getMapper(UserMa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250606101726003.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.626Z">
+<meta property="article:modified_time" content="2025-06-06T02:17:27.104Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20250606101726003.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>手撕Mybatis</h1>
+<p>mybatis有下面的功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">SqlsessionFactory</span> <span class="hljs-variable">sqlsessionFactory</span> <span class="hljs-operator">=</span> createSqlsessionFactory();<br><span class="hljs-type">Sqlsession</span> <span class="hljs-variable">sqlsession</span> <span class="hljs-operator">=</span> sqlsessionFactory.openSession();<br><span class="hljs-type">UserMapper</span> <span class="hljs-variable">userMapper</span> <span class="hljs-operator">=</span> sqlsession.getMapper(UserMapper.class);<br><span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> userMapper.selectById(<span class="hljs-number">1</span>);<br>System.out.println(user);<br></code></pre></td></tr></table></figure>
+<p>我们可以传入我们自己的接口得带实现我们接口的对象（也就是第三行），然后可以调用函数操作数据库得到结果</p>
+<p>全程是不需要实现接口的，也就是面向接口编程</p>
+<p>但是记得，我们是不能直接操作接口的，因此肯定有人帮我们实现了这个接口，也就是动态代理：赋予了我们动态生成类的能力</p>
+<p>我们实现的功能：</p>
+<ul>
+<li>根据字段查找单个对象、多个对象</li>
+<li>in查询，传入List</li>
+<li>insert 传入一个对象进行插入</li>
+</ul>
+<p>如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java">User <span class="hljs-title function_">selectById</span><span class="hljs-params">(<span class="hljs-meta">@Yb0os1Param(&quot;id&quot;)</span> Integer id)</span>;<br><br>List&lt;User&gt; <span class="hljs-title function_">selectByName</span><span class="hljs-params">(<span class="hljs-meta">@Yb0os1Param(&quot;name&quot;)</span> String name)</span>;<br>User <span class="hljs-title function_">selectByIdAndName</span><span class="hljs-params">(<span class="hljs-meta">@Yb0os1Param(&quot;id&quot;)</span><span class="hljs-type">int</span> i, <span class="hljs-meta">@Yb0os1Param(&quot;name&quot;)</span>String yb0os1)</span>;<br><br>List&lt;User&gt; <span class="hljs-title function_">selectBatchByIds</span><span class="hljs-params">(<span class="hljs-meta">@Yb0os1Param(&quot;id&quot;)</span>List&lt;Integer&gt; ids)</span>;<br>List&lt;User&gt; <span class="hljs-title function_">selectBatchByNames</span><span class="hljs-params">(<span class="hljs-meta">@Yb0os1Param(&quot;name&quot;)</span>List&lt;String&gt; names)</span>;<br><br>List&lt;User&gt; <span class="hljs-title function_">selectBatchByIdsAndNames</span><span class="hljs-params">(<span class="hljs-meta">@Yb0os1Param(&quot;id&quot;)</span>List&lt;Integer&gt; ids,<span class="hljs-meta">@Yb0os1Param(&quot;name&quot;)</span>List&lt;String&gt; names)</span>;<br><br><span class="hljs-type">boolean</span> <span class="hljs-title function_">insertUser</span><span class="hljs-params">(User user)</span>;<br></code></pre></td></tr></table></figure>
+<p>核心的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1;<br><br><span class="hljs-keyword">import</span> com.yb0os1.anno.Yb0os1Field;<br><span class="hljs-keyword">import</span> com.yb0os1.anno.Yb0os1Param;<br><span class="hljs-keyword">import</span> com.yb0os1.anno.Yb0os1TableName;<br><span class="hljs-keyword">import</span> jdk.swing.interop.SwingInterOpUtils;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationHandler;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">import</span> java.lang.reflect.Parameter;<br><span class="hljs-keyword">import</span> java.lang.reflect.ParameterizedType;<br><span class="hljs-keyword">import</span> java.lang.reflect.Proxy;<br><span class="hljs-keyword">import</span> java.lang.reflect.Type;<br><span class="hljs-keyword">import</span> java.sql.Array;<br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.DriverManager;<br><span class="hljs-keyword">import</span> java.sql.PreparedStatement;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.util.ArrayList;<br><span class="hljs-keyword">import</span> java.util.Arrays;<br><span class="hljs-keyword">import</span> java.util.Collection;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.StringJoiner;<br><span class="hljs-keyword">import</span> java.util.concurrent.atomic.AtomicInteger;<br><span class="hljs-keyword">import</span> java.util.stream.Collectors;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MySqlsessionFactory</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">JDBCURL</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;jdbc:mysql://localhost:3306/testdb&quot;</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">USERNAME</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;root&quot;</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">PASSWORD</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;root&quot;</span>;<br><br>    <span class="hljs-keyword">public</span> &lt;T&gt; T <span class="hljs-title function_">getMapper</span><span class="hljs-params">(Class&lt;T&gt; mapperClass)</span> &#123;<br>        <span class="hljs-keyword">return</span> (T) Proxy.newProxyInstance(<span class="hljs-built_in">this</span>.getClass().getClassLoader(), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;mapperClass&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlInvocationHandler</span>());<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SqlInvocationHandler</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">InvocationHandler</span> &#123;<br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">         * <span class="hljs-doctag">@param</span> proxy  代理对象</span><br><span class="hljs-comment">         * <span class="hljs-doctag">@param</span> method 被代理方法</span><br><span class="hljs-comment">         * <span class="hljs-doctag">@param</span> args   被代理的方法参数</span><br><span class="hljs-comment">         * <span class="hljs-doctag">@return</span> 被代理方法的返回值</span><br><span class="hljs-comment">         */</span><br>        <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> &#123;<br>            <span class="hljs-comment">//Object对象的方法不走代理</span><br>            <span class="hljs-keyword">if</span> (Object.class.equals(method.getDeclaringClass())) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;Object对象的方法不走代理&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (method.getName().startsWith(<span class="hljs-string">&quot;selectBatch&quot;</span>)) &#123;<br>                <span class="hljs-comment">//selectBatch开头的走下面的代理</span><br>                <span class="hljs-keyword">return</span> invokeSelect(proxy, method, args,<span class="hljs-literal">true</span>);<br>            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (method.getName().startsWith(<span class="hljs-string">&quot;select&quot;</span>)) &#123;<br>                <span class="hljs-comment">//select开头的走下面的代理</span><br>                <span class="hljs-keyword">return</span> invokeSelect(proxy, method, args,<span class="hljs-literal">false</span>);<br>            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (method.getName().startsWith(<span class="hljs-string">&quot;insert&quot;</span>)) &#123;<br>                <span class="hljs-comment">//insert开头的走下面的代理</span><br>                <span class="hljs-keyword">return</span> invokeInsert(proxy, method, args);<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;<br>        <span class="hljs-comment">//插入操作</span><br>        <span class="hljs-keyword">private</span> Object <span class="hljs-title function_">invokeInsert</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> &#123;<br>            <span class="hljs-comment">//insert into table () values ();</span><br>            <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">sqlBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(<span class="hljs-string">&quot;insert into &quot;</span>);<br>            Parameter[] parameters = method.getParameters();<br>            Class&lt;?&gt; target = parameters[<span class="hljs-number">0</span>].getType();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">tableName</span> <span class="hljs-operator">=</span> getTableName(target.getAnnotation(Yb0os1TableName.class));<br>            sqlBuilder.append(tableName);<br>            Field[] fields = target.getDeclaredFields();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">colNames</span> <span class="hljs-operator">=</span> Arrays.stream(fields).map(field -&gt; field.getAnnotation(Yb0os1Field.class).name()).collect(Collectors.joining(<span class="hljs-string">&quot;,&quot;</span>));<br>            sqlBuilder.append(<span class="hljs-string">&quot; (&quot;</span>).append(colNames).append(<span class="hljs-string">&quot;) &quot;</span>);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">nums</span> <span class="hljs-operator">=</span> Arrays.stream(fields).map(field -&gt; <span class="hljs-string">&quot;?&quot;</span>).collect(Collectors.joining(<span class="hljs-string">&quot;,&quot;</span>));<br>            sqlBuilder.append(<span class="hljs-string">&quot;values (&quot;</span>).append(nums).append(<span class="hljs-string">&quot;)&quot;</span>);<br><br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> sqlBuilder.toString();<br>            System.out.println(<span class="hljs-string">&quot;执行的sql语句=&quot;</span>+sql);<br>            System.out.println(<span class="hljs-string">&quot;传入的参数=&quot;</span>+ Arrays.toString(args));<br>            <span class="hljs-keyword">try</span> (<span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> DriverManager.getConnection(JDBCURL, USERNAME, PASSWORD);<br>                 <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">ps</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql)) &#123;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; args.length; i++) &#123;<br>                    Field[] fieldsTarget = args[i].getClass().getDeclaredFields();<br>                    <span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br>                    <span class="hljs-keyword">for</span> (Field field : fieldsTarget)&#123;<br>                        <span class="hljs-keyword">if</span> (field.getType().equals(Integer.class))&#123;<br>                            ps.setInt(count++,(Integer)field.get(args[i]));<br>                        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (field.getType().equals(String.class))&#123;<br>                            ps.setString(count++,(String)field.get(args[i]));<br>                        &#125;<span class="hljs-keyword">else</span> &#123;<br>                            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;目前只支持Integer和String类型&quot;</span>);<br>                        &#125;<br>                    &#125;<br>                &#125;<br>                <span class="hljs-type">int</span> <span class="hljs-variable">execute</span> <span class="hljs-operator">=</span> ps.executeUpdate();<br>                <span class="hljs-keyword">return</span> execute!=<span class="hljs-number">0</span>;<br>            &#125;<span class="hljs-keyword">catch</span> (Exception e)&#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>            &#125;<br>        &#125;<br><br><br>        <span class="hljs-keyword">private</span> Object <span class="hljs-title function_">invokeSelect</span><span class="hljs-params">(Object proxy, Method method, Object[] args,<span class="hljs-type">boolean</span> isBatch)</span> &#123;<br>            <span class="hljs-comment">//组成sql语句的方法  select xxx from xxx where xxx = ?</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> isBatch?composeSelectBatchSql(method,args) : composeSelectSql(method);<br>            System.out.println(<span class="hljs-string">&quot;执行的sql语句=&quot;</span>+sql);<br>            System.out.println(<span class="hljs-string">&quot;传入的参数=&quot;</span>+ Arrays.toString(args));<br>            <span class="hljs-keyword">try</span> (<span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> DriverManager.getConnection(JDBCURL, USERNAME, PASSWORD);<br>                 <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">ps</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql)) &#123;<br>                <span class="hljs-comment">//设置参数的值</span><br>                <span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; args.length; i++) &#123;<br>                    <span class="hljs-type">Object</span> <span class="hljs-variable">arg</span> <span class="hljs-operator">=</span> args[i];<br>                    <span class="hljs-keyword">if</span> (arg <span class="hljs-keyword">instanceof</span> Integer) &#123;<br>                        ps.setInt(i + <span class="hljs-number">1</span>, (Integer) arg);<br>                    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (arg <span class="hljs-keyword">instanceof</span> String) &#123;<br>                        ps.setString(i + <span class="hljs-number">1</span>, (String) arg);<br>                    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(arg <span class="hljs-keyword">instanceof</span> Collection&lt;?&gt; collection)&#123;<br>                        Object[] array = collection.toArray();<br>                        <span class="hljs-keyword">if</span> (array.length &gt; <span class="hljs-number">0</span> &amp;&amp; array[<span class="hljs-number">0</span>] <span class="hljs-keyword">instanceof</span> Integer) &#123;<br>                            <span class="hljs-keyword">for</span> (Object o : array) &#123;<br>                                ps.setInt(count++, (Integer) o);<br>                            &#125;<br>                        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (array.length &gt; <span class="hljs-number">0</span> &amp;&amp; array[<span class="hljs-number">0</span>] <span class="hljs-keyword">instanceof</span> String) &#123;<br>                            <span class="hljs-keyword">for</span> (Object o : array) &#123;<br>                                ps.setString(count++, (String) o);<br>                            &#125;<br>                        &#125; <span class="hljs-keyword">else</span> &#123;<br>                            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;目前只支持Integer和String类型&quot;</span>);<br>                        &#125;<br>                    &#125;<br>                    <span class="hljs-keyword">else</span> &#123;<br>                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;目前只支持Integer和String类型&quot;</span>);<br>                    &#125;<br>                &#125;<br>                <span class="hljs-comment">//得到结果集</span><br>                <span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> ps.executeQuery();<br>               <span class="hljs-keyword">if</span> (Collection.class.isAssignableFrom(method.getReturnType())||isBatch)&#123;<br>                   Collection&lt;Object&gt; collection = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>                   <span class="hljs-keyword">while</span> (rs.next())&#123;<br>                       collection.add(parseResult(rs, getClassFromMethod(method)));<br>                   &#125;<br>                   <span class="hljs-keyword">return</span> collection;<br>               &#125;<span class="hljs-keyword">else</span>&#123;<br>                   <span class="hljs-keyword">if</span> (rs.next()) &#123;<br>                       <span class="hljs-comment">//创建对象 需要通过反射</span><br>                       <span class="hljs-keyword">return</span> parseResult(rs, method.getReturnType());<br>                   &#125;<br>               &#125;<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> Object <span class="hljs-title function_">parseResult</span><span class="hljs-params">(ResultSet rs, Class&lt;?&gt; returnType)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>            Constructor&lt;?&gt; constructor = returnType.getConstructor();<br>            <span class="hljs-type">Object</span> <span class="hljs-variable">res</span> <span class="hljs-operator">=</span> constructor.newInstance();<br>            Field[] fields = returnType.getDeclaredFields();<br>            <span class="hljs-keyword">for</span> (Field field : fields) &#123;<br>                <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> field.getName();<br>                <span class="hljs-type">Object</span> <span class="hljs-variable">column</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>                <span class="hljs-keyword">if</span> (field.getType().equals(String.class)) &#123;<br>                    column = rs.getString(name);<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (field.getType().equals(Integer.class)) &#123;<br>                    column = rs.getInt(name);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;目前只支持Integer和String类型&quot;</span>);<br>                &#125;<br>                field.setAccessible(<span class="hljs-literal">true</span>);<br>                field.set(res, column);<br>            &#125;<br>            <span class="hljs-keyword">return</span> res;<br>        &#125;<br>        <span class="hljs-keyword">private</span> String <span class="hljs-title function_">composeSelectBatchSql</span><span class="hljs-params">(Method method, Object[] args)</span> &#123;<br>            <span class="hljs-comment">//select xxx from xxx where xxx in (?,?,?)</span><br>            <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(<span class="hljs-string">&quot;select &quot;</span>);<br>            Class&lt;?&gt; aClass = getClassFromMethod(method);<br>            sql.append(getSelectCols(aClass));<br>            sql.append(<span class="hljs-string">&quot; from &quot;</span>);<br>            sql.append(getTableName(aClass.getAnnotation(Yb0os1TableName.class)));<br>            sql.append(<span class="hljs-string">&quot; where &quot;</span>);<br>            sql.append(getSelectBatchConditions(method.getParameters(),args));<br>            <span class="hljs-keyword">return</span> sql.toString();<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> String <span class="hljs-title function_">getSelectBatchConditions</span><span class="hljs-params">(Parameter[] parameters, Object[] args)</span> &#123;<br>            <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>();<br>            List&lt;String&gt; collect = Arrays.stream(args).map(arg -&gt; &#123;<br>                <span class="hljs-type">StringJoiner</span> <span class="hljs-variable">sb</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringJoiner</span>(<span class="hljs-string">&quot;,&quot;</span>);<br>                <span class="hljs-type">int</span> <span class="hljs-variable">size</span> <span class="hljs-operator">=</span> ((Collection&lt;?&gt;) arg).size();<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; size; j++) &#123;<br>                    sb.add(<span class="hljs-string">&quot;?&quot;</span>);<br>                &#125;<br>                <span class="hljs-keyword">return</span> sb.toString();<br>            &#125;).toList();<br>            <span class="hljs-keyword">return</span> Arrays.stream(parameters)<br>                    .map(parameter -&gt; &#123;<br>                                <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> collect.get(i.getAndIncrement());<br>                                <span class="hljs-keyword">return</span> parameter.getAnnotation(Yb0os1Param.class).value() + <span class="hljs-string">&quot; in(&quot;</span>+s+<span class="hljs-string">&quot;)&quot;</span>;<br>                    &#125;<br>                    )<br>                    .collect(Collectors.joining(<span class="hljs-string">&quot; and &quot;</span>));<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> Class&lt;?&gt; getClassFromMethod(Method method) &#123;<br>            Class&lt;?&gt; aClass = <span class="hljs-literal">null</span>;<br>            <span class="hljs-comment">// 获取方法的返回类型</span><br>            <span class="hljs-type">Type</span> <span class="hljs-variable">returnType</span> <span class="hljs-operator">=</span> method.getGenericReturnType();<br>            <span class="hljs-keyword">if</span> (returnType <span class="hljs-keyword">instanceof</span> ParameterizedType parameterizedType) &#123;<br>                <span class="hljs-comment">// 获取泛型参数类型</span><br>                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();<br>                aClass = (Class&lt;?&gt;) actualTypeArguments[<span class="hljs-number">0</span>];<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;The method&#x27;s return type is not a parameterized type.&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">return</span> aClass;<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> String <span class="hljs-title function_">composeSelectSql</span><span class="hljs-params">(Method method)</span> &#123;<br>            <span class="hljs-comment">//select xxx,xxx from xxx where xxx=?</span><br>            Class&lt;?&gt; returnType = method.getReturnType();<br>            <span class="hljs-keyword">if</span> (Collection.class.isAssignableFrom(returnType))&#123;<br>                returnType = getClassFromMethod(method);<br>            &#125;<br>            <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(<span class="hljs-string">&quot;select &quot;</span>);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">selectCols</span> <span class="hljs-operator">=</span> getSelectCols(returnType);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">tableName</span> <span class="hljs-operator">=</span> getTableName(returnType.getAnnotation(Yb0os1TableName.class));<br>            <span class="hljs-type">String</span> <span class="hljs-variable">conditions</span> <span class="hljs-operator">=</span> getzSelectConditions(method.getParameters());<br>            <span class="hljs-keyword">return</span> sql.append(selectCols)<br>                    .append(<span class="hljs-string">&quot; from &quot;</span>)<br>                    .append(tableName)<br>                    .append(<span class="hljs-string">&quot; where &quot;</span>)<br>                    .append(conditions)<br>                    .toString();<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> String <span class="hljs-title function_">getzSelectConditions</span><span class="hljs-params">(Parameter[] parameters)</span> &#123;<br>            <span class="hljs-keyword">return</span> Arrays.stream(parameters).map(parameter -&gt; parameter.getAnnotation(Yb0os1Param.class).value() + <span class="hljs-string">&quot;=?&quot;</span>)<br>                    .collect(Collectors.joining(<span class="hljs-string">&quot; and &quot;</span>));<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> String <span class="hljs-title function_">getTableName</span><span class="hljs-params">(Yb0os1TableName annotation)</span> &#123;<br>            <span class="hljs-keyword">if</span> (annotation == <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;请为该类添加@Yb0os1TableName注解&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">return</span> annotation.name();<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> String <span class="hljs-title function_">getSelectCols</span><span class="hljs-params">(Class&lt;?&gt; returnType)</span> &#123;<br>            <span class="hljs-comment">//return :: User</span><br>            <span class="hljs-comment">//获取所有的字段；</span><br>            <span class="hljs-keyword">return</span> Arrays.stream(returnType.getDeclaredFields()).map(Field::getName)<br>                    .collect(Collectors.joining(<span class="hljs-string">&quot;,&quot;</span>));<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>测试结果</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250606101726003.png" srcset="/img/loading.gif" lazyload alt="image-20250606101726003"></p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1163 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="CPC广告投放系统 - 需求文档  一、需求概述 1.1 CPC广告的现状  有一定的投放提报能力 仅在大搜渠道曝光展示 展示策略及数据回收均依赖于大搜  1.2 CPC广告的未来规划 旅游供应商可通过CPC广告系统，将产品投放至携程各类有旅游单品曝光的流量场景中。同时CPC广告系统借助旅游自有的算法能力，达成提升广告收入和提升供应商广告ROI双赢的目标。 1.3 本期产品功能需求范围  1.4">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/1.%E5%AE%9E%E4%B9%A0%E6%96%87%E6%A1%A3/%E6%90%BA%E7%A8%8B/%E9%9C%80%E6%B1%82/CPC%E5%B9%BF%E5%91%8A%E6%8E%92%E5%BA%8F%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3/CPT%E6%97%A0%E5%B9%BF%E5%91%8A%E5%9C%BA%E6%99%AF%E5%94%AE%E5%8D%96CPC%E5%B9%BF%E5%91%8A.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="CPC广告投放系统 - 需求文档  一、需求概述 1.1 CPC广告的现状  有一定的投放提报能力 仅在大搜渠道曝光展示 展示策略及数据回收均依赖于大搜  1.2 CPC广告的未来规划 旅游供应商可通过CPC广告系统，将产品投放至携程各类有旅游单品曝光的流量场景中。同时CPC广告系统借助旅游自有的算法能力，达成提升广告收入和提升供应商广告ROI双赢的目标。 1.3 本期产品功能需求范围  1.4">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225410078.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225423856.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225432635.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225441063.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225447649.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225456096.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225506529.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225513134.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225519320.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225525548.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.596Z">
+<meta property="article:modified_time" content="2026-02-07T14:55:59.355Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20260207225410078.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>CPC广告投放系统 - 需求文档</h1>
+<hr>
+<h2 id="一、需求概述">一、需求概述</h2>
+<h3 id="1-1-CPC广告的现状">1.1 CPC广告的现状</h3>
+<ul>
+<li>有一定的投放提报能力</li>
+<li>仅在大搜渠道曝光展示</li>
+<li>展示策略及数据回收均依赖于大搜</li>
+</ul>
+<h3 id="1-2-CPC广告的未来规划">1.2 CPC广告的未来规划</h3>
+<p>旅游供应商可通过CPC广告系统，将产品投放至携程各类有旅游单品曝光的流量场景中。同时CPC广告系统借助旅游自有的算法能力，达成<strong>提升广告收入</strong>和<strong>提升供应商广告ROI</strong>双赢的目标。</p>
+<h3 id="1-3-本期产品功能需求范围">1.3 本期产品功能需求范围</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225410078.png" srcset="/img/loading.gif" lazyload alt="image-20260207225410078"></p>
+<h3 id="1-4-本期业务覆盖范围">1.4 本期业务覆盖范围</h3>
+<h4 id="本期包含">本期包含</h4>
+<p>旅游频道搜索及大搜频道搜索：</p>
+<ul>
+<li>“出发地参团”</li>
+<li>“目的地参团”</li>
+<li>“出发地参团（大搜）”</li>
+<li>“目的地参团（大搜）”</li>
+</ul>
+<p>列表展示规则：<strong>无CPT广告时展示CPC广告</strong>，即<code>tabid=64</code>和<code>512</code>的列表</p>
+<h4 id="本期不包含">本期不包含</h4>
+<p>旅游频道其他列表：</p>
+<ul>
+<li>“综合”、“自由行”、“目的地自由行”、“游学”</li>
+<li>“私家团”、“目的地私家团”</li>
+<li>“一日游”、“特色体验”、“停车服务”、“当地交通”</li>
+<li>“旅行服务”、“WiFi”、“电话卡”</li>
+</ul>
+<p><strong>备注</strong>：跟团相关列表后续增加时AI无需单独立项，综合和玩乐需要单独再立项（5.16程婉玉、李静、吕行）</p>
+<p>本期需求数据流转状态</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225423856.png" srcset="/img/loading.gif" lazyload alt="image-20260207225423856"></p>
+<hr>
+<h2 id="二、数据流转流程">二、数据流转流程</h2>
+<h3 id="2-1-CPC广告候选池">2.1 CPC广告候选池</h3>
+<h4 id="功能概述">功能概述</h4>
+<p>一条CPC广告的数据定义，基于现有CPC广告候选池调整，<strong>红色字段为新增或变更的字段</strong>。</p>
+<h4 id="数据字段定义">数据字段定义</h4>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225432635.png" srcset="/img/loading.gif" lazyload alt="image-20260207225432635"></p>
+<h4 id="渠道配置表">渠道配置表</h4>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225441063.png" srcset="/img/loading.gif" lazyload alt="image-20260207225441063"></p>
+<h4 id="广告状态">广告状态</h4>
+<p><strong>【投放中（已达当日预算）】</strong> 状态触发条件变更：</p>
+<p>需<strong>所有渠道均已达预算上限</strong>（已达预算上限定义：实时消费≥渠道预算，如渠道预算为0，则表示直接达到预算上限）</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225447649.png" srcset="/img/loading.gif" lazyload alt="image-20260207225447649"></p>
+<h3 id="2-2-CPC广告后台服务和两个已存在渠道的数据交互模式">2.2 CPC广告后台服务和两个已存在渠道的数据交互模式</h3>
+<h4 id="旅游频道列表">旅游频道列表</h4>
+<p><strong>广告展示条件</strong>：CPT无广告时返回CPC广告</p>
+<p><strong>数据流转</strong>：前端只请求一次，营销判断返回CPT还是CPC广告</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225456096.png" srcset="/img/loading.gif" lazyload alt="image-20260207225456096"></p>
+<h4 id="CPT和CPC广告差异">CPT和CPC广告差异</h4>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>CPT广告</th>
+<th>CPC广告</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>展示广告的列表</strong></td>
+<td>综搜、出发地参团、目的地参团、自由行、私家团等</td>
+<td>出发地参团、目的地参团</td>
+</tr>
+<tr>
+<td><strong>广告位置</strong></td>
+<td>列表页前几位</td>
+<td>5n+1插入到列表中</td>
+</tr>
+<tr>
+<td><strong>高星用户</strong></td>
+<td>折叠，用户可主动点击展开来查看</td>
+<td>插入列表中正常显示</td>
+</tr>
+<tr>
+<td><strong>正反馈</strong></td>
+<td>精排中【正反馈前2个产品】展示在广告之上<br>精排中非【正反馈前2个产品】展示在广告之下</td>
+<td>相同</td>
+</tr>
+<tr>
+<td><strong>点击数统计</strong></td>
+<td>ubt埋点（也可走接口调用）</td>
+<td>需走接口调用</td>
+</tr>
+</tbody>
+</table>
+<h4 id="大搜">大搜</h4>
+<p><strong>广告展示条件</strong>：保持现状，将广告候选池推给大搜，大搜控制是否曝光展示。</p>
+<p><strong>注意</strong>：给大搜推的预算改为该渠道的预算，营销研发需和大搜研发确认是否变更字段。</p>
+<hr>
+<h2 id="三、CPC广告投放接口服务">三、CPC广告投放接口服务</h2>
+<h3 id="3-1-功能概述">3.1 功能概述</h3>
+<p>CPC广告的接口服务，当前端请求广告数据时返回应展示哪些广告产品。</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225506529.png" srcset="/img/loading.gif" lazyload alt="image-20260207225506529"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225513134.png" srcset="/img/loading.gif" lazyload alt="image-20260207225513134"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225519320.png" srcset="/img/loading.gif" lazyload alt="image-20260207225519320"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20260207225525548.png" srcset="/img/loading.gif" lazyload alt="image-20260207225525548"></p>
+<h3 id="3-2-前端请求广告服务">3.2 前端请求广告服务</h3>
+<p><strong>渠道方请求广告数据</strong></p>
+<p><strong>合作方</strong>：</p>
+<ul>
+<li>前端产品：黄坤、吴赛男、罗飞（本期不涉及）、吕丹（本期不涉及）</li>
+</ul>
+<h4 id="3-2-1-前端请求传参约定">3.2.1 前端请求传参约定</h4>
+<p><strong>1、前端请求广告时按以下约定传参：渠道码、必要场景信息、AI所需用户信息（用户星级、是否登录）</strong></p>
+<ul>
+<li><strong>广告渠道</strong>：和各接入方提前约定传值，当前枚举：大搜、CPT无广告</li>
+<li><strong>广告场景信息</strong>：站点、tab、搜索关键词、日期、pageid</li>
+<li><strong>该渠道AI分析所需字段</strong>：晏法哲：06/04 CPC广告排序接口参数（跟团排序现有参数契约基础上删掉一部分无关参数）</li>
+<li><strong>该场景能召回的产品数量</strong>：用于后续广告控制：该场景自然排序召回产品数小于n时不展示广告（24.6.25 新增）</li>
+</ul>
+<p><strong>2、前端曝光和点击增加如下埋点</strong>（24.6.25 新增）</p>
+<ul>
+<li>合作方：hanqi jin（金含奇）、Weixiao Huang（黄维筱）</li>
+</ul>
+<p><strong>3、当一条产品既是正反馈又是广告时的处理规则</strong>（24.6.25 新增）</p>
+<ul>
+<li>合作方：hanqi jin（金含奇）、Weixiao Huang（黄维筱）、Tim Gu（顾海洋）</li>
+<li><strong>规则</strong>：前端提取两条正反馈产品置顶，此功能不变。一条产品可能既是正反馈又是广告，当一条产品既是正反馈又是广告时，<strong>仅展示正反馈卡片样式，不展示广告标签，点击不计费</strong>。</li>
+</ul>
+<h3 id="3-3-内部处理-召回判定">3.3 内部处理-召回判定</h3>
+<p><strong>功能</strong>：找出哪些广告产品能在该渠道场景被搜索召回</p>
+<p><strong>合作方</strong>：搜索服务：陈少伟</p>
+<p><strong>实现逻辑</strong>：</p>
+<ol>
+<li>
+<p><strong>【可投广告产品】</strong>：“投放状态=投放中（启用）” 且 “该渠道剩余预算≥单点击出价” 的广告产品</p>
+</li>
+<li>
+<p><strong>【召回判定】</strong>：搜索给精排的总包还是1000个产品</p>
+<ul>
+<li>1000中包含950粗排（可能包含老品广告）+50新品广告</li>
+<li>新品不足50时，用粗排来补（比如某场景只有30个新品广告能被召回，那么搜索给970粗排+30广告新品）</li>
+<li>新品广告&gt;50时，可以按照粗排分从大到小取</li>
+<li>对于精排AI，拿到的是950个粗排（含老品广告）+50新品广告（新品分靠前）</li>
+</ul>
+</li>
+<li>
+<p><strong>搜索服务返回</strong>：搜索给的产品id合集结果提供给AI进行下一步【广告排序】，透传上一步前端请求时带来的AI分析所需参数，同时增加广告位次和出价的字段</p>
+</li>
+</ol>
+<p><strong>确认人</strong>：Woody Zheng（郑永川）</p>
+<h3 id="3-4-内部处理-前置过滤">3.4 内部处理-前置过滤</h3>
+<p><strong>功能</strong>：提前过滤掉部分不适合展示广告的场景</p>
+<p><strong>过滤规则</strong>：</p>
+<ol>
+<li>
+<p><strong>该场景自然排序召回产品数小于n时不展示CPC广告</strong></p>
+</li>
+<li>
+<p><strong>（24.06.05新增）用户和场景过滤</strong>：</p>
+<ul>
+<li>【0、6、7星】用户不展示广告</li>
+<li>【非登录】用户不展示广告</li>
+<li>【非POI】搜索场景不展示广告</li>
+</ul>
+</li>
+<li>
+<p><strong>tabid ≠64或512的页面不展示广告</strong></p>
+</li>
+</ol>
+<h3 id="3-5-内部处理-广告排序">3.5 内部处理-广告排序</h3>
+<p><strong>功能</strong>：将上一步的产品集合提供给AI算法，算法结合出价和产品与用户契合度，给出广告排序，不同渠道可能会对接不同的算法提供方</p>
+<p><strong>合作方</strong>：</p>
+<ul>
+<li>AI算法：晏法哲</li>
+<li>AI工程：邵昆</li>
+</ul>
+<p><strong>参考文档</strong>：晏法哲CPT渠道算法文档：05/09 CPC竞价广告排序算法方案</p>
+<h4 id="3-5-1-排序逻辑">3.5.1 排序逻辑</h4>
+<p><strong>多目标建模</strong>：CTR为主、CVR为辅</p>
+<p><strong>广告排序逻辑</strong>：<code>rank_score = ctr × (cvr^α) × bid</code>【参考酒店方案，α可调】</p>
+<h4 id="3-5-2-营销入参">3.5.2 营销入参</h4>
+<p><strong>确认人</strong>：Woody Zheng（郑永川）</p>
+<ol>
+<li><strong>list</strong>：待排序产品的产品类型（冗余，玩乐02、度假03）、产品id、出价金额、出价币种</li>
+<li><strong>透传前端的参数</strong></li>
+<li><strong>唯一值</strong>：便于后续回溯还原每次请求</li>
+</ol>
+<h4 id="3-5-3-算法返回">3.5.3 算法返回</h4>
+<p>需返回每个广告位置上的候选排序结果及其rank_score，即：</p>
+<ul>
+<li>广告位1返回候选品1、候选品2、候选品3…候选品n</li>
+<li>广告位2返回候选品1、候选品2、候选品3…候选品n</li>
+<li>广告位3返回候选品1、候选品2、候选品3…候选品n</li>
+<li>…</li>
+<li>广告位n返回候选品1、候选品2、候选品3…候选品n</li>
+</ul>
+<p><strong>本期广告位</strong>：1+5N(N≤6)，即1、6、11、16、21、26、31</p>
+<p><strong>注意</strong>：此位置可能是动态的，由营销传给AI</p>
+<h4 id="3-5-4-本期算法性能规范需求">3.5.4 本期算法性能规范需求</h4>
+<p><strong>1、用户范围</strong></p>
+<table>
+<thead>
+<tr>
+<th>页面</th>
+<th>出发地参团</th>
+<th>出发地参团&amp;目的地参团</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>tabid</strong></td>
+<td>tabid=64和512的列表（出发地参团&amp;目的地参团）</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>渠道</strong></td>
+<td>app&amp;h5&amp;online</td>
+<td>app&amp;h5&amp;online</td>
+</tr>
+<tr>
+<td><strong>用户</strong></td>
+<td>0-7星用户</td>
+<td>1-5星用户 + 0星（6、7星暂不展示广告）</td>
+</tr>
+<tr>
+<td><strong>关键词</strong></td>
+<td>所有</td>
+<td>POI场景 + 非POI</td>
+</tr>
+<tr>
+<td><strong>登录用户</strong></td>
+<td>登录、非登录</td>
+<td>登录 + 未登录</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2、广告数量要求</strong></p>
+<p>业务层面要满足至少前7个广告位有足够的候选方以备展示（为应对各种过滤策略导致的候选池衰减，每个位置推荐的产品数请求多少个返回多少个）</p>
+<p><strong>3、rank算法要求</strong></p>
+<p>点击费用取决于算法的rank算法，该算法应该避免分数值分布不均匀导致花费远低于出价的场景，花费算法合理性要求，<strong>每天的花费/出价不得低于60%</strong></p>
+<p><strong>4、模型更新要求</strong></p>
+<ul>
+<li>定期分析已推产品的点击情况用于提升模型后续推荐准确率</li>
+<li>定期分析广告产品上下文自然排序产品点击转化率，广告产品不得低于其x%</li>
+</ul>
+<p><strong>5、性能要求</strong></p>
+<p>单次请求（200个产品之内）返回结果时间<strong>不超过80ms</strong></p>
+<h4 id="3-5-5-效果回收">3.5.5 效果回收</h4>
+<p><strong>1、离线验收</strong></p>
+<p>涉及列表：出发地参团/目的地参团</p>
+<p>离线排序模拟数据表：</p>
+<ul>
+<li>搜索场景：关键词，出发站，页面名称</li>
+<li>产品信息：产品ID、产品标题、产品类型、产品钻级、销售模式</li>
+<li>产品分数：总分、广告位次，产品排名、ctr、cvr、bid</li>
+<li>特征数据：模型因子权重，分数</li>
+</ul>
+<p><strong>2、排序中台预览</strong></p>
+<p>排序中台筛选项新增：广告位次</p>
+<h4 id="3-5-6-AB实验">3.5.6 AB实验</h4>
+<p>以整体项目AB实验为准，此处不做特殊控制</p>
+<h3 id="3-6-内部处理-策略过滤">3.6 内部处理-策略过滤</h3>
+<p><strong>功能</strong>：在AI返回的数据中过滤掉不适合展示的广告，不同流量渠道策略会存在差异</p>
+<p><strong>合作方</strong>：广告策略：李静、吕行</p>
+<p><strong>参考文档</strong>：吕行CPT渠道广告过滤策略：【广告展示过滤】CPC拦截过滤策略</p>
+<p><strong>过滤规则</strong>：</p>
+<ol>
+<li>
+<p><strong>搜索服务提供数据</strong>：搜索服务要给【最终对客呈现top50的排序（最大广告位为31）】产品id list及每个产品的钻级和点评分，用于广告下方的过滤策略</p>
+<p><strong>【最终对客呈现top50】</strong>：精排过后，正反馈置顶且已插入新品的列表</p>
+<p><strong>确认人</strong>：Woody Zheng（郑永川）</p>
+</li>
+<li>
+<p><strong>过滤策略</strong>：</p>
+<ul>
+<li>某广告产品若最终对客展示产品排序高于广告显示位置，则不展示广告</li>
+<li>广告位次与最终对客展示产品排序（新品+非新品）位次间隔&lt;=4，过滤</li>
+<li>上下文产品钻级过滤：判断推荐产品钻级不低于上下三位钻级的最低钻级</li>
+<li>上下文产品点评分过滤：判断推荐产品钻级不低于上下三位点评分的最低分数</li>
+<li>该列表已曝光的广告下面不再展示</li>
+<li>CTR低于x不展示</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-7-返回">3.7 返回</h3>
+<p><strong>功能</strong>：根据渠道+场景，广告数量配置表，广告的数量及位置</p>
+<p><strong>返回内容</strong>：</p>
+<ul>
+<li>每条广告需带着广告自己的特征埋点</li>
+<li>如产生点击的点击费用值</li>
+</ul>
+<p><strong>合作方</strong>：前端产品：黄坤、吴赛男、罗飞（本期不涉及）、吕丹（本期不涉及）</p>
+<p><strong>确认人</strong>：Sainan Wu（吴赛男）</p>
+<h4 id="3-7-1-点击费用计算公式">3.7.1 点击费用计算公式</h4>
+<p><strong>确认人</strong>：Woody Zheng（郑永川）</p>
+<p><strong>公式</strong>：<code>花费 = min{（下一名的评分/自己的评分）× 自己的出价 + CNY0.1，自己的出价}</code></p>
+<p><strong>举例</strong>：</p>
+<p>AI给出某一个广告位的候选产品列表P1、P2、P3，及其分别的rank_score（rank_score = ctr × (cvr^α) × bid）R1、R2、R3，三个产品分别的出价金额B1、B2、B3</p>
+<p>经过过滤策略：</p>
+<ul>
+<li>若该位置可展示P1、P2、P3，则实际展示P1，P1的点击费用 = (R2/R1) × B1 + CNY0.1</li>
+<li>若该位置可展示P1、P3，则实际展示P1，P1的点击费用 = (R3/R1) × B1 + CNY0.1</li>
+<li>若位置仅可展示P1，则实际展示P1，P1的点击费用 = P1的出价 = B1</li>
+</ul>
+<h4 id="3-7-2-前端点击埋点接口">3.7.2 前端点击埋点接口</h4>
+<p><strong>功能</strong>：提供前端点击调用的埋点接口</p>
+<p><strong>要求</strong>：前端点击埋点需调用广告服务提供的点击统计埋点接口，确保点击数不丢失</p>
+<p><strong>（24.06.27新增）</strong>：点击埋点增加&quot;流量渠道（biddingbu）&quot;</p>
+<hr>
+<h2 id="四、CPC广告数据服务">四、CPC广告数据服务</h2>
+<h3 id="4-1-功能概述">4.1 功能概述</h3>
+<p>CPC广告自己进行曝光、点击的埋点数据统计</p>
+<h3 id="4-2-广告埋点">4.2 广告埋点</h3>
+<p><strong>广告自己加埋点，统计点击</strong></p>
+<p><strong>参考文档</strong>：CPC接入相似酒店场景-Ctrip前端需求</p>
+<h3 id="4-3-广告风控">4.3 广告风控</h3>
+<p><strong>功能</strong>：实时判定每次点击是否为真实有效点击，确认真实有效后营销执行扣费</p>
+<p><strong>合作方</strong>：lin hu（胡林）(MBU-金融事业部)</p>
+<p><strong>支持渠道</strong>：会展示广告的渠道包含app、h5、小程序和online</p>
+<h4 id="4-3-1-实时校验功能">4.3.1 实时校验功能</h4>
+<p>以下功能需支持实时校验：</p>
+<ol>
+<li><strong>IP过滤</strong></li>
+<li><strong>cid、ip、uid层面已点击用户避免重复计费</strong>（详见下面&quot;特殊场景广告点击不计费&quot;，小程序和online怎么识别？）</li>
+<li><strong>爬虫点击过滤</strong>（风控无反扒能力）</li>
+<li><strong>白名单过滤</strong>（供应商自己的点击不扣费，供应商广告创建后台添加手机号）</li>
+<li><strong>携程内部员工IP过滤</strong></li>
+<li><strong>同目的地竞对供应商的互相点击过滤</strong></li>
+</ol>
+<h4 id="4-3-2-特殊场景广告点击不计费">4.3.2 特殊场景广告点击不计费</h4>
+<p><strong>规则</strong>：和酒店规则保持一致</p>
+<ul>
+<li>60分钟内同ip同产品类型同商品ID点击数&gt;=3，不计费</li>
+<li>60分钟内同cid同产品类型同商品ID点击数&gt;=3，不计费</li>
+<li>60分钟内同uid同产品类型同商品ID点击数&gt;=3，不计费</li>
+</ul>
+<h4 id="4-3-3-暂缓功能">4.3.3 暂缓功能</h4>
+<p><strong>第三方点击校验</strong>：外部第三方曝光点击数据校验，存在较多集团审批阻碍且酒店并未引入，本期不做</p>
+<hr>
+<h2 id="五、CPC广告管理">五、CPC广告管理</h2>
+<h3 id="5-1-功能概述">5.1 功能概述</h3>
+<p>VBK online供应商操作页面，管理广告的推广计划，查看已创建广告的数据</p>
+<h3 id="5-2-CPT创建广告页面引导创建CPC广告">5.2 CPT创建广告页面引导创建CPC广告</h3>
+<p><strong>功能</strong>：试试效果广告，曝光免费点击才收费，跳转至CPC广告创建页去创建广告</p>
+<h3 id="5-3-CPC广告创建页调整">5.3 CPC广告创建页调整</h3>
+<h4 id="5-3-1-输入产品id的校验服务交互样式">5.3.1 输入产品id的校验服务交互样式</h4>
+<p><strong>要求</strong>：和CPT使用同一样式</p>
+<p><strong>竞价门槛校验组件升级</strong></p>
+<h4 id="5-3-2-新增渠道选择选项">5.3.2 新增渠道选择选项</h4>
+<p><strong>（24.07.03新增）灰度计划</strong>：</p>
+<p>后端提供灰度供应商白名单，命中的供应商前端才展示&quot;投放渠道&quot;选择，未命中的供应商仍为原版即仅可投放大搜渠道。当白名单为空时，表示全量。</p>
+<p><strong>1、投放渠道和页面上产品id所选的业务线联动</strong></p>
+<p>展示该业务线可投放的渠道：</p>
+<ul>
+<li>本项目上线时，线路可投两个渠道，日游&amp;活动只可投大搜</li>
+</ul>
+<p><strong>2、投放渠道必填，支持多选</strong></p>
+<ul>
+<li>勾选多渠道时，需分别设置各渠道预算，校验需为正数支持小数点后2位</li>
+<li>此时【每日花费上限】字段为各渠道预算求和且不可编辑</li>
+</ul>
+<p><strong>3、勾选单一渠道时，【每日花费上限】字段可编辑</strong></p>
+<p><strong>4、历史数据处理</strong></p>
+<p>无需特殊处理。项目上线时所有【推广中】且【产品类型=度假】的CPC推广，改为两者都勾选，预算分配规则：</p>
+<ul>
+<li>【旅游频道搜索结果列表页】= 原每日预算 × 0.7 后向上取整</li>
+<li>【携程大搜搜索联想页及结果页】= 原每日预算 - 计算出的【旅游频道搜索结果列表页】预算</li>
+</ul>
+<h4 id="5-3-3-广告位展示模块">5.3.3 广告位展示模块</h4>
+<p><strong>新增</strong>：CPT无广告列表，置于首位，加new角标</p>
+<h4 id="5-3-4-广告创建">5.3.4 广告创建</h4>
+<p><strong>相同时段禁止创建多条广告拦截条件变更</strong>：</p>
+<ul>
+<li><strong>现状</strong>：产品体系+产品id相同时，若两条推广存在推广时间重合，则禁止创建</li>
+<li><strong>调整为</strong>：产品体系+产品id相同时，若两条推广存在<strong>相同的推广渠道</strong>且推广时间重合，则禁止创建</li>
+</ul>
+<h4 id="5-3-5-广告效果页面">5.3.5 广告效果页面</h4>
+<p><strong>查询时间范围</strong>：不可超过30天</p>
+<hr>
+<h2 id="六、CPC广告AB实验">六、CPC广告AB实验</h2>
+<h3 id="6-1-实验配置">6.1 实验配置</h3>
+<p><strong>项目上线时需进行50%实验分流</strong></p>
+<p><strong>分流发起方</strong>：后端，当有CPC广告返回的场景下，调用分流器，部分不展示广告</p>
+<p><strong>实现方案参考</strong>：04 竞价广告ab分流改为后端控制</p>
+<p><strong>（24.07.16新增）实验号</strong>：240716_VAC_MLCPC</p>
+<h3 id="6-2-分流时机">6.2 分流时机</h3>
+<p>用户（cid）在实验周期内请求广告数据，<strong>首次有广告数据返回时分流</strong>，控制为展示广告或不展示广告，一旦分流则该用户在本实验周期内不变组</p>
+<h3 id="6-3-实验组">6.3 实验组</h3>
+<ul>
+<li><strong>A</strong>：展示广告</li>
+<li><strong>B</strong>：不展示广告</li>
+<li><strong>C</strong>：展示广告</li>
+<li><strong>D</strong>：展示广告</li>
+</ul>
+<h3 id="6-4-分流配置管理">6.4 分流配置管理</h3>
+<p><strong>需求背景</strong>：未来要经常测试CPC广告是否对列表转化有影响，估实验要支持可视化配置</p>
+<p><strong>配置项</strong>：</p>
+<ul>
+<li>渠道（大搜渠道CPC是否展示本期控不了）</li>
+<li>tabid</li>
+<li>要支持设置实验号、是否开启、分流的开始结束时间</li>
+<li>分流可手动终止，每开始一条分流活动都要对用户进行重新分组</li>
+</ul>
+<h3 id="6-5-配置信息举例">6.5 配置信息举例</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>主键</strong></td>
+<td>系统生成</td>
+</tr>
+<tr>
+<td><strong>实验号</strong></td>
+<td>xxxxxx</td>
+</tr>
+<tr>
+<td><strong>是否有效</strong></td>
+<td>是/否</td>
+</tr>
+<tr>
+<td><strong>渠道</strong></td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>实验开始及结束时间</strong></td>
+<td>年月日时分秒-年月日时分秒</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="七、BI报表相关需求">七、BI报表相关需求</h2>
+<h3 id="7-1-现有CPC广告效果表调整">7.1 现有CPC广告效果表调整</h3>
+<p><strong>表名</strong>：【数据组】CPC广告效果汇总表</p>
+<p><strong>新增字段</strong>：</p>
+<ol>
+<li><strong>产品体系</strong>（玩乐2、度假3）</li>
+<li><strong>投放渠道</strong>（通过渠道筛选：大搜CPC，度假列表页，查看不同渠道的预算、花费、曝光、点击、订单，不筛选则求和）</li>
+</ol>
+<p><strong>两点强调</strong>：</p>
+<ol>
+<li><strong>广告挂单规则</strong>：所有的供应商订单，反查历史广告点击，挂在最近一条广告上，一个订单只能属于一个广告（推广id+日期=投放id）</li>
+<li><strong>点击数</strong>：点击数使用营销后端接口统计的点击数，不要使用ubt点击数</li>
+</ol>
+<h3 id="7-2-新增报表：策略过滤掉的产品后台统计记录">7.2 新增报表：策略过滤掉的产品后台统计记录</h3>
+<p><strong>统计字段</strong>：</p>
+<ul>
+<li>时间</li>
+<li>广告场景（每次请求的唯一参数值）</li>
+<li>产品id</li>
+<li>过滤原因</li>
+</ul>
+<h3 id="7-3-供应商端实时曝光点击数据">7.3 供应商端实时曝光点击数据</h3>
+<p><strong>（24.06.27 讨论确认）</strong></p>
+<p><strong>合作方</strong>：Youbin Zeng（曾佑斌）</p>
+<p><strong>实现方案</strong>：</p>
+<ul>
+<li>营销统计点击的接口数据</li>
+<li>BI提供曝光的实时接口</li>
+<li>营销拼接BI的实时曝光和营销的点击，营销来做对客显示保底（所有推广的曝光数原则上必须要≥点击数，故当曝光数＜点击数时，给曝光数重新赋值让其=点击数）</li>
+</ul>
+<hr>
+<h2 id="八、技术实现要点总结">八、技术实现要点总结</h2>
+<h3 id="8-1-核心流程">8.1 核心流程</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs">前端请求广告<br>    ↓<br>召回判定（搜索服务）<br>    ↓<br>前置过滤<br>    ↓<br>广告排序（AI算法）<br>    ↓<br>策略过滤<br>    ↓<br>返回广告结果<br>    ↓<br>前端展示<br>    ↓<br>曝光/点击埋点<br>    ↓<br>风控校验<br>    ↓<br>扣费<br></code></pre></td></tr></table></figure>
+<h3 id="8-2-关键参数">8.2 关键参数</h3>
+<ul>
+<li><strong>渠道码</strong>：区分大搜、旅游频道列表</li>
+<li><strong>广告位次</strong>：1+5N(N≤6)，即1、6、11、16、21、26、31</li>
+<li><strong>排序公式</strong>：<code>rank_score = ctr × (cvr^α) × bid</code></li>
+<li><strong>点击费用</strong>：<code>花费 = min{（下一名的评分/自己的评分）× 自己的出价 + CNY0.1，自己的出价}</code></li>
+</ul>
+<h3 id="8-3-性能要求">8.3 性能要求</h3>
+<ul>
+<li>单次请求（200个产品之内）返回结果时间<strong>不超过80ms</strong></li>
+<li>每天的花费/出价不得低于60%</li>
+</ul>
+<h3 id="8-4-兼容性要求">8.4 兼容性要求</h3>
+<ul>
+<li>支持新旧版本同时在线</li>
+<li>历史数据处理：项目上线时所有【推广中】且【产品类型=度假】的CPC推广，改为两者都勾选</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

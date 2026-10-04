@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="简历优化 rabbitmq优化为kafka、rpc框架要学习 自我介绍 面试官你好，我叫杜赟，目前研一，就读于东南大学网络空间安全学院。我也自己学习了Java后端的相关技术栈，Java基础、集合、常用的框架、数据库MySQL redis等等，熟悉一些常见的数据结构，对技术比较热爱，在学习技术的时候也思考他怎么实现的，简单手撕了线程池、动态代理、mybatis、hashmap、AQS锁等等，也动手写">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%9D%A2%E8%AF%95%E7%AF%87/1%E9%A1%B9%E7%9B%AE%E9%97%AE%E7%AD%94.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="简历优化 rabbitmq优化为kafka、rpc框架要学习 自我介绍 面试官你好，我叫杜赟，目前研一，就读于东南大学网络空间安全学院。我也自己学习了Java后端的相关技术栈，Java基础、集合、常用的框架、数据库MySQL redis等等，熟悉一些常见的数据结构，对技术比较热爱，在学习技术的时候也思考他怎么实现的，简单手撕了线程池、动态代理、mybatis、hashmap、AQS锁等等，也动手写">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-04T05:02:31.624Z">
+<meta property="article:modified_time" content="2026-04-03T10:11:31.291Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <p>简历优化 rabbitmq优化为kafka、rpc框架要学习</p>
+<h1>自我介绍</h1>
+<p>面试官你好，我叫杜赟，目前研一，就读于东南大学网络空间安全学院。我也自己学习了Java后端的相关技术栈，Java基础、集合、常用的框架、数据库MySQL redis等等，熟悉一些常见的数据结构，对技术比较热爱，在学习技术的时候也思考他怎么实现的，简单手撕了线程池、动态代理、mybatis、hashmap、AQS锁等等，也动手写了两个项目，一个是智慧课堂，一个是点评这个 主要是用来深化学习reids应用的一个项目。我的介绍完毕。</p>
+<h1>智慧课堂</h1>
+<p>智慧学堂这是一个基于微服务的在线教育项目，主要分为了两个部分：学生端和管理端。</p>
+<p>学生端围绕学生展开，学生就可以进行播放视频进行学习、签到、提问、评论、购买课程等</p>
+<p>管理包括教师、管理员，主要是对课程、用户、优惠券等进行管理</p>
+<p>我主要是写了学习进度管理、优惠券管理、点赞和积分排行、互动问答方面。</p>
+<h2 id="视频断点续播">视频断点续播</h2>
+<p><strong>困难点/有挑战性的</strong></p>
+<p>首先，视频播放进度的记录要考虑的用户异常退出的场景，因此我们不能依赖视频停止播放、浏览器退出等前端事件来提交播放进度，而是应该由前端定期的提交播放进度，类似一种心跳机制。同时，由于要实现视频播放进度的秒级精度，因此这种心跳必然要维持一个较高的频率，频率越高则回放的时间精度越高。我们项目中设置的是15秒一次心跳，携带这视频播放进度、章节id、课程id等。服务端在接收到前端提交的播放进度信息后，将其持久化保存即可。</p>
+<p>这些播放进度不能直接写入数据库，因为在用户访问的高峰期，对数据库来说压力还是太大了。所以我们采用的策略就是合并写请求：先将播放进度信息写入redis缓存当中，再异步的持久化到数据库中。</p>
+<p>异步持久化通常会采用定时任务来实现，但是这里的话播放进度信息有一些特殊性，因为播放进度不需要每一次的都记录到数据库，而是只需记录用户离开某个视频时最后一次提交的播放进度即可。如果定时任务频繁执行，用户离开视频前持久化到数据库的操作属于无效操作，增加了数据库负担。</p>
+<p>那么需要一种方案判断用户是否是最后一次提交，是然后再持久化到数据库中。</p>
+<p>这里有两种方案：</p>
+<p>方案一，使用定时任务+任务队列基于时间做判断。只要用户依然在播放视频，那么Redis中的进度就会每隔15秒变化一次。因此我们只需要在缓存播放进度的同时，记录本次更新的时间戳。定时任务每隔20秒执行一次，但不是立刻更新数据库。而是要先判断Redis缓存中的时间戳与当前时间相差是否超过15秒，超过了则说明用户已经停止提交播放进度，说明当前是最后一次提交，我们写入数据库。否则放弃本次任务即可。</p>
+<p>方案二，使用延迟队列基于进度做判断。前端提交播放进度的时候，我们除了要缓存播放进度到Redis以外，还需要提交一个20秒后执行的延迟任务到DelayQueue 延迟队列，任务中记录本次播放进度。延迟任务执行的时候与缓存中的进度做比较，不相同，则证明用户依然在播放视频，放弃本次任务。相同，则证明用户停止播放视频了，则持久化到数据库。</p>
+<p>这里采用的是使用延迟队列基于进度进行判断的，项目启动的时候我们就会开启一个异步任务，不停的检测延迟队列中是否有任务，一旦有任务，通过线程池多线程执行，就会判断这里的任务和Redis中的学习记录是否一致，如果一致，就持久化到数据库中，更新学习记录和课表中最近学习小节和时间。如果不一致，说明用户还在持续播放，直接结束不做处理，这样就对数据库操作少了很多，优化了性能</p>
+<p><strong>保存视频记录采用哪种数据结构</strong></p>
+<p>采用hash结构   key就是课程id，hashkey就是userid+小节id，hashvalue就是record（json）</p>
+<p><strong>延迟队列为什么采用DelayQueue？</strong></p>
+<p>延迟队列的有DelayQueue、Redis模拟延迟队列（ZSET）、消息队列中的延迟队列（死信队列）；</p>
+<p>DelayQueue就是JDK自带的，不依赖其他第三方服务、减少了网络交互对吧 但是占用JVM内存 只支持单机使用。延迟任务存储时间比较短，成本最低</p>
+<h2 id="优惠券相关功能">优惠券相关功能</h2>
+<p>领取方式有手动领取、兑换码；</p>
+<p>管理员可以创建优惠券然后发放，修改数据状态，就结束了</p>
+<p><strong>兑换码</strong></p>
+<p>对于兑换码在上面的基础上还要生成兑换码的，兑换码要求长度不超过10，只包含数字字母，保证生成和校验都是高效可靠的</p>
+<p>我们设计了一个按位加权求和的加密验签算法。 32位的自增序列，可以每4位一组，转为10进制，这样就有8个数字。提前准备一个长度为8的加权数组，作为秘钥。对自增序列的8个数字按位加权求和，得到的结果作为签名。加权数组最好使用质数，这样重复的概率会降低。 当然，考虑到秘钥的安全性，我们也可以准备多组加权数组，比如准备16组。然后生成兑换码时随机生成一个4位的新鲜值，取值范围刚好是0~15，新鲜值是几，我们就取第几组加权数组作为秘钥。然后把新鲜值、自增序列拼接后按位加权求和，得到签名。 最后把签名值的后14位、新鲜值（4位）、自增序列（32位）拼接，得到一个50位二进制数，然后与一个较大的质数做异或运算加以混淆，再基于Base32进行转码，得到的兑换码恰好10位，符合要求。</p>
+<p>验签的时候，首先将结果 利用Base32转码为数字。然后与大质数异或得到原始数值。 接着取高14位，得到签名；取后36位得到新鲜值与自增序列的拼接结果。取中4位得到新鲜值。 根据新鲜值找到对应的秘钥（加权数组），然后再次对后32位加权求和，得到签名。与高14位的签名比较是否一致，如果不一致证明兑换码被篡改过，属于无效兑换码。如果一致，证明是有效兑换码。 接着，取出低32位，得到兑换码的自增序列号。利用BitMap验证兑换状态，是否兑换过即可。 整个验证过程完全不用访问数据库，效率非常高。</p>
+<p>领取优惠券的时候可能会问题</p>
+<p>1、超卖问题：</p>
+<p>判断库存数量和修改库存数量不是原子性操作 这种场景非常适合使用乐观锁来解决，在修改的时候加入库存数量的判断即可，而且MySQL更新的时候也会加上排他锁的</p>
+<p>2、超出用户限领数量问题</p>
+<p>先查询数据库 --&gt; 再判断是否超出限领数量–&gt; 最后新增用户券</p>
+<p>一开始使用redis自己实现了分布式锁，set nx px   释放的锁的时候先判断是不是自己的锁 是则可以删除  又不是原子性了  lua脚本</p>
+<p>存在问题：</p>
+<ol>
+<li>超时释放（时间是不要进行设置的。网络延迟，超过了设置锁的时间，锁释放 但是业务我们完成）</li>
+<li>不可重入</li>
+<li>失败重试</li>
+</ol>
+<p>redisson redis自己的分布式锁组件</p>
+<p>可重入（redis hash）、可重试（发布订阅模式）、超时续约（看门狗机制，每隔一段时间releaseTime/3检查是否还继续持有，重置超时时间，但是我们不能手动的设置过期时间）</p>
+<p>Redisson底层是基于Redis的hash结构来记录获取锁的线程信息，结构是这样的：key是锁名称，hasKey是线程标示，hashValue是锁重入次数。这样就可以实现锁的可重入性。</p>
+<p>然后Redisson的分布式锁允许自定义锁的超时自动释放时间，如果没有设置或者设置的值为-1，则自动释放时间为30秒，并且会开启一个WatchDog机制。WatchDog就是一个定时任务，每隔（leaseTime/3）秒就会执行一次，会重置锁的expire时间为30秒，从而实现所的自动续期</p>
+<p>至于阻塞重试机制，则是基于Redis的发布订阅机制。如果设置了waitTime大于0，则获取锁失败的线程会订阅一个当前锁的频道，然后等待。获取锁成功的线程在执行完业务释放锁后会向频道内发送通知，收到通知的线程会再次尝试获取锁，重复这个过程直到获取锁成功或者重试时长超过waitTime</p>
+<h2 id="分布式锁组件">分布式锁组件</h2>
+<p>加锁都是一个固定的流程，获取锁对象  --&gt;   尝试加锁  --&gt;   执行业务  --&gt; 释放锁</p>
+<p>我们可以使用AOP+自定义注解来实现这些固定的功能</p>
+<p>首先获取锁对象，我们使用工厂模式来实现，因为redisson中有很多锁对象，比如可重入锁，公平锁，读锁，写锁等，我们把这些类型放到一个枚举中，并用枚举的方法来实现，然后配置到注解的属性上，将来使用的时候只需要在添加注解的时候去指定要用的锁类型就行</p>
+<p>接着是尝试加锁，这里我们使用的是策略模式实现的。主要是封装获取锁失败后的策略。比如获取失败后是否重试，是有限重试还是无限重试，如果不重试或者重试耗尽后又怎么处理，是直接结束还是抛出异常。我们把这些封装成一个一个的策略，目前是五种策略：不重试直接结束，不重试直接抛出异常，重试超时后结束，重试超时后抛出异常，无限重试。也是使用的枚举实现，并配置到注解中，在使用时只需要在注解中指定一种即可。</p>
+<p>最后获取锁成功后就开始执行业务。业务执行完成后释放锁。</p>
+<p>工厂模式：提供了一种创建对象的方式，而无需指定要创建的具体类。通过使用工厂模式，可以将对象的创建逻辑封装在一个工厂类中，而不是在客户端代码中直接实例化对象，这样可以提高代码的可维护性和可扩展性。</p>
+<p>策略模式：策略模式定义了一系列算法或策略，并将每个算法封装在独立的类中，使得它们可以互相替换。通过使用策略模式，可以在运行时根据需要选择不同的算法，而不需要修改客户端代码</p>
+<h2 id="课表缓存">课表缓存</h2>
+<p>缓存穿透</p>
+<p>客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会到达数据库</p>
+<ul>
+<li>布隆过滤器+缓存null对象（过期时间的）</li>
+</ul>
+<p>查找课表的时候，先通过布隆过滤器判断是否存在，不存在就返回null   存在则查询缓存，命中缓存就会返回无论是否为null，没有命中则查询MySQL数据库，并且加入缓存/布隆过滤器</p>
+<p>缓存雪崩</p>
+<p>同一时段大量的缓存key同时失效或者redis服务宕机，导致大量请求到达数据库，带来巨大压力</p>
+<ul>
+<li>给不同的key添加随机的ttl （针对key失效）</li>
+<li>利用Redis集群提高服务的可用性（针对redis宕机）</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存</li>
+</ul>
+<p>缓存击穿</p>
+<p>热点Key问题，一个被<strong>高并发访问</strong>并且<strong>缓存重建业务比较复杂</strong>的key突然失效，无数的请求访问会瞬间给数据库带来巨大的冲击</p>
+<ul>
+<li>互斥锁：考虑一致性；只要在缓存中没有找到 那么就加锁查询数据库，更新缓存</li>
+<li>逻辑过期：考虑性能，缓存中查到之后比较时间，是否过期；过期的话还是获取锁查MySQL并且更新缓存</li>
+</ul>
+<h2 id="积分排行榜">积分排行榜</h2>
+<p>用户通过点赞、学习行为产生积分时，会发送消息通知积分服务，积分服务除了保存积分明细之外，还有把积分累加起来</p>
+<p>分为本月实时的积分榜   历史的积分排行榜</p>
+<p>本月的就是存储在redis zset，key榜单id value就是用户id  score就是积分；</p>
+<p>因为历史榜单查询频率不高，所以我们没有在Redis中存在，是持久化到Mysql数据库中的。这里我们采用的是水平分表来存储，一个月就是一张表。</p>
+<p>使用了xxl-job定时任务来实现整个历史榜单持久化动作，分为三个定时任务</p>
+<ol>
+<li>月初的时候创建新的赛季表</li>
+<li>第一个定时任务执行完之后接着执行的，用来把上个月的榜单持久化到数据库中</li>
+<li>二个定时任务执行完之后接着执行，用来清理Redis中上个月的榜单数据 unlink 异步删除redis的数据</li>
+</ol>
+<h2 id="点赞功能">点赞功能</h2>
+<p>点赞不能重复点赞，set保存点赞记录，key 业务id   value 点赞的用户</p>
+<p>点赞数量使用zset，key就是业务类型  value就是业务id   score就是点赞数量</p>
+<p>点赞服务中我们还开始了一个定时任务，这里使用的是XXL-JOB，定时从Zset结构中从小到大批量的读取并移除这些业务的点赞数量，再通过MQ通知业务方，业务方会把点赞数量记录到自己的业务表中</p>
+<h2 id="签到功能">签到功能</h2>
+<p>bitmap 用一行数据就能标示这个用户一个月的签到记录，最多31个比特位，不超过4个字节，非常的节省空间</p>
+<p>连续签到的天数：查到的是10进制，所以我们让这个数字跟1做与运算，其实就是最后一位跟1做与运算，这样就能得到最后一天的签到记录，如果是1，代表已经签到过，再把这个数字右移一位，倒数第二位就成最后一位了，再跟1做与运算，得到倒数第二天的签到记录，依次循环，直到碰到结果为0的情况</p>
+<h2 id="互动问答功能">互动问答功能</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Plain">用户在学习的过程中，可以在播放界面的侧边进行提问，其他用户如果看到这个问题可以对这个问题进行回答，并且也可以对回答进行评论。在管理端，管理员也可以查看这个问题，同样也可以对这个问题进行回答或者评论。并且管理端还有隐藏功能，可以对问题、回答或者评论进行隐藏。<br></code></pre></td></tr></table></figure>
+<p>设计两个表，问题表和回答评论表</p>
+<h1>美食点评</h1>
+<h2 id="全局id生成器">全局id生成器</h2>
+<p>时间戳 还要生成序列号 没生成一个id 序列号就+1</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

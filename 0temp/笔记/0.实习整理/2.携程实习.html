@@ -1,0 +1,919 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="部门 旅游事业群-旅游研发部-AI工程组-搜推开发组 旅游事业群下旅游研发部的AI工程的搜推开发组 需求1：rule-sentinel 质量检测平台，作用对携程一些排序内容进行正确与否的判断，难点：高并发 分布式限流(运行断言脚本，因为对其他项目检测的时候其他项目也在正常允许) ；Redis分布式锁  消息队列(防止断言丢失) ；虚拟线程(为什么有时候使用虚拟线程 有时候使用线程)  ；Redis">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/0.%E5%AE%9E%E4%B9%A0%E6%95%B4%E7%90%86/2.%E6%90%BA%E7%A8%8B%E5%AE%9E%E4%B9%A0.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="部门 旅游事业群-旅游研发部-AI工程组-搜推开发组 旅游事业群下旅游研发部的AI工程的搜推开发组 需求1：rule-sentinel 质量检测平台，作用对携程一些排序内容进行正确与否的判断，难点：高并发 分布式限流(运行断言脚本，因为对其他项目检测的时候其他项目也在正常允许) ；Redis分布式锁  消息队列(防止断言丢失) ；虚拟线程(为什么有时候使用虚拟线程 有时候使用线程)  ；Redis">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-04T05:02:31.592Z">
+<meta property="article:modified_time" content="2026-03-25T05:27:23.231Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>部门</h1>
+<p>旅游事业群-旅游研发部-AI工程组-搜推开发组</p>
+<p>旅游事业群下旅游研发部的AI工程的搜推开发组</p>
+<p>需求1：rule-sentinel 质量检测平台，作用对携程一些排序内容进行正确与否的判断，难点：高并发 分布式限流(运行断言脚本，因为对其他项目检测的时候其他项目也在正常允许) ；Redis分布式锁  消息队列(防止断言丢失) ；虚拟线程(为什么有时候使用虚拟线程 有时候使用线程)  ；Redis状态转换  (多个用例运行时 成功或者失败什么时候发送) 等等，任务搭建前后端系统，后续进行细看</p>
+<p>需求2：广告产品展示</p>
+<h1>面试问题</h1>
+<p>clickhouse、dfs（agent+笛卡尔积）、虚拟线程、原子sql、MQ异步执行、多级动态限流</p>
+<h2 id="rule-sentinel">rule-sentinel</h2>
+<h3 id="介绍">介绍</h3>
+<p>❗问题：rule-sentinel是什么？做什么？</p>
+<p>背景：rule-sentinel是一个深度服务于整个旅游业务（包括跟团、租车、私家团、日游、景区门票等）的搜索推荐质量保障平台，主要是解决由于排序模型和策略复杂且迭代频繁带来的测试效率低下和线上质量风险高的痛点，目标就是构建一个智能化生成用户、高并发执行、实时监控告警的规则自动化测试平台，实现用例高效的自动生成、批量执行、结果统计全流程闭环。</p>
+<p>功能：核心的功能主要包含了，场景\业务\用例组\用例等管理、用例生成、场景执行、实时监控，整体的流程是：xxx</p>
+<p>负责：我负责该平台的前后端整体开发联调，参与用例生成与执行模块优化与设计，比如说QMQ异步改造、存储分层、限流等等</p>
+<h3 id="收获-成长-技术挑战">收获/成长/技术挑战</h3>
+<p>❗问题：你在携程这段实习，最大的收获是什么？遇到的最大的技术挑战是什么？怎么解决的？</p>
+<blockquote>
+<p>并发场景下的数据一致性  虚拟线程</p>
+<p>针对 <code>Read-Modify-Write</code> 导致的重复更新问题，我没有盲目引入高开销的 Redis 分布式锁，而是通过设计一条<strong>带 <code>NOT EXISTS</code> 子查询的原子 SQL</strong>，巧妙地利用 MySQL InnoDB 行锁在数据库底层完成了‘检查并更新’的原子操作。这不仅保证了状态流转的强一致性，避免了告警风暴，还减少了外部组件依赖。配合 <strong>Java 21 虚拟线程</strong>与 QMQ 异步化改造，我最终将系统吞吐量提升了 3-5 倍，实现了高性能与数据强一致性的深度平衡。”</p>
+</blockquote>
+<h3 id="并发场景原子sql">并发场景原子sql</h3>
+<p><strong>❗问题</strong>：产生这个场景的竞态根因是什么？如果每一个都更新会产生什么样的后果？</p>
+<blockquote>
+<p>在场景执行的时候会有上千条用例（场景绑定的所有用例）运行，当每条用例执行完成时都会尝试判断“当前是否为最后一个完成的用例”，如果完成则更新场景状态为完成并触发统计与告警逻辑，但由于多个线程执行的，它们可能基于同一份“已完成数量”的旧数据判断自己是最后一个，（不判断场景状态会被重复更新，给数据库带来不必要的写入压力）可能还会导致所有用例执行完毕但是场景状态依旧是执行中，我们采用的方案就是使用的not exists  一条sql语句完成查询是否还有非终态的用例和更新场景状态</p>
+<p>如果每个都更新的话，后果挺严重的：首先场景状态会被重复更新，甚至出现 “所有用例都完成了，场景状态还是执行中” 的不一致；然后可能会触发重复的测试报告推送、规则上线流程，造成业务故障；还有可能给数据库带来不必要的写入压力，影响性能。</p>
+</blockquote>
+<p><strong>❗问题</strong>：为什么使用了原子sql而不是分布式锁或者其他方案？方案有什么前提条件吗？</p>
+<blockquote>
+<p>对比了分布式锁，最终选原子 SQL 主要有如下原因：第一是可靠性更高，没有额外依赖。我们的场景和用例数据本身就存在 MySQL 里，用单条 UPDATE 依托 InnoDB 的行级锁和事务原子性，不会出现分布式锁中间件故障 (Redis 宕机、主从切换）导致的锁丢失问题，链路更短。第二是性能更好，开销更小。只有一次数据库更新操作，没有 Redis 的网络交互，而且只有最后一个用例执行完时 SQL 才会影响行数，其他时候不更新数据，对数据库压力很小。第三是代码更简洁，不用处理分布式锁的超时、续期、死锁这些问题，维护成本低。</p>
+<p>方案的前提条件有几个：首先必须用 InnoDB 引擎，而且语句要在事务里执行，保证原子性和行锁；然后 scene_id 必须是 test_scene 表的主键或者唯一索引，这样 UPDATE 时只加行锁，不会锁表；还有 test_case 表要建 scene_id+status 的联合索引，保证 NOT EXISTS 的子查询不会全表扫描；最后这个方案只适合同库同实例的场景，跨库跨服务的分布式事务就不行了。</p>
+</blockquote>
+<p><strong>❗问题</strong>：如果这条 SQL 执行时，数据库出现主从延迟，会有什么问题？怎么解决？</p>
+<blockquote>
+<p>主从延迟的话，可能会出现问题：比如主库已经把最后一个用例的状态更新成 “完成” 了，但是从库还没同步过来，这时候 NOT EXISTS 的子查询如果走从库的话，就会查到还有未完成的用例，导致场景状态更新失败，一直停在 “执行中”。</p>
+<p>解决方法我们当时想了几个：第一个是让这条 UPDATE 的子查询强制走主库，保证数据是最新的，不过这样会增加主库的压力；第二个是业务层加个重试机制，如果第一次更新没成功，等个几百毫秒再重试一次，给主从同步留一点时间；第三个是如果对实时性要求不是特别高，也可以等定时对账任务来补全场景状态，不过我们这个场景需要实时更新，所以最后选了强制主库查询 + 少量重试的方案。</p>
+</blockquote>
+<p>❗问题：如果并发量再放大 10 倍，单条 SQL 的行锁会不会导致性能瓶颈？有什么优化方案？</p>
+<blockquote>
+<p>即使并发放大十倍，这条 update 语句的锁粒度仍然是单行锁，且真正成功更新的只有一个线程，其余线程在发现条件不满足后立即返回，不会长时间持锁，因此在绝大多数情况下不会成为性能瓶颈，但如果场景执行高度集中，形成热点行更新压力，可能会导致锁竞争增加</p>
+<p>第一个是场景分片，比如按 scene_id 的哈希值把场景分到不同的库或者表中，减少单库单表的锁竞争；第二个是引入乐观锁，比如给 test_scene 表加个 version 字段，更新的时候带上 version，只有 version 匹配才更新，不过乐观锁在高并发下可能会有很多重试失败，需要配合重试机制；第三个是把场景状态的更新异步化，不用每个用例执行完都去更新，而是先把用例状态写到 MQ，然后由一个单独的服务来批量汇总用例状态，再更新场景状态，这样可以大大减少行锁的竞争次数。</p>
+</blockquote>
+<h3 id="mq异步执行">mq异步执行</h3>
+<p>❗问题：优化主要是怎么做了？做了什么？解决了什么痛点？为什么需要手动ACK？</p>
+<blockquote>
+<p>原来的执行链路是 MQ 消费线程直接执行业务逻辑，导致消费线程阻塞且吞吐受限，当用例执行耗时较长时会影响整体消费能力；将消费线程与业务执行解耦，消费线程只负责拉取消息并投递到独立业务线程池处理，同时引入手动 ACK 机制，保证只有在业务执行成功后才确认消息消费，失败的话按指数退避重试，从而避免在服务异常宕机时出现消息丢失问题，这种方式解决了原有模型中消费线程阻塞、吞吐低以及异常情况下数据不一致的痛点，同时提升了整体执行并发能力。</p>
+</blockquote>
+<p>❗问题：吞吐提升 3-5 倍是怎么进行量化的？</p>
+<blockquote>
+<p>我们是通过压测和线上监控两方面量化的：首先在测试环境做了压测，用同样的机器配置，同样的消息量，优化前单台消费者每秒最多处理 10 条消息，优化后能到 50 条以上，压测层面就提升了 5 倍。然后上线后看线上监控，统计了连续一周的高峰期数据，优化前消息消费延迟平均 5 秒，高峰期堆积几十万条；优化后消费延迟平均 200ms 以内，高峰期无堆积，整体吞吐确实稳定在 3-5 倍的提升。</p>
+</blockquote>
+<p>❗问题：如果业务线程池中的任务还在执行，消费者服务突然宕机了，会出现什么问题？怎么解决？</p>
+<blockquote>
+<p>这种情况下，因为消息还没手动 ACK，QMQ 会认为消息没消费成功，等消费者服务重启后，或者其他消费者节点会重新投递这条消息。不过可能会出现的问题是，之前的任务可能已经执行了一半，比如用例已经开始执行了，但是状态还没更新，重新投递的话可能会导致重复执行。</p>
+<p>这个也就是服务重启或者杀死的时候优雅停机，主要是利用spring的@PreDestroy注解（ShutdownHook关闭钩子机制优雅停机），当服务断开的时候就会触发，执行里面的代码；幂等设计–给每个用例执行生成一个唯一的 execute_id，作为用例执行表的唯一键，即使消息重试，再次执行时，先查一下这个 execute_id 有没有对应的执行记录，如果有就直接跳过，不会重复执行，保证数据一致性。另外，我们也有用例执行的状态机，即使执行到一半宕机，重启后也能根据状态继续或者回滚。</p>
+</blockquote>
+<p>❗问题：MQ 出现了百万级的消息堆积，你的紧急处理流程是什么？</p>
+<blockquote>
+<p>首先要紧急止血，不能让堆积继续扩大：第一步是先限流，暂时关闭非核心业务线的场景提交，或者降低核心业务线的并发提交量，减少新消息的产生；第二步是临时扩容消费者服务，多启动几个消费者节点，增加消费能力，不过要注意下游系统的承载能力，不能把下游打垮。</p>
+<p>当发现 MQ 出现百万级堆积时，我会先判断“是否是持续性积压还是瞬时流量峰值”，第一步是查看消费速率、生产速率和 lag 增长趋势，如果生产速率远高于消费速率且 lag 持续增长，说明消费端出现瓶颈或异常，此时我会立即限流或暂停上游场景触发入口，避免继续放大积压，同时检查消费者实例是否异常、线程池是否打满、下游依赖（数据库/模型接口）是否出现慢响应或错误率上升；第二步是快速扩容消费者实例或提高线程池并发度，在确认下游系统可承载的前提下提升消费能力，如果是单分区/单队列热点导致堆积，则考虑增加分区或做 key 打散；第三步是评估消息是否具备时效性，如果部分消息已经过期或对业务无意义，可以结合业务策略做丢弃或降级处理；在问题缓解后会复盘根因，例如是否限流阈值配置不合理、是否下游依赖没有隔离导致雪崩、是否 ACK 时机设计有问题，从而通过引入更严格的入口限流、线程池隔离、消费速率监控告警和自动扩容策略避免再次发生。</p>
+</blockquote>
+<h3 id="clickhouse">clickhouse</h3>
+<p>❗问题：为什么使用了分层存储的方案？/为什么使用clickhouse保存执行快照而不是其他方案？</p>
+<blockquote>
+<p>解决只使用MySQL存储的痛点：存储压力大，所有数据都存在 MySQL 里，用例执行快照是冷数据，写入后几乎不修改，并且请求体、请求头、断言信息等字段都很长，逐渐就导致主库压力大，将冷数据存储到ck中，缓解主库压力并且还可以查询速度快、增强稳定性</p>
+<p>对比了几个主流选项：对比 MySQL 分库分表，能解决存储但 OLAP（联机分析处理 复杂查询等） 性能没提升，代码复杂度还高；对比 ES，ES 适合全文检索，但我们是结构化统计，ES 聚合性能不如 ClickHouse，存储成本还高 3 倍；对比 Hive/Spark，适合离线 T+1，查询延迟太高，不满足秒级需求。</p>
+<p>选 ClickHouse 的核心优势：第一是 OLAP 性能极致，列式存储 + 向量化执行，千万级数据秒级查询；第二是存储成本低，LZ4/ZSTD 压缩，相同数据量存储是 MySQL 的 1/5-1/10；第三是适合高吞吐批量写入，我们的快照是一次写入几乎不修改，完全契合；第四是公司内部有成熟的 ClickHouse 集群，运维成本低。</p>
+</blockquote>
+<p>❗问题：clickhouse存储快照的优点？/clickhouse有什么特点？</p>
+<blockquote>
+<p>用 ClickHouse 存快照的优点，其实就是它的核心特点：首先是列式存储，只读取查询需要的列，IO 开销比行式低很多，比如只查执行状态和耗时，不用读几十 KB 的日志；然后是 MergeTree 引擎，数据按排序键有序存储，配合稀疏索引，查询时能快速定位，不用全表扫描；还有极高的压缩比，同一列数据类型一致、重复度高，压缩比能到 10:1 以上，省存储；另外支持向量化执行，利用 CPU 的 SIMD 指令批量处理数据，计算效率高；还有分区裁剪，按时间分区，查询近 7 天的数据只扫对应分区，性能提升很多。</p>
+</blockquote>
+<p>❗问题：MySQL 和 ClickHouse 之间的数据同步是怎么实现的？如果修改成异步保存如何保证两端数据的一致性？</p>
+<blockquote>
+<p>MySQL用于保存用例的执行这一条，clickhouse保存用例执行记录具体详细的信息（请求头 请求体 响应体等等），整体更新的流程是串行的，先插入clickhouse然后更新MySQL，如果插入clickhouse或者MySQL失败都会触发重试</p>
+<p>异步保存的话：</p>
+<p>如果你把 CK 写入再拆成另一个异步任务（不等待结果），就会有这个风险：</p>
+<ul>
+<li>MySQL 已经 SUCCESS/FAILED</li>
+<li>但 CK 明细写失败或延迟到达</li>
+</ul>
+<p>这时就必须额外做：对账补偿任务幂等重放，来保证最终一致性</p>
+<p>这种情况下，异步双写的重试队列可能还没来得及处理，服务就宕机了，数据会暂时 “丢失”，但我们有定时对账任务来兜底：每 10 分钟的对账任务会扫描 MySQL 中最近 1 小时内已完成的用例，然后去 ClickHouse 查对应的 execute_id，如果查不到，就会把这条用例的快照数据重新写入 ClickHouse，补全缺失的数据。另外，我们的异步双写写入失败的话，除了存本地重试队列，还会写一条失败日志到本地文件，服务重启后会先扫描本地的失败日志和重试队列，先把这些数据补写了，再处理新的请求，多重保障不丢失数据。</p>
+</blockquote>
+<p>❗问题：ClickHouse（MergeTree）核心工作原理？为什么能支撑千万级甚至亿级数据的秒级查询？</p>
+<blockquote>
+<p>简单的说，MergeTree就是数据写入时先生成零散的 Data Part，后台线程不断进行 Merge（合并排序），利用稀疏索引快速定位数据块，支撑亿级数据秒级查询</p>
+<p>MergeTree 的核心工作原理大概分几步：首先是数据写入，先写内存里的 MemTable，同时写 WAL 日志保证宕机不丢，MemTable 到阈值后 flush 到磁盘，生成一个新的 Data Part，每个 Part 里的数据按排序键有序存储；然后是后台合并，后台线程定期把小 Part 合并成大 Part，合并时重新排序、去重、压缩，减少文件数量；接着是索引构建，用稀疏索引，默认每 8192 行建一个索引条目，存排序键值和数据偏移，索引很小，能全放内存；最后是查询时，先按分区键裁剪不相关的分区，再用稀疏索引定位到数据位置，只扫对应范围。</p>
+<p>能支撑秒级查询的原因：第一是列式存储 + 向量化执行，只读需要的列，IO 低，还能用 SIMD 批量算；第二是有序存储 + 稀疏索引，数据有序，索引小，能快速定位，不用全表扫；第三是分区裁剪 + 预聚合，分区能过滤 90% 以上的数据，物化视图预聚合能提前算好统计；第四是 ClickHouse 本身的工程优化，比如数据压缩、谓词下推这些，把硬件性能榨得很干。</p>
+</blockquote>
+<p>❗问题：ClickHouse 是列式存储数据库，请问列式存储和 MySQL 的行式存储有什么核心区别？</p>
+<blockquote>
+<p>行式存储（MySQL）以“整行”为物理存储单位，读取一条记录通常会把整行相关列都读出来，适合频繁单行点查、更新、事务一致性强的 OLTP；列式存储（ClickHouse）以“列”为物理存储单位，相同列的数据连续存放，查询只需要哪些列就读取哪些列，天然适合扫描少数列进行聚合统计，同时列式存储对相同类型数据压缩效果更好并且便于向量化执行，所以在“海量明细 + 聚合分析”下会远快于行式，但不擅长高频单行更新与强事务写。</p>
+</blockquote>
+<p>❗问题：如果平台后续接入了全公司的业务线，数据量涨到百亿级，并发查询量提升 10 倍，你的分层存储方案需要做哪些升级和优化？</p>
+<blockquote>
+<p>存储方面：ClickHouse做分片集群，，按时间或业务线做分区并对排序键做优化以提升跳读效率</p>
+<p>查询方面：做查询限流与缓存（例如对常用面板指标做短 TTL 缓存），并对大查询做资源队列隔离</p>
+<p>冷热数据分离，近 7 天热数据在高性能节点、历史数据在低成本节点；定期归档，超过 1 年的冷数据从对象存储归档到公司的离线数据仓库（比如 Hive）—— 作为长期备份，Hive 适合离线批量查询</p>
+</blockquote>
+<h3 id="虚拟线程">虚拟线程</h3>
+<p>❗问题：实现了内存占用降低90%，这个是怎么量化的？</p>
+<blockquote>
+<p>一部分来自理论特性，一部分来自压测和线上观测。</p>
+<p>传统线程由操作系统内核管理，每个线程都直接映射到一个内核线程。 通常在 <strong>1MB</strong> 左右</p>
+<p>虚拟线程由 JVM 在用户态调度，而不是 OS。通常在 <strong>几百字节到几个 KB</strong> 之间（起步约 <strong>200B - 300B</strong>）</p>
+<p>在测试环境里，我们用千级轮询任务做过对比，改成虚拟线程之后，监控上看到 JVM 内存占用明显下降；上线后高峰期观测也能看到这一类查询/轮询任务带来的线程资源占用显著降低。</p>
+</blockquote>
+<p>❗问题：虚拟线程和平台线程的区别？虚拟线程有什么缺点或者问题吗？有没有什么坑？pinning问题？</p>
+<blockquote>
+<p>区别：</p>
+<p>1、调度映射，平台线程和 OS 内核线程 1:1，内核调度；虚拟线程是 M:N 映射到平台线程，JVM 用户态调度。</p>
+<p>2、上下文切换，平台线程是内核态 / 用户态切换，开销大；虚拟线程是纯用户态切换，开销小</p>
+<p>3、内存方面，平台线程固定栈内存，默认 1M，创建成本高；虚拟线程栈内存按需分配，初始几百字节，创建成本几乎为 0。</p>
+<p>4、阻塞处理方面，平台线程 IO 阻塞时内核线程被挂起，浪费资源；虚拟线程 IO 阻塞时 JVM 卸载它，载体线程继续执行其他任务，CPU 利用率高</p>
+<p>5、数量上限方面，平台线程单机最多上千个，再多 OOM；虚拟线程单机轻松百万级</p>
+<p>坑：</p>
+<p>不适合 CPU 密集型任务，CPU 密集时虚拟线程和平台线程都占 CPU，没有优势，反而调度开销可能更大</p>
+<p>pinning问题：synchronized同步关键字和本地方法，虚拟线程被固定pinned在某个平台线程无法被挂起（卸载），导致并发效率下降</p>
+<p>为什么导致pinning问题？</p>
+<p><code>synchronized</code>会导致 Pinning，是因为它是基于 Monitor 锁实现的，JVM 无法安全地卸载持有 Monitor 锁的虚拟线程，怕锁状态混乱，所以只能 Pin 住直到锁释放。</p>
+<p><code>native</code>方法会导致 Pinning，是因为 JVM 无法控制本地代码的执行，本地代码可能持有本地资源、修改载体线程状态，卸载的话会出问题，所以也必须 Pin 住。</p>
+<p>使用虚拟线程的时候要注意自己以及引用的别人的包里面都要检查，不能使用到上面的</p>
+</blockquote>
+<p>❗问题：虚拟线程的原理是什么？</p>
+<blockquote>
+<p>实现虚拟线程的核心组件主要是ExecutorService执行器+Continuation续体，执行器：默认是ForkJoinPool，默认线程数量等于运行计算机上的处理器数量（核数），续体：可挂起和可恢复的Runnable，可以分段执行的Runnable</p>
+<p>当IO等待/互斥资源等待释放的时候 执行到阻塞点的时候，会把当前调用栈保存为 continuation 并从载体线程卸载，载体线程继续去跑其他虚拟线程，当阻塞条件满足（比如 IO 返回）时，调度器会把 continuation 恢复并继续执行，这使得 JVM 能用少量载体线程支撑非常多的并发任务，从而在 IO 密集场景下显著提升并发能力并降低线程栈内存占用。</p>
+<p>栈内存的按需分配，虚拟线程的栈内存不是固定的，而是随着调用深度动态分配和释放，初始只有很小的一块，所以创建成本极低，能轻松创建百万级</p>
+</blockquote>
+<p>❗问题：虚拟线程适合 IO 密集型任务，那它适合 CPU 密集型任务吗？为什么？</p>
+<blockquote>
+<p>虚拟线程不适合 CPU 密集型任务，因为 CPU 密集任务几乎不会发生可挂起的阻塞，虚拟线程就不会释放载体线程资源，相当于仍然占用 CPU 核心持续计算，同时还会带来额外的调度与上下文切换开销；CPU 密集型场景更适合使用固定大小的线程池与任务队列，线程数通常与 CPU 核心数接近，通过减少调度开销和避免过多线程竞争来提升吞吐，因此虚拟线程在 CPU 密集场景并不能带来优势，甚至可能降低性能。</p>
+</blockquote>
+<p>❗问题：项目的 JDK 版本不支持虚拟线程，你会用什么方案优化这个 IO 密集型场景？</p>
+<blockquote>
+<p>两个方面吧，一是减少阻塞线程占用 二是提升 IO 并发效率</p>
+<p>一是通过 CompletableFuture/异步回调或 Reactor 这类异步编程模型把等待 IO 的线程释放出来，避免大量线程阻塞；</p>
+<p>二是合理扩大线程池并配套隔离与监控（优化平台线程池的参数，针对 IO 密集型场景，核心线程数设为 CPU 核数<em>2，最大线程数设为 CPU 核数</em>50，队列用有界队列或者 SynchronousQueue，拒绝策略用 CallerRunsPolicy 或者自定义的降级策略，既保证并发度，又避免 OOM），同时把外部调用做批量化、缓存化、超时控制与降级，减少远程调用次数和等待时间</p>
+</blockquote>
+<h3 id="限流">限流</h3>
+<p>❗问题：多级动态限流是怎么设计的？</p>
+<blockquote>
+<p>我们这个平台是测试平台，简要来说功能就是生成用例之后向被测系统发送http请求，获得相应之后执行脚本判断是否合规</p>
+<p>多级动态限流的设计目标是保护被测系统，还要保证平台整体吞吐可控，多级就是最外层也就是网关层全平台入口限流，进入系统之后优先按完整 URL 做最细粒度控制保护关键接口，其次按业务线，再提供全局默认阈值保证系统安全下限</p>
+<p>配置由动态中心热更新使阈值调整不需要重启，执行时附带指标打点观测命中率和拒绝率，形成“策略-执行-监控-调参”的闭环，从而既能在常态下稳态运行，也能在紧急发布或夜间回归时快速调整吞吐。</p>
+</blockquote>
+<p>❗问题：限流算法是使用的什么？是单机还是集群？为什么使用令牌桶算法而不是滑动窗口？</p>
+<blockquote>
+<p>采用的是令牌桶算法，草稿执行的时候使用的是单机，场景下用例执行使用集群</p>
+<p>如果用<strong>滑动窗口</strong>，在窗口切换的瞬间，如果并发极高，可能会导致大量请求直接被拒绝，触发不必要的报警。</p>
+<p>使用<strong>令牌桶</strong>，如果系统在过去一段时间处于空闲状态，桶内会积累一定数量的令牌。当批次任务突发到达时，令牌桶可以利用这些积攒的令牌<strong>平滑地处理这一波突发流量</strong>，而不会直接报错，这极大地提升了自动化测试的鲁棒性和用户体验。</p>
+<p>场景是定时执行的，符合突发执行的特点，，令牌桶允许在短时间内消耗积累的令牌实现一定程度的突发，同时整体速率仍受限于令牌生成速率，比滑动窗口更适合“允许短突发但要控制长期平均速率”的执行型任务；</p>
+<p>草稿只在生成的时候执行一次因此直接使用单机限流，减少了网络io；</p>
+<p>正式用例执行的时候需要全局配额（例如保护下游服务总 QPS），则会用分布式限流方案（Redis/配置中心配额+本地桶）实现集群级一致限流，避免多实例叠加突破下游承载。</p>
+</blockquote>
+<h3 id="Agent-笛卡尔积">Agent+笛卡尔积</h3>
+<p>❗问题：实现智能化用例生成链路，具体怎么做的？</p>
+<blockquote>
+<p>通过 LLM 将自然语言规则转化为 <strong>Groovy 配置脚本</strong>，利用 <strong>DFS 递归实现多维参数笛卡尔积</strong>，支持单场景分钟级生成上千条高覆盖率用例，极大降低了复杂搜推规则的测试准备成本。</p>
+</blockquote>
+<p>❗问题：通过笛卡尔积实现多维参数组合，请详细讲一下这个笛卡尔积的落地实现方案，以及针对业务场景做了哪些核心优化？</p>
+<blockquote>
+<p>每个参数维度（如城市、日期、用户类型、渠道、商品类型等）抽象为一个列表，DFS 每深入一层选择该维度的一个候选值，当所有维度都选完就形成一条用例，理论上等价于笛卡尔积</p>
+</blockquote>
+<p>❗问题：基于 Agent 实现了自然语言规则到可执行脚本的转化，请讲一下这个 Agent 的完整设计逻辑，如何保证转化的准确率？如果转化失败有什么兜底方案？</p>
+<blockquote>
+<p>Agent 的设计是 “大模型 Agent + 规则校验器 + 脚本模板匹配” 的双轮架构：第一步是 Prompt 工程强约束，设计专属 System Prompt，限定角色、输出格式、拆解规则，必须输出参数维度、取值范围、合法约束、非法约束、预期结果 5 个固定模块，还给了 3 个业务示例，让 Agent 严格遵循；第二步是业务规则二次校验，Agent 输出后，规则校验器自动检查有没有参数遗漏、约束冲突、预期不明确，校验不通过就生成修正提示，返回 Agent 二次优化，最多 3 轮迭代；第三步是脚本模板匹配，校验通过的结构化结果匹配对应业务线的 Groovy 脚本模板，填充参数、约束、预期结果，生成脚本框架，后续笛卡尔积的组合再填充进去，得到最终可执行脚本。</p>
+<p>保证准确率的措施：首先是垂直领域微调，用携程旅游业务线历史 1000 + 条规则和标准拆解结果做了大模型微调，让 Agent 适配旅游业务的表述习惯，准确率从通用模型的 75% 提升到 96% 以上；然后是多轮校验修正，3 轮迭代后结构化拆解成功率到 99.5% 以上；还有人工审核兜底，核心业务线的高风险规则，生成后自动进人工审核队列，业务方确认无误才进入后续环节。</p>
+<p>简要的回答：</p>
+<p>大模型是有幻觉的不可避免，做了几道防线保证：</p>
+<p>1、<strong>Prompt 强约束</strong>：约束 LLM 只能输出严格的 Groovy/json 结构</p>
+<p>2、<strong>编译预检</strong>：拿到代码后，后台利用 <code>GroovyShell.parse()</code> 做语法树检查，不合法直接重试。</p>
+<p>3、人为干预：生成的用例默认为“草稿”状态，必须由 QA 试跑一条确认断言无误后，才一键转化为正式用例发布。把 AI 的高产出和人的确定性结合起来。</p>
+</blockquote>
+<p>❗问题：用笛卡尔积做参数组合，最核心的痛点就是组合爆炸，请问你是怎么解决这个问题的？</p>
+<blockquote>
+<p>我们规则有三者类型默认、映射和组合，默认和映射就是做简单的笛卡尔积，组合的话比如说某个城市只能对应某些活动，把这些放到组合里面而不做笛卡尔积，这样是在用户配置规则的时候就行类似的剪纸；其次，用户输入的规则其实不会做很深入（1-8维）的笛卡尔积，理论上根本不会导致组合爆炸的问题，而且深入也做了限制</p>
+</blockquote>
+<p>❗问题：实现多维测试用例参数组合，行业内有很多成熟方案，比如等价类划分、正交实验法、 pairwise 配对法，你为什么最终选择笛卡尔积？对比这些方案，核心优势是什么？</p>
+<blockquote>
+<p>选笛卡尔积的核心原因：第一，完全满足高风险场景的覆盖率要求，是唯一能保证核心维度所有组合 100% 覆盖的方案，从根本上避免边界漏测；第二，适配我们的业务维度规模，3-5 个核心维度全量笛卡尔积，组合数千级以内，执行引擎能承载；第三，逻辑简单可维护，业务方、测试团队都能理解，出现问题容易排查，还适配动态参数维度，新增维度无需调整算法；第四，可灵活兼容其他方案，我们的笛卡尔积底层嵌入了等价类划分、维度分层抽样，既保留全量覆盖的优势，又规避组合爆炸。</p>
+<p>对比其他方案的核心优势：对比等价类划分，它只适合单维度参数校验，多维度组合场景下无法覆盖维度间的关联逻辑，容易漏测，我们是多维度规则组合，不适合；对比正交实验法，它用少量用例覆盖大部分场景，适合多维度低风险、追求效率的场景，但无法覆盖所有边界组合，高风险场景下有漏测风险，我们不能接受；对比 pairwise 配对法，它保证任意两个维度的所有组合出现一次，适合高维度、维度间关联强的场景，但无法覆盖 3 个及以上维度的组合边界，高风险场景下还是有漏测风险。</p>
+</blockquote>
+<p>❗问题：单场景分钟级产出千级用例，这个成果是怎么量化验证的？上线后给业务带来了什么实际价值？</p>
+<blockquote>
+<p>从规则输入到可执行用例落盘的总耗时、单位时间产出量、生成失败率和后续执行通过率</p>
+<p>整体从智能生成草稿用例 到验证草稿 生成正式用例 整体的流程耗时大概1 2分钟左右，完全实现分钟级别，并且</p>
+</blockquote>
+<h2 id="详情页更多推荐cpc广告接入">详情页更多推荐cpc广告接入</h2>
+<p>DAG、cpt、cpc、cvr、ctr、（这个项目我负责的倒是比较简单 但是通过这个项目了解了列表页接入cpc广告的功能实现，了解了dag、广告的一些名词、</p>
+<h3 id="问题">问题</h3>
+<p>介绍一下项目背景、你的核心工作、改造难点，以及这个收益是怎么核算的？</p>
+<blockquote>
+<p>给旅游产品详情页的「更多推荐」模块接入 CPC 广告能力。</p>
+<p>在此之前，携程首页、搜索列表页已经有非常成熟的广告商业化体系，但详情页一直只做纯自然内容推荐，没有接入广告。而详情页的用户已经进入了商品决策环节，购买意向更强，属于高价值的精准流量，没有接入广告相当于浪费了大量的商业化变现机会。</p>
+<p>项目的核心目标非常明确：在不影响用户体验、不降低商品核心转化率的前提下，完成详情页推荐模块的 CPC 广告接入，拓展搜索流量的商业化场景，提升公司广告收入。</p>
+<p>核心广告名词：</p>
+<p><strong>CPC</strong>：按点击付费，是我们这个项目的核心计费模式，用户点击一次广告，广告主就会向平台支付对应的广告费用，对比 CPT（按时长包段付费，比如固定买断一个月的广告位），CPC 更灵活，更适配推荐场景的效果化变现；</p>
+<p>CPT广告：一种以时间来计费的广告，国内很多的网站都是按照“一个月多少钱”这种固定收费模式来收费的，这种广告形式很粗糙，无法保障客户的利益。但是CPT的确是一种很省心的广告，能给你的网站、博客带来稳定的收入。</p>
+<p><strong>cpm广告</strong>：一种展示付费广告，只要展示了广告主的广告内容，广告主就为此付费。这种广告的效果不是很好，但是却能给有一定流量的网站、博客带来稳定的收入。CPM每千人访问费用，就是千次展示费用，举个例子来讲10/cpm，意思就是每一千ip访问你挂网站的这个页面，你将得到10单位的货币。</p>
+<p>cpa：按行为付费  cps：按销售收费</p>
+<p><strong>CTR</strong>：点击率，也就是广告的点击次数 / 曝光次数，是衡量广告匹配度的核心指标；</p>
+<p><strong>CVR</strong>：转化率，也就是用户点击广告后完成下单的次数 / 广告点击次数，直接决定了广告的最终商业价值。</p>
+</blockquote>
+<p>为什么使用了 DAG 工作流引擎？详细了解过吗？</p>
+<blockquote>
+<p>1、零侵入原有核心代码</p>
+<p>DAG 工作流引擎，我们可以把整个推荐排序全流程，拆分成一个个独立、无状态、可复用的原子节点，比如自然内容召回节点、广告召回节点、合规过滤节点、多目标排序节点、广告与自然内容混排节点等等。拆分完成后，列表页可以复用原有节点 1:1 还原之前的流程，详情页只需要重新编排节点，新增广告相关的节点即可，全程零修改列表页的原有核心代码，上线风险几乎为零。</p>
+<p>2、可复用性强，大幅提升开发效率</p>
+<p>拆分后的原子节点，列表页和详情页可以直接复用，不用重复开发。比如自然内容召回、过滤、基础排序这些节点，两个页面完全通用，详情页的广告流程只需要新增广告召回、广告混排两个专属节点，其他节点直接复用，不用写大量重复代码，开发效率提升了很多，也完美匹配了项目的短排期要求。</p>
+<p>3、节点级容错降级，保障核心链路可用</p>
+<p>DAG 的每个节点都可以独立配置超时时间、异常降级逻辑、重试策略。比如我们给广告召回节点设置了 200ms 超时，一旦广告引擎调用超时，节点会自动跳过广告召回，直接返回纯自然内容，单个节点的故障完全不会影响整个排序流程的执行，保障了详情页核心推荐功能的可用性。这也是硬编码的串行流程很难实现的。</p>
+<p>原理：</p>
+<p>DAG 有向无环图，，在工作流引擎里，它的核心思想是：把一个复杂的业务流程，拆解成多个独立的、无状态的、可复用的原子执行节点，节点之间通过有向边定义依赖关系，整个流程没有循环依赖，保证能按预设的顺序稳定执行。</p>
+</blockquote>
+<p>多目标排序</p>
+<blockquote>
+<p>多目标排序，就是不再只按单一指标（比如只按 CTR）给内容排序，而是结合多个业务目标，给每个内容计算综合排序分，最终按综合分排序。</p>
+<p>在我们这个广告场景里，就是不能只看广告出价，出价最高的广告排最前面，这样会导致广告和用户需求不匹配，CTR 和 CVR 都会很低，既影响用户体验，长期也会降低广告收入。所以我们的多目标排序，是结合<strong>广告出价、CTR 点击率、CVR 转化率</strong>三个核心指标，给每个广告计算综合排序分，公式大概是「排序分 = 广告出价 × (α×CTR + β×CVR)」，α 和 β 是权重系数。</p>
+<p>这样既能保证平台的广告收入，又能把用户更可能点击、更可能下单的广告排在前面，平衡了用户体验和商业化收益。</p>
+</blockquote>
+<pre><code class=" mermaid">flowchart TD
+    A[initContext]
+    A --&gt; B[extractContextVariables]
+    B --&gt; C&#123;source 是否已传?&#125;
+    C --&gt;|是| D[保留 source]
+    C --&gt;|否| E&#123;detailSourceProductId 是否存在?&#125;
+    E --&gt;|是| F[source=detail&lt;br/&gt;更多推荐/详情页]
+    E --&gt;|否| G[source=list&lt;br/&gt;列表页]
+
+    D --&gt; H[calculateDimensionsAndSupplement]
+    F --&gt; H
+    G --&gt; H
+
+    H --&gt; I[parallelFeatureAndFactorsAndIngest]
+    I --&gt; J[ingestData]
+    J --&gt; K&#123;isBlackScene?&#125;
+    K --&gt;|true| L[blackBoxRank]
+    K --&gt;|false| M[whiteBoxRank]
+    L --&gt; N[validateProduct]
+    M --&gt; N
+    N --&gt; O[reRank]
+    O --&gt; P[FusionScoringCalculator]
+    P --&gt; Q&#123;source == detail?&#125;
+    Q --&gt;|是| R[执行融合分调整]
+    Q --&gt;|否| S[跳过融合分调整]
+    R --&gt; T[createProductInfo → sort → manualRank → setRank → extensionInfo]
+    S --&gt; T
+</code></pre>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,995 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="前置环境 软件开发整体介绍 软件开发流程 需求分析  产出 需求规格说明书、产品原型  设计  UI设计、数据库设计、接口设计  编码  项目代码、单元测试  测试  编写测试用例、测试报告  上线运维  软件环境安装、配置   软件环境 开发环境（development）：开发人员在开发阶段使用的环境，一般外部用户无法访问测试环境 测试环境（testing）：专门给测试人员使用的环境，用于测试项">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96%E5%AD%A6%E4%B9%A0.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="前置环境 软件开发整体介绍 软件开发流程 需求分析  产出 需求规格说明书、产品原型  设计  UI设计、数据库设计、接口设计  编码  项目代码、单元测试  测试  编写测试用例、测试报告  上线运维  软件环境安装、配置   软件环境 开发环境（development）：开发人员在开发阶段使用的环境，一般外部用户无法访问测试环境 测试环境（testing）：专门给测试人员使用的环境，用于测试项">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802113046474.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802113345195.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802114541267.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802115231230.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802120403501.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802163022906.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802165407247.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802165853982.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240803163349478.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240803164611359.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240803164802648.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240803164933423.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240803200444936.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240803194938786.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240807003540656.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240804042604655.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240804042712162.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240805012608585.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240807003607314.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240809014617132.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240809014639533.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240826012648124.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240826014235974.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240805152825287.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240816101306104.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240816110040872.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240816110134517.png">
+<meta property="og:image" content="https://res.wx.qq.com/wxdoc/dist/assets/img/api-login.2fcc9f35.jpg">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240821011330566.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240823180457504.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240823180919888.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240823181432326.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240823181716150.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20240825163145711.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.631Z">
+<meta property="article:modified_time" content="2024-11-09T16:08:09.598Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20240802113046474.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>前置环境</h1>
+<h2 id="软件开发整体介绍">软件开发整体介绍</h2>
+<h3 id="软件开发流程">软件开发流程</h3>
+<p>需求分析</p>
+<blockquote>
+<p>产出 需求规格说明书、产品原型</p>
+</blockquote>
+<p>设计</p>
+<blockquote>
+<p>UI设计、数据库设计、接口设计</p>
+</blockquote>
+<p>编码</p>
+<blockquote>
+<p>项目代码、单元测试</p>
+</blockquote>
+<p>测试</p>
+<blockquote>
+<p>编写测试用例、测试报告</p>
+</blockquote>
+<p>上线运维</p>
+<blockquote>
+<p>软件环境安装、配置</p>
+</blockquote>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802113046474.png" srcset="/img/loading.gif" lazyload alt="image-20240802113046474"></p>
+<h3 id="软件环境">软件环境</h3>
+<p>开发环境（development）：开发人员在开发阶段使用的环境，一般外部用户无法访问测试环境</p>
+<p>测试环境（testing）：专门给测试人员使用的环境，用于测试项目，一般外部用户无法访问</p>
+<p>生产环境（production）：即线上环境，正式提供对外服务的环境</p>
+<h2 id="苍穹外卖项目介绍">苍穹外卖项目介绍</h2>
+<h3 id="项目介绍">项目介绍</h3>
+<p>定位:专门为餐饮企业(餐厅、饭店)定制的一款软件产品</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802113345195.png" srcset="/img/loading.gif" lazyload alt="image-20240802113345195"></p>
+<h3 id="产品原型">产品原型</h3>
+<p>产品经理</p>
+<h3 id="技术选型">技术选型</h3>
+<p>技术选型:展示项目中使用到的技术框架和中间件等</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802114541267.png" srcset="/img/loading.gif" lazyload alt="image-20240802114541267"></p>
+<h2 id="开发环境搭建（知识点）">开发环境搭建（知识点）</h2>
+<h3 id="前端搭建">前端搭建</h3>
+<p>做的是后端，所以是部署到nginx一个压缩包（已经开发好了）</p>
+<h3 id="后端搭建–文件含义">后端搭建–文件含义</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802115231230.png" srcset="/img/loading.gif" lazyload alt="image-20240802115231230"></p>
+<p>上三个都属于pojo，细分</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802120403501.png" srcset="/img/loading.gif" lazyload alt="image-20240802120403501"></p>
+<h3 id="后端搭建–搭建git环境">后端搭建–搭建git环境</h3>
+<p>创建本地git仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs git"># .gitignore文件的作用：不希望提交到git仓库的文件<br>**/target/<br>.idea<br>*.iml<br>*.class<br>*Test.java<br>**/test/<br><br></code></pre></td></tr></table></figure>
+<p>图形化界面：VCS-&gt;创建Git仓库</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802163022906.png" srcset="/img/loading.gif" lazyload alt="image-20240802163022906"></p>
+<p>创建远程仓库-&gt;推送到远程仓库</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802165407247.png" srcset="/img/loading.gif" lazyload alt="image-20240802165407247"></p>
+<h3 id="后端搭建–搭建数据库">后端搭建–搭建数据库</h3>
+<p>直接允许sql文件（库是被建好的）</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240802165853982.png" srcset="/img/loading.gif" lazyload alt="image-20240802165853982"></p>
+<p>允许如果报错</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stylus">java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.ClassNotFoundException</span>: javax<span class="hljs-selector-class">.xml</span><span class="hljs-selector-class">.bind</span><span class="hljs-selector-class">.DatatypeConverter</span><br>	at java.base/jdk<span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.loader</span><span class="hljs-selector-class">.BuiltinClassLoader</span><span class="hljs-selector-class">.loadClass</span>(BuiltinClassLoader<span class="hljs-selector-class">.java</span>:<span class="hljs-number">641</span>) ~<span class="hljs-selector-attr">[na:na]</span><br>	at java.base/jdk<span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.loader</span>.ClassLoaders<span class="hljs-variable">$AppClassLoader</span><span class="hljs-selector-class">.loadClass</span>(ClassLoaders<span class="hljs-selector-class">.java</span>:<span class="hljs-number">188</span>) ~<span class="hljs-selector-attr">[na:na]</span><br>	at java.base/java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.ClassLoader</span><span class="hljs-selector-class">.loadClass</span>(ClassLoader<span class="hljs-selector-class">.java</span>:<span class="hljs-number">520</span>) ~<span class="hljs-selector-attr">[na:na]</span><br>	at io<span class="hljs-selector-class">.jsonwebtoken</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.Base64Codec</span><span class="hljs-selector-class">.encode</span>(Base64Codec<span class="hljs-selector-class">.java</span>:<span class="hljs-number">21</span>) ~<span class="hljs-selector-attr">[jjwt-0.9.1.jar:0.9.1]</span><br>	at io<span class="hljs-selector-class">.jsonwebtoken</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.Base64UrlCodec</span><span class="hljs-selector-class">.encode</span>(Base64UrlCodec<span class="hljs-selector-class">.java</span>:<span class="hljs-number">22</span>) ~<span class="hljs-selector-attr">[jjwt-0.9.1.jar:0.9.1]</span><br>	at io<span class="hljs-selector-class">.jsonwebtoken</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.DefaultJwtBuilder</span><span class="hljs-selector-class">.base64UrlEncode</span>(DefaultJwtBuilder<span class="hljs-selector-class">.java</span>:<span class="hljs-number">349</span>) ~<span class="hljs-selector-attr">[jjwt-0.9.1.jar:0.9.1]</span><br>	at io<span class="hljs-selector-class">.jsonwebtoken</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.DefaultJwtBuilder</span><span class="hljs-selector-class">.compact</span>(DefaultJwtBuilder<span class="hljs-selector-class">.java</span>:<span class="hljs-number">295</span>) ~<span class="hljs-selector-attr">[jjwt-0.9.1.jar:0.9.1]</span><br>	at com<span class="hljs-selector-class">.yb0os1</span><span class="hljs-selector-class">.utils</span><span class="hljs-selector-class">.JjwtUtils</span><span class="hljs-selector-class">.generateJwt</span>(JjwtUtils<span class="hljs-selector-class">.java</span>:<span class="hljs-number">27</span>) ~<span class="hljs-selector-attr">[classes/:na]</span><br>	<br></code></pre></td></tr></table></figure>
+<p>添加maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.xml.bind<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jaxb-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.3.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="后端搭建–nginx反向代理">后端搭建–nginx反向代理</h3>
+<p>前端发送动态请求，通过nginx转发到后端服务器</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240803163349478.png" srcset="/img/loading.gif" lazyload alt="image-20240803163349478"></p>
+<p>nginx反向代理好处</p>
+<ol>
+<li>提高访问速度，nginx可以做缓存</li>
+<li>进行负载均衡</li>
+<li>保证后端服务安全</li>
+</ol>
+<p><strong>反向代理配置</strong>：</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240803164611359.png" srcset="/img/loading.gif" lazyload alt="image-20240803164611359"></p>
+<p>例如浏览器网址：<code>http://localhost/api/empolyee/login</code>，经过nignx变为,<code>http://localhost/admin/empolyee/login</code></p>
+<p><strong>负载均衡配置：</strong></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240803164802648.png" srcset="/img/loading.gif" lazyload alt="image-20240803164802648"></p>
+<p>负载均衡的策略</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240803164933423.png" srcset="/img/loading.gif" lazyload alt="image-20240803164933423"></p>
+<h3 id="后端搭建–完善登录">后端搭建–完善登录</h3>
+<p>sha256加密</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SHA256Utils</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">sha256</span><span class="hljs-params">(String password)</span>&#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">passwordB</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">MessageDigest</span> <span class="hljs-variable">digest</span> <span class="hljs-operator">=</span> MessageDigest.getInstance(<span class="hljs-string">&quot;SHA-256&quot;</span>);<br>            <span class="hljs-comment">// 使用指定的字节更新摘要，这里需要指定字符集编码，默认为平台默认字符集</span><br>            digest.update(password.getBytes(StandardCharsets.UTF_8));<br>            <span class="hljs-comment">// 完成哈希计算，得到结果</span><br>            <span class="hljs-type">byte</span>[] bytes = digest.digest();<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">byte</span> b : bytes) &#123;<br>                <span class="hljs-type">String</span> <span class="hljs-variable">hex</span> <span class="hljs-operator">=</span> Integer.toHexString(<span class="hljs-number">0xff</span> &amp; b);<br>                <span class="hljs-keyword">if</span> (hex.length() == <span class="hljs-number">1</span>) passwordB.append(<span class="hljs-string">&#x27;0&#x27;</span>);<br>                passwordB.append(hex);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (NoSuchAlgorithmException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>        &#125;<br>        <span class="hljs-keyword">return</span> passwordB.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="接口文档导入apipost">接口文档导入apipost</h3>
+<h3 id="测试–Swagger">测试–Swagger</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240803200444936.png" srcset="/img/loading.gif" lazyload alt="image-20240803200444936"></p>
+<p>使用Swagger你只需要按照它的规范去定义接口及接口相关的信息，就可以做到生成接口文档，以及在线接口调试页面。</p>
+<p>Knife4j是为Java MVC框架集成Swagger生成Api文档的增强解决方案</p>
+<h4 id="使用方法-spring-boot3只能使用openAI的">使用方法(spring boot3只能使用openAI的)</h4>
+<ol>
+<li>导入maven坐标</li>
+</ol>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.github.xiaoymin<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>knife4j-openapi3-jakarta-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.4.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>在yml配置文件设置</li>
+</ol>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># springdoc-openapi项目配置</span><br><span class="hljs-attr">springdoc:</span><br>  <span class="hljs-attr">swagger-ui:</span><br>    <span class="hljs-attr">path:</span> <span class="hljs-string">/swagger-ui.html</span><br>    <span class="hljs-comment"># API标签和操作的排序方式 alpha按照字母顺序排序</span><br>    <span class="hljs-attr">tags-sorter:</span> <span class="hljs-string">alpha</span><br>    <span class="hljs-attr">operations-sorter:</span> <span class="hljs-string">alpha</span><br>  <span class="hljs-attr">api-docs:</span><br>    <span class="hljs-comment"># http://localhost:8080/v3/api-docs来查看生成的JSON文档</span><br>    <span class="hljs-attr">path:</span> <span class="hljs-string">/v3/api-docs</span><br>  <span class="hljs-comment"># 创建API文档的多个分组，每个分组可以指定匹配的路径和扫描的java包</span><br>  <span class="hljs-attr">group-configs:</span><br>    <span class="hljs-comment"># 分组名称</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">group:</span> <span class="hljs-string">&#x27;adminController&#x27;</span><br>      <span class="hljs-comment"># 该分组的url</span><br>      <span class="hljs-attr">paths-to-match:</span> <span class="hljs-string">&#x27;/admin/**&#x27;</span><br>      <span class="hljs-comment"># 该分组的控制器类所在的包</span><br>      <span class="hljs-attr">packages-to-scan:</span> <span class="hljs-string">com.yb0os1.controller</span><br><span class="hljs-comment"># knife4j的增强配置，不需要增强可以不配</span><br><span class="hljs-attr">knife4j:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">setting:</span><br>    <span class="hljs-attr">language:</span> <span class="hljs-string">zh_cn</span><br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>设置一些信息 在配置类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebMvcConfiguration</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">WebMvcConfigurationSupport</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 设置静态资源映射</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> registry</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addResourceHandlers</span><span class="hljs-params">(ResourceHandlerRegistry registry)</span> &#123;<br>        registry.addResourceHandler(<span class="hljs-string">&quot;/doc.html&quot;</span>).addResourceLocations(<span class="hljs-string">&quot;classpath:/META-INF/resources/&quot;</span>);<br>        registry.addResourceHandler(<span class="hljs-string">&quot;/webjars/**&quot;</span>).addResourceLocations(<span class="hljs-string">&quot;classpath:/META-INF/resources/webjars/&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> OpenAPI <span class="hljs-title function_">openAPI</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">OpenAPI</span>()<br>                .info(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Info</span>()<br><span class="hljs-comment">//                        设置标题</span><br>                        .title(<span class="hljs-string">&quot;knife4j测试的接口文档&quot;</span>)<br><span class="hljs-comment">//                        设置简述</span><br>                        .description(<span class="hljs-string">&quot;这是基于knife4j-openapi3-jakarta-spring-boot-starter的接口文档&quot;</span>)<br><span class="hljs-comment">//                        设置版本</span><br>                        .version(<span class="hljs-string">&quot;1.0&quot;</span>)<br><span class="hljs-comment">//                        设置联系方式</span><br>                        .contact(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Contact</span>()<br>                                .name(<span class="hljs-string">&quot;yb0os1&quot;</span>)<br>                                .email(<span class="hljs-string">&quot;2673711750@qq.com&quot;</span>)))<br>                .externalDocs(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ExternalDocumentation</span>()<br>                        .description(<span class="hljs-string">&quot;springboot基础框架&quot;</span>)<br>                        .url(<span class="hljs-string">&quot;http://localhost:8080&quot;</span>));<br><br>    &#125;<br><span class="hljs-comment">//    下面是分组</span><br><br><span class="hljs-comment">//    @Bean</span><br><span class="hljs-comment">//    public GroupedOpenApi groupedOpenApi2()&#123;</span><br><span class="hljs-comment">//        return GroupedOpenApi.builder()</span><br><span class="hljs-comment">////                设置分组名称</span><br><span class="hljs-comment">//                .group(&quot;管理员管理&quot;)</span><br><span class="hljs-comment">////                分组url</span><br><span class="hljs-comment">//                .pathsToMatch(&quot;/admin/**&quot;)</span><br><span class="hljs-comment">////                该分组所在的包</span><br><span class="hljs-comment">//                .packagesToScan(&quot;com.yb0os1.controller&quot;)</span><br><span class="hljs-comment">//                .build();</span><br><span class="hljs-comment">//    &#125;</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="常用注解">常用注解</h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.swagger.core.v3<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>swagger-models<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.19<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>通过注解可以控制生成的接口文档，使接口文档拥有更好的可读性，常用注解如下:</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240803194938786.png" srcset="/img/loading.gif" lazyload alt="image-20240803194938786"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Operation(summary = &quot;xxx方法&quot;)</span>  -- 用在方法上<br><span class="hljs-meta">@Tag(name = &quot;&quot;)</span>  -- 用在类上 Controller<br><span class="hljs-meta">@Schema(description = &quot;&quot;)</span>  -- 用在属性、实体类上<br><br></code></pre></td></tr></table></figure>
+<h1>管理端</h1>
+<h2 id="员工相关接口">员工相关接口</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240807003540656.png" srcset="/img/loading.gif" lazyload alt="image-20240807003540656"></p>
+<h3 id="新增员工">新增员工</h3>
+<p>简单的insert 无知识点</p>
+<p>存在问题：</p>
+<ol>
+<li>测试的时候返回信息为响应码401，因为我们没有携带jwt</li>
+<li>创建员工的时候，如果username重复，前端没有反应</li>
+<li>创建员工的时候，createUser、updateUser的ID是锁定的</li>
+</ol>
+<p><strong>问题1的描述和解决方案</strong></p>
+<p>测试的时候：<img src="D:%5CTypora%5Cimgs%5Cimage-20240804042604655.png" srcset="/img/loading.gif" lazyload alt="image-20240804042604655"></p>
+<p>因为没有加jwt令牌，统一加：</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240804042712162.png" srcset="/img/loading.gif" lazyload alt="image-20240804042712162"></p>
+<p><strong>问题2的描述和解决方案</strong></p>
+<p>在异常处理器中编入方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ExceptionHandler</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">exceptionHandler</span><span class="hljs-params">(SQLIntegrityConstraintViolationException ex)</span>&#123;<br>    <span class="hljs-comment">//Duplicate entry &#x27;liu&#x27; for key &#x27;idx_username&#x27;</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> ex.getMessage();<br>    <span class="hljs-keyword">if</span> (message.contains(<span class="hljs-string">&quot;Duplicate entry&quot;</span>))&#123;<br>        <span class="hljs-comment">//包含重复的键值对</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">msg</span> <span class="hljs-operator">=</span> message.split(<span class="hljs-string">&quot; &quot;</span>)[<span class="hljs-number">2</span>] + MessageConstant.ALREADY_EXISTS;<br>        <span class="hljs-keyword">return</span> Result.error(msg);<br>    &#125;<br>    <span class="hljs-keyword">return</span> Result.error(MessageConstant.UNKNOWN_ERROR);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>问题3的描述和解决方案</strong></p>
+<p>创建员工的时候，createUser、updateUser的ID是锁定的，我们需要在token中获取</p>
+<ol>
+<li>在拦截器从token中获取empID</li>
+<li>存储到ThreadLocal当中</li>
+<li>需要empId时从ThreadLocal中取出</li>
+<li>在最后remove 防止内存泄露</li>
+</ol>
+<h3 id="员工分页查询">员工分页查询</h3>
+<p>存在问题：</p>
+<p>时间展示的时候格式不正确</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240805012608585.png" srcset="/img/loading.gif" lazyload alt="image-20240805012608585"></p>
+<p>解决方法：</p>
+<p>方法一、在时间属性上加上注解<code>@JsonFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</code>，对时间格式化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@JsonFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)</span><br><span class="hljs-keyword">private</span> LocalDateTime updateTime;<br></code></pre></td></tr></table></figure>
+<p>上述方法对每一个属性都要添加 繁琐</p>
+<p>方法二、在WebMvcConfiguration中扩展Spring MVC 消息转换器，统一对日期进行格式化处理</p>
+<h3 id="启用或者禁用账号">启用或者禁用账号</h3>
+<p>常规update</p>
+<h3 id="编辑员工">编辑员工</h3>
+<p>先根据id查找 在web页面回显 然后修改 常规select+update</p>
+<h3 id="修改密码">修改密码</h3>
+<p>先看看旧密码是否正确 然后修改</p>
+<h2 id="分类管理">分类管理</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240807003607314.png" srcset="/img/loading.gif" lazyload alt="image-20240807003607314"></p>
+<p>和员工类似 就不写了</p>
+<h2 id="公共代码的自动填充">公共代码的自动填充</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240809014617132.png" srcset="/img/loading.gif" lazyload alt="image-20240809014617132"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240809014639533.png" srcset="/img/loading.gif" lazyload alt="image-20240809014639533"></p>
+<p>对于当前时间和创建人的设置，我们可以使用AOP来一次性设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1.aop;<br><br><span class="hljs-keyword">import</span> com.yb0os1.annotation.AutoFill;<br><span class="hljs-keyword">import</span> com.yb0os1.constant.AutoFillConstant;<br><span class="hljs-keyword">import</span> com.yb0os1.context.BaseContext;<br><span class="hljs-keyword">import</span> com.yb0os1.enumeration.OperationType;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.aspectj.lang.JoinPoint;<br><span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Aspect;<br><span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Before;<br><span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Pointcut;<br><span class="hljs-keyword">import</span> org.aspectj.lang.reflect.MethodSignature;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">import</span> java.time.LocalDateTime;<br><br><span class="hljs-comment">/***</span><br><span class="hljs-comment"> * 自定义切面，实现公共字段的自动填充</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><span class="hljs-comment">//要注意引入的包是 spring-boot-starter-aop</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebAOP</span> &#123;<br>    <span class="hljs-comment">//加入时间、操作人等方面的信息的切入点</span><br>    <span class="hljs-comment">// 两个表达式都加入了 目的就是减小扫描范围</span><br>    <span class="hljs-meta">@Pointcut(&quot;execution(* com.yb0os1.mapper.*.*(..)) &amp;&amp; @annotation(com.yb0os1.annotation.AutoFill)&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">autoFillPointCut</span><span class="hljs-params">()</span>&#123;&#125;<br><br>    <span class="hljs-comment">//前置通知，赋值</span><br>    <span class="hljs-meta">@Before(&quot;autoFillPointCut()&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">autoFill</span><span class="hljs-params">(JoinPoint joinPoint)</span>&#123;<br>        log.info(<span class="hljs-string">&quot;公共字段自动填充...&quot;</span>);<br>        <span class="hljs-comment">// 获取到当前被拦截的方法上的数据库操作类型</span><br>        <span class="hljs-type">MethodSignature</span> <span class="hljs-variable">methodSignature</span> <span class="hljs-operator">=</span> (MethodSignature) joinPoint.getSignature();<span class="hljs-comment">//方法签名</span><br>        <span class="hljs-type">AutoFill</span> <span class="hljs-variable">autoFill</span> <span class="hljs-operator">=</span> methodSignature.getMethod().getAnnotation(AutoFill.class);<span class="hljs-comment">//获取注解对象</span><br>        <span class="hljs-type">OperationType</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> autoFill.value();<span class="hljs-comment">//获得注解的value字段的值</span><br><br>        <span class="hljs-comment">// 获取传入的参数的值  约定需要填充的就是第一个参数</span><br>        <span class="hljs-comment">// 传入的是地址 所以在这里操作obj 在指定的方法也会被影响</span><br>        Object[] args = joinPoint.getArgs();<br>        <span class="hljs-keyword">if</span> (args==<span class="hljs-literal">null</span> || args.length==<span class="hljs-number">0</span>)<span class="hljs-keyword">return</span>;<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">arg</span> <span class="hljs-operator">=</span> args[<span class="hljs-number">0</span>];<br><br>        <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">now</span> <span class="hljs-operator">=</span> LocalDateTime.now();<br>        <span class="hljs-type">Long</span> <span class="hljs-variable">currentId</span> <span class="hljs-operator">=</span> BaseContext.getCurrentId();<br><br>        <span class="hljs-comment">// 判断是update操作还是insert操作</span><br>        <span class="hljs-keyword">if</span> (value == OperationType.INSERT)&#123;<br>            <span class="hljs-comment">//对四个字段赋值</span><br>            <span class="hljs-comment">// 利用反射 Object对象是没有set的方法 所以我们利用反射获取</span><br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setCreateTime</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME,LocalDateTime.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateTime</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME,LocalDateTime.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setCreateUser</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_USER,Long.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateUser</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER,Long.class);<br>                setCreateTime.invoke(arg,now);<br>                setUpdateTime.invoke(arg,now);<br>                setCreateUser.invoke(arg,currentId);<br>                setUpdateUser.invoke(arg,currentId);<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (value == OperationType.UPDATE)&#123;<br>            <span class="hljs-comment">//对两个字段赋值</span><br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateUser</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER,Long.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateTime</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME,LocalDateTime.class);<br>                setUpdateTime.invoke(arg,now);<br>                setUpdateUser.invoke(arg,currentId);<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="菜品管理">菜品管理</h2>
+<h2 id="店铺状态设置">店铺状态设置</h2>
+<p>状态值建议redis存储</p>
+<h2 id="来单提醒、客户催单">来单提醒、客户催单</h2>
+<p>来单提醒</p>
+<p>基于WebSocket</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240826012648124.png" srcset="/img/loading.gif" lazyload alt="image-20240826012648124"></p>
+<p>直接客户支付完成之后，服务器给外卖商家的返回数据（type为1），进行提醒外卖商家</p>
+<p>客户催单</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240826014235974.png" srcset="/img/loading.gif" lazyload alt="image-20240826014235974"></p>
+<p>客户点击之后，服务器给外卖商家的返回数据（type为2），进行提醒外卖商家</p>
+<h1>知识点</h1>
+<h2 id="前置环境-开发环境">前置环境-&gt;开发环境</h2>
+<h2 id="ThreadLocal">ThreadLocal</h2>
+<p>ThreadLocal为每个线程提供单独一份存储空间，具有线程隔离的效果。只有在线程内才能获取对应的值，线程外访问不得</p>
+<p>ThreadLocal常用方法：</p>
+<ul>
+<li><code>set(T value)</code>：设置当前线程的线程局部变量的值</li>
+<li><code>get()</code>：返回当前线程所对应的线程局部变量的值</li>
+<li><code>remove()</code>：移除当前线程的线程局部变量</li>
+</ul>
+<h2 id="时间展示问题-消息转换器">时间展示问题-消息转换器</h2>
+<p>想理解消息转换器，首先得知道消息是什么，在使用SpringMVC框架时，由前端发请求给后端，请求体中的内容就被称为消息，另外反过来，由后端发给前端的响应数据也是消息，那消息转换器又是来干嘛的呢？其实就是实现消息与Java对象的相互转换，将请求体中的消息转为Java对象，反过来将Java对象转为响应体中的消息，所以其实SpringMVC中的@RequestBody和@ResponseBody注解就是干的这个事。</p>
+<p>方法一、在时间属性上加上注解<code>@JsonFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</code>，对时间格式化</p>
+<p>方法二、在WebMvcConfiguration中扩展Spring MVC 消息转换器，统一对日期进行格式化处理</p>
+<p>当spring项目启动的时候，extendMessageConverters</p>
+<p>conf中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebMvcConfig</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">WebMvcConfigurationSupport</span>  <span class="hljs-comment">//而不是WebMvcConfigter</span><br><span class="hljs-comment">//Spring项目启动的时候 自动调用该方法    </span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">extendMessageConverters</span><span class="hljs-params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> &#123;<br>        <span class="hljs-comment">// 创建消息转换器对象</span><br>        <span class="hljs-type">MappingJackson2HttpMessageConverter</span> <span class="hljs-variable">converter</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MappingJackson2HttpMessageConverter</span>();<br><br>        <span class="hljs-comment">// 需要为消息转换器设置一个对象转换器，对象转换器可以将java对象序列转为json数据</span><br>        converter.setObjectMapper(<span class="hljs-keyword">new</span> <span class="hljs-title class_">JacksonObjectMapper</span>());<br><br>        <span class="hljs-comment">// 将自己的消息转换器加入到converters -&gt;是spring框架所有的消息转换器</span><br>        <span class="hljs-comment">// index是索引 设置执行的顺序</span><br>        converters.add(converters.size()-<span class="hljs-number">1</span>,converter);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>转化器对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.sky.json;<br><br><span class="hljs-keyword">import</span> com.fasterxml.jackson.databind.DeserializationFeature;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.databind.<span class="hljs-keyword">module</span>.SimpleModule;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;<br><br><span class="hljs-keyword">import</span> java.time.LocalDate;<br><span class="hljs-keyword">import</span> java.time.LocalDateTime;<br><span class="hljs-keyword">import</span> java.time.LocalTime;<br><span class="hljs-keyword">import</span> java.time.format.DateTimeFormatter;<br><br><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 对象映射器:基于jackson将Java对象转为json，或者将json转为Java对象</span><br><span class="hljs-comment"> * 将JSON解析为Java对象的过程称为 [从JSON反序列化Java对象]</span><br><span class="hljs-comment"> * 从Java对象生成JSON的过程称为 [序列化Java对象到JSON]</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JacksonObjectMapper</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ObjectMapper</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">DEFAULT_DATE_FORMAT</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>;<br>    <span class="hljs-comment">//public static final String DEFAULT_DATE_TIME_FORMAT = &quot;yyyy-MM-dd HH:mm:ss&quot;;</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">DEFAULT_DATE_TIME_FORMAT</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;yyyy-MM-dd HH:mm&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">DEFAULT_TIME_FORMAT</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;HH:mm:ss&quot;</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">JacksonObjectMapper</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">super</span>();<br>        <span class="hljs-comment">//收到未知属性时不报异常</span><br>        <span class="hljs-built_in">this</span>.configure(FAIL_ON_UNKNOWN_PROPERTIES, <span class="hljs-literal">false</span>);<br><br>        <span class="hljs-comment">//反序列化时，属性不存在的兼容处理</span><br>        <span class="hljs-built_in">this</span>.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);<br><br>        <span class="hljs-type">SimpleModule</span> <span class="hljs-variable">simpleModule</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleModule</span>()<br>                .addDeserializer(LocalDateTime.class, <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalDateTimeDeserializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)))<br>                .addDeserializer(LocalDate.class, <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalDateDeserializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))<br>                .addDeserializer(LocalTime.class, <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalTimeDeserializer</span>(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)))<br>                .addSerializer(LocalDateTime.class, <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalDateTimeSerializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)))<br>                .addSerializer(LocalDate.class, <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalDateSerializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))<br>                .addSerializer(LocalTime.class, <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalTimeSerializer</span>(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));<br><br>        <span class="hljs-comment">//注册功能模块 例如，可以添加自定义序列化器和反序列化器</span><br>        <span class="hljs-built_in">this</span>.registerModule(simpleModule);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>那么出现了一个新问题：自定义消息转化器配置完成后，knife4j无法启动<img src="D:%5CTypora%5Cimgs%5Cimage-20240805152825287.png" srcset="/img/loading.gif" lazyload alt="image-20240805152825287"></p>
+<p>因为配置的是时间的处理，knife4j的返回值，被自定义的统一返回封装后，页面无法解析。</p>
+<p>将index设置最后 这样都可以正常使用</p>
+<p>**消息转化器容器中消息转化器的顺序代表着执行的顺序，是至关重要的！**暂时浅学</p>
+<h2 id="利用AOP进行公共字段自动填充">利用AOP进行公共字段自动填充</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1.aop;<br><br><span class="hljs-keyword">import</span> com.yb0os1.annotation.AutoFill;<br><span class="hljs-keyword">import</span> com.yb0os1.constant.AutoFillConstant;<br><span class="hljs-keyword">import</span> com.yb0os1.context.BaseContext;<br><span class="hljs-keyword">import</span> com.yb0os1.enumeration.OperationType;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.aspectj.lang.JoinPoint;<br><span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Aspect;<br><span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Before;<br><span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Pointcut;<br><span class="hljs-keyword">import</span> org.aspectj.lang.reflect.MethodSignature;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">import</span> java.time.LocalDateTime;<br><br><span class="hljs-comment">/***</span><br><span class="hljs-comment"> * 自定义切面，实现公共字段的自动填充</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebAOP</span> &#123;<br>    <span class="hljs-comment">//加入时间、操作人等方面的信息的切入点</span><br>    <span class="hljs-comment">// 两个表达式都加入了 目的就是减小扫描范围</span><br>    <span class="hljs-meta">@Pointcut(&quot;execution(* com.yb0os1.mapper.*.*(..)) &amp;&amp; @annotation(com.yb0os1.annotation.AutoFill)&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">autoFillPointCut</span><span class="hljs-params">()</span>&#123;&#125;<br><br>    <span class="hljs-comment">//前置通知，赋值</span><br>    <span class="hljs-meta">@Before(&quot;autoFillPointCut()&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">autoFill</span><span class="hljs-params">(JoinPoint joinPoint)</span>&#123;<br>        log.info(<span class="hljs-string">&quot;公共字段自动填充...&quot;</span>);<br>        <span class="hljs-comment">// 获取到当前被拦截的方法上的数据库操作类型</span><br>        <span class="hljs-type">MethodSignature</span> <span class="hljs-variable">methodSignature</span> <span class="hljs-operator">=</span> (MethodSignature) joinPoint.getSignature();<span class="hljs-comment">//方法签名</span><br>        <span class="hljs-type">AutoFill</span> <span class="hljs-variable">autoFill</span> <span class="hljs-operator">=</span> methodSignature.getMethod().getAnnotation(AutoFill.class);<span class="hljs-comment">//获取注解对象</span><br>        <span class="hljs-type">OperationType</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> autoFill.value();<span class="hljs-comment">//获得注解的value字段的值</span><br><br>        <span class="hljs-comment">// 获取传入的参数的值  约定需要填充的就是第一个参数</span><br>        <span class="hljs-comment">// 传入的是地址 所以在这里操作obj 在指定的方法也会被影响</span><br>        Object[] args = joinPoint.getArgs();<br>        <span class="hljs-keyword">if</span> (args==<span class="hljs-literal">null</span> || args.length==<span class="hljs-number">0</span>)<span class="hljs-keyword">return</span>;<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">arg</span> <span class="hljs-operator">=</span> args[<span class="hljs-number">0</span>];<br><br>        <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">now</span> <span class="hljs-operator">=</span> LocalDateTime.now();<br>        <span class="hljs-type">Long</span> <span class="hljs-variable">currentId</span> <span class="hljs-operator">=</span> BaseContext.getCurrentId();<br><br>        <span class="hljs-comment">// 判断是update操作还是insert操作</span><br>        <span class="hljs-keyword">if</span> (value == OperationType.INSERT)&#123;<br>            <span class="hljs-comment">//对四个字段赋值</span><br>            <span class="hljs-comment">// 利用反射 Object对象是没有set的方法 所以我们利用反射获取</span><br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setCreateTime</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME,LocalDateTime.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateTime</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME,LocalDateTime.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setCreateUser</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_USER,Long.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateUser</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER,Long.class);<br>                setCreateTime.invoke(arg,now);<br>                setUpdateTime.invoke(arg,now);<br>                setCreateUser.invoke(arg,currentId);<br>                setUpdateUser.invoke(arg,currentId);<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (value == OperationType.UPDATE)&#123;<br>            <span class="hljs-comment">//对两个字段赋值</span><br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateUser</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER,Long.class);<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">setUpdateTime</span> <span class="hljs-operator">=</span> arg.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME,LocalDateTime.class);<br>                setUpdateTime.invoke(arg,now);<br>                setUpdateUser.invoke(arg,currentId);<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="数据库主键自增如何映射到类的属性？">数据库主键自增如何映射到类的属性？</h2>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">insert</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;insertDish&quot;</span> <span class="hljs-attr">useGeneratedKeys</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">keyProperty</span>=<span class="hljs-string">&quot;id&quot;</span>&gt;</span><br>    将自增的主键映射到类的id属性 哪个类？传入的类<br></code></pre></td></tr></table></figure>
+<h2 id="mysql批量删除多表数据">mysql批量删除多表数据</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DELETE dish,dish_flavor from dish LEFT JOIN dish_flavor on dish.id = dish_flavor.dish_id        where dish.id = xxx;<br>delete后显示要进行删除数据的多表<br>          <br></code></pre></td></tr></table></figure>
+<h2 id="HttpClient">HttpClient</h2>
+<p>HttpClient 是Apache Jakarta Common 下的子项目，可以用来提供高效的、最新的、功能丰富的支持 HTTP 协议的客户端编程工具包，并且它支持 HTTP 协议最新的版本和建议。</p>
+<p>maven坐标</p>
+<p>（aliyunoss导入了该坐标 可以不显式导入）</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240816101306104.png" srcset="/img/loading.gif" lazyload alt="image-20240816101306104"></p>
+<p>发送请求的步骤：</p>
+<ol>
+<li>创建HttpClient对象</li>
+<li>创建Http请求对象</li>
+<li>调用HttpClient的execute方法发送请求</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootTest</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HttpClientTest</span> &#123;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testGet</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 创建httpclient对象</span><br>        <span class="hljs-type">CloseableHttpClient</span> <span class="hljs-variable">httpClient</span> <span class="hljs-operator">=</span> HttpClients.createDefault();<br>        <span class="hljs-comment">// 创建请求对象</span><br>        <span class="hljs-type">HttpGet</span> <span class="hljs-variable">httpGet</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpGet</span>(<span class="hljs-string">&quot;http://localhost:8080/user/shop/status&quot;</span>);<br>        <span class="hljs-comment">// 发送请求 接受响应</span><br>        <span class="hljs-type">CloseableHttpResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> httpClient.execute(httpGet);<br>        <span class="hljs-comment">// 获取返回的状态码</span><br>        System.out.println(<span class="hljs-string">&quot;服务端返回的状态码&quot;</span>+response.getStatusLine().getStatusCode());<br>        <span class="hljs-comment">// 获取返回的数据</span><br>        <span class="hljs-type">HttpEntity</span> <span class="hljs-variable">entity</span> <span class="hljs-operator">=</span> response.getEntity();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">body</span> <span class="hljs-operator">=</span> EntityUtils.toString(entity);<br>        System.out.println(<span class="hljs-string">&quot;服务端返回的数据&quot;</span>+body);<br>        <span class="hljs-comment">//关闭资源</span><br>        response.close();<br>        httpClient.close();<br>    &#125;<br><br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testPost</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 创建httpclient对象</span><br>        <span class="hljs-type">CloseableHttpClient</span> <span class="hljs-variable">httpClient</span> <span class="hljs-operator">=</span> HttpClients.createDefault();<br>        <span class="hljs-comment">// 创建请求对象</span><br>        <span class="hljs-type">HttpPost</span> <span class="hljs-variable">httpPost</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpPost</span>(<span class="hljs-string">&quot;http://localhost:8080/admin/employee/login&quot;</span>);<br>        <span class="hljs-comment">// 提交参数</span><br>        <span class="hljs-type">JSONObject</span> <span class="hljs-variable">jsonObject</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">JSONObject</span>();<br>        jsonObject.put(<span class="hljs-string">&quot;username&quot;</span>,<span class="hljs-string">&quot;admin&quot;</span>);<br>        jsonObject.put(<span class="hljs-string">&quot;password&quot;</span>,<span class="hljs-string">&quot;123456&quot;</span>);<br>        <span class="hljs-type">StringEntity</span> <span class="hljs-variable">stringEntity</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringEntity</span>(jsonObject.toString());<br>        stringEntity.setContentEncoding(<span class="hljs-string">&quot;utf-8&quot;</span>);<br>        stringEntity.setContentType(<span class="hljs-string">&quot;application/json&quot;</span>);<br>        httpPost.setEntity(stringEntity);<br>        <span class="hljs-comment">// 发送请求 接受响应</span><br>        <span class="hljs-type">CloseableHttpResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> httpClient.execute(httpPost);<br>        <span class="hljs-comment">// 获取返回的状态码</span><br>        System.out.println(<span class="hljs-string">&quot;服务端返回的状态码&quot;</span>+response.getStatusLine().getStatusCode());<br>        <span class="hljs-comment">// 获取返回的数据</span><br>        <span class="hljs-type">HttpEntity</span> <span class="hljs-variable">entity</span> <span class="hljs-operator">=</span> response.getEntity();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">body</span> <span class="hljs-operator">=</span> EntityUtils.toString(entity);<br>        System.out.println(<span class="hljs-string">&quot;服务端返回的数据&quot;</span>+body);<br>        <span class="hljs-comment">//关闭资源</span><br>        response.close();<br>        httpClient.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="微信小程序开发">微信小程序开发</h2>
+<p><strong>目录结构</strong></p>
+<p>小程序包含一个描述整体程序的 app 和多个描述各自页面的 page。一个小程序主体部分由三个文件组成，必须放在项目的根目录，如下</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240816110040872.png" srcset="/img/loading.gif" lazyload alt="image-20240816110040872"></p>
+<p>一个小程序页面一般由四个文件组成：</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240816110134517.png" srcset="/img/loading.gif" lazyload alt="image-20240816110134517"></p>
+<h2 id="微信登录">微信登录</h2>
+<p><img src="https://res.wx.qq.com/wxdoc/dist/assets/img/api-login.2fcc9f35.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>获取openid</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> String <span class="hljs-title function_">getOpenID</span><span class="hljs-params">(String code)</span>&#123;<br>    <span class="hljs-comment">// 获取当前用户的openid 向目的地址发送请求</span><br>    Map&lt;String,String&gt;params = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>    params.put(<span class="hljs-string">&quot;appid&quot;</span>,weChatProperties.getAppid());<br>    params.put(<span class="hljs-string">&quot;secret&quot;</span>,weChatProperties.getSecret());<br>    params.put(<span class="hljs-string">&quot;js_code&quot;</span>,code);<br>    params.put(<span class="hljs-string">&quot;grant_type&quot;</span>,<span class="hljs-string">&quot;authorization_code&quot;</span>);<br>    <span class="hljs-type">String</span> <span class="hljs-variable">json</span> <span class="hljs-operator">=</span> HttpClientUtil.doGet(WX_LOGIN, params);<br><br>    <span class="hljs-type">JSONObject</span> <span class="hljs-variable">jsonObject</span> <span class="hljs-operator">=</span> JSON.parseObject(json);<br>    <span class="hljs-keyword">return</span> jsonObject.getString(<span class="hljs-string">&quot;openid&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="数据缓存">数据缓存</h2>
+<p>为什么要有缓存？当多个用户频繁的查询数据，可以要等上几秒钟才会显示。用户端小程序展示的菜品数据都是通过查询数据库获得，如果用户端访问量比较大，数据库访问压力随之增大。</p>
+<p>解决：存储到redis</p>
+<p>直接使用spring cache</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240821011330566.png" srcset="/img/loading.gif" lazyload alt="image-20240821011330566"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> Result&lt;List&lt;DishVO&gt;&gt; <span class="hljs-title function_">getDishByCategoryId</span><span class="hljs-params">(Long categoryId)</span>&#123;<br>    <span class="hljs-comment">// 构造redis的key  dish_categoryId</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;dish_&quot;</span> + categoryId;<br>    <span class="hljs-comment">//查询redis中是否含有菜品数据</span><br>    List&lt;DishVO&gt; list = (List&lt;DishVO&gt;) redisTemplate.opsForValue().get(key);<br>    <span class="hljs-keyword">if</span> (list!=<span class="hljs-literal">null</span> &amp;&amp; !list.isEmpty())&#123;<br>        <span class="hljs-comment">//非空 无需查询数据库</span><br>        <span class="hljs-keyword">return</span> Result.success(list);<br>    &#125;<br>    <span class="hljs-comment">//不存在 查询数据库</span><br>    <span class="hljs-type">Dish</span> <span class="hljs-variable">dish</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dish</span>();<br>    dish.setCategoryId(categoryId);<br>    dish.setStatus(StatusConstant.ENABLE);<br>    list = dishServe.listWithFlavor(dish);<br>    <span class="hljs-comment">//放到redis</span><br>    redisTemplate.opsForValue().set(key,list);<br>    <span class="hljs-keyword">return</span> Result.success(list);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>数据库和缓存数据一致性：</p>
+<ul>
+<li>修改的时候清理缓存</li>
+<li>删除的时候清理缓存</li>
+<li>起售/停售的时候清理缓存</li>
+<li>新增菜品清理缓存</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">clearCache</span><span class="hljs-params">(String pattern)</span>&#123;<br>    <span class="hljs-type">Set</span> <span class="hljs-variable">keys</span> <span class="hljs-operator">=</span> redisTemplate.keys(pattern);<br>    redisTemplate.delete(keys);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="微信支付">微信支付</h2>
+<p>在sky-take-out查看 user的OrderController</p>
+<p>小程序支付时序图：</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240823180457504.png" srcset="/img/loading.gif" lazyload alt="image-20240823180457504"></p>
+<p><strong>生成预支付交易单</strong></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240823180919888.png" srcset="/img/loading.gif" lazyload alt="image-20240823180919888"></p>
+<p><strong>小程序调用支付API</strong></p>
+<p><a target="_blank" rel="noopener" href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_4.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_4.shtml</a></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240823181432326.png" srcset="/img/loading.gif" lazyload alt="image-20240823181432326"></p>
+<p><strong>前置步骤</strong>：</p>
+<p>获取微信支付平台证书、商户私钥文件</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240823181716150.png" srcset="/img/loading.gif" lazyload alt="image-20240823181716150"></p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1.properties;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><span class="hljs-keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;sky.wechat&quot;)</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WeChatProperties</span> &#123;<br><br>    <span class="hljs-keyword">private</span> String appid; <span class="hljs-comment">//小程序的appid</span><br>    <span class="hljs-keyword">private</span> String secret; <span class="hljs-comment">//小程序的秘钥</span><br>    <span class="hljs-keyword">private</span> String mchid; <span class="hljs-comment">//商户号</span><br>    <span class="hljs-keyword">private</span> String mchSerialNo; <span class="hljs-comment">//商户API证书的证书序列号</span><br>    <span class="hljs-keyword">private</span> String privateKeyFilePath; <span class="hljs-comment">//商户私钥文件</span><br>    <span class="hljs-keyword">private</span> String apiV3Key; <span class="hljs-comment">//证书解密的密钥</span><br>    <span class="hljs-keyword">private</span> String weChatPayCertFilePath; <span class="hljs-comment">//平台证书</span><br>    <span class="hljs-keyword">private</span> String notifyUrl; <span class="hljs-comment">//支付成功的回调地址</span><br>    <span class="hljs-keyword">private</span> String refundNotifyUrl; <span class="hljs-comment">//退款成功的回调地址</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>配置属性</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">sky:</span><br>  <span class="hljs-attr">wechat:</span><br>    <span class="hljs-attr">appid:</span> <span class="hljs-string">wxf47bc7760c0d6994</span><br>    <span class="hljs-attr">secret:</span> <span class="hljs-string">011ea1dc4a0d6b50b2435c0dcee5492d</span><br>    <span class="hljs-attr">mchid:</span> <span class="hljs-number">1561414331</span><br>    <span class="hljs-attr">mchSerialNo:</span> <span class="hljs-string">4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606</span><br>    <span class="hljs-attr">privateKeyFilePath:</span> <span class="hljs-string">D:\pay\apiclient_key.pem</span><br>    <span class="hljs-attr">apiV3Key:</span> <span class="hljs-string">CZBK51236435wxpay435434323FFDuv3</span><br>    <span class="hljs-attr">weChatPayCertFilePath:</span> <span class="hljs-string">D:\pay\wechatpay_166D96F876F45C7D07CE98952A96EC980368ACFC.pem</span><br>    <span class="hljs-attr">notifyUrl:</span> <span class="hljs-string">https://58869fb.r2.cpolar.top/notify/paySuccess</span><br>    <span class="hljs-attr">refundNotifyUrl:</span> <span class="hljs-string">https://58869fb.r2.cpolar.top/notify/refundSuccess</span><br></code></pre></td></tr></table></figure>
+<p>微信支付的工具类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1.serve.impl;<br><br><span class="hljs-keyword">import</span> com.alibaba.fastjson.JSONObject;<br><span class="hljs-keyword">import</span> com.yb0os1.constant.MessageConstant;<br><span class="hljs-keyword">import</span> com.yb0os1.context.BaseContext;<br><span class="hljs-keyword">import</span> com.yb0os1.dto.OrderSubmitDTO;<br><span class="hljs-keyword">import</span> com.yb0os1.dto.OrdersPaymentDTO;<br><span class="hljs-keyword">import</span> com.yb0os1.entity.AddressBook;<br><span class="hljs-keyword">import</span> com.yb0os1.entity.OrderDetail;<br><span class="hljs-keyword">import</span> com.yb0os1.entity.Orders;<br><span class="hljs-keyword">import</span> com.yb0os1.entity.ShoppingCart;<br><span class="hljs-keyword">import</span> com.yb0os1.entity.User;<br><span class="hljs-keyword">import</span> com.yb0os1.exception.AddressBookBusinessException;<br><span class="hljs-keyword">import</span> com.yb0os1.exception.OrderBusinessException;<br><span class="hljs-keyword">import</span> com.yb0os1.exception.ShoppingCartBusinessException;<br><span class="hljs-keyword">import</span> com.yb0os1.mapper.AddressBookMapper;<br><span class="hljs-keyword">import</span> com.yb0os1.mapper.OrderDetailMapper;<br><span class="hljs-keyword">import</span> com.yb0os1.mapper.OrderMapper;<br><span class="hljs-keyword">import</span> com.yb0os1.mapper.ShoppingCartMapper;<br><span class="hljs-keyword">import</span> com.yb0os1.mapper.UserMapper;<br><span class="hljs-keyword">import</span> com.yb0os1.serve.OrderServe;<br><span class="hljs-keyword">import</span> com.yb0os1.utils.WeChatPayUtil;<br><span class="hljs-keyword">import</span> com.yb0os1.vo.OrderPaymentVO;<br><span class="hljs-keyword">import</span> com.yb0os1.vo.OrderSubmitVO;<br><span class="hljs-keyword">import</span> org.springframework.beans.BeanUtils;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Service;<br><span class="hljs-keyword">import</span> org.springframework.transaction.annotation.Transactional;<br><br><span class="hljs-keyword">import</span> java.math.BigDecimal;<br><span class="hljs-keyword">import</span> java.time.LocalDateTime;<br><span class="hljs-keyword">import</span> java.util.ArrayList;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderServeImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OrderServe</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> OrderMapper orderMapper;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> OrderDetailMapper orderDetailMapper;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> AddressBookMapper addressBookMapper;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> ShoppingCartMapper shoppingCartMapper;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> UserMapper userMapper;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> WeChatPayUtil weChatPayUtil;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-keyword">public</span> OrderSubmitVO <span class="hljs-title function_">submit</span><span class="hljs-params">(OrderSubmitDTO orderSubmitDTO)</span> &#123;<br>        <span class="hljs-comment">//处理业务异常（地址为空 购物车为空）</span><br>        <span class="hljs-type">AddressBook</span> <span class="hljs-variable">addressBook</span> <span class="hljs-operator">=</span> addressBookMapper.getById(orderSubmitDTO.getAddressBookId());<br>        <span class="hljs-keyword">if</span> (addressBook==<span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AddressBookBusinessException</span>(MessageConstant.ADDRESS_BOOK_IS_NULL);<br>        <span class="hljs-type">Long</span> <span class="hljs-variable">userId</span> <span class="hljs-operator">=</span> BaseContext.getCurrentId();<br>        <span class="hljs-type">ShoppingCart</span> <span class="hljs-variable">shoppingCart</span> <span class="hljs-operator">=</span> ShoppingCart.builder()<br>                .userId(userId)<br>                .build();<br>        List&lt;ShoppingCart&gt; shoppingCartList = shoppingCartMapper.list(shoppingCart);<br>        <span class="hljs-keyword">if</span> (shoppingCartList==<span class="hljs-literal">null</span> || shoppingCartList.isEmpty())<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ShoppingCartBusinessException</span>(MessageConstant.SHOPPING_CART_IS_NULL);<br>        <span class="hljs-comment">//向订单表插入一条数据</span><br>        <span class="hljs-type">Orders</span> <span class="hljs-variable">orders</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Orders</span>();<br>        BeanUtils.copyProperties(orderSubmitDTO,orders);<br>        orders.setOrderTime(LocalDateTime.now());<br>        orders.setPayStatus(Orders.UN_PAID);<br>        orders.setStatus(Orders.PENDING_PAYMENT);<br>        orders.setNumber(String.valueOf(System.currentTimeMillis()));<br>        orders.setUserId(userId);<br>        orders.setPhone(addressBook.getPhone());<br>        orders.setConsignee(addressBook.getConsignee());<br>        orderMapper.insert(orders);<br>        <span class="hljs-comment">//向订单明细表插入n条数据</span><br>        List&lt;OrderDetail&gt; orderDetailList = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (ShoppingCart cart : shoppingCartList) &#123;<br>            <span class="hljs-type">OrderDetail</span> <span class="hljs-variable">orderDetail</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">OrderDetail</span>();<br>            BeanUtils.copyProperties(cart,orderDetail);<br>            orderDetail.setOrderId(orders.getId());<br>            orderDetailList.add(orderDetail);<br>        &#125;<br>        orderDetailMapper.insertBatch(orderDetailList);<br>        <span class="hljs-comment">//清空购物车数据</span><br>        shoppingCartMapper.cleanAll(userId);<br>        <span class="hljs-comment">//返回VO对象</span><br>        <span class="hljs-keyword">return</span>  OrderSubmitVO.builder().id(orders.getId()).orderTime(orders.getOrderTime())<br>                .orderNumber(orders.getNumber()).orderAmount(orders.getAmount())<br>                .build();<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 订单支付</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ordersPaymentDTO</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> OrderPaymentVO <span class="hljs-title function_">payment</span><span class="hljs-params">(OrdersPaymentDTO ordersPaymentDTO)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 当前登录用户id</span><br>        <span class="hljs-type">Long</span> <span class="hljs-variable">userId</span> <span class="hljs-operator">=</span> BaseContext.getCurrentId();<br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> userMapper.getById(userId);<br><br>        <span class="hljs-comment">//调用微信支付接口，生成预支付交易单</span><br>        <span class="hljs-type">JSONObject</span> <span class="hljs-variable">jsonObject</span> <span class="hljs-operator">=</span> weChatPayUtil.pay(<br>                ordersPaymentDTO.getOrderNumber(), <span class="hljs-comment">//商户订单号</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">BigDecimal</span>(<span class="hljs-number">0.01</span>), <span class="hljs-comment">//支付金额，单位 元</span><br>                <span class="hljs-string">&quot;苍穹外卖订单&quot;</span>, <span class="hljs-comment">//商品描述</span><br>                user.getOpenid() <span class="hljs-comment">//微信用户的openid</span><br>        );<br><br>        <span class="hljs-keyword">if</span> (jsonObject.getString(<span class="hljs-string">&quot;code&quot;</span>) != <span class="hljs-literal">null</span> &amp;&amp; jsonObject.getString(<span class="hljs-string">&quot;code&quot;</span>).equals(<span class="hljs-string">&quot;ORDERPAID&quot;</span>)) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">OrderBusinessException</span>(<span class="hljs-string">&quot;该订单已支付&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-type">OrderPaymentVO</span> <span class="hljs-variable">vo</span> <span class="hljs-operator">=</span> jsonObject.toJavaObject(OrderPaymentVO.class);<br>        vo.setPackageStr(jsonObject.getString(<span class="hljs-string">&quot;package&quot;</span>));<br><br>        <span class="hljs-keyword">return</span> vo;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 支付成功，修改订单状态</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> outTradeNo</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">paySuccess</span><span class="hljs-params">(String outTradeNo)</span> &#123;<br><br>        <span class="hljs-type">Long</span> <span class="hljs-variable">userId</span> <span class="hljs-operator">=</span> BaseContext.getCurrentId();<br>        <span class="hljs-comment">// 根据订单号查询订单</span><br>        <span class="hljs-type">Orders</span> <span class="hljs-variable">ordersDB</span> <span class="hljs-operator">=</span> orderMapper.getByNumberAndUserId(outTradeNo,userId);<br><br>        <span class="hljs-comment">// 根据订单id更新订单的状态、支付方式、支付状态、结账时间</span><br>        <span class="hljs-type">Orders</span> <span class="hljs-variable">orders</span> <span class="hljs-operator">=</span> Orders.builder()<br>                .id(ordersDB.getId())<br>                .status(Orders.TO_BE_CONFIRMED)<br>                .payStatus(Orders.PAID)<br>                .checkoutTime(LocalDateTime.now())<br>                .build();<br><br>        orderMapper.update(orders);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="Spring-Cache-Spring-Task">Spring Cache Spring Task</h2>
+<p>在javaweb里面</p>
+<h2 id="WebSocket">WebSocket</h2>
+<h3 id="介绍">介绍</h3>
+<p>WebSocket 是基于 TCP 的一种新的网络协议。浏览器和服务器只需要完成一次握手，两者之间就可以创建<strong>持久性</strong>的连接，它实现了浏览器与服务器<strong>全双工</strong>通信，并进行<strong>双向数据传输</strong>。</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20240825163145711.png" srcset="/img/loading.gif" lazyload alt="image-20240825163145711"></p>
+<p>常见场景</p>
+<ul>
+<li>视频弹幕</li>
+<li>网页聊天</li>
+<li>体育实况更新</li>
+<li>股票基金报价实时更新</li>
+</ul>
+<h3 id="案例">案例</h3>
+<p>使用</p>
+<ul>
+<li>导入WebSocket的maven坐标</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-websocket<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>导入WebSocket服务端组件WebSocketServer，用于和客户端通信</li>
+<li>导入配置类WebSocketConfiguration，注册WebSocket的服务端组件</li>
+</ul>
+<p>代码一般就是如下，固定的</p>
+<p>websocket.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1.websocket;<br><br><span class="hljs-keyword">import</span> jakarta.websocket.OnClose;<br><span class="hljs-keyword">import</span> jakarta.websocket.OnMessage;<br><span class="hljs-keyword">import</span> jakarta.websocket.OnOpen;<br><span class="hljs-keyword">import</span> jakarta.websocket.Session;<br><span class="hljs-keyword">import</span> jakarta.websocket.server.PathParam;<br><span class="hljs-keyword">import</span> jakarta.websocket.server.ServerEndpoint;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-keyword">import</span> java.util.Collection;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * WebSocket服务</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@ServerEndpoint(&quot;/ws/&#123;sid&#125;&quot;)</span><span class="hljs-comment">//根据路径进行匹配</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketServer</span> &#123;<br><br>    <span class="hljs-comment">//存放会话对象</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Map&lt;String, Session&gt; sessionMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>();<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 连接建立成功调用的方法</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@OnOpen</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onOpen</span><span class="hljs-params">(Session session, <span class="hljs-meta">@PathParam(&quot;sid&quot;)</span> String sid)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;客户端：&quot;</span> + sid + <span class="hljs-string">&quot;建立连接&quot;</span>);<br>        sessionMap.put(sid, session);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 收到客户端消息后调用的方法</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> message 客户端发送过来的消息</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@OnMessage</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onMessage</span><span class="hljs-params">(String message, <span class="hljs-meta">@PathParam(&quot;sid&quot;)</span> String sid)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;收到来自客户端：&quot;</span> + sid + <span class="hljs-string">&quot;的信息:&quot;</span> + message);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 连接关闭调用的方法</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> sid</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@OnClose</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClose</span><span class="hljs-params">(<span class="hljs-meta">@PathParam(&quot;sid&quot;)</span> String sid)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;连接断开:&quot;</span> + sid);<br>        sessionMap.remove(sid);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 群发</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> message</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendToAllClient</span><span class="hljs-params">(String message)</span> &#123;<br>        Collection&lt;Session&gt; sessions = sessionMap.values();<br>        <span class="hljs-keyword">for</span> (Session session : sessions) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-comment">//服务器向客户端发送消息</span><br>                session.getBasicRemote().sendText(message);<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>WebSocketConfigruation</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1.config;<br><br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.server.standard.ServerEndpointExporter;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * WebSocket配置类，用于注册WebSocket的Bean</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketConfiguration</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> ServerEndpointExporter <span class="hljs-title function_">serverEndpointExporter</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerEndpointExporter</span>();<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="Apache-ECharts">Apache ECharts</h2>
+<p>Apache Echarts 是一款基于Javascript 的<strong>数据可视化图表库</strong>，提供直观，生动，可交互，可个性化定制的数据可视化图表</p>
+<p>官网地址:<a target="_blank" rel="noopener" href="https://echarts.apache.org/zh/index.html">https://echarts.apache.org/zh/index.html</a></p>
+<p>使用Echarts，重点在于研究当前图表所需的<strong>数据格式</strong></p>
+<h2 id="处理Excel-—-Apache-POI">处理Excel — Apache POI</h2>
+<p>在java中操作excel文件</p>
+<p>Apache POl是一个处理Miscrosoft Office各种文件格式的开源项目。简单来说就是，我们可以使用 POI在 Java 程序中对Miscrosoft Office各种文件进行读写操作。</p>
+<p>一般情况下，POI都是用于操作 Excel 文件:</p>
+<ul>
+<li>银行网银系统导出交易明细</li>
+<li>各种业务系统导出Excel报表</li>
+<li>批量导入业务数据</li>
+</ul>
+<p>1、导入坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.poi<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>poi<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.16<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.poi<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>poi-ooxml<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.16<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>2、案例代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.yb0os1.test;<br><br><span class="hljs-keyword">import</span> org.apache.poi.xssf.usermodel.XSSFRow;<br><span class="hljs-keyword">import</span> org.apache.poi.xssf.usermodel.XSSFSheet;<br><span class="hljs-keyword">import</span> org.apache.poi.xssf.usermodel.XSSFWorkbook;<br><br><span class="hljs-keyword">import</span> java.io.FileInputStream;<br><span class="hljs-keyword">import</span> java.io.FileOutputStream;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">POITest</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">poiWrist</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">//在内存创建一个excel文件</span><br>        <span class="hljs-type">XSSFWorkbook</span> <span class="hljs-variable">excel</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">XSSFWorkbook</span>();<br>        <span class="hljs-comment">//创建sheet页</span><br>        <span class="hljs-type">XSSFSheet</span> <span class="hljs-variable">sheet</span> <span class="hljs-operator">=</span> excel.createSheet(<span class="hljs-string">&quot;info&quot;</span>);<br>        <span class="hljs-comment">//在sheet页中创建行对象  rownum是从0开始 0代表第一行</span><br>        <span class="hljs-type">XSSFRow</span> <span class="hljs-variable">row</span> <span class="hljs-operator">=</span> sheet.createRow(<span class="hljs-number">1</span>);<br>        <span class="hljs-comment">//在行上创建单元格  并且写入文件内容</span><br>        row.createCell(<span class="hljs-number">1</span>).setCellValue(<span class="hljs-string">&quot;你好呀&quot;</span>);<br>        row.createCell(<span class="hljs-number">2</span>).setCellValue(<span class="hljs-string">&quot;world&quot;</span>);<br><br>        <span class="hljs-type">FileOutputStream</span> <span class="hljs-variable">fos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;D:\\info.xlsx&quot;</span>);<br><br>        excel.write(fos);<br><br>        excel.close();<br>        fos.close();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">poiRead</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">//读取磁盘存在的xlsx文件</span><br>        <span class="hljs-type">FileInputStream</span> <span class="hljs-variable">fis</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(<span class="hljs-string">&quot;D:\\info.xlsx&quot;</span>);<br>        <span class="hljs-type">XSSFWorkbook</span> <span class="hljs-variable">excel</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">XSSFWorkbook</span>(fis);<br><br>        <span class="hljs-comment">//读取第一个sheet页</span><br>        <span class="hljs-type">XSSFSheet</span> <span class="hljs-variable">sheet</span> <span class="hljs-operator">=</span> excel.getSheetAt(<span class="hljs-number">0</span>);<br><span class="hljs-comment">//        XSSFSheet sheet = excel.getSheet(&quot;info&quot;);</span><br><br>        <span class="hljs-comment">//获取sheet页中最后一行有内容的行号（从0开始）</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">lastRowNum</span> <span class="hljs-operator">=</span> sheet.getLastRowNum();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">firstRowNum</span> <span class="hljs-operator">=</span> sheet.getFirstRowNum();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> firstRowNum;i&lt;=lastRowNum;++i)&#123;<br>            <span class="hljs-type">XSSFRow</span> <span class="hljs-variable">row</span> <span class="hljs-operator">=</span> sheet.getRow(i);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">one</span> <span class="hljs-operator">=</span> row.getCell(<span class="hljs-number">1</span>).getStringCellValue();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">tow</span> <span class="hljs-operator">=</span> row.getCell(<span class="hljs-number">2</span>).getStringCellValue();<br>            System.out.println(one+<span class="hljs-string">&quot;----&quot;</span>+tow);<br>        &#125;<br><br>        fis.close();<br>        excel.close();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br><span class="hljs-comment">//        poiWrist();</span><br>        poiRead();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>一般使用导入excel 格式比较复杂的话，那么一般先建立一个模板文件（格式都是好的）</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

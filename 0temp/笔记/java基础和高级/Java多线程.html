@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="Runnable、Callable和Future的详解和区别 Runnable Runnable接口只有一个抽象的run()方法，此方法是在Thread.start()的时候由JVM调用run方法，创建一个线程，并调用run方法 123456789101112Runnable runnable &#x3D; () -&gt; &#123;      try &#123;          System.ou">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/java%E5%9F%BA%E7%A1%80%E5%92%8C%E9%AB%98%E7%BA%A7/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="Runnable、Callable和Future的详解和区别 Runnable Runnable接口只有一个抽象的run()方法，此方法是在Thread.start()的时候由JVM调用run方法，创建一个线程，并调用run方法 123456789101112Runnable runnable &#x3D; () -&gt; &#123;      try &#123;          System.ou">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250325000449461.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250325221926256.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.608Z">
+<meta property="article:modified_time" content="2025-07-01T05:34:36.116Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20250325000449461.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>Runnable、Callable和Future的详解和区别</h1>
+<h2 id="Runnable">Runnable</h2>
+<p>Runnable接口只有一个抽象的run()方法，此方法是在Thread.start()的时候由JVM调用run方法，创建一个线程，并调用run方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Runnable</span> <span class="hljs-variable">runnable</span> <span class="hljs-operator">=</span> () -&gt; &#123;<br>      <span class="hljs-keyword">try</span> &#123;<br>          System.out.println(Thread.currentThread().getName());<br>          Thread.sleep(<span class="hljs-number">5000</span>);<br>          System.out.println(<span class="hljs-string">&quot;处理完成&quot;</span>);<br>      &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>          e.printStackTrace();<br>      &#125;<br>  &#125;;<br>  System.out.println(Thread.currentThread().getName());<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(runnable).start();<br>  System.out.println(Thread.currentThread().getName());<br></code></pre></td></tr></table></figure>
+<p>主线程不会等待run方法执行完成，而是直接执行完成</p>
+<h2 id="Callable和Future">Callable和Future</h2>
+<p>callable是产生结果，future是拿到结果</p>
+<p>Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，</p>
+<p>Callable线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值</p>
+<ul>
+<li>Runnable重新run方法,Callable重写call方法;</li>
+<li>Runnable无返回值,Callable有返回值;</li>
+<li>Runnable不能抛异常,Callable能抛异常</li>
+<li>callable和runnable都可以应用于executors。而thread类只支持runnable及其子类.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">Callable&lt;Integer&gt; callable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Callable</span>&lt;Integer&gt;() &#123;<br>           <span class="hljs-meta">@Override</span><br>           <span class="hljs-keyword">public</span> Integer <span class="hljs-title function_">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>               System.out.println(<span class="hljs-string">&quot;Thread1&quot;</span>+Thread.currentThread().getName());<br>               Thread.sleep(<span class="hljs-number">1000</span>);<br>               <span class="hljs-keyword">return</span>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>().nextInt(<span class="hljs-number">100</span>);<br>           &#125;<br>       &#125;;<br>       FutureTask&lt;Integer&gt; futureTask = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FutureTask</span>&lt;Integer&gt;(callable);<br>       System.out.println(<span class="hljs-string">&quot;Thread2&quot;</span>+Thread.currentThread().getName());<br>       <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(futureTask).start();<br>       System.out.println(futureTask.get());<span class="hljs-comment">//get会阻塞</span><br>       System.out.println(<span class="hljs-string">&quot;Thread2&quot;</span>+Thread.currentThread().getName());<br></code></pre></td></tr></table></figure>
+<p>调用futureTask的get方法会让主线程等待子线程拿到返回值再去执行下一步。但是一般不会立刻调用FutureTask的get方法，而是主线程处理其他操作，需要用到返回值再去调用</p>
+<h1>CountDownLatch</h1>
+<h2 id="概述">概述</h2>
+<p>CountDownLatch是一个同步工具类，用来协调多个线程之间的同步，用来作为线程间的通信而不是互斥作用。</p>
+<p>CountDownLatch能够使一个线程在等待另外一些线程完成各自工作之后，再继续执行。</p>
+<p>使用一个计数器进行实现，计数器初始值就是线程的数量。当每个被计数的线程完成任务后，计数器值减一，当计数器的值为0时，表示所有线程都已经完成了任务，然后在CountDownLatch上等待的线程就可以恢复执行。</p>
+<h2 id="原理">原理</h2>
+<p>CountDownLatch是通过一个计数器来实现的，计数器的初始化值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就相应的减1。当计数器到达0时，表示所有的线程都已完成任务，然后在闭锁上等待的线程就可以恢复执行任务。</p>
+<blockquote>
+<p>await 主线程阻塞 等待时间到了或者countDown减到0，主线程恢复执行</p>
+</blockquote>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250325000449461.png" srcset="/img/loading.gif" lazyload alt="image-20250325000449461"></p>
+<h2 id="使用">使用</h2>
+<p>函数列表</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 构造一个用给定计数初始化的 CountDownLatch。</span><br>CountDownLatch(<span class="hljs-type">int</span> count)<br><span class="hljs-comment">// 使当前线程在锁存器倒计数至零之前一直等待，除非线程被中断。</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">await</span><span class="hljs-params">()</span><br><span class="hljs-comment">// 使当前线程在锁存器倒计数至零之前一直等待，除非线程被中断或超出了指定的等待时间。</span><br><span class="hljs-type">boolean</span> <span class="hljs-title function_">await</span><span class="hljs-params">(<span class="hljs-type">long</span> timeout, TimeUnit unit)</span><br><span class="hljs-comment">// 递减锁存器的计数，如果计数到达零，则释放所有等待的线程。</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">countDown</span><span class="hljs-params">()</span><br><span class="hljs-comment">// 返回当前计数。</span><br><span class="hljs-type">long</span> <span class="hljs-title function_">getCount</span><span class="hljs-params">()</span><br><span class="hljs-comment">// 返回标识此锁存器及其状态的字符串。</span><br>String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">CountDownLatch</span> <span class="hljs-variable">countDownLatch</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CountDownLatch</span>(<span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                Thread.sleep(<span class="hljs-number">3000</span>);<br>                System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;start&quot;</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                e.printStackTrace();<br>            &#125;<span class="hljs-keyword">finally</span> &#123;<br>                countDownLatch.countDown();<br>            &#125;<br>        &#125;).start();<br><br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                Thread.sleep(<span class="hljs-number">5000</span>);<br>                System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;start&quot;</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                e.printStackTrace();<br>            &#125;<span class="hljs-keyword">finally</span> &#123;<br>                countDownLatch.countDown();<br>            &#125;<br>        &#125;).start();<br><br>        System.out.println(<span class="hljs-string">&quot;begin:&quot;</span>+<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        countDownLatch.await(<span class="hljs-number">10</span>, TimeUnit.SECONDS);<br>        System.out.println(<span class="hljs-string">&quot;end:&quot;</span>+<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br></code></pre></td></tr></table></figure>
+<h2 id="应用场景">应用场景</h2>
+<ol>
+<li>
+<p>实现最大的并行性：有时我们想同时启动多个线程，实现最大程度的并行性。例如，我们想测试一个单例类。如果我们创建一个初始计数器为1的CountDownLatch，并让其他所有线程都在这个锁上等待，只需要调用一次countDown()方法就可以让其他所有等待的线程同时恢复执行。</p>
+</li>
+<li>
+<p>开始执行前等待N个线程完成各自任务：例如应用程序启动类要确保在处理用户请求前，所有N个外部系统都已经启动和运行了。</p>
+</li>
+<li>
+<p>死锁检测：一个非常方便的使用场景是你用N个线程去访问共享资源，在每个测试阶段线程数量不同，并尝试产生死锁。</p>
+</li>
+</ol>
+<h1>CompletableFuture</h1>
+<h2 id="概述-2">概述</h2>
+<p>CompletableFuture对Future的改进有什么？或者说为什么还要出CompletableFuture？</p>
+<ul>
+<li>get()方法在Future计算完成之前会一直处于阻塞状态</li>
+<li>isDone()方法容易耗费CPU资源</li>
+<li>对于真正的异步任务我们希望是可以通过传入回调函数,在Future结束时自动调用该回调函数,这样,我们就不用等待结果</li>
+<li>阻塞的方式和异步编程的设计理念相违背,而轮询的方式会耗费无谓的CPU资源.因此设计出ComplatableFuture
+<ul>
+<li>ComplatableFuture提供了一种观察者模式类似的机制,可以<strong>让任务执行完成后通知监听的一方</strong></li>
+</ul>
+</li>
+</ul>
+<h6 id="CompletionFuture的优点">CompletionFuture的优点</h6>
+<ul>
+<li>异步任务结束时,会自动调用某个对象的方法;</li>
+<li>主线程设置好会掉之后,不再关心异步任务的执行,异步任务之间可以顺序执行</li>
+<li>异步任务出错时,会自动回调某个对象的方法</li>
+</ul>
+<h2 id="ComplatableFuture和CompletionStage源码">ComplatableFuture和CompletionStage源码</h2>
+<p>CompletionStage代表异步计算过程中的某一个阶段,一个阶段完成以后可能会触发另外一个阶段</p>
+<ul>
+<li>一个阶段的计算执行可以是一个Function,Consumer或者Runnable.比如:stage.thenApply(x -&gt;square(x)).thenAccept(x -&gt; sout(x)).thenRun(()-&gt;sout)</li>
+<li>一个阶段的执行可能是单个阶段的完成触发,也可能是多个阶段一起触发</li>
+<li>代表异步计算过程中的某一个阶段,一个阶段完成可能会触发另外一个阶段</li>
+</ul>
+<p>在Java8中,CompletableFuture提供了非常强大的Future的扩展功能,可以帮助我们简化异步编程的复杂性,并且提供了函数式编程的能力,可以通过回调的方式处理计算结果,也提供了转换和组合ComplatableFuture的方式</p>
+<ul>
+<li>可能代表一个明确完成的Future,也有可能代表一个完成阶段(CompletionStage),它支持在完成计算后触发一些函数式或执行某些动作</li>
+<li>实现了Future和CompletionStage接口</li>
+</ul>
+<h2 id="核心方法">核心方法</h2>
+<p>runAsync无返回值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//返回一个新的CompletableFuture，在&#123;@link ForkJoinPool#commonPool（）&#125;中运行的任务运行给定操作后，该任务将异步完成。</span><br><span class="hljs-comment">//@param runnable the action to run before completing the returned CompletableFuture</span><br><span class="hljs-comment">//@return the new CompletableFuture</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> CompletableFuture&lt;Void&gt; <span class="hljs-title function_">runAsync</span><span class="hljs-params">(Runnable runnable)</span><br><br><span class="hljs-comment">//返回一个新的CompletableFuture，该Future由运行给定操作后在给定执行器中运行的任务异步完成。</span><br><span class="hljs-comment">//@param runnable在完成返回的CompletableFuture之前运行操作</span><br><span class="hljs-comment">//@param executor用于异步执行的执行器</span><br><span class="hljs-comment">//@返回新的CompletableFuture </span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> CompletableFuture&lt;Void&gt; <span class="hljs-title function_">runAsync</span><span class="hljs-params">(Runnable runnable,Executor executor)</span><br><br></code></pre></td></tr></table></figure>
+<p>supplyAsync有返回值(常用的方法)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//最常用的方法</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;U&gt; CompletableFuture&lt;U&gt; <span class="hljs-title function_">supplyAsync</span><span class="hljs-params">(Supplier&lt;U&gt; supplier)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;U&gt; CompletableFuture&lt;U&gt; <span class="hljs-title function_">supplyAsync</span><span class="hljs-params">(Supplier&lt;U&gt; supplier,Executor executor)</span><br><br></code></pre></td></tr></table></figure>
+<p>Executor说明:</p>
+<ul>
+<li>没有指定Executor的方法,直接使用默认的<code>ForkJoinPool.commonPool()</code>作为他的线程池执行异步代码</li>
+<li>如果执行线程池,则使用我们自定义的或者特别的线程池执行异步代码</li>
+</ul>
+<p>对结果进行处理</p>
+<ul>
+<li>thenRun
+<ul>
+<li>任务A执行完执行B,并且B不需要A得结果</li>
+</ul>
+</li>
+<li>thenAccept</li>
+<li>任务A执行完执行B,B需要A得结果,但是任务B无返回值</li>
+<li>thenApply
+<ul>
+<li>任务A执行完执行B,B需要A得结果,同时任务B有返回值</li>
+</ul>
+</li>
+<li>handle
+<ul>
+<li>任务A执行完执行B,B需要A得结果,同时任务B有返回值.可以回去上一个任务的异常信息</li>
+</ul>
+</li>
+</ul>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250325221926256.png" srcset="/img/loading.gif" lazyload alt="image-20250325221926256"></p>
+<p>获得结果和触发计算</p>
+<ul>
+<li>获取结果
+<ul>
+<li>get()</li>
+<li>get(long timeout ,TimeUnit unit)</li>
+<li>join()</li>
+<li>getNow(T valueIfAbsent):如果计算完成返回计算的结果值或者抛出的异常,如果没有计算完成,则返回给的默认值
+<ul>
+<li>没有计算完成的情况下,给我一个替代结果</li>
+<li>计算完,返回计算完成后的结果(或者是异常)</li>
+<li>没计算完,完成设定的valueIfAbsent值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>主动触发计算
+<ul>
+<li>public boolean complete(T value):是否打断get方法立即返回括号值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tianji.promotion;<br><br><span class="hljs-keyword">import</span> java.util.concurrent.CompletableFuture;<br><span class="hljs-keyword">import</span> java.util.concurrent.TimeUnit;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ComplatableFutureTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        <span class="hljs-comment">//子线程执行下面的代码，会返回值</span><br>        CompletableFuture.supplyAsync(() -&gt; &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>            System.out.println(<span class="hljs-string">&quot;====&gt; 111&quot;</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>        &#125;).thenApply(item1 -&gt; &#123;<span class="hljs-comment">//item1为上一步返回的值，并且自身也会产生结果</span><br>            <span class="hljs-comment">// // int i = 10/0;</span><br>            System.out.println(<span class="hljs-string">&quot;====&gt; 222&quot;</span>);<br>            <span class="hljs-keyword">return</span> item1 + <span class="hljs-string">&quot;12&quot;</span>;<br>        &#125;).thenApply(item2 -&gt; &#123;<span class="hljs-comment">//item1为上一步返回的值，并且自身也会产生结果</span><br>            System.out.println(<span class="hljs-string">&quot;====&gt; 333&quot;</span>);<br>            <span class="hljs-keyword">return</span> Integer.valueOf(item2);<br>        &#125;).whenComplete((value, exception) -&gt; &#123;<span class="hljs-comment">//这个方法会执行，不管上面有没有异常 whenComplete+handle相当于try/finally</span><br>            <span class="hljs-comment">//这一步要对exception做判断</span><br>            <span class="hljs-keyword">if</span> (exception != <span class="hljs-literal">null</span>) &#123;<br>                System.out.println(<span class="hljs-string">&quot;=======&gt;whenComplete&quot;</span>);<br>                System.out.println(exception);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//如果不对exception做判断可能会影响到值得使用,因为获取到的值为null;</span><br>                System.out.println(<span class="hljs-string">&quot;计算结果为:==&gt;&quot;</span> + value);<br>            &#125;<br>        &#125;).exceptionally(e -&gt; &#123;<span class="hljs-comment">//只要上面个报错就会执行 exceptionally相当于try/catch</span><br>            System.out.println(<span class="hljs-string">&quot;=======&gt;exceptionally&quot;</span>);<br>            System.out.println(e);<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;);<br><br>        TimeUnit.SECONDS.sleep(<span class="hljs-number">5</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>无异常:</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">===<span class="hljs-function">=&gt;</span> <span class="hljs-number">111</span><br>===<span class="hljs-function">=&gt;</span> <span class="hljs-number">222</span><br>===<span class="hljs-function">=&gt;</span> <span class="hljs-number">333</span><br>计算结果为:=<span class="hljs-function">=&gt;</span><span class="hljs-number">112</span><br></code></pre></td></tr></table></figure>
+<p>有异常:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">====&gt; <span class="hljs-number">111</span><br>=======&gt;whenComplete<br>java<span class="hljs-selector-class">.util</span><span class="hljs-selector-class">.concurrent</span><span class="hljs-selector-class">.CompletionException</span>: java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.ArithmeticException</span>: / by zero<br>=======&gt;exceptionally<br>java<span class="hljs-selector-class">.util</span><span class="hljs-selector-class">.concurrent</span><span class="hljs-selector-class">.CompletionException</span>: java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.ArithmeticException</span>: / by zero<br></code></pre></td></tr></table></figure>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

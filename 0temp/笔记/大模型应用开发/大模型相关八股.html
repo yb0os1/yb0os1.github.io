@@ -1,0 +1,822 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="如何理解大模型 定义和特点 大模型通常指基于深度学习的大规模人工智能模型 例如像 GPT-4 大语言模型 （LLM，Large Language Model） 特点：  **大模型的&quot;大&quot;主要体现在参数规模大。**传统深度学习模型的参数规模通常在百万级到千万级，而大模型的参数量达到了 百亿级、干亿级，甚至万亿级。以 GPT-4 为例，参数规模可能达万亿级   如我们通常说的7B">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E7%AC%94%E8%AE%B0/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%85%AB%E8%82%A1.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="如何理解大模型 定义和特点 大模型通常指基于深度学习的大规模人工智能模型 例如像 GPT-4 大语言模型 （LLM，Large Language Model） 特点：  **大模型的&quot;大&quot;主要体现在参数规模大。**传统深度学习模型的参数规模通常在百万级到千万级，而大模型的参数量达到了 百亿级、干亿级，甚至万亿级。以 GPT-4 为例，参数规模可能达万亿级   如我们通常说的7B">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250618134142117.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250618134202749.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250516122652385.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250618134456058.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.613Z">
+<meta property="article:modified_time" content="2025-12-13T12:27:52.680Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20250618134142117.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>如何理解大模型</h1>
+<h2 id="定义和特点">定义和特点</h2>
+<p>大模型通常指基于深度学习的大规模人工智能模型</p>
+<p>例如像 GPT-4 大语言模型 （LLM，Large Language Model）</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>**大模型的&quot;大&quot;主要体现在参数规模大。**传统深度学习模型的参数规模通常在百万级到千万级，而大模型的参数量达到了 百亿级、干亿级，甚至万亿级。以 GPT-4 为例，参数规模可能达万亿级</li>
+</ul>
+<blockquote>
+<p>如我们通常说的7B模型，指的就是他的参数量达到了70亿</p>
+</blockquote>
+<ul>
+<li>大模型的核心是基于 <strong>深度学习</strong> 和 <strong>神经网络</strong>，通常采用 <strong>Transformer</strong> 架构
+<ul>
+<li><strong>Transformer</strong>  通过 “<strong>自注意力机制</strong>（Self-Attention）” 和 &quot;<strong>多头注意力机制</strong>（Multi-Head Attention）&quot;实现高效的信息处理，相比于传统的 RNN（循环神经网络）和 CNN（卷积神经网络），具有更强的并行计算能力和更长的上下文理解能力。(了解即可)</li>
+</ul>
+</li>
+</ul>
+<h2 id="应用场景">应用场景</h2>
+<p>不要简单的认为大模型就只是AI对话，他的应用方向非常广泛，</p>
+<p>涵盖 <strong>自然语言处理(NLP)</strong>、<strong>计算机视觉(CV)、语音识别、科学计算、自动驾驶等</strong> 领域</p>
+<table>
+<thead>
+<tr>
+<th><strong>应用领域</strong></th>
+<th><strong>代表应用</strong></th>
+<th><strong>典型模型</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.NLP 语言 AI</td>
+<td>ChatGPT、翻译、代码生成</td>
+<td>GPT-4、LLaMA 3、Claude</td>
+</tr>
+<tr>
+<td>2.计算机视觉(CV)</td>
+<td>图像生成、目标检测</td>
+<td>Stable Diffusion、DALL·E、ViT</td>
+</tr>
+<tr>
+<td>3.语音AI</td>
+<td>语音识别、语音克隆</td>
+<td>Whisper、VALL-E、Tacotron</td>
+</tr>
+<tr>
+<td>4.自动驾驶&amp;机器人</td>
+<td>无人车、机器人导航</td>
+<td>Tesla FSD、Gato、Perceiver</td>
+</tr>
+<tr>
+<td>5.科学计算&amp;医疗</td>
+<td>药物研发、医学影像</td>
+<td>AlphaFold、Med-PaLM 2</td>
+</tr>
+<tr>
+<td>6.推荐系统&amp;广告</td>
+<td>电商推荐、精准营销</td>
+<td>DeepFM、DINO、YouTube Al</td>
+</tr>
+</tbody>
+</table>
+<p>大模型擅长做生成内容、代码编写、文本处理、多态任务</p>
+<p>但它对高精度计算、事实准确性、实时数据获取存在局限性</p>
+<h2 id="擅长方向">擅长方向</h2>
+<ol>
+<li><strong>文本理解</strong>：能阅读、总结、分析文章，如阅读理解、问答系统</li>
+<li><strong>文本生成</strong>：能撰写高质量 文章、小说、新闻、代码、法律合同等</li>
+<li><strong>机器翻译</strong>：可以翻译多种语言，质量接近专业翻译水平 (如 DeepL、Google Translate)</li>
+<li><strong>信息提取</strong>：能从文档中提取关键信息，如 法律、医学、财务报告分析</li>
+<li><strong>代码生成</strong>：自动编写 Python、JavaScript、C++代码，辅助开发者 (如 GitHub Copilot)</li>
+<li><strong>代码调试</strong>：帮助找出代码中的 Bug、优化代码性能</li>
+<li><strong>代码解释</strong>：能解释复杂代码的逻辑，帮助学习和维护遗留代码</li>
+<li><strong>广泛知识问答</strong>：大模型掌握 百科知识、历史、科技、医学、经济等 领域的信息</li>
+<li><strong>图像识别 &amp; 生成</strong> (如 DALL·E、Stable Diffusion)：生成艺术作品、设计海报</li>
+<li><strong>语音识别 &amp; 语音合成</strong> (如 Whisper、VALL-E)：实现 语音转文字(ASR)、AI语音播报</li>
+<li><strong>视频生成</strong> (如 Sora)：基于文本输入，生成高质量视频</li>
+<li><strong>总结长文档</strong>：如会议纪要、论文总结</li>
+<li><strong>从非结构化文本中提取信息</strong>：如将文章转换成 表格、JSON 数据</li>
+</ol>
+<h2 id="不擅长方向">不擅长方向</h2>
+<ol>
+<li>无法进行精确 数值计算，如 大数运算、金融精算、密码学计算 (如3.9和3.11那个大?)</li>
+<li>可能犯逻辑错误，推理链条过长时，可能得出错误结论</li>
+<li>容易“编造”信息，即使信息看起来可信，但可能并不存在</li>
+<li>可能给出 错误的医学、法律、科技等专业知识(如医学诊断、法律条文)</li>
+<li>对 长尾知识（冷门信息、最新论文、特定行业信息）缺乏准确性</li>
+<li>训练好的大模型不会像人类一样主动学习新知识，无法实时更新</li>
+</ol>
+<h2 id="关键问题">关键问题</h2>
+<p><strong>目前，大模型遇到的一些关键问题有以下几个</strong></p>
+<ul>
+<li><strong>数据和隐私问题</strong>：大模型训练涉及大量数据，可能存在隐私泄露风险</li>
+<li><strong>幻觉</strong>：模型可能生成虚假或不准确的信息</li>
+<li><strong>能耗高</strong>：训练一次大模型可能消耗数干吨二氧化碳当量的能源</li>
+<li><strong>可控性和安全性</strong>：如何让模型可靠、透明地运作是一个重要挑战</li>
+</ul>
+<h1>大模型幻觉</h1>
+<p>大模型的“幻觉”指的是 AI 生成了看似合理但实际上错误或编造的信息<br>
+例如，它可能会编造不存在的事实、错误引用文献、甚至捏造公司或人物的信息</p>
+<h2 id="幻觉产生原因">幻觉产生原因</h2>
+<p><strong>语言模型的“填空”机制</strong></p>
+<ul>
+<li>Transformer 语言模型本质上是一个**“填空预测器”**它是根据概率预测来选择下一个输出的词，而不是在“思考”正确答案</li>
+</ul>
+<p><strong>训练数据存在缺陷</strong></p>
+<ul>
+<li>训练数据本身可能包含 错误信息、不完整数据、偏见信息，导致模型学到不真实的内容</li>
+<li>训练数据可能过时，例如，GPT-4 的数据 截止到 2023 年初，无法回答最新时事</li>
+</ul>
+<p><strong>缺乏事实验证能力</strong></p>
+<ul>
+<li>语言模型在生成文本时，并不会主动去 查证答案的真实性</li>
+</ul>
+<p><strong>长文本记忆力有限</strong></p>
+<ul>
+<li>由于上下文窗口有限 (如GPT-4-turbo约128k tokens)，当文本过长时，AI可能遗忘前面提到的信息</li>
+</ul>
+<h2 id="解决幻觉">解决幻觉</h2>
+<p><strong>解决幻觉的一些方案</strong></p>
+<ol>
+<li>RAG，通过RAG的方式，让大模型在回答问题之前先检索真实数据，再让模型进行回答</li>
+<li>Fine-tuning，即微调，通过微调的方式，给模型学习专业领域的知识，让他更好的回答</li>
+<li>限制AI的回答，比如在提示词中告诉他如果你不知道，直接就回答不知道</li>
+<li>通过标注和反馈不断优化模型。并把反馈可以给到模型让模型调整</li>
+<li>让同一个模型多次生成同一个内容的答案，然后选择一个最终版本</li>
+<li>在问题回答之后，让 AI自己检查自己的答案，并标记不确定的部分</li>
+<li>联网， 在 A1生成答案之前，先通过网络查询最新数据</li>
+<li>让 AI 先写下推理过程，再得出最终结论，而不是直接给出答案</li>
+</ol>
+<h1>项目</h1>
+<p>主要用于prompt问答、Agent+Function calling、Fine-tuning、RAG</p>
+<h2 id="prompt问答">prompt问答</h2>
+<p>利用大模型的推理能力，通过Prompt提问来完成业务</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250618134142117.png" srcset="/img/loading.gif" lazyload alt="image-20250618134142117"></p>
+<h2 id="Agent-Function-calling">Agent+Function calling</h2>
+<p>AI拆解任务，调用业务端提供的接口实现复杂业务</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250618134202749.png" srcset="/img/loading.gif" lazyload alt="image-20250618134202749"></p>
+<h2 id="Fine-tuning">Fine-tuning</h2>
+<p>模型微调</p>
+<p>针对特有业务场景对基础大模型做数据训练和微调，以满足特定场景的需求</p>
+<h2 id="RAG">RAG</h2>
+<p>给大模型外挂一个知识库，让大模型基于知识库内容做推理和回答</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250516122652385.png" srcset="/img/loading.gif" lazyload alt="image-20250516122652385"></p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250618134456058.png" srcset="/img/loading.gif" lazyload alt="image-20250618134456058"></p>
+<h2 id="对话机器人-智能客服-定制的一些东西">对话机器人 智能客服 定制的一些东西+</h2>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

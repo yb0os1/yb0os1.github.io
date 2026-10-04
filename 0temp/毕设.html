@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="车联网中基于无双线性配对无证书的聚合签密方案 伪代码 1234567891011121314151617181920212223242526272829&#x2F;*输入	λ：安全参数 *&#x2F;函数 SystemSetup(λ) 返回 (params, s):    &#x2F;&#x2F; 步骤 1: 给定安全参数 λ，选取阶为素数 q 的循环群 G，生成元为 P    q &#x3D; 选择一个素数(基于安全参数 λ)    G &#x3D; 选">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/%E6%AF%95%E8%AE%BE.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="车联网中基于无双线性配对无证书的聚合签密方案 伪代码 1234567891011121314151617181920212223242526272829&#x2F;*输入	λ：安全参数 *&#x2F;函数 SystemSetup(λ) 返回 (params, s):    &#x2F;&#x2F; 步骤 1: 给定安全参数 λ，选取阶为素数 q 的循环群 G，生成元为 P    q &#x3D; 选择一个素数(基于安全参数 λ)    G &#x3D; 选">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-04T05:02:31.590Z">
+<meta property="article:modified_time" content="2025-12-06T04:05:29.949Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1>车联网中基于无双线性配对无证书的聚合签密方案</h1>
+<p>伪代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*输入</span><br><span class="hljs-comment">	λ：安全参数 </span><br><span class="hljs-comment">*/</span><br>函数 SystemSetup(λ) 返回 (params, s):<br>    <span class="hljs-comment">// 步骤 1: 给定安全参数 λ，选取阶为素数 q 的循环群 G，生成元为 P</span><br>    q = 选择一个素数(基于安全参数 λ)<br>    G = 选取循环群(阶为 q 的群)<br>    P = 从 G 中选择一个生成元<br><br>    <span class="hljs-comment">// 步骤 2: 随机生成主私钥 s ∈ Z_q^*</span><br>    s ∈ Z_q^*<br><br>    <span class="hljs-comment">// 步骤 3: 计算主公钥 P_Pub = sP</span><br>    P_Pub = s * P<br><br>    <span class="hljs-comment">// 步骤 4: 选择安全哈希函数 H_1, H_2, H_3: &#123;0,1&#125;^* → Z_q^*</span><br>    H_1 = 选择安全哈希函数()<br>    H_2 = 选择安全哈希函数()<br>    H_3 = 选择安全哈希函数()<br><br>    <span class="hljs-comment">// 步骤 5: 默认系统参数 params = &#123;G, q, P, P_Pub, H_1, H_2, H_3&#125;</span><br>    params = 创建系统参数对象(G, q, P, P_Pub, H_1, H_2, H_3)<br><br>    <span class="hljs-comment">// 步骤 6: 返回值: 主私钥 s, 默认系统参数 params</span><br>    返回 (params, s)<br>        <br>用于初始化密码系统并生成系统参数和主私钥。函数接收安全参数λ，基于此选择一个素数q，并选取一个阶为 q的循环群G及其生成元 P。接着，函数随机生成主私钥 s，并计算主公钥 P_Pub = s * P。<br><br>为了保证系统安性，函数选择三个安全哈希函数，将任意长度的输入映射到群的阶 q 下的整数。然后，创建一个包含循环群 G、群的阶 q、生成元 P、主公钥 P_Pub 以及哈希函数 H_1、H_2 和 H_3 的系统参数对象 params。最后，函数返回主私钥 s 和系统参数 params，完成密码系统的初始化。<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*输入</span><br><span class="hljs-comment">	s：主私钥</span><br><span class="hljs-comment">	ID：用户标识</span><br><span class="hljs-comment">*/</span><br>函数 PartialKeyExtraction(s, ID) 返回 (d_ID, Y_ID):<br>    <span class="hljs-comment">// 步骤 1: 选择一个随机生成数 y_ID ∈ Z_q^*</span><br>    y_ID ∈ Z_q^*<br><br>    <span class="hljs-comment">// 步骤 2: 计算部分公钥 Y_ID = y_ID × P</span><br>    Y_ID = y_ID * P<br><br>    <span class="hljs-comment">// 步骤 3: 计算哈希值 h_ID = H_1(ID, Y_ID, P_Pub)</span><br>    h_ID = H_1(ID, Y_ID, P_Pub)<br><br>    <span class="hljs-comment">// 步骤 4: 计算部分私钥 d_ID = (y_ID + h_ID * s) mod q</span><br>    d_ID = (y_ID + h_ID * s) mod q<br><br>    <span class="hljs-comment">// 步骤 5: 返回部分密钥 (d_ID, Y_ID)</span><br>    返回 (d_ID, Y_ID)<br>        <br>        PartialKeyExtraction 函数从主私钥和用户标识中提取部分密钥。首先，选择一个随机数 y_ID ∈ Z_q^*，然后计算部分公钥 Y_ID = y_ID * P。接着，计算哈希值 h_ID = H_1(ID, Y_ID, P_Pub)，并根据主私钥 s 计算部分私钥 d_ID = (y_ID + h_ID * s) mod q。最后，返回部分私钥 d_ID 和部分公钥 Y_ID。<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*输入</span><br><span class="hljs-comment">	ID: 用户的身份标识</span><br><span class="hljs-comment">	(d_ID, Y_ID): 部分私钥和部分公钥</span><br><span class="hljs-comment">*/</span><br>函数 SecretValueGeneration(ID, (d_ID, Y_ID)) 返回 (x_ID,sk_ID,PK_ID):<br>    <span class="hljs-comment">// 步骤 1: 选择一个随机生成数作为机密值：x_ID ∈ Z_q^*</span><br>    x_ID ∈ Z_q^*<br>    <br>    <span class="hljs-comment">// 步骤 2: 计算X_ID、K_ID</span><br>    X_ID = x_ID * <span class="hljs-type">P</span><br>    <span class="hljs-variable">K_ID</span> <span class="hljs-operator">=</span> X_ID + Y_ID<br>    <br>    <span class="hljs-comment">// 步骤 3: 获取私钥/公钥对</span><br>    sk_ID = (x_ID, d_ID)<br>    PK_ID = (K_ID, Y_ID)<br>    <br>    <span class="hljs-comment">// 步骤 4: 返回秘密值，私钥公钥对</span><br>    返回 (x_ID,sk_ID,PK_ID)<br>        <br>        SecretValueGeneration 函数生成一个用户的秘密值、私钥和公钥。首先，选择一个随机数 x_ID 作为机密值。接着，计算 X_ID = x_ID * P 和 K_ID = X_ID + Y_ID。然后，生成私钥对 sk_ID = (x_ID, d_ID) 和公钥对 PK_ID = (K_ID, Y_ID)。最后，返回机密值 x_ID，私钥 sk_ID 和公钥 PK_ID。<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java">    <span class="hljs-comment">/*输入</span><br><span class="hljs-comment">        ID_i: 发送者的身份标识</span><br><span class="hljs-comment">        sk_ID_i: 发送者的私钥</span><br><span class="hljs-comment">        ID_B: 接收者的身份标识</span><br><span class="hljs-comment">        PK_ID_B: 接收者的公钥</span><br><span class="hljs-comment">        m_i: 待加密的消息</span><br><span class="hljs-comment">        t_i: 时间戳</span><br><span class="hljs-comment">    */</span><br>    函数 Signcryption(ID_i, sk_ID_i, ID_B, PK_ID_B, m_i, t_i) 返回 σ_i:<br>        <span class="hljs-comment">// 步骤 1：选取两个随机生成数：u_i1, u_i2 ∈ Z_q^*</span><br>        u_i1, u_i2 ∈ Z_q^*<br>        <span class="hljs-comment">// 步骤 2：计算部分签密u_i，这是一个乘法和逆运算的组合</span><br>        u_i = (u_i1 * x_ID_i + u_i2 * d_ID_i) * (x_ID_i + d_ID_i)^(-<span class="hljs-number">1</span>)<br>        <span class="hljs-comment">// 步骤 3：基于u_i计算公钥点U_i</span><br>        U_i = u_i * P<br>        <span class="hljs-comment">// 步骤 4：计算接收者ID_B的哈希值h_ID_B</span><br>        h_ID_B = H1(ID_B, Y_ID_B, P_Pub)<br>        <span class="hljs-comment">// 步骤 5：基于部分签密u_i和接收者哈希值h_ID_B计算密钥K_i</span><br>        K_i = u_i * (K_ID_B + h_ID_B * P_Pub)<br>        <span class="hljs-comment">// 步骤 6：计算哈希值</span><br>        z_i = H2(ID_B, U_i, K_i, t_i)<br>        <span class="hljs-comment">// 步骤 7：对消息m_i进行加密</span><br>        c_i = m_i ⊕ z_i<br>        <span class="hljs-comment">// 步骤 8：继续计算哈希</span><br>        h_i = H3(m_i, ID_i, PK_ID_i, U_i, K_i, t_i)<br>        <span class="hljs-comment">// 步骤 9：计算签名值w_i，这是u_i和h_i的线性组合</span><br>        w_i = u_i + h_i * (x_ID_i + d_ID_i) mod q<br>        <span class="hljs-comment">// 步骤 10：构建最终结果</span><br>        σ_i = (U_i, c_i, w_i)<br>        <span class="hljs-comment">// 步骤 11：返回结果</span><br>        返回 σ_i<br>            <br>            计算部分签密：$$u_i = (u_&#123;i1&#125; * x_&#123;ID_i&#125; + u_&#123;i2&#125; * d_&#123;ID_i&#125;) * (x_&#123;ID_i&#125; + d_&#123;ID_i&#125;)^&#123;-<span class="hljs-number">1</span>&#125;<span class="hljs-type">$$</span><br><span class="hljs-variable">$$K_i</span> <span class="hljs-operator">=</span> u_i * (K_&#123;ID_B&#125; + h_&#123;ID_B&#125; * P_&#123;Pub&#125;)<span class="hljs-type">$$</span><br>            <span class="hljs-variable">$$z_i</span> <span class="hljs-operator">=</span> H2(ID_B, U_i, K_i, t_i)<span class="hljs-type">$$</span><br>            <span class="hljs-variable">$$c_i</span> <span class="hljs-operator">=</span> m_i \oplus z_i$$$$\sigma_i = (U_i, c_i, w_i)<span class="hljs-type">$$</span><br>            <span class="hljs-variable">$$w_i</span> <span class="hljs-operator">=</span> u_i + h_i * (x_&#123;ID_i&#125; + d_&#123;ID_i&#125;) \mod q$$<br>            $$w_i * P ≠ U_i + h_i * (K_&#123;ID_i&#125; + h_&#123;ID_i&#125; * P_&#123;Pub&#125;)$$<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">	ID_i: 接收者的身份标识</span><br><span class="hljs-comment">	PK_ID_i: 接收者的公钥</span><br><span class="hljs-comment">	t_i: 时间戳</span><br><span class="hljs-comment">	ID_B: 发送者的身份标识</span><br><span class="hljs-comment">	sk_ID_B: 发送者的私钥</span><br><span class="hljs-comment">	σ_i: 加密的消息和签名</span><br><span class="hljs-comment">*/</span><br>函数 Unsigncryption(ID_i, PK_ID_i, t_i, ID_B, sk_ID_B, σ_i) 返回 m_i:<br>    <span class="hljs-comment">// 步骤 1：计算发送者 ID 的哈希值</span><br>    h_ID_i = H1(ID_i, Y_ID_i, P_Pub)<br>    <span class="hljs-comment">// 步骤 2：计算密钥</span><br>    K_i = (x_ID_B + d_ID_B) * U_i<br>    <span class="hljs-comment">// 步骤 3：计算消息哈希</span><br>    z_i = H2(ID_B, U_i, K_i, t_i)<br>    <span class="hljs-comment">// 步骤 4：解密消息</span><br>    m_i = c_i ⊕ z_i<br>    <span class="hljs-comment">// 步骤 5：继续哈希</span><br>    h_i = H3(m_i, ID_i, PK_ID_i, U_i, K_i, t_i)<br>    <span class="hljs-comment">// 步骤 6：检查时间戳</span><br>    如果 t_i 已经过期，则返回 ⊥<br>    <span class="hljs-comment">// 步骤 6：检查签名一致性</span><br>    如果 w_i * P ≠ U_i + h_i * (K_ID_i + h_ID_i * P_Pub)，则返回 ⊥<br>    <span class="hljs-comment">// 步骤 7：返回明文</span><br>    返回 m_i<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*输入</span><br><span class="hljs-comment">	&#123;t_i, σ_i | 1 ≤ i ≤ n&#125;: 时间戳和相应的签名对。</span><br><span class="hljs-comment">*/</span><br>函数 Aggregation(&#123;t_i, σ_i | <span class="hljs-number">1</span> ≤ i ≤ n&#125;) 返回 σ or ⊥:<br>    <span class="hljs-comment">// 步骤 1: 循环遍历每个加密时间戳和结果</span><br>    循环: <span class="hljs-type">for</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span> to n <span class="hljs-keyword">do</span><br>    <span class="hljs-comment">// 步骤 2: 检查时间戳 t_i 是否已经过期</span><br>    	判断: 如果 t_i 已经过期<br>    <span class="hljs-comment">// 步骤 3: 如果有一个时间戳已经过期，则返回 ⊥ 表示验证失败</span><br>            返回 ⊥<br>    <span class="hljs-comment">// 步骤 4: 计算所有 w_i 的和 W</span><br>    	W = ∑_(i=<span class="hljs-number">1</span>)^n w_i<br>    <span class="hljs-comment">// 步骤 5: 构造聚合签名 σ</span><br>    	σ = (&#123;U_i, c_i | <span class="hljs-number">1</span> ≤ i ≤ n&#125;, W)<br>    <span class="hljs-comment">// 步骤 6: 返回聚合签名 σ</span><br>    返回 σ<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*输入：</span><br><span class="hljs-comment">	&#123;ID_i, PK_&#123;ID_i&#125;, t_i | 1 ≤ i ≤ n&#125;: 发送方的身份标识、公钥和时间戳</span><br><span class="hljs-comment">	ID_B: 接收方的身份标识</span><br><span class="hljs-comment">	 sk_&#123;ID_B&#125;: 接收方的私钥</span><br><span class="hljs-comment">	σ: 签密消息</span><br><span class="hljs-comment">*/</span><br>函数 AggregateUnsigncryption(ID_i, PK_ID_i, &#123;t_i | <span class="hljs-number">1</span> ≤ i ≤ n&#125;, ID_B, sk_ID_B, σ) <br>返回 &#123;m_i | <span class="hljs-number">1</span> ≤ i ≤ n&#125; or ⊥:<br>    <span class="hljs-comment">// 步骤 1: 遍历每个签密消息</span><br>    循环: <span class="hljs-type">for</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span> to n <span class="hljs-keyword">do</span><br>        <span class="hljs-comment">// 步骤 2: 计算发送方ID_i的哈希值 h_&#123;ID&#125;_i</span><br>        h_ID_i = H_1(ID_i, Y_ID_i, P_Pub)<br>        <span class="hljs-comment">// 步骤 3: 计算会话密钥 K_i</span><br>        K_i = (x_ID_B + d_ID_B) * U_i<br>        <span class="hljs-comment">// 步骤 4: 计算哈希值 z_i</span><br>        z_i = H_2(ID_B, U_i, K_i, t_i)<br>        <span class="hljs-comment">// 步骤 5: 解密消息 m_i</span><br>        m_i = c_i ⊕ z_i<br>        <span class="hljs-comment">// 步骤 6: 计算哈希值 h_i</span><br>        h_i = H_3(m_i, ID_i, PK_ID_i, U_i, K_i, t_i)<br>        <span class="hljs-comment">// 步骤 7: 检查时间戳是否过期</span><br>        如果 t_i 已经过期，返回 ⊥<br>        <span class="hljs-comment">// 步骤 8: 验证签名的一致性</span><br>        如果 WP ≠ ∑_&#123;i=<span class="hljs-number">1</span>&#125;^&#123;n&#125; U_i + ∑_&#123;i=<span class="hljs-number">1</span>&#125;^&#123;n&#125; h_i (K_ID_i + h_ID_i P_Pub)，返回 ⊥<br>    <span class="hljs-comment">// 步骤 9: 返回解密后的消息集合</span><br>    返回 &#123;m_i | <span class="hljs-number">1</span> ≤ i ≤ n&#125;<br>$$&#123;m_i | <span class="hljs-number">1</span> ≤ i ≤ n&#125; $$<br><br></code></pre></td></tr></table></figure>
+<p>首先是密钥生成中心（KGC）生成系统参数和主密钥，秘密保存主密钥并发布系统参数。其次是各实体通过与KGC和信任权威机构（TA）的交互生成和验证各自的私钥和公钥。最后是车辆使用签密技术加密数据并发送给道路边缘单元（RSU），RSU对收到的数据进行聚合后发送给认证服务器（AS），AS运行聚合解密和验证算法，解密并验证数据的完整性和真实性。整个过程通过代码实现了无证书无双线性配对的密钥管理、数据加密、聚合和验证机制。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SigncryptionOutput <span class="hljs-title function_">crypto</span><span class="hljs-params">(AllParams allParams, String IDi, Element[] skIDi, String IDB, 		Element[] PKIDB, <span class="hljs-type">byte</span>[] mi, <span class="hljs-type">long</span> ti)</span> <span class="hljs-keyword">throws</span> NoSuchAlgorithmException &#123;<br>       <span class="hljs-comment">// 生成随机数 ui,1 和 ui,2</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">ui1</span> <span class="hljs-operator">=</span> Public.pairing.getZr().newRandomElement().getImmutable();<br>       <span class="hljs-type">Element</span> <span class="hljs-variable">ui2</span> <span class="hljs-operator">=</span> Public.pairing.getZr().newRandomElement().getImmutable();<br>       <span class="hljs-comment">// 计算 ui = (ui,1*xIDi + ui,2*dIDi)(xIDi + dIDi)^(-1)</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">ui</span> <span class="hljs-operator">=</span> calculateUi(ui1, ui2, skIDi);<br>       <span class="hljs-comment">// 计算 Ui = ui * P</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">Ui</span> <span class="hljs-operator">=</span> calculateUiP(allParams,ui);<br>       <span class="hljs-comment">// 计算 hIDB = H1(IDB, YIDB, PPub)</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">hIDB</span> <span class="hljs-operator">=</span> calculateH1(IDBElement, PKIDB[<span class="hljs-number">1</span>], allParams.params.PPub);<br>       <span class="hljs-comment">// 计算 Ki = ui * (KIDB + hIDB * PPub)</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">Ki</span> <span class="hljs-operator">=</span> calculateKi(allParams,ui, IDBElement, hIDB, PKIDB[<span class="hljs-number">1</span>]);<br>       <span class="hljs-comment">// 计算 zi = H2(IDB, Ui, Ki, ti)</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">zi</span> <span class="hljs-operator">=</span> calculateH2(IDBElement, Ui, Ki, ti);<br>       <span class="hljs-comment">// 计算 ci = mi ⊕ zi</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">ci</span> <span class="hljs-operator">=</span> calculateCi(mi, zi);<br>       <span class="hljs-comment">// 计算 hi = H3(mi, IDi, PKIDi, Ui, Ki, ti)</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">hi</span> <span class="hljs-operator">=</span> calculateH3(mi, IDiElement, skIDi[<span class="hljs-number">1</span>], Ui, Ki, ti);<br>       <span class="hljs-comment">// 计算 wi = ui + hi(xIDi + dIDi) mod q</span><br>       <span class="hljs-type">Element</span> <span class="hljs-variable">wi</span> <span class="hljs-operator">=</span> calculateWi(ui, hi, skIDi[<span class="hljs-number">1</span>]);<br>       <span class="hljs-comment">// 构建签密结果</span><br>       <span class="hljs-type">SigncryptionOutput</span> <span class="hljs-variable">sigma</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SigncryptionOutput</span>(Ui, ci, wi);<br>       <span class="hljs-comment">// 返回签密结果</span><br>       <span class="hljs-keyword">return</span> sigma;<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">decrypt</span><span class="hljs-params">(SigncryptionOutput symbolicEncryptedMessage, Element[] skIDB, Element[] PKIDi)</span> &#123;<br>    <span class="hljs-comment">// 使用接收者B的私钥对符号加密消息进行指数运算</span><br>	<span class="hljs-type">Element</span> <span class="hljs-variable">ci_Zr</span> <span class="hljs-operator">=</span>  Public.pairing.getZr().newElementFromBytes(symbolicEncryptedMessage.ci.duplicate().toBytes());<br>    <span class="hljs-type">Element</span> <span class="hljs-variable">exponentiationResult</span> <span class="hljs-operator">=</span> symbolicEncryptedMessage.Ui.add(ci_Zr).add(symbolicEncryptedMessage.wi).powZn(skIDB[<span class="hljs-number">0</span>]).powZn(skIDB[<span class="hljs-number">1</span>]);<br>    <span class="hljs-comment">// 对PKIDi进行指数运算</span><br>    <span class="hljs-type">Element</span> <span class="hljs-variable">PKIDiExponentiationResult</span> <span class="hljs-operator">=</span> PKIDi[<span class="hljs-number">0</span>].add(PKIDi[<span class="hljs-number">1</span>]).powZn(skIDB[<span class="hljs-number">0</span>].add(skIDB[<span class="hljs-number">1</span>]));<br>    <span class="hljs-comment">// 对PKIDiExponentiationResult取逆</span><br>    <span class="hljs-type">Element</span> <span class="hljs-variable">PKIDiExponentiationResultInverse</span> <span class="hljs-operator">=</span> PKIDiExponentiationResult.invert();<br>    <span class="hljs-comment">// 对指数运算结果进行除法运算</span><br>    <span class="hljs-type">Element</span> <span class="hljs-variable">exponentiationResultCurve</span> <span class="hljs-operator">=</span> Public.pairing.getG1().newElementFromBytes(exponentiationResult.toBytes());<br>    <span class="hljs-type">Element</span> <span class="hljs-variable">decryptedMessageElement</span> <span class="hljs-operator">=</span> exponentiationResultCurve.div(PKIDiExponentiationResultInverse);<br>    <span class="hljs-comment">// 这里的解密操作需要根据具体算法进行设计，这里只是将解密后的元素转换为字符串作为示例</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">decryptedMessage</span> <span class="hljs-operator">=</span> decryptedMessageElement.toString();<br>    <span class="hljs-keyword">return</span> decryptedMessage;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Element <span class="hljs-title function_">aggregate</span><span class="hljs-params">(<span class="hljs-type">long</span>[] t, SigncryptionOutput[] sigma)</span> &#123;<br>    <span class="hljs-comment">// 检查输入数组的大小</span><br>    <span class="hljs-keyword">if</span> (t.length != sigma.length) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;输入数组必须具有相同的长度&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 循环处理输入</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; t.length; i++) &#123;<br>        <span class="hljs-comment">// 检查 ti 是否过期</span><br>        <span class="hljs-keyword">if</span> (!isExpired((<span class="hljs-type">int</span>)t[i])) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// 如果任何 ti 已过期，则返回 null</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 计算聚合权重 W</span><br>    <span class="hljs-type">Element</span> <span class="hljs-variable">W</span> <span class="hljs-operator">=</span> computeAggregateWeight(sigma);<br>    <span class="hljs-comment">// 创建并返回聚合签名 σ</span><br>    <span class="hljs-keyword">return</span> createAggregatedSignature(sigma, W);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Element[] aggregateUnsigncryption(String[] ID, Element[] PKID, <span class="hljs-type">long</span>[] t, String IDB, Element skIDB, Element sigma) &#123;<br>    <span class="hljs-comment">// 检查输入数组的大小</span><br>    <span class="hljs-keyword">if</span> (ID.length != PKID.length || ID.length != t.length || PKID.length != t.length) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;输入数组必须具有相同长度&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 初始化用于存储结果消息的数组</span><br>    Element[] messages = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Element</span>[ID.length];<br>     <span class="hljs-comment">// 遍历输入</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; ID.length; i++) &#123;<br>        <span class="hljs-comment">// 解密密文</span><br>        Element[] decryptionResult = decrypt(ID[i], PKID[i], t[i], IDB, skIDB, sigma);<br>         <span class="hljs-comment">// 验证解密的正确性</span><br>         <span class="hljs-keyword">if</span> (!verifyDecryption(decryptionResult, ID[i], PKID[i], t[i], IDB, skIDB, sigma))<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// 如果解密验证失败，返回 null</span><br>        <span class="hljs-comment">// 将消息存储在结果数组中</span><br>        messages[i] = decryptionResult[<span class="hljs-number">3</span>]; <span class="hljs-comment">// 将解密消息 mi 存储在结果数组中</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> messages;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs nix">Alice1参数:<br><br>主私钥 <span class="hljs-params">s:</span> <span class="hljs-number">31518484519354942737851143604015776780848543899259142366570579014931811554710</span><br>主公钥 <span class="hljs-params">PPub:</span> <span class="hljs-number">1269398272599130458280233923839335067391903473468076388084846841899531783308146</span>,<span class="hljs-number">368896277729359991116039015088467204856436847293192206065523435232045218325863</span>,<span class="hljs-number">0</span><br><br>秘密值 <span class="hljs-params">xID:</span> <span class="hljs-number">42777534630016544541458485784889914042132800479083491172003613732395035421864</span><br><br>私钥 <span class="hljs-params">skID:</span> [<span class="hljs-number">42777534630016544541458485784889914042132800479083491172003613732395035421864</span>, <span class="hljs-number">728751868754486196870919506494276997198192101633874398834020731330803222812</span>]<br>公钥 <span class="hljs-params">PKID:</span> [<span class="hljs-number">756584853981464690304012068984897593756887953587842263644225688286319074368838</span>,<span class="hljs-number">1213355325853873079549784995959980846099968907598256100736476471986866934939941</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1283058833241228160921503024898599045685421544406756530342746061422962134346610</span>,<span class="hljs-number">611842086952697811183739596116244841140347308033368446549695521882155115961796</span>,<span class="hljs-number">0</span>]<br><br><br>Alice2参数:<br>群 <span class="hljs-params">G:</span> it.unisa.dia.gas.plaf.jpbc.field.curve.CurveField@<span class="hljs-number">29</span>ce7c0f<br>生成器 <span class="hljs-params">P:</span> <span class="hljs-number">444708239513068229956902703508629376296447646129118668252186141749662152781795</span>,<span class="hljs-number">1204757614692569488785331350811285443580619733990815491050565661601246592292138</span>,<span class="hljs-number">0</span><br>主私钥 <span class="hljs-params">s:</span> <span class="hljs-number">49430539768994756727399758699128860901414708601545126814846327156857214037514</span><br>主公钥 <span class="hljs-params">PPub:</span> <span class="hljs-number">323288251585070430773950095812191669060357761313938061345043120576835445572059</span>,<span class="hljs-number">765839896087675735277134006029114558194693604714006609624084361446687245940685</span>,<span class="hljs-number">0</span><br>哈希函数 <span class="hljs-params">H1:</span> SHA-<span class="hljs-number">256</span> Message Digest from SUN, <span class="hljs-symbol">&lt;initialized&gt;</span><br><br>哈希函数 <span class="hljs-params">H2:</span> SHA-<span class="hljs-number">256</span> Message Digest from SUN, <span class="hljs-symbol">&lt;initialized&gt;</span><br><br>哈希函数 <span class="hljs-params">H3:</span> SHA-<span class="hljs-number">256</span> Message Digest from SUN, <span class="hljs-symbol">&lt;initialized&gt;</span><br><br>部分私钥 <span class="hljs-params">dID:</span> <span class="hljs-number">69315215191318363592772754898007554757570371224732004195839477493260006054333</span><br>部分公钥 <span class="hljs-params">YID:</span> <span class="hljs-number">212617629596537845099133152254313604925238908006215884184428289668678673246924</span>,<span class="hljs-number">1259444814840196503403779013311951872140014707012407578590397873806816462903563</span>,<span class="hljs-number">0</span><br>秘密值 <span class="hljs-params">xID:</span> <span class="hljs-number">31677905189459251076068421719364464286378627133331672788102674428942615902113</span><br>私钥 <span class="hljs-params">skID:</span> [<span class="hljs-number">31677905189459251076068421719364464286378627133331672788102674428942615902113</span>, <span class="hljs-number">69315215191318363592772754898007554757570371224732004195839477493260006054333</span>]<br>公钥 <span class="hljs-params">PKID:</span> [<span class="hljs-number">810897723468469541304226042876382297934531557201163939861626861451174557009049</span>,<span class="hljs-number">209742293773285698557258995636175299430063145661668517279931831453321139903215</span>,<span class="hljs-number">0</span>, <span class="hljs-number">212617629596537845099133152254313604925238908006215884184428289668678673246924</span>,<span class="hljs-number">1259444814840196503403779013311951872140014707012407578590397873806816462903563</span>,<span class="hljs-number">0</span>]<br><br>Bob参数:<br>群 <span class="hljs-params">G:</span> it.unisa.dia.gas.plaf.jpbc.field.curve.CurveField@<span class="hljs-number">29</span>ce7c0f<br>生成器 <span class="hljs-params">P:</span> <span class="hljs-number">836713696016010146960880422640410157337281391722080740027098698747508428706481</span>,<span class="hljs-number">597012953879188757746467713625313462281568618467684580039744341873902048070674</span>,<span class="hljs-number">0</span><br>主私钥 <span class="hljs-params">s:</span> <span class="hljs-number">4907390977853222599110311113564993905299159414966565673163129909753791222842</span><br>主公钥 <span class="hljs-params">PPub:</span> <span class="hljs-number">481023858413240206320484427631563689570913701002791122430390348665818624394787</span>,<span class="hljs-number">1108251605053504366528940906507956729375795039301625974501979053317450247577153</span>,<span class="hljs-number">0</span><br>哈希函数 <span class="hljs-params">H1:</span> SHA-<span class="hljs-number">256</span> Message Digest from SUN, <span class="hljs-symbol">&lt;initialized&gt;</span><br><br>哈希函数 <span class="hljs-params">H2:</span> SHA-<span class="hljs-number">256</span> Message Digest from SUN, <span class="hljs-symbol">&lt;initialized&gt;</span><br><br>哈希函数 <span class="hljs-params">H3:</span> SHA-<span class="hljs-number">256</span> Message Digest from SUN, <span class="hljs-symbol">&lt;initialized&gt;</span><br><br>部分私钥 <span class="hljs-params">dID:</span> <span class="hljs-number">21641824166931412724609801675928210115726438471424402560863539039788955980393</span><br>部分公钥 <span class="hljs-params">YID:</span> <span class="hljs-number">1343867711138330911221156579180268222482540234843471215658931083661635095592970</span>,<span class="hljs-number">394106325638193493394329865043615776343889084890963650830223030812087655073837</span>,<span class="hljs-number">0</span><br>秘密值 <span class="hljs-params">xID:</span> <span class="hljs-number">17140138362924834708624722678378133786054128575456732607763156929212980107867</span><br>私钥 <span class="hljs-params">skID:</span> [<span class="hljs-number">17140138362924834708624722678378133786054128575456732607763156929212980107867</span>, <span class="hljs-number">21641824166931412724609801675928210115726438471424402560863539039788955980393</span>]<br>公钥 <span class="hljs-params">PKID:</span> [<span class="hljs-number">1272384085658789297540279395183159117571241279575791779004978460237783929233606</span>,<span class="hljs-number">1059908336613346082876230315597853389397424963732520572273874002178132796541581</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1343867711138330911221156579180268222482540234843471215658931083661635095592970</span>,<span class="hljs-number">394106325638193493394329865043615776343889084890963650830223030812087655073837</span>,<span class="hljs-number">0</span>]<br><br><br>加密之后的结果：<br>sigma.Ui:<span class="hljs-number">80173758903531859217141876458107230796336622809860128955857658946413605102029</span><br>sigma.ci:<span class="hljs-number">477781527124404487873588435795388504241395877457114158795106358207683964691998</span>,<span class="hljs-number">539223289945226761330663848665206753887268783322229936221056952786205477625316</span>,<span class="hljs-number">0</span><br>sigma.wi:<span class="hljs-number">43803040525467971209127007682701283208357370448688870153325907366286507556405</span><br><br>解密后的消息: <span class="hljs-number">1359340416453714938188925427248678425884540647757425595046380635202834842133023</span>,<span class="hljs-number">892962472640510112578550951726314198939945295599359640299109832486545286988389</span>,<span class="hljs-number">0</span><br><br><br>sigma.Ui:<span class="hljs-number">27515007774624691501055821915097906254880740929902086317721208071442672623103</span><br>sigma.ci:<span class="hljs-number">477781527124404487873588435795388504241395877457114158795106358207683964691998</span>,<span class="hljs-number">539223289945226761330663848665206753887268783322229936221056952786205477625316</span>,<span class="hljs-number">0</span><br>sigma.wi:<span class="hljs-number">22142481655550491711415518715522595191072237695853829141677192372212543497001</span><br><br><br>解密后的消息: <span class="hljs-number">910613235914733177853589537890493461431405856654949380480309598519463029832649</span>,<span class="hljs-number">611735594493141197110753785631942013587124545950285642184770933385652169897942</span>,<span class="hljs-number">0</span><br><br><br>聚合之后：<span class="hljs-number">1277035484654624956568004332320058875625271877724900308604161565521893484213062</span>,<span class="hljs-number">931434674470937744776890721181686973978824875991787021142565982931944935048723</span>,<span class="hljs-number">0</span><br><br>验证通过！<br>解聚合之后：<br><span class="hljs-number">1277035484654624956568004332320058875625271877724900308604161565521893484213062</span>,<span class="hljs-number">931434674470937744776890721181686973978824875991787021142565982931944935048723</span>,<span class="hljs-number">0</span><br><span class="hljs-number">201802721756037202022453068509224927170860220590115408527576543304338197115074</span>,<span class="hljs-number">1009181450014689942758893080876409828352022844745415323216338396150503510212885</span>,<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<p>四年的大学生活即将结束，我深感自己在各方面都有了显著的提升。学业上，我z认真学习专业知识，成绩优异；生活中，我积极参与社团活动，培养了良好的沟通和团队合作能力；在实习中，我 将理论与实践相结合，积累了宝贵的工作经验。这些经历让我更加成熟，也为我未来的职业发展奠定了坚实的基础。</p>
+<p>四年的大学生活即将结束，我在各方面都有了显著的提升。</p>
+<p>思想上，我积极向党组织靠拢，认真学习党的理论知识，不断提高自己的政治觉悟和思想水平。</p>
+<p>学习上，我刻苦钻研专业知识，成绩优异，多次获得奖学金，并参与了多项科研项目，培养了扎实的学术能力。</p>
+<p>生活上，我热心参与社团活动，结交了许多志同道合的朋友，培养了良好的人际关系和团队合作能力。hhhhhhhh</p>
+<p>首先，初始化阶段，密钥生成中心（KGC）运行<code>SystemSetup</code>函数生成系统参数和主密钥并发布系统参数。其次，在注册阶段，信任权威机构（TA）通过安全信道将身份信息发送给KGC，KGC运行<code>PartialKeyExtraction</code>函数生成部分密钥，TA验证后生成最终的私钥和公钥。认证服务器（AS）、道路边缘单元（RSU）和车辆（V_i）按照相似流程与KGC和TA交互，生成和验证各自的密钥对。最后，在数据传输阶段，车辆使用Signcryption技术加密数据，通过RSU聚合后发送给AS，AS运行聚合验证算法解密并验证数据。整个过程通过代码实现了无证书无双线性配对的密钥管理和数据加密机制</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">u_i\left(K_&#123;ID_B&#125;+h_</span><span class="hljs-template-variable">&#123;&#123;\<span class="hljs-name">rm</span> ID&#125;_B&#125;P_&#123;Pub&#125;\right)</span><br><span class="hljs-template-variable">=u_i\left(<span class="hljs-name">x_</span>&#123;&#123;\rm ID&#125;_B&#125;P+y_&#123;&#123;\rm ID&#125;_B&#125;P+h_&#123;&#123;\rm ID&#125;_B&#125;sP\right)</span><br><span class="hljs-template-variable">=\ \left(<span class="hljs-name">x_</span>&#123;&#123;\rm ID&#125;_B&#125;+\left(<span class="hljs-name">y_</span>&#123;&#123;\rm ID&#125;_B&#125;+h_&#123;&#123;\rm ID&#125;_B&#125;s\right)\right)\left(<span class="hljs-name">u_iP</span>\right)</span><br><span class="hljs-template-variable">=(<span class="hljs-name">x_</span>&#123;&#123;\rm ID&#125;_B&#125;+d_&#123;&#123;\rm ID&#125;_B&#125;)U_i</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">u_i 代表 </span><br><span class="language-xml">K_&#123;ID_B&#125;</span><br><span class="language-xml">h_</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">ID</span>&#125;_B&#125;代表B的哈希值</span><br><span class="hljs-template-variable">P_&#123;Pub&#125;代表主公钥</span><br><span class="hljs-template-variable">x_&#123;&#123;ID&#125;_B&#125;代表B选取的随机数</span><br><span class="hljs-template-variable">y_&#123;&#123;ID&#125;_B&#125;代表B选取的随机数</span><br><span class="hljs-template-variable">P代表生成元你</span><br><span class="hljs-template-variable">s代表主私钥</span><br></code></pre></td></tr></table></figure>
+<p>牛肉28  上脑30  吊龙40   黑鱼13</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

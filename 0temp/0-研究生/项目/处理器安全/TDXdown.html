@@ -1,0 +1,885 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="TDXdown: Single-Stepping and Instruction Counting Attacks against Intel TDX 针对英特尔TDX的单步和指令计数攻击 文章工作 可信执行环境（TEE）能保护计算和数据，即使面对特权攻击者（如控制管理程序的一方）也能确保数据安全 对TEE威胁最大的是侧信道攻击，其中单步攻击最强大：作为一种强大的攻击技术，对 Intel SGX">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/0-%E7%A0%94%E7%A9%B6%E7%94%9F/%E9%A1%B9%E7%9B%AE/%E5%A4%84%E7%90%86%E5%99%A8%E5%AE%89%E5%85%A8/TDXdown.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="TDXdown: Single-Stepping and Instruction Counting Attacks against Intel TDX 针对英特尔TDX的单步和指令计数攻击 文章工作 可信执行环境（TEE）能保护计算和数据，即使面对特权攻击者（如控制管理程序的一方）也能确保数据安全 对TEE威胁最大的是侧信道攻击，其中单步攻击最强大：作为一种强大的攻击技术，对 Intel SGX">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250227231255778.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250306234040462.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250306234055272.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250306234613618.png">
+<meta property="og:image" content="d:%5CTypora%5Cimgs%5Cimage-20250306234634568.png">
+<meta property="article:published_time" content="2026-10-04T05:02:31.582Z">
+<meta property="article:modified_time" content="2025-03-07T01:14:53.637Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:%5CTypora%5Cimgs%5Cimage-20250227231255778.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <p>TDXdown: Single-Stepping and Instruction Counting Attacks against Intel TDX</p>
+<h1>针对英特尔TDX的单步和指令计数攻击</h1>
+<h2 id="文章工作">文章工作</h2>
+<p>可信执行环境（TEE）能保护计算和数据，即使面对特权攻击者（如控制管理程序的一方）也能确保数据安全</p>
+<p>对TEE威胁最大的是侧信道攻击，其中单步攻击最强大：作为一种强大的攻击技术，对 Intel SGX 和 AMD SEV 构成严重威胁，它能增强现有侧信道攻击效果，还可用于指令计数攻击，揭示 TEE 的控制流，进而利用加密库中的微小泄漏</p>
+<p>Intel TDX（第二代的TEE）配置了专门应对单步攻击的方式（设计了内置防御机制，包括检测单步中断模式的启发式方法和激活的预防模式）</p>
+<p>这篇文章就是提出两种新攻击方式：利用TDX检测启发式的弱点进行单步攻击绕过防御和<strong>StumbleStepping 攻击</strong></p>
+<ol>
+<li>利用其弱点使得TDX单步执行对策失败</li>
+</ol>
+<p>利用这两种有效的攻击原语， 分析了ECDSA 签名算法中随机数截断导致的泄漏问题，揭示了 wolfSSL 和 OpenSSL 的安全漏洞</p>
+<h2 id="基础">基础</h2>
+<p><strong>TDX架构</strong></p>
+<ul>
+<li>受保护的虚拟机称为 信任域(TD)</li>
+<li>虚拟机监控程序需要调用TDX模块的SEAMCALL API来 管理信任域</li>
+<li>只有TDX模块可以进入信任域</li>
+<li>从信任域退出时,控制权返回给TDX模块, 而不是虚拟机监控程序</li>
+</ul>
+<p>TDX模块在不可信的虚拟机监控程序和信任域之间形成了一个可信层</p>
+<p>TDX 模块位于新增的受保护内存范围，引入安全仲裁模式（SEAM），分为 VMX root 和 VMX non - root 子模式，TDX 模块运行在 SEAM VMX root 模式，TD 运行在 SEAM VMX non - root 模式</p>
+<p>TD 的内存使用多密钥全内存加密（MKTME），根据 KeyID 使用不同加密密钥，KeyID 分为共享和私有，私有 KeyID 仅在 SEAM CPU 模式下可用</p>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250227231255778.png" srcset="/img/loading.gif" lazyload alt="image-20250227231255778"></p>
+<p><strong>TDX 控制数据结构</strong></p>
+<p>TD 的相关数据结构由 TDX 模块管理，如信任域虚拟处理器状态（TDVPS）描述 TD 中每个虚拟 CPU 的状态</p>
+<p>该数据结构的内存由 管理程序分配后传递给TDX模块，TDX模块用私有MKTME KeyID加密，管理程序只能通过TDX模块的API与之交互</p>
+<p><strong>针对 Intel TDX 的缓存攻击</strong></p>
+<p>TDX使用MKTME对TD的内存进行加密  用来影响侧信道攻击</p>
+<p>但是MKTME KeyID 编码在物理地址位中，是缓存标签的一部分</p>
+<p>理论上不同 KeyID 访问相同数据会导致不同缓存标签和数据解密，但缓存一致性机制会在加载新 KeyID 数据前清除使用不同 KeyID 的现有条目，这使得攻击者可利用 Flush + Reload 风格的缓存攻击，通过不同 KeyID 访问 TD 内存将其从缓存中逐出</p>
+<p><strong>指令计数攻击</strong></p>
+<p>指令计数攻击是基于单步的针对TEE 的侧信道攻击，推断精细的控制流信息</p>
+<p>攻击者假设已知执行的二进制文件，结合粗粒度的页错误控制通道和单步攻击，以指令粒度重构受害者的控制流，甚至能检测等长代码分支在指令序列中不同点的内存访问差异</p>
+<p>为防范攻击，安全关键代码应采用数据无关的恒定时间范式：执行路径或任何内存访问不得依赖于秘密数据</p>
+<p><strong>攻击者模型</strong></p>
+<p>采用默认 TEE 攻击者模型，攻击者具有系统 root 权限，可使用页错误控制通道、编程 APIC 定时器和控制处理器频率，但不假设具有物理访问权限，如恶意或受损的云服务提供商试图从客户 TD 中泄露数据。</p>
+<h2 id="TDX-单步执行防御措施">TDX 单步执行防御措施</h2>
+<p><strong>TDX 中断架构</strong></p>
+<p>在Intel SGX和AMD SEV上,单步攻击 利用了外部中断(如APIC定时器中断)中止TEE的执行并将控制权返回给攻击者控制的操作系统或虚拟机监控器</p>
+<p>在 TDX 中，攻击者控制的管理程序无法直接进入TD，TD 退出时控制权也不立即返回管理程序，而是由 TDX 模块处理。TDX 模块运行在特殊 CPU 模式，为管理程序提供 SEAMCALLs 管理 TD</p>
+<p>虽然恶意管理程序可设置 APIC 定时器中断 TD，但中断后由 TDX 模块<strong>检测</strong>中断模式是否为攻击，若判定为攻击，则通过单步<strong>预防模式</strong>继续执行 TD 若干周期后再将控制权交回管理程序</p>
+<p><strong>单步执行检测</strong></p>
+<p>TD 因中断退出时，TDX 模块通过分析 TD 指令指针（RIP）前进字节数和进入退出 TD 的时间来判断中断行为</p>
+<ol>
+<li>若 RIP 前进超过最长 x86 指令字节数的两倍，说明至少执行了两条指令，不是单步执行</li>
+<li>TDX 模块记录进入和退出 TD 的 rdtsc 时间戳（读取处理器的时间戳计数器）tb和ta，如果时间差ta-tb达到一定阈值，则认为中断行为正常，否则激活单步预防模式（TDX1.5 版本中阈值为 4096个 rdtsc 增量）</li>
+</ol>
+<p><strong>预防模式</strong></p>
+<p>检测到潜在单步攻击时，TDX 模块先禁用所有中断，防止管理程序干扰</p>
+<p>然后以单步方式让 TD 执行随机数量（PmSteps）的指令</p>
+<p>每次进入 TD 时设置 Monitor Trap Flag(监视陷阱标志)，使 TD 执行一条指令后退出，</p>
+<p>重复此过程直到执行完 PmSteps 条指令，最后将控制权交回管理程序，使管理程序无法知晓 TD 的精确执行进度</p>
+<p>由于执行的指令数量是随机的，执行过程中又禁止了管理程序干扰，管理程序无法得知 TD 到底执行了哪些指令、执行的顺序以及执行进度，也就难以利用单步攻击获取 TD 内部的敏感信息或破坏 TD 的正常运行</p>
+<h2 id="绕过单步执行防御机制">绕过单步执行防御机制</h2>
+<p><strong>利用时间戳计数器特性</strong>：利用rdtsc时间戳计数器的频率不受CPU频率缩放影响的特点，攻击者利用这一特性，降低运行 TD 的 CPU 核心频率，使得在实际执行时间较长的情况下，TDX 模块测量的时间差仍能满足正常中断条件（td&gt;4096个rdtsc）</p>
+<ul>
+<li>使用 Linux <code>cpufreq</code>驱动设置目标核心为<code>powersave</code>模式，通过<code>cpufreq-set -g powersave</code>将频率固定为 800MHz</li>
+<li>验证频率：通过<code>cpufreq-info</code>命令确认当前核心频率</li>
+</ul>
+<p><strong>借助 APIC 定时器实现单步攻击</strong>：攻击者使用 APIC定时器来触发中断，以实现单步攻击。确保定时器中断在首条指令执行期间命中，攻击者通过刷新 TD 的 TLB（缓冲区）来延长首条指令的执行时间。同时，选择合适的定时器设置，防止出现多步执行的情况</p>
+<p><strong>页错误控制通道</strong></p>
+<ul>
+<li>
+<p>API 调用，通过 TDX 模块的<code>SEAMCALL</code> API 临时阻止访问特定内存页：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">td_page_block</span> &#123;</span><br>    <span class="hljs-type">uint64_t</span> page_guest_phys;<br>    <span class="hljs-type">uint32_t</span> flags; <span class="hljs-comment">// 0x2 = block read/write</span><br>&#125;;<br>seamcall_block_page(&amp;td_page_block);<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="StumbleStepping攻击">StumbleStepping攻击</h2>
+<p>针对 Intel TDX 单步执行预防模式的攻击方法，核心就是利用该模式中存在的缓存侧信道信息泄露问题，通过监测特定页面的访问情况来推断目标信任域（TD）执行的指令数量，进而揭示 TD 的控制流信息</p>
+<p>攻击者利用 TDX 单步执行预防模式中的固有缓存侧信道。在预防模式下，TDX 模块每次进入和退出 TD 时，都会访问 TD 的虚拟处理器状态（TDVPS）页面。攻击者通过监测这些页面的访问次数，就能推断出 TD 执行的指令数。这是因为每次 TDX 模块进入 TD 执行一条指令，就会对应一次对 TDVPS 页面的访问操作，攻击者利用这一特性，通过特定的缓存攻击技术来获取这些信息。</p>
+<p>核心原理</p>
+<p>TDX 单步预防机制缺陷</p>
+<ul>
+<li>预防模式通过随机执行 PmSteps 指令（1-32 条），使管理程序无法追踪 TD 的精确执行进度</li>
+<li>每次 TD 进入 / 退出时，TDX 模块必须访问 TDVPS（虚拟处理器状态）页面以保存 / 恢复寄存器状态。该访问行为形成固定模式的缓存侧信道</li>
+</ul>
+<p>缓存侧信道利用</p>
+<ul>
+<li>KeyID-based Flush+Reload
+<ul>
+<li>TD 内存使用 MKTME 加密，不同 KeyID 访问同一物理地址时，缓存条目需被刷新</li>
+<li>攻击者利用此特性，通过监测 TDVPS 页面的缓存未命中次数，推断 TD 执行的指令数</li>
+<li>攻击者使用与目标不同的 KeyID 先将目标数据从缓存中清除，之后再尝试重新加载（Reload）该数据，通过测量重新加载数据的时间，就能判断目标是否在这期间访问过该数据。因为若目标访问过，数据会被加载到缓存中，攻击者重新加载时时间会较短；若目标未访问，数据需要从内存中读取，加载时间就会较长</li>
+</ul>
+</li>
+</ul>
+<p>攻击的步骤：</p>
+<ol>
+<li><strong>触发预防模式</strong>
+<ul>
+<li>利用 APIC 定时器发送高频中断（如每 1μs 一次），迫使 TDX 模块持续检测单步攻击；TDX 模块的检测逻辑基于时间差，高频中断会缩短两次中断的时间间隔，触发预防模式</li>
+</ul>
+</li>
+<li><strong>定位 TDVPS 敏感区域</strong>：（页面分析）
+<ul>
+<li>TDVPS 包含虚拟 CPU 的寄存器状态（如 RIP、RSP），大小约 16KB</li>
+<li>通过离线分析发现，每次 TD 进入 / 退出时，TDX 模块必然访问特定缓存行（如<code>struct vcpu_state.rip</code>）</li>
+<li>CPU 缓存一致性协议要求不同 KeyID 访问同一物理地址时清除旧条目</li>
+</ul>
+</li>
+<li><strong>缓存侧信道构建</strong>
+<ul>
+<li><strong>KeyID-based Flush+Reload 流程</strong>：
+<ul>
+<li><strong>Flush</strong>：攻击者用不同 KeyID 将目标缓存行逐出缓存</li>
+<li><strong>Reload</strong>：立即读取该缓存行，测量访问时间</li>
+<li>若时间差 &gt; 阈值（如 500 cycles），说明 TDX 模块用 TD 的 KeyID 访问过该缓存行</li>
+</ul>
+</li>
+<li>理论依据：MKTME 加密使不同 KeyID 的缓存标签不同，访问后必须清除旧条目</li>
+</ul>
+</li>
+<li><strong>指令计数推断</strong>
+<ul>
+<li>时间差分析
+<ul>
+<li>每次预防模式执行 1 条指令，触发两次 TDVPS 访问（进入和退出）</li>
+<li><strong>公式</strong>：指令数 = 缓存未命中次数 / 2</li>
+</ul>
+</li>
+<li>预防模式下，TDX 模块强制 TD 单步执行，访问 TDVPS 的频率与指令数成正比</li>
+</ul>
+</li>
+<li><strong>控制流关联</strong>
+<ul>
+<li>页错误触发点
+<ul>
+<li>临时阻止 TD 访问特定内存页，迫使 TD 在访问该页时触发页错误，中断预防模式循环</li>
+<li>页错误优先级高于预防模式，强制控制权转移</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>利用 TDX 单步执行预防模式的固有缓存侧信道，通过 KeyID - based Flush + Reload 机制监测 TDVPS 页面的访问次数，推断 TD 执行的指令数。攻击者故意触发预防模式，在单独核心上并行运行侧信道攻击，结合页错误信息揭示 TD 的控制流</p>
+<h2 id="ECDSA密钥恢复">ECDSA密钥恢复</h2>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250306234040462.png" srcset="/img/loading.gif" lazyload alt="image-20250306234040462"></p>
+<ul>
+<li>若 k 泄露，<img src="D:%5CTypora%5Cimgs%5Cimage-20250306234055272.png" srcset="/img/loading.gif" lazyload alt="image-20250306234055272">恢复私钥</li>
+</ul>
+<p>k 必须随机且与 n 互质。若 k 存在偏差，攻击者可通过侧信道信息恢复 k</p>
+<p>截断法的缺陷</p>
+<ul>
+<li>实现逻辑
+<ul>
+<li>生成随机字节串，长度大于<em>n</em>的位数</li>
+<li>截断为n的位数：<img src="D:%5CTypora%5Cimgs%5Cimage-20250306234613618.png" srcset="/img/loading.gif" lazyload alt="image-20250306234613618"></li>
+</ul>
+</li>
+<li>漏洞
+<ul>
+<li>截断过程中的循环次数依赖<em>k</em>的高位比特，导致控制流泄漏（如 wolfSSL 和 OpenSSL 的实现</li>
+</ul>
+</li>
+</ul>
+<h3 id="StumbleStepping-攻击-wolfSSL">StumbleStepping 攻击 wolfSSL</h3>
+<p><img src="D:%5CTypora%5Cimgs%5Cimage-20250306234634568.png" srcset="/img/loading.gif" lazyload alt="image-20250306234634568"></p>
+<p>攻击步骤：<strong>触发预防模式</strong>-》<strong>缓存监测 TDVPS</strong>-》<strong>控制流关联</strong>-》<strong>数据统计</strong>-》<strong>密钥恢复</strong></p>
+<ul>
+<li>
+<ol>
+<li>收集 70 万次签名，筛选出<code>W₁=2</code>事件（概率 1.5×10⁻⁵）</li>
+<li>使用 LLL 算法恢复 k</li>
+<li>计算私钥 d</li>
+</ol>
+</li>
+<li><strong>结果</strong>：1.7 秒恢复密钥，成功率 95%。</li>
+</ul>
+<p>当<code>W₁=2</code>时，secp160r1 曲线的 15 位 MSB 全为 1</p>
+<p>OpenSSL 攻击（单步执行）</p>
+<ul>
+<li>目标：brainpoolp224r1 曲线。</li>
+<li>步骤：监测 38-39 指令差异，17 万次签名恢复密钥。</li>
+<li>工具：Predicate Sieving。</li>
+</ul>
+<h2 id="改进建议">改进建议</h2>
+<p><strong>防御单步攻击</strong></p>
+<ul>
+<li>检测优化：原检测机制依赖时间差（4096 rdtsc），攻击者可通过降频绕过
+<ul>
+<li>仅依赖指令计数器，设置 “至少执行两条指令” 阈值</li>
+<li><strong>公式</strong>：若 RIP 增量 &lt; 2× 最长指令长度（15 bytes），触发预防模式</li>
+</ul>
+</li>
+<li>预取机制
+<ul>
+<li>在 TDX 模块中预取首条指令，消除人工延迟（参考 AEX-Notify 技术）</li>
+</ul>
+</li>
+</ul>
+<p><strong>防御 StumbleStepping</strong></p>
+<ul>
+<li>预防模式：当前预防模式每次执行 1 条指令，导致 TDVPS 访问次数过多，形成侧信道
+<ul>
+<li>批量执行随机指令（1-32 条），减少 TDVPS 访问次数</li>
+<li><strong>公式</strong>：每次执行 PmSteps 指令，仅访问 TDVPS 1 次（进入时）</li>
+</ul>
+</li>
+<li>缓存隔离
+<ul>
+<li>为 TDVPS 分配专用缓存区域，物理隔离消除侧信道</li>
+</ul>
+</li>
+</ul>
+<p>wolfssl和openssl：wolfSSL 和 OpenSSL 的非 ce 生成使用截断法，导致控制流泄漏</p>
+<ul>
+<li><strong>拒绝采样</strong>：生成随机数直到 k &lt; n，而非截断</li>
+</ul>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

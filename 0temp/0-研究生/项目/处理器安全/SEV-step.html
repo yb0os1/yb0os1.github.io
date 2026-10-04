@@ -1,0 +1,728 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yb0os1">
+  <meta name="keywords" content="yb0os1">
+  
+    <meta name="description" content="老的原语  新的行为 比如 一开始攻击aes 扩展到大模型  再扩展到提供给大模型的隐私信息 修改页表 达到控制中断的目的 攻击者捕获这中断   后续再通过一些其他的处理器漏洞来进行分析、处理 了解师兄论文中在不同进程中打破隔离的方式：  利用隐藏计数器打破进程隔离：发现 AMD 处理器中存在未公开的隐藏计数器，其状态在上下文切换时不会被刷新。实验：当父子进程绑定到同一个核心时，子进程能读取父进程">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://yb0os1.github.io/0temp/0-%E7%A0%94%E7%A9%B6%E7%94%9F/%E9%A1%B9%E7%9B%AE/%E5%A4%84%E7%90%86%E5%99%A8%E5%AE%89%E5%85%A8/SEV-step.html">
+<meta property="og:site_name" content="yb0os1">
+<meta property="og:description" content="老的原语  新的行为 比如 一开始攻击aes 扩展到大模型  再扩展到提供给大模型的隐私信息 修改页表 达到控制中断的目的 攻击者捕获这中断   后续再通过一些其他的处理器漏洞来进行分析、处理 了解师兄论文中在不同进程中打破隔离的方式：  利用隐藏计数器打破进程隔离：发现 AMD 处理器中存在未公开的隐藏计数器，其状态在上下文切换时不会被刷新。实验：当父子进程绑定到同一个核心时，子进程能读取父进程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-04T05:02:31.580Z">
+<meta property="article:modified_time" content="2025-06-27T13:16:04.373Z">
+<meta property="article:author" content="yb0os1">
+<meta property="article:tag" content="yb0os1">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>page.title - yb0os1</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yb0os1.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"collapseDepth":1,"headingSelector":"h1, h2, h3, h4, h5, h6","scrollOffset":80,"expand":true,"init_open":true,"number":true,"wrap":false,"max_depth":6,"min_depth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2026-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        yb0os1~🏠
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="javascript:;" target="_self" style="display: inline-block;">
+                      
+                        <span>💬 杂项</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/categories/"
+                                target="_self">
+                                
+                                  <span>分类</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/archives/"
+                                target="_self">
+                                
+                                  <span>归档</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/tags/"
+                                target="_self">
+                                
+                                  <span>标签</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/java/" target="_self" style="display: inline-block;">
+                      
+                        <span>☕️ Java</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JVM/"
+                                target="_self">
+                                
+                                  <span>JVM</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/JUC/"
+                                target="_self">
+                                
+                                  <span>JUC</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/java/spring/"
+                                target="_self">
+                                
+                                  <span>Spring全家桶</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/cpp/" target="_self" style="display: inline-block;">
+                      
+                        <span>🔧 C++</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/cpp/basics/"
+                                target="_self">
+                                
+                                  <span>基础</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/408" target="_self">
+                        
+                          <span>💻 计算机基础</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/database" target="_self" style="display: inline-block;">
+                      
+                        <span>🗄️ 数据库</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/mysql/"
+                                target="_self">
+                                
+                                  <span>MySQL</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/redis/"
+                                target="_self">
+                                
+                                  <span>Redis</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/kv/"
+                                target="_self">
+                                
+                                  <span>Kv</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/database/ClickHouse/"
+                                target="_self">
+                                
+                                  <span>ClickHouse</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                  <!-- 修复核心：拆分跳转区域和下拉箭头 -->
+                  <li class="nav-item dropdown">
+                    <!-- 可跳转的主文字区域 -->
+                    <a class="nav-link" href="/distributed" target="_self" style="display: inline-block;">
+                      
+                        <span>🔗 分布式架构</span>
+                    </a>
+                    <!-- 仅负责展开下拉的箭头，不拦截跳转 -->
+                    <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false"
+                      style="display: inline-block; margin-left: -20px !important;">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/queue/"
+                                target="_self">
+                                
+                                  <span>消息队列</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/transaction/"
+                                target="_self">
+                                
+                                  <span>分布式事务</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/consistency/"
+                                target="_self">
+                                
+                                  <span>一致性协议</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/microservice/"
+                                target="_self">
+                                
+                                  <span>微服务架构</span>
+                              </a>
+                              
+                        
+                          
+                            
+                              <a class="dropdown-item" href="/distributed/rpc/"
+                                target="_self">
+                                
+                                  <span>RPC</span>
+                              </a>
+                              
+                    </div>
+                  </li>
+                  
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/scene" target="_self">
+                        
+                          <span>🚀 场景</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/AI" target="_self">
+                        
+                          <span>🤖 AI</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/practice" target="_self">
+                        
+                          <span>💼 实习</span>
+                      </a>
+                    </li>
+                    
+                      
+          
+            
+              
+                
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about/" target="_self">
+                        
+                          <span>👨‍💻 关于</span>
+                      </a>
+                    </li>
+                    
+                      
+                        
+                          <li class="nav-item" id="search-btn">
+                            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                              data-target="#modalSearch" aria-label="Search">
+                              <i class="iconfont icon-search"></i>
+                            </a>
+                          </li>
+                          
+                            
+                              
+                                <li class="nav-item" id="color-toggle-btn">
+                                  <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                    <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                  </a>
+                                </li>
+                                
+      </ul>
+    </div>
+  </div>
+  <style>
+    /* 鼠标 hover 分类项时，文字和箭头同时亮 */
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown:hover>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 替换成你主题的高亮蓝色（和图中一致） */
+    }
+
+    /* 当前页面为分类页时，文字和箭头同时激活亮 */
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link,
+    .navbar .navbar-nav>.nav-item.dropdown.active>.nav-link.dropdown-toggle {
+      color: #42b9f4 !important;
+      /* 同样替换为你的高亮色 */
+    }
+  </style>
+  <!-- 修复下拉菜单点击外部关闭的问题 -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('show');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          if (menu) menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <p>老的原语  新的行为</p>
+<p>比如 一开始攻击aes 扩展到大模型  再扩展到提供给大模型的隐私信息</p>
+<p>修改页表 达到控制中断的目的 攻击者捕获这中断   后续再通过一些其他的处理器漏洞来进行分析、处理</p>
+<p>了解师兄论文中<strong>在不同进程中打破隔离的方式</strong>：</p>
+<ul>
+<li><strong>利用隐藏计数器打破进程隔离</strong>：发现 AMD 处理器中存在未公开的隐藏计数器，其状态在上下文切换时不会被刷新。实验：当父子进程绑定到同一个核心时，子进程能读取父进程留在处理器核心中的计数器状态 。这打破了不同进程间原本应有的地址空间隔离，使得不同进程可以共享计数器状态。利用这一特性，通过设计基于驱逐现象的计数器复用机制，构造了跨进程隐蔽信道。木马进程与间谍进程可将自己绑定到约定核心上，木马进程训练计数器状态，间谍进程探测计数器状态，从而实现进程间信息的隐蔽传输，在不同进程间建立了非法通信渠道</li>
+<li><strong>利用推测性存储绕过预测器打破进程隔离</strong>：推测性存储绕过预测器由指令物理地址索引，利用操作系统的写时复制机制，在父子进程通过 fork () 系统调用创建时，父子进程对特定函数（如 stld 函数）的调用具有相同物理地址，它们对该函数的调用将访问索引值相同的计数器 。这使得不同进程可以通过操作相同的计数器，实现跨用户进程隐蔽信道。木马进程与间谍进程虽无法约定索引值访问相同推测性存储绕过预测器表项，但可使用类似滚动数组的方式尝试碰撞，检测碰撞发生来传输信息，打破了不同用户进程间的隔离</li>
+</ul>
+<p>上面的思想同样可以用于在<strong>安全虚拟机和 hypervisor 中打破隔离</strong>的基本思想</p>
+<ul>
+<li><strong>基于推测性存储绕过预测器打破安全虚拟机和 hypervisor 的隔离</strong>：推测性存储绕过预测器状态在上下文切换时不被刷新，这一性质不仅存在于用户进程间，在更广泛的场景中同样存在。在跨 SEV - SNP hypervisor 与安全虚拟机的场景中，通过部署 AMD 官方提供的 SEV hypervisor 及安全虚拟机环境，利用 qemu - affinity 工具将 qemu 创建的虚拟机进程绑定到宿主机的指定核心上，并在两者间开辟共享内存用于信号量的创建与使用 。推测性存储绕过预测器的状态可以在 hypervisor 与安全虚拟机间复杂的切换过程中维持不变，从而实现了跨 SEV - SNP 隐蔽信道，打破了安全虚拟机和 hypervisor 之间的隔离，使得攻击者可以在两者之间传输信息，威胁到了安全虚拟机的安全性</li>
+</ul>
+<h2 id="SEV-Step-A-Single-Stepping-Framework-for-AMD-SEV">SEV-Step: A Single-Stepping Framework for AMD-SEV</h2>
+<p>关注AMD 安全加密虚拟化（SEV），提出了 SEV-Step单步执行框架，深入探讨了 SEV 在微架构侧信道攻击下的安全性问题</p>
+<p><strong>sev现状</strong>：AMD SEV 是一种保护整个虚拟机的 TEE，基于 AMD SVM 硬件加速虚拟化技术。它通过加密 VM 内存内容来抵御恶意的管理程序和部分物理攻击者。但是，自 SEV 发布以来，已遭受多种攻击 ，如利用未加密的 VMCB、嵌套页表、加密模式等方面的漏洞。在攻击技术方面，针对 Intel SGX 的单步执行攻击取得了显著进展，SGX-Step 框架实现了可靠的单步执行并提供了可复用的攻击框架，但 SEV 在这方面的研究相对滞后，此前的工作大多未发布可复用的成果或仅针对特定攻击，缺乏可靠的单步执行和通用的攻击框架。</p>
+<p>SEV-step工具具体可以实现的功能：</p>
+<ol>
+<li>
+<h3 id="页错误跟踪功能">页错误跟踪功能</h3>
+<ul>
+<li><strong>强制产生页错误</strong>：<code>sev-step</code>利用管理程序对嵌套页表的控制，通过修改页的相关位（如 present、no - execute 和 read/write 位），强制 VM 产生页错误并揭示访问类型</li>
+<li><strong>快速定位代码区域</strong>：页错误跟踪粒度较粗但速度快，可用于在单步执行前快速定位感兴趣的代码区域。当 VM 即将执行包含依赖秘密的内存查找的代码页时，再启动单步执行进行更精确的攻击</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>具体：借助管理程序对嵌套页表的控制来实现，能强制虚拟机（VM）产生页错误，进而揭示其内存访问类型
+<ul>
+<li><code>sev-step</code>利用管理程序对嵌套页表的控制能力，通过修改页的一些关键相关位，像<code>present</code>（存在位）、<code>no - execute</code>（不可执行位）以及<code>read/write</code>（读写位）等，来强制 VM 产生页错误。例如，当把某页的<code>present</code>位设置为 0 时，若 VM 尝试访问该页，就会触发页错误异常</li>
+<li>当 VM 因页表位修改而产生页错误时，就能够揭示出 VM 对该页的访问类型，比如是读访问、写访问还是执行访问。这有助于攻击者了解 VM 的内存访问模式，从而定位到可能包含敏感信息或者关键代码的内存区域</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>
+<h5 id="单步执行功能">单步执行功能</h5>
+<ul>
+<li>每次只执行程序中的一条指令，执行完一条指令后暂停，等待进一步的操作指示再执行下一条指令</li>
+<li><strong>精确控制执行流</strong>：借助<code>sev-step</code>，能够以单步方式执行受 SEV 保护的虚拟机（VM）中的代码。通过配置 APIC 定时器中断，让硬件在指令边界处理中断，确保中断在 VM 执行的第一条指令结束前触发，同时使指令进入执行流水线，从而实现单步执行。这一功能使攻击者可以精准关联微架构观察与受害者执行状态，在攻击过程中能够细致地观察每一条指令执行时系统的状态变化</li>
+<li><strong>提高单步执行可靠性</strong>：为保证单步执行的可靠性，<code>sev-step</code>采取了一系列措施。例如刷新 VM 的 TLB 条目、重置 “accessed” 位来增加单步执行窗口时间；通过固定内核线程 CPU 核心、稳定 CPU 频率、禁用硬件缓存预取器等方式确保执行速度稳定；防止虚拟定时器中断干扰单步执行，并利用 VM 的性能计数器事件确定 APIC 定时器超时值，准确判断单步、零步和多步情况</li>
+</ul>
+</li>
+<li>
+<h5 id="缓存攻击功能">缓存攻击功能</h5>
+<ul>
+<li><strong>适配 SEV 环境的攻击方式</strong>：由于 SEV 环境的特性，传统的 Load + Reload 和 Flush + Reload 攻击不可行，<code>sev-step</code>采用 Prime + Probe 攻击。在用户空间确定驱逐集，在内核空间实现 Prime 和 Probe 步骤，以减少缓存噪声</li>
+<li><strong>测量缓存状态</strong>：通过性能计数器和 rdpru 指令测量访问时间，推断缓存状态，从而获取目标 VM 的内存访问模式等信息，为进一步的攻击提供支持</li>
+</ul>
+</li>
+<li>
+<h5 id="用户空间-API-交互功能">用户空间 API 交互功能</h5>
+<ul>
+<li><strong>实现内核与用户空间通信</strong>：<code>sev-step</code>基于 AMD 的 SEV 参考管理程序，通过 ioctl 和共享内存实现内核空间与用户空间的通信。ioctl 用于低频操作，共享内存用于高频的页错误和单步事件通知</li>
+<li><strong>支持用户空间开发攻击逻辑</strong>：当 VMEXIT 事件发生时，内核空间通过共享内存向用户空间发送事件，然后等待用户空间确认，期间 VM 处于暂停状态。这使得用户空间能通过 ioctl API 修改配置，确保在下一次 VMRUN 时生效，将复杂的攻击逻辑放在用户空间更丰富、不易出错的编程环境中开发</li>
+</ul>
+</li>
+</ol>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
